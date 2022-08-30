@@ -2,8 +2,13 @@
   "name": "offer-design-system",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "https://github.com/price-offer/offer-design-system.git",
-  "author": "Team Price",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/price-offer/offer-design-system.git"
+  },
+  "author": {
+    "name": "Team Price"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "vite --open",
@@ -12,7 +17,8 @@
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "lint:fix": "tsc --noEmit && eslint --fix ./src/**/*.{ts,tsx}",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=43263771fe52"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",
@@ -36,6 +42,7 @@
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
     "babel-loader": "^8.2.5",
+    "chromatic": "^6.8.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -46,5 +53,11 @@
     "typescript": "^4.6.4",
     "vite": "^3.0.7",
     "vite-tsconfig-paths": "^3.5.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/price-offer/offer-design-system/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/price-offer/offer-design-system#readme",
+  "_id": "offer-design-system@0.0.1"
 }

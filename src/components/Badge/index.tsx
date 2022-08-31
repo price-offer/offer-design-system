@@ -14,7 +14,7 @@ type ApplyColorScheme = (
 ) => string
 
 export const Badge = ({
-  colorScheme = 'gray',
+  colorScheme,
   children,
   ...props
 }: BadgeProps): ReactElement => {

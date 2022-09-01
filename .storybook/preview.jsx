@@ -1,4 +1,5 @@
-import { theme } from '../src/themes'
+import { theme } from '../src/styles/themes'
+import { GlobalStyle } from '../src/styles'
 import { ThemeProvider } from "@emotion/react"
 
 export const parameters = {
@@ -14,6 +15,7 @@ export const parameters = {
 export const decorators = [
   Story => (
     <ThemeProvider theme={theme}>
+      <GlobalStyle/>
       <Story/>
     </ThemeProvider>
   )

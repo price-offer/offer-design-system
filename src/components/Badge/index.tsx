@@ -50,7 +50,7 @@ const applyColorScheme: ApplyColorScheme = (colorScheme, colors) => {
 const StyledBadge = styled.div<StyledBadgeProps>`
   display: inline-block;
   min-height: 20px;
-  padding: 3px 6px 2px 6px;
+  padding: 4px 7px;
   text-align: center;
   font-feature-settings: normal;
   ${({ colorScheme, theme }): string =>

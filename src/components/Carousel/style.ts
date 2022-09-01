@@ -91,6 +91,6 @@ export const StyledCurrentDot = styled.div<CurrentDotProps>`
   margin: 0 1px;
   border-radius: 100px;
   cursor: pointer;
-  transform: ${({ imageIndex }) => `translate(${imageIndex * 20}px,-50%)`};
+  transform: ${({ imageIndex }) => `translate(${imageIndex * 18}px,-50%)`};
   transition: transform 0.5s;
 `

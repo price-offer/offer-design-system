@@ -3,7 +3,7 @@ import type { Colors } from '@themes/colors'
 import styled from '@emotion/styled'
 
 type BadgeColorScheme = 'gray' | 'orange' | 'purple'
-interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
+export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   colorScheme: BadgeColorScheme
 }
 

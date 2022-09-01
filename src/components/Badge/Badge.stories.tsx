@@ -1,5 +1,6 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 import { Badge } from './index'
+import type { BadgeProps } from './index'
 
 export default {
   argTypes: {
@@ -10,9 +11,9 @@ export default {
   },
   component: Badge,
   title: 'Component/Badge'
-} as ComponentMeta<typeof Badge>
+} as Meta
 
-const Template: ComponentStory<typeof Badge> = args => <Badge {...args} />
+const Template: Story<BadgeProps> = args => <Badge {...args} />
 
 export const Gray = Template.bind({})
 Gray.args = { children: 'Badge', colorScheme: 'gray' }

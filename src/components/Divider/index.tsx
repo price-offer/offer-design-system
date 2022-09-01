@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 
-interface DividerProps {
+export interface DividerProps {
   orientation?: 'vertical' | 'horizontal'
   size?: 'bold' | 'regular'
 }

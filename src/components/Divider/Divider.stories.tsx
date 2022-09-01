@@ -1,5 +1,6 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 import { Divider } from './index'
+import type { DividerProps } from './index'
 
 export default {
   argTypes: {
@@ -14,9 +15,9 @@ export default {
   },
   component: Divider,
   title: 'Component/Divider'
-} as ComponentMeta<typeof Divider>
+} as Meta
 
-const Template: ComponentStory<typeof Divider> = args => <Divider {...args} />
+const Template: Story<DividerProps> = args => <Divider {...args} />
 export const Horizontal = Template.bind({})
 Horizontal.args = {
   orientation: 'horizontal',

@@ -108,7 +108,7 @@ const Carousel = ({ images, isArrow }: CarouselProps) => {
               }}></StyledDot>
           )
         })}
-        <StyledCurrentDot imageIndex={translateValue / 70}></StyledCurrentDot>
+        <StyledCurrentDot imageIndex={translateValue / 60}></StyledCurrentDot>
       </StyledDotBox>
     </StyledCarouselContainer>
   )

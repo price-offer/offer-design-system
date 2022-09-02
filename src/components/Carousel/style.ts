@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import styled from '@emotion/styled'
 
 interface SliderProps {
@@ -11,7 +10,7 @@ export const StyledSlider = styled.div<SliderProps>`
   display: flex;
   overflow: hidden;
   margin: 0 auto;
-  cursor: ${({ cursorOn }) => cursorOn && 'pointer'};
+  cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
 `
 
 interface ImageBoxProps {
@@ -20,7 +19,8 @@ interface ImageBoxProps {
 export const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   transition: 1s;
-  transform: ${({ translateValue }) => `translateX(-${translateValue}vw)`};
+  transform: ${({ translateValue }): string =>
+    `translateX(-${translateValue}vw)`};
 `
 
 export const StyledImage = styled.img`
@@ -91,6 +91,7 @@ export const StyledCurrentDot = styled.div<CurrentDotProps>`
   margin: 0 1px;
   border-radius: 100px;
   cursor: pointer;
-  transform: ${({ imageIndex }) => `translate(${imageIndex * 18}px,-50%)`};
+  transform: ${({ imageIndex }): string =>
+    `translate(${imageIndex * 18}px,-50%)`};
   transition: transform 0.5s;
 `

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import type { ReactElement, SetStateAction } from 'react'
 import {
   StyledArrow,
   StyledArrowBox,
@@ -18,7 +18,7 @@ interface CarouselProps {
   isArrow: boolean
 }
 
-const Carousel = ({ images, isArrow }: CarouselProps) => {
+const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
   const arrowRight = ICON.CHEVRON_RIGHT_40
   const arrowLeft = ICON.CHEVRON_LEFT_40
   const [translateValue, setTranslateValue] = useState<number>(0)
@@ -26,7 +26,7 @@ const Carousel = ({ images, isArrow }: CarouselProps) => {
   const [mouseUpClientX, setMouseUpClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
-  const moveCurrent = (imageIndex: number) => {
+  const moveCurrent = (imageIndex: number): void => {
     setTranslateValue((imageIndex - 1) * 60)
   }
   const moveRight = (): void => {
@@ -45,20 +45,20 @@ const Carousel = ({ images, isArrow }: CarouselProps) => {
     }
   }
 
-  const onMouseDown = (e: any) => {
+  const onMouseDown = (e: { clientX: SetStateAction<number> }): void => {
     setMouseDownClientX(e.clientX)
     setCursorOn(true)
   }
 
-  const onMouseUp = (e: any) => {
+  const onMouseUp = (e: { clientX: SetStateAction<number> }): void => {
     setMouseUpClientX(e.clientX)
     setCursorOn(false)
   }
-  const handleTouchStart = (e: any) => {
+  const handleTouchStart = (e: any): void => {
     setMouseUpClientX(e.touches[0].clientX)
     setCursorOn(true)
   }
-  const handleTouchStartEnd = (e: any) => {
+  const handleTouchStartEnd = (e: any): void => {
     setMouseDownClientX(e.changedTouches[0].clientX)
     setCursorOn(false)
   }
@@ -103,7 +103,7 @@ const Carousel = ({ images, isArrow }: CarouselProps) => {
             <StyledDot
               key={image.id}
               className={`${image.id}`}
-              onClick={() => {
+              onClick={(): void => {
                 moveCurrent(image.id)
               }}></StyledDot>
           )

@@ -1,4 +1,4 @@
-import type { ComponentStory, Meta } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 import Carousel from './index'
 import type { CarouselProps } from './index'
 import { IMAGE } from '@constants'
@@ -9,7 +9,7 @@ export default {
   title: 'Component/Carousel'
 } as Meta<CarouselProps>
 
-const Template: ComponentStory<typeof Carousel> = args => <Carousel {...args} />
+const Template: Story<CarouselProps> = args => <Carousel {...args} />
 
 export const isArrow = Template.bind({})
 isArrow.args = {

@@ -54,6 +54,7 @@ export const StyledArrow = styled.img`
 `
 export const StyledCarouselContainer = styled.div`
   touch-action: none;
+  user-select: none;
   position: relative;
 `
 

@@ -1,4 +1,4 @@
-import type { ReactElement, SetStateAction } from 'react'
+import type { ReactElement, SetStateAction, TouchEventHandler } from 'react'
 import {
   StyledArrow,
   StyledArrowBox,
@@ -11,14 +11,15 @@ import {
   StyledSlider
 } from './style'
 import { useEffect, useState } from 'react'
-import { ICON } from '../../constants/icons'
+import { ICON } from '@constants/icons'
 
-interface CarouselProps {
+export interface CarouselProps {
   images: { url: string; id: number }[]
   isArrow: boolean
 }
 
 const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
+  const carouselSize = 60
   const arrowRight = ICON.CHEVRON_RIGHT_40
   const arrowLeft = ICON.CHEVRON_LEFT_40
   const [translateValue, setTranslateValue] = useState<number>(0)
@@ -26,51 +27,54 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
   const [mouseUpClientX, setMouseUpClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
-  const moveCurrent = (imageIndex: number): void => {
-    setTranslateValue((imageIndex - 1) * 60)
+  const handleMoveCurrent = (imageIndex: number): void => {
+    setTranslateValue((imageIndex - 1) * carouselSize)
   }
-  const moveRight = (): void => {
-    if (translateValue !== 60 * (images.length - 1)) {
-      setTranslateValue(prev => prev + 60)
+  const handleMoveRight = (): void => {
+    if (translateValue !== carouselSize * (images.length - 1)) {
+      setTranslateValue(prev => prev + carouselSize)
     } else {
       setTranslateValue(0)
     }
   }
 
-  const moveLeft = (): void => {
+  const handleMoveLeft = (): void => {
     if (translateValue !== 0) {
-      setTranslateValue(prev => prev - 60)
+      setTranslateValue(prev => prev - carouselSize)
     } else {
-      setTranslateValue(60 * (images.length - 1))
+      setTranslateValue(carouselSize * (images.length - 1))
     }
   }
 
-  const onMouseDown = (e: { clientX: SetStateAction<number> }): void => {
+  const handleMouseDown = (e: { clientX: SetStateAction<number> }): void => {
     setMouseDownClientX(e.clientX)
     setCursorOn(true)
   }
 
-  const onMouseUp = (e: { clientX: SetStateAction<number> }): void => {
+  const handleMouseUp = (e: { clientX: SetStateAction<number> }): void => {
     setMouseUpClientX(e.clientX)
     setCursorOn(false)
   }
-  const handleTouchStart = (e: any): void => {
+  const handleTouchStart: TouchEventHandler<HTMLDivElement> = e => {
     setMouseUpClientX(e.touches[0].clientX)
     setCursorOn(true)
   }
-  const handleTouchStartEnd = (e: any): void => {
+  const handleTouchStartEnd: TouchEventHandler<HTMLDivElement> = e => {
     setMouseDownClientX(e.changedTouches[0].clientX)
     setCursorOn(false)
   }
 
   useEffect(() => {
     const dragSpace = Math.abs(mouseDownClientX - mouseUpClientX)
-    if (mouseDownClientX !== 0) {
-      if (mouseUpClientX < mouseDownClientX && dragSpace > 100) {
-        moveRight()
-      } else if (mouseUpClientX > mouseDownClientX && dragSpace > 100) {
-        moveLeft()
-      }
+    const userSlideRight = mouseUpClientX < mouseDownClientX && dragSpace > 100
+    const userSlideLeft = mouseUpClientX > mouseDownClientX && dragSpace > 100
+    if (mouseDownClientX === 0) {
+      return
+    }
+    if (userSlideRight) {
+      handleMoveRight()
+    } else if (userSlideLeft) {
+      handleMoveLeft()
     }
   }, [mouseUpClientX])
 
@@ -78,12 +82,11 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
     <StyledCarouselContainer>
       <StyledSlider
         cursorOn={cursorOn}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
-        <StyledImageBox
-          translateValue={translateValue !== 0 ? translateValue : null}>
+        <StyledImageBox translateValue={translateValue || null}>
           {images.map((image, idx) => {
             return (
               <StyledImage key={image.id} alt={'image' + idx} src={image.url} />
@@ -92,8 +95,14 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
         </StyledImageBox>
         {isArrow && (
           <StyledArrowBox>
-            <StyledArrow src={arrowLeft} onClick={moveLeft}></StyledArrow>
-            <StyledArrow src={arrowRight} onClick={moveRight}></StyledArrow>
+            <StyledArrow
+              alt="arrow-left"
+              src={arrowLeft}
+              onClick={handleMoveLeft}></StyledArrow>
+            <StyledArrow
+              alt="arrow-right"
+              src={arrowRight}
+              onClick={handleMoveRight}></StyledArrow>
           </StyledArrowBox>
         )}
       </StyledSlider>
@@ -104,11 +113,12 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
               key={image.id}
               className={`${image.id}`}
               onClick={(): void => {
-                moveCurrent(image.id)
+                handleMoveCurrent(image.id)
               }}></StyledDot>
           )
         })}
-        <StyledCurrentDot imageIndex={translateValue / 60}></StyledCurrentDot>
+        <StyledCurrentDot
+          imageIndex={translateValue / carouselSize}></StyledCurrentDot>
       </StyledDotBox>
     </StyledCarouselContainer>
   )

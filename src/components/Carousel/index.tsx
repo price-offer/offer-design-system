@@ -19,20 +19,20 @@ export interface CarouselProps {
 }
 
 const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
-  const carouselSize = 60
+  const carouselWidthSize = 60
   const arrowRight = ICON.CHEVRON_RIGHT_40
   const arrowLeft = ICON.CHEVRON_LEFT_40
   const [translateValue, setTranslateValue] = useState<number>(0)
-  const [mouseDownClientX, setMouseDownClientX] = useState<number>(0)
-  const [mouseUpClientX, setMouseUpClientX] = useState<number>(0)
+  const [startClientX, setStartClientX] = useState<number>(0)
+  const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
   const handleMoveCurrent = (imageIndex: number): void => {
-    setTranslateValue((imageIndex - 1) * carouselSize)
+    setTranslateValue((imageIndex - 1) * carouselWidthSize)
   }
   const handleMoveRight = (): void => {
-    if (translateValue !== carouselSize * (images.length - 1)) {
-      setTranslateValue(prev => prev + carouselSize)
+    if (translateValue !== carouselWidthSize * (images.length - 1)) {
+      setTranslateValue(prev => prev + carouselWidthSize)
     } else {
       setTranslateValue(0)
     }
@@ -40,35 +40,35 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
 
   const handleMoveLeft = (): void => {
     if (translateValue !== 0) {
-      setTranslateValue(prev => prev - carouselSize)
+      setTranslateValue(prev => prev - carouselWidthSize)
     } else {
-      setTranslateValue(carouselSize * (images.length - 1))
+      setTranslateValue(carouselWidthSize * (images.length - 1))
     }
   }
 
   const handleMouseDown = (e: { clientX: SetStateAction<number> }): void => {
-    setMouseDownClientX(e.clientX)
+    setStartClientX(e.clientX)
     setCursorOn(true)
   }
 
   const handleMouseUp = (e: { clientX: SetStateAction<number> }): void => {
-    setMouseUpClientX(e.clientX)
+    setEndClientX(e.clientX)
     setCursorOn(false)
   }
   const handleTouchStart: TouchEventHandler<HTMLDivElement> = e => {
-    setMouseUpClientX(e.touches[0].clientX)
+    setEndClientX(e.touches[0].clientX)
     setCursorOn(true)
   }
   const handleTouchStartEnd: TouchEventHandler<HTMLDivElement> = e => {
-    setMouseDownClientX(e.changedTouches[0].clientX)
+    setStartClientX(e.changedTouches[0].clientX)
     setCursorOn(false)
   }
 
   useEffect(() => {
-    const dragSpace = Math.abs(mouseDownClientX - mouseUpClientX)
-    const userSlideRight = mouseUpClientX < mouseDownClientX && dragSpace > 100
-    const userSlideLeft = mouseUpClientX > mouseDownClientX && dragSpace > 100
-    if (mouseDownClientX === 0) {
+    const dragSpace = Math.abs(startClientX - endClientX)
+    const userSlideRight = endClientX < startClientX && dragSpace > 100
+    const userSlideLeft = endClientX > startClientX && dragSpace > 100
+    if (startClientX === 0) {
       return
     }
     if (userSlideRight) {
@@ -76,7 +76,7 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
     } else if (userSlideLeft) {
       handleMoveLeft()
     }
-  }, [mouseUpClientX])
+  }, [endClientX])
 
   return (
     <StyledCarouselContainer>
@@ -118,7 +118,7 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
           )
         })}
         <StyledCurrentDot
-          imageIndex={translateValue / carouselSize}></StyledCurrentDot>
+          imageIndex={translateValue / carouselWidthSize}></StyledCurrentDot>
       </StyledDotBox>
     </StyledCarouselContainer>
   )

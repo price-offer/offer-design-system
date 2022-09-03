@@ -25,7 +25,6 @@ const StyledDividerWrapper = styled.div<StyledDividerProps>`
 const StyledDivider = styled.hr<DividerProps>`
   margin: 0;
   padding: 0;
-  border: none;
   width: 100%;
   display: ${({ orientation }): string =>
     orientation === 'horizontal' ? 'block' : 'inline'};
@@ -38,7 +37,7 @@ const StyledDivider = styled.hr<DividerProps>`
       case 'regular':
         return `${border.regular} solid ${colors.grayScale.gray10}`
       default:
-        return ''
+        return 'none'
     }
   }};
 `

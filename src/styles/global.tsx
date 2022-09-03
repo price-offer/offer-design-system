@@ -8,7 +8,7 @@ const globalStyle = css`
   }
 
   body {
-    font-family: Pretendard;
+    font-family: Pretendard regular;
   }
 `
 

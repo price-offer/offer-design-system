@@ -7,6 +7,10 @@ export interface CarouselProps {
   isArrow: boolean
 }
 
+interface SliderProps {
+  cursorOn: boolean
+}
+
 interface CurrentDotProps {
   imageIndex: number
 }
@@ -72,7 +76,7 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
   }, [endClientX])
 
   return (
-    <StyledCarouselContainer>
+    <StyledCarouselWrapper>
       <StyledSlider
         cursorOn={cursorOn}
         onMouseDown={handleMouseDown}
@@ -113,7 +117,7 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
         <StyledCurrentDot
           imageIndex={translateValue / carouselWidthSize}></StyledCurrentDot>
       </StyledDotBox>
-    </StyledCarouselContainer>
+    </StyledCarouselWrapper>
   )
 }
 
@@ -121,9 +125,11 @@ export default Carousel
 
 import styled from '@emotion/styled'
 
-interface SliderProps {
-  cursorOn: boolean
-}
+export const StyledCarouselWrapper = styled.div`
+  touch-action: none;
+  user-select: none;
+  position: relative;
+`
 export const StyledSlider = styled.div<SliderProps>`
   position: relative;
   max-width: 60vw;
@@ -172,11 +178,6 @@ export const StyledArrow = styled.img`
   &:hover {
     color: dodgerblue;
   }
-`
-export const StyledCarouselContainer = styled.div`
-  touch-action: none;
-  user-select: none;
-  position: relative;
 `
 
 export const StyledDotBox = styled.div`

@@ -53,6 +53,8 @@ const StyledBadge = styled.div<StyledBadgeProps>`
   padding: 2px 6px;
   text-align: center;
   font-feature-settings: normal;
+  ${({ theme }): string => theme.fonts.caption}
+  font-weight: 500;
   ${({ colorScheme, theme }): string =>
     applyColorScheme(colorScheme, theme.colors)};
 `

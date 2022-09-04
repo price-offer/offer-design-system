@@ -18,14 +18,14 @@ export const fonts: Fonts = {
   body01: {
     bold: 'font-size: 16px; font-weight: bold; line-height: 24px; letter-spacing: -0.6%;',
     medium:
-      'font-size: 16px; font-weight: medium; line-height: 24px; letter-spacing: -0.6%;',
+      'font-size: 16px; font-weight: 500; line-height: 24px; letter-spacing: -0.6%;',
     regular:
       'font-size: 16px; font-weight: regular; line-height: 24px; letter-spacing: -0.6%;'
   },
   body02: {
     bold: 'font-size: 14px; font-weight: bold; line-height: 24px; letter-spacing: -0.6%;',
     long: 'font-size: 14px; font-weight: regular; line-height: 26px; letter-spacing: -0.4%;',
-    medium: 'font-size: 14px; font-weight: medium; line-height: 20px;',
+    medium: 'font-size: 14px; font-weight: 500; line-height: 20px;',
     regular:
       'font-size: 14px; font-weight: regular; line-height: 14px; letter-spacing: -0.4%;'
   },
@@ -35,13 +35,13 @@ export const fonts: Fonts = {
     'font-size: 36px; font-weight: bold; line-height: 40px; letter-spacing: -0.6%;',
   display02: {
     bold: 'font-size: 28px; font-weight: bold; line-height: 28px;',
-    medium: 'font-size: 28px; font-weight: medium; line-height: 28px;'
+    medium: 'font-size: 28px; font-weight: 500; line-height: 28px;'
   },
   headline01: 'font-size: 24px; font-weight: bold; line-height: 32px;',
   headline02: 'font-size: 20px; font-weight: bold; line-height: 28px;',
   subtitle01: {
     bold: 'font-size: 18px; font-weight: bold; line-height: 22px; letter-spacing: -0.6%;',
     medium:
-      'font-size: 18px; font-weight: medium; line-height: 22px; letter-spacing: -0.4%;'
+      'font-size: 18px; font-weight: 500; line-height: 22px; letter-spacing: -0.4%;'
   }
 } as const

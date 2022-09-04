@@ -4,13 +4,13 @@ export const FontCSS = css`
   @font-face {
     font-family: 'Pretendard';
     font-style: normal;
-    font-weight: regular;
+    font-weight: normal;
     src: url('/fonts/Pretendard-Regular.woff') format('woff');
   }
   @font-face {
     font-family: 'Pretendard';
     font-style: normal;
-    font-weight: medium;
+    font-weight: 500;
     src: url('/fonts/Pretendard-Medium.woff') format('woff');
   }
   @font-face {

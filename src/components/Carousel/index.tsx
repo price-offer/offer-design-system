@@ -5,18 +5,41 @@ import { ICON } from '@constants/icons'
 export interface CarouselProps {
   images: { url: string; id: number }[]
   isArrow: boolean
+  size?: number
+  name: string
 }
 
 interface SliderProps {
   cursorOn: boolean
+  size: number
 }
 
-interface CurrentDotProps {
+interface CurrentIndicatorProps {
   imageIndex: number
 }
 
-const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
-  const carouselWidthSize = 60
+interface ImageBoxProps {
+  translateValue: number | null
+}
+
+interface ImageProps {
+  size: number
+}
+
+type HandleOffset = (navType: keyof typeof NAV_TYPE) => void
+const NAV_TYPE = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT'
+} as const
+
+const Carousel = ({
+  images,
+  isArrow,
+  size = 60,
+  name
+}: CarouselProps): ReactElement => {
+  const carouselWidthSize = size
+  const translateValueOfLastImage = carouselWidthSize * (images.length - 1)
   const arrowRight = ICON.CHEVRON_RIGHT_40
   const arrowLeft = ICON.CHEVRON_LEFT_40
   const [translateValue, setTranslateValue] = useState<number>(0)
@@ -24,22 +47,23 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
-  const handleMoveCurrent = (imageIndex: number): void => {
+  const handleIndicator = (imageIndex: number): void => {
     setTranslateValue((imageIndex - 1) * carouselWidthSize)
   }
-  const handleMoveRight = (): void => {
-    if (translateValue !== carouselWidthSize * (images.length - 1)) {
-      setTranslateValue(prev => prev + carouselWidthSize)
-    } else {
-      setTranslateValue(0)
-    }
+
+  const TRANSLATE_VALUE_OF_NAV_TYPE = {
+    LEFT: -carouselWidthSize,
+    RIGHT: carouselWidthSize
   }
 
-  const handleMoveLeft = (): void => {
-    if (translateValue !== 0) {
-      setTranslateValue(prev => prev - carouselWidthSize)
+  const handleOffset: HandleOffset = navType => {
+    const { LEFT } = NAV_TYPE
+    const endPoint = navType === LEFT ? 0 : translateValueOfLastImage
+    const prevTranslateValue = navType === LEFT ? translateValueOfLastImage : 0
+    if (translateValue === endPoint) {
+      setTranslateValue(prevTranslateValue)
     } else {
-      setTranslateValue(carouselWidthSize * (images.length - 1))
+      setTranslateValue(prev => prev + TRANSLATE_VALUE_OF_NAV_TYPE[navType])
     }
   }
 
@@ -69,9 +93,9 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
       return
     }
     if (userSlideRight) {
-      handleMoveRight()
+      handleOffset('RIGHT')
     } else if (userSlideLeft) {
-      handleMoveLeft()
+      handleOffset('LEFT')
     }
   }, [endClientX])
 
@@ -79,14 +103,20 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
     <StyledCarouselWrapper>
       <StyledSlider
         cursorOn={cursorOn}
+        size={carouselWidthSize}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
         <StyledImageBox translateValue={translateValue || null}>
-          {images.map((image, idx) => {
+          {images.map(image => {
             return (
-              <StyledImage key={image.id} alt={'image' + idx} src={image.url} />
+              <StyledImage
+                key={image.id}
+                alt={`${name}- ${image.id}`}
+                size={carouselWidthSize}
+                src={image.url}
+              />
             )
           })}
         </StyledImageBox>
@@ -95,28 +125,36 @@ const Carousel = ({ images, isArrow }: CarouselProps): ReactElement => {
             <StyledArrow
               alt="arrow-left"
               src={arrowLeft}
-              onClick={handleMoveLeft}></StyledArrow>
+              onClick={(): void => {
+                handleOffset('LEFT')
+              }}
+            />
             <StyledArrow
               alt="arrow-right"
               src={arrowRight}
-              onClick={handleMoveRight}></StyledArrow>
+              onClick={(): void => {
+                handleOffset('RIGHT')
+              }}
+            />
           </StyledArrowBox>
         )}
       </StyledSlider>
-      <StyledDotBox>
+      <StyledIndicatorBox>
         {images.map(image => {
           return (
-            <StyledDot
+            <StyledIndicator
               key={image.id}
-              className={`${image.id}`}
+              className={`${name}- ${image.id}`}
               onClick={(): void => {
-                handleMoveCurrent(image.id)
-              }}></StyledDot>
+                handleIndicator(image.id)
+              }}></StyledIndicator>
           )
         })}
-        <StyledCurrentDot
-          imageIndex={translateValue / carouselWidthSize}></StyledCurrentDot>
-      </StyledDotBox>
+        <StyledCurrentIndicator
+          imageIndex={
+            translateValue / carouselWidthSize
+          }></StyledCurrentIndicator>
+      </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )
 }
@@ -132,7 +170,7 @@ export const StyledCarouselWrapper = styled.div`
 `
 export const StyledSlider = styled.div<SliderProps>`
   position: relative;
-  max-width: 60vw;
+  max-width: ${({ size }): string => `${size}vw`};
   height: 500px;
   display: flex;
   overflow: hidden;
@@ -140,9 +178,6 @@ export const StyledSlider = styled.div<SliderProps>`
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
 `
 
-interface ImageBoxProps {
-  translateValue: number | null
-}
 export const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   transition: 1s;
@@ -150,8 +185,8 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
     `translateX(-${translateValue}vw)`};
 `
 
-export const StyledImage = styled.img`
-  width: 60vw;
+export const StyledImage = styled.img<ImageProps>`
+  width: ${({ size }): string => `${size}vw`};
   object-fit: cover;
   object-position: center center;
 `
@@ -180,7 +215,7 @@ export const StyledArrow = styled.img`
   }
 `
 
-export const StyledDotBox = styled.div`
+export const StyledIndicatorBox = styled.div`
   display: flex;
   gap: 5px;
   position: absolute;
@@ -190,7 +225,7 @@ export const StyledDotBox = styled.div`
   transform: translateX(-50%);
 `
 
-export const StyledDot = styled.div`
+export const StyledIndicator = styled.div`
   width: 10px;
   height: 10px;
   background-color: #e8e8ea;
@@ -200,7 +235,7 @@ export const StyledDot = styled.div`
   font-size: 20px;
 `
 
-export const StyledCurrentDot = styled.div<CurrentDotProps>`
+export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   width: 10px;
   height: 10px;
   background-color: #2f2e36;

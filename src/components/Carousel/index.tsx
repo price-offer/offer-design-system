@@ -1,6 +1,7 @@
 import type { ReactElement, SetStateAction, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import { ICON } from '@constants/icons'
+import styled from '@emotion/styled'
 
 export interface CarouselProps {
   images: { url: string; id: number }[]
@@ -24,6 +25,10 @@ interface ImageBoxProps {
 
 interface ImageProps {
   size: number
+}
+
+interface IndicatorBoxProps {
+  isArrow: boolean
 }
 
 type HandleOffset = (navType: keyof typeof NAV_TYPE) => void
@@ -93,9 +98,9 @@ const Carousel = ({
       return
     }
     if (userSlideRight) {
-      handleOffset('RIGHT')
+      handleOffset(NAV_TYPE.RIGHT)
     } else if (userSlideLeft) {
-      handleOffset('LEFT')
+      handleOffset(NAV_TYPE.LEFT)
     }
   }, [endClientX])
 
@@ -126,20 +131,20 @@ const Carousel = ({
               alt="arrow-left"
               src={arrowLeft}
               onClick={(): void => {
-                handleOffset('LEFT')
+                handleOffset(NAV_TYPE.LEFT)
               }}
             />
             <StyledArrow
               alt="arrow-right"
               src={arrowRight}
               onClick={(): void => {
-                handleOffset('RIGHT')
+                handleOffset(NAV_TYPE.RIGHT)
               }}
             />
           </StyledArrowBox>
         )}
       </StyledSlider>
-      <StyledIndicatorBox>
+      <StyledIndicatorBox isArrow={isArrow}>
         {images.map(image => {
           return (
             <StyledIndicator
@@ -147,21 +152,19 @@ const Carousel = ({
               className={`${name}- ${image.id}`}
               onClick={(): void => {
                 handleIndicator(image.id)
-              }}></StyledIndicator>
+              }}
+            />
           )
         })}
         <StyledCurrentIndicator
-          imageIndex={
-            translateValue / carouselWidthSize
-          }></StyledCurrentIndicator>
+          imageIndex={translateValue / carouselWidthSize}
+        />
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )
 }
 
 export default Carousel
-
-import styled from '@emotion/styled'
 
 export const StyledCarouselWrapper = styled.div`
   touch-action: none;
@@ -171,74 +174,104 @@ export const StyledCarouselWrapper = styled.div`
 export const StyledSlider = styled.div<SliderProps>`
   position: relative;
   max-width: ${({ size }): string => `${size}vw`};
-  height: 500px;
+  height: 400px;
   display: flex;
   overflow: hidden;
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
+  @media screen and (max-width: 768px) {
+    height: 400px;
+  }
+  @media screen and (max-width: 360px) {
+    height: 360px;
+  }
 `
 
 export const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
+  height: 440px;
   transition: 1s;
   transform: ${({ translateValue }): string =>
     `translateX(-${translateValue}vw)`};
+  @media screen and (max-width: 768px) {
+    height: 400px;
+  }
+  @media screen and (max-width: 360px) {
+    height: 360px;
+  }
 `
 
 export const StyledImage = styled.img<ImageProps>`
   width: ${({ size }): string => `${size}vw`};
-  object-fit: cover;
-  object-position: center center;
+  height: 440px;
+  object-fit: fill;
+  object-position: center;
+  @media screen and (max-width: 768px) {
+    height: 400px;
+  }
+  @media screen and (max-width: 360px) {
+    height: 360px;
+  }
 `
 
 export const StyledArrowBox = styled.div`
   position: absolute;
-  left: -20px;
   top: 0;
+  left: -20px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const StyledArrow = styled.img`
   width: 40px;
   height: 60px;
-  background-color: #ffffff;
-  color: white;
+  background-color: ${({ theme }): string => theme.colors.background.white};
+  color: ${({ theme }): string => theme.colors.background.white};
   font-size: 2rem;
   cursor: pointer;
-  &:hover {
-    color: dodgerblue;
-  }
 `
 
-export const StyledIndicatorBox = styled.div`
+export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   display: flex;
   gap: 5px;
   position: absolute;
+  bottom: -20px;
   left: 50%;
-  bottom: -30px;
   cursor: pointer;
   transform: translateX(-50%);
+  @media screen and (max-width: 768px) {
+    bottom: 27px;
+  }
 `
 
 export const StyledIndicator = styled.div`
   width: 10px;
   height: 10px;
-  background-color: #e8e8ea;
+  background-color: ${({ theme }): string => theme.colors.grayScale.gray10};
   border-radius: 100px;
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
+  @media screen and (max-width: 768px) {
+    width: 8px;
+    height: 8px;
+    background-color: ${({ theme }): string => theme.colors.background.white};
+    opacity: 0.5;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+  }
 `
 
 export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   width: 10px;
   height: 10px;
-  background-color: #2f2e36;
+  background-color: ${({ theme }): string => theme.colors.grayScale.gray90};
   position: absolute;
   left: 0;
   top: 50%;
@@ -249,4 +282,13 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   transform: ${({ imageIndex }): string =>
     `translate(${imageIndex * 18}px,-50%)`};
   transition: transform 0.5s;
+  @media screen and (max-width: 768px) {
+    width: 8px;
+    height: 8px;
+    background-color: ${({ theme }): string => theme.colors.background.white};
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    transform: ${({ imageIndex }): string =>
+      `translate(${imageIndex * 16}px,-50%)`};
+    transition: transform 0.5s;
+  }
 `

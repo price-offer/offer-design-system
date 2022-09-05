@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const Test = () => {
+import type { ReactElement } from 'react'
+
+const Test = (): ReactElement => {
   return <div>배포테스트용 컴포넌트입니둥~!!</div>
 }
 

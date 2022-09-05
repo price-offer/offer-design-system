@@ -30,5 +30,5 @@ NoArrow.args = {
   ],
   isArrow: false,
   name: 'products',
-  size: 60
+  size: 687
 }

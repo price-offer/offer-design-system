@@ -9,16 +9,15 @@ export default {
       control: { type: 'radio' },
       options: Object.values(BUTTON_STYLE_KEYS)
     },
+    children: {
+      control: { type: 'text' }
+    },
     iconUrl: {
       control: { type: 'text' }
     },
     size: {
       control: { type: 'radio' },
       options: ['large', 'medium', 'small']
-    },
-    type: {
-      control: { type: 'radio' },
-      option: ['button', 'submit', 'reset']
     }
   },
   component: Button,
@@ -34,26 +33,10 @@ Basic.args = {
   size: 'large'
 }
 
-export const Option = Template.bind({})
-Option.args = {
-  buttonStyle: 'solidDisabled',
-  children: 'CTA 버튼',
-  option: 'option',
-  size: 'small'
-}
-
 export const Icon = Template.bind({})
 Icon.args = {
   buttonStyle: 'ghost',
   children: 'CTA 버튼',
   iconUrl: ICON.HEART_24,
   size: 'medium'
-}
-export const IconOption = Template.bind({})
-IconOption.args = {
-  buttonStyle: 'outline',
-  children: 'CTA 버튼',
-  iconUrl: ICON.HEART_24,
-  option: 'option',
-  size: 'small'
 }

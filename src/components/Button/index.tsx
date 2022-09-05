@@ -1,6 +1,7 @@
-import type { MouseEventHandler, ReactElement } from 'react'
+import type { HTMLAttributes, ReactElement } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import styled from '@emotion/styled'
+import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
 const ICON_SIZE = {
@@ -18,39 +19,29 @@ export const BUTTON_STYLE_KEYS = {
 
 type ButtonStyle = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'large' | 'medium' | 'small'
-export interface ButtonProps {
+export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   buttonStyle?: ButtonStyle
   size?: ButtonSize
-  type?: 'button' | 'submit' | 'reset'
-  children: string
-  option?: string
   iconUrl?: string
-  onClick: MouseEventHandler<HTMLButtonElement>
+  children: string
 }
-type StyledButtonProps = Pick<ButtonProps, 'buttonStyle' | 'size'>
+type StyledButtonProps = StyledProps<ButtonProps, 'buttonStyle' | 'size'>
 
 export const Button = ({
-  size,
-  buttonStyle,
-  type = 'button',
-  children,
-  option,
+  size = 'medium',
+  buttonStyle = 'solidPrimary',
   iconUrl,
-  onClick
+  children,
+  ...props
 }: ButtonProps): ReactElement => {
   const iconSize = size === 'small' ? ICON_SIZE.SMALL : ICON_SIZE.LARGE
 
   return (
-    <StyledButton
-      buttonStyle={buttonStyle}
-      size={size}
-      type={type}
-      onClick={onClick}>
+    <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
       {iconUrl && (
         <img alt="icon" height={iconSize} src={iconUrl} width={iconSize} />
       )}
       {children}
-      {option && <StyledButtonOption>{option}</StyledButtonOption>}
     </StyledButton>
   )
 }
@@ -63,25 +54,17 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
 
   ${({ theme }): string => theme.fonts.body02.bold}
-  ${({ theme, size = 'medium', buttonStyle = 'solidPrimary' }): string =>
+  ${({ theme, size, buttonStyle }): string =>
     renderButtonSizeStyle(theme, size, buttonStyle)}
-  ${({ theme, buttonStyle = 'solidPrimary' }): string =>
+  ${({ theme, buttonStyle }): string =>
     renderButtonColor(theme, buttonStyle as ButtonStyle)}
 
   img {
     padding-right: 4px;
-    filter: ${({ theme, buttonStyle = 'solidPrimary' }): string =>
+    filter: ${({ theme, buttonStyle }): string =>
       hexToCSSFilter(renderFontColor(theme, buttonStyle)).filter};
   }
 `
-
-const StyledButtonOption = styled.span`
-  padding-left: 8px;
-  color: ${({ theme }): string => theme.colors.brand.primary};
-
-  ${({ theme }): string => theme.fonts.body02.medium}
-`
-
 const renderButtonSizeStyle = (
   theme: Theme,
   size: ButtonSize,

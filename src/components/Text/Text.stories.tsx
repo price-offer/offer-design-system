@@ -14,7 +14,7 @@ export default {
     }
   },
   component: Text,
-  title: 'Component/Text'
+  title: 'Components/Text'
 } as Meta<TextProps>
 
 const Template: Story<TextProps> = args => <Text {...args} />

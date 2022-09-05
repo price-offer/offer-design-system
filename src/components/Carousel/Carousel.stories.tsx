@@ -19,7 +19,7 @@ isArrow.args = {
   ],
   isArrow: true,
   name: 'products',
-  size: 60
+  size: 687
 }
 export const NoArrow = Template.bind({})
 

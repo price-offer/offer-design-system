@@ -2,6 +2,7 @@ import type { ReactElement, SetStateAction, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import { ICON } from '@constants/icons'
 import styled from '@emotion/styled'
+import useMediaQuery from 'hook/useMediaQuery'
 
 export interface CarouselProps {
   images: { url: string; id: number }[]
@@ -40,10 +41,12 @@ const NAV_TYPE = {
 const Carousel = ({
   images,
   isArrow,
-  size = 60,
+  size = 687,
   name
 }: CarouselProps): ReactElement => {
-  const carouselWidthSize = size
+  const desktop = useMediaQuery(`(min-width:769px)`)
+
+  const carouselWidthSize = desktop ? size : 100
   const translateValueOfLastImage = carouselWidthSize * (images.length - 1)
   const arrowRight = ICON.CHEVRON_RIGHT_40
   const arrowLeft = ICON.CHEVRON_LEFT_40
@@ -173,17 +176,21 @@ export const StyledCarouselWrapper = styled.div`
 `
 export const StyledSlider = styled.div<SliderProps>`
   position: relative;
-  max-width: ${({ size }): string => `${size}vw`};
+  max-width: ${({ size }): string => `${size}px`};
   height: 400px;
   display: flex;
   overflow: hidden;
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
   @media screen and (max-width: 768px) {
+    max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
+    right: 15px;
   }
   @media screen and (max-width: 360px) {
+    max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
+    right: 15px;
   }
 `
 
@@ -192,24 +199,30 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
   height: 440px;
   transition: 1s;
   transform: ${({ translateValue }): string =>
-    `translateX(-${translateValue}vw)`};
+    `translateX(-${translateValue}px)`};
   @media screen and (max-width: 768px) {
     height: 400px;
+    transform: ${({ translateValue }): string =>
+      `translateX(-${translateValue}vw)`};
   }
   @media screen and (max-width: 360px) {
     height: 360px;
+    transform: ${({ translateValue }): string =>
+      `translateX(-${translateValue}vw)`};
   }
 `
 
 export const StyledImage = styled.img<ImageProps>`
-  width: ${({ size }): string => `${size}vw`};
+  width: ${({ size }): string => `${size}px`};
   height: 440px;
   object-fit: fill;
   object-position: center;
   @media screen and (max-width: 768px) {
+    width: ${({ size }): string => `${size}vw`};
     height: 400px;
   }
   @media screen and (max-width: 360px) {
+    width: ${({ size }): string => `${size}vw`};
     height: 360px;
   }
 `

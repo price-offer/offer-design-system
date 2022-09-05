@@ -52,20 +52,22 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   border: none;
   cursor: pointer;
+  color: ${({ theme, buttonStyle }): string =>
+    applyFontColor(theme, buttonStyle)};
 
-  ${({ theme }): string => theme.fonts.body02.bold}
+  ${({ theme }): string => theme.fonts.body02B}
   ${({ theme, size, buttonStyle }): string =>
-    renderButtonSizeStyle(theme, size, buttonStyle)}
+    applyButtonSizeStyle(theme, size, buttonStyle)}
   ${({ theme, buttonStyle }): string =>
-    renderButtonColor(theme, buttonStyle as ButtonStyle)}
+    applyButtonColor(theme, buttonStyle as ButtonStyle)}
 
   img {
     padding-right: 4px;
     filter: ${({ theme, buttonStyle }): string =>
-      hexToCSSFilter(renderFontColor(theme, buttonStyle)).filter};
+      hexToCSSFilter(applyFontColor(theme, buttonStyle)).filter};
   }
 `
-const renderButtonSizeStyle = (
+const applyButtonSizeStyle = (
   theme: Theme,
   size: ButtonSize,
   buttonStyle: ButtonStyle
@@ -88,48 +90,30 @@ const renderButtonSizeStyle = (
   }
 }
 
-const renderButtonColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
+const applyButtonColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
   const { grayScale } = theme.colors
 
   switch (buttonStyle) {
     case 'solidDisabled':
-      return `
-                background-color: ${grayScale.gray20};
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: ${grayScale.gray20};`
     case 'solidPrimary':
-      return `
-                background-color: ${grayScale.black};
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: ${grayScale.black};`
     case 'solidSub':
-      return `
-                background-color: ${grayScale.gray05};
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: ${grayScale.gray05};`
     case 'outline':
-      return `
-                background-color: ${grayScale.white};
-                border: 1px solid ${grayScale.gray20};
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: ${grayScale.white};
+              border: 1px solid ${grayScale.gray20};`
     case 'outlineDisabled':
-      return `
-                background-color: ${grayScale.white};
-                border: 1px solid ${grayScale.gray20};
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: ${grayScale.white};
+              border: 1px solid ${grayScale.gray20};`
     case 'ghost':
-      return `
-                background-color: transparent;
-                color: ${renderFontColor(theme, buttonStyle)};
-              `
+      return `background-color: transparent;`
     default:
       return ``
   }
 }
 
-const renderFontColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
+const applyFontColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
   const { grayScale } = theme.colors
 
   switch (buttonStyle) {

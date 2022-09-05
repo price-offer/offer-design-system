@@ -1,7 +1,7 @@
-import type { ReactElement } from 'react'
+import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 
-export interface DividerProps {
+export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
   orientation?: 'vertical' | 'horizontal'
   size?: 'bold' | 'regular'
 }
@@ -9,10 +9,11 @@ type StyledDividerProps = Pick<DividerProps, 'orientation'>
 
 export const Divider = ({
   orientation = 'horizontal',
-  size = 'regular'
+  size = 'regular',
+  ...props
 }: DividerProps): ReactElement => {
   return (
-    <StyledDividerWrapper orientation={orientation}>
+    <StyledDividerWrapper orientation={orientation} {...props}>
       <StyledDivider orientation={orientation} size={size} />
     </StyledDividerWrapper>
   )

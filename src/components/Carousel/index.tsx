@@ -267,8 +267,6 @@ export const StyledArrowBox = styled.div`
 `
 
 export const StyledRightArrow = styled.img<ArrowProps>`
-  display: ${({ translateValue }): string =>
-    translateValue === 0 ? 'none;' : ''};
   width: 40px;
   height: 60px;
   background-color: ${({ theme }): string => theme.colors.background.white};
@@ -278,8 +276,6 @@ export const StyledRightArrow = styled.img<ArrowProps>`
 `
 
 export const StyledLeftArrow = styled.img<ArrowProps>`
-  display: ${({ translateValue }): string =>
-    translateValue === undefined ? 'none;' : ''};
   width: 40px;
   height: 60px;
   background-color: ${({ theme }): string => theme.colors.background.white};

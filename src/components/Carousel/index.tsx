@@ -41,7 +41,7 @@ interface CurrentIndicatorProps {
 }
 
 interface ImageBoxProps {
-  translateValue: number | null
+  currentImageValue: number
 }
 
 interface ImageProps {
@@ -49,7 +49,7 @@ interface ImageProps {
 }
 
 interface ArrowProps {
-  translateValue: number | null
+  currentImageValue: number
 }
 
 interface IndicatorBoxProps {
@@ -62,6 +62,9 @@ const NAV_TYPE = {
   RIGHT: 'RIGHT'
 } as const
 
+const ARROW_RIGHT = ICON.CHEVRON_RIGHT_40
+const ARROW_LEFT = ICON.CHEVRON_LEFT_40
+
 const Carousel = ({
   images,
   isArrow,
@@ -69,18 +72,15 @@ const Carousel = ({
   name
 }: CarouselProps): ReactElement => {
   const desktop = useMediaQuery(`(min-width:1023px)`)
-
   const carouselWidthSize = desktop ? size : 100
-  const translateValueOfLastImage = carouselWidthSize * (images.length - 1)
-  const arrowRight = ICON.CHEVRON_RIGHT_40
-  const arrowLeft = ICON.CHEVRON_LEFT_40
-  const [translateValue, setTranslateValue] = useState<number>(0)
+  const lastImageValue = carouselWidthSize * (images.length - 1)
+  const [currentImageValue, setCurrentImageValue] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
   const handleIndicator = (imageIndex: number): void => {
-    setTranslateValue((imageIndex - 1) * carouselWidthSize)
+    setCurrentImageValue((imageIndex - 1) * carouselWidthSize)
   }
 
   const TRANSLATE_VALUE_OF_NAV_TYPE = {
@@ -90,12 +90,12 @@ const Carousel = ({
 
   const handleOffset: HandleOffset = navType => {
     const { LEFT } = NAV_TYPE
-    const endPoint = navType === LEFT ? 0 : translateValueOfLastImage
-    const prevTranslateValue = navType === LEFT ? translateValueOfLastImage : 0
-    if (translateValue === endPoint) {
-      setTranslateValue(prevTranslateValue)
+    const endPoint = navType === LEFT ? 0 : lastImageValue
+    const prevTranslateValue = navType === LEFT ? lastImageValue : 0
+    if (currentImageValue === endPoint) {
+      setCurrentImageValue(prevTranslateValue)
     } else {
-      setTranslateValue(prev => prev + TRANSLATE_VALUE_OF_NAV_TYPE[navType])
+      setCurrentImageValue(prev => prev + TRANSLATE_VALUE_OF_NAV_TYPE[navType])
     }
   }
 
@@ -109,9 +109,12 @@ const Carousel = ({
   }
 
   useEffect(() => {
+    const userDragLength = 100
     const dragSpace = Math.abs(startClientX - endClientX)
-    const userSlideRight = endClientX > startClientX && dragSpace > 200
-    const userSlideLeft = endClientX < startClientX && dragSpace > 200
+    const userSlideRight =
+      endClientX > startClientX && dragSpace > userDragLength
+    const userSlideLeft =
+      endClientX < startClientX && dragSpace > userDragLength
     if (startClientX === 0) {
       return
     }
@@ -129,7 +132,7 @@ const Carousel = ({
         size={carouselWidthSize}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
-        <StyledImageBox translateValue={translateValue || null}>
+        <StyledImageBox currentImageValue={currentImageValue}>
           {images.map(image => {
             return (
               <StyledImage
@@ -143,25 +146,25 @@ const Carousel = ({
         </StyledImageBox>
         {isArrow && (
           <StyledArrowBox>
-            {translateValue === 0 ? (
+            {currentImageValue === 0 ? (
               <div />
             ) : (
               <StyledRightArrow
                 alt="arrow-left"
-                src={arrowLeft}
-                translateValue={translateValue}
+                currentImageValue={currentImageValue}
+                src={ARROW_LEFT}
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.LEFT)
                 }}
               />
             )}
-            {translateValue === translateValueOfLastImage ? (
+            {currentImageValue === lastImageValue ? (
               <div />
             ) : (
               <StyledLeftArrow
                 alt="arrow-right"
-                src={arrowRight}
-                translateValue={translateValue}
+                currentImageValue={currentImageValue}
+                src={ARROW_RIGHT}
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.RIGHT)
                 }}
@@ -183,7 +186,7 @@ const Carousel = ({
           )
         })}
         <StyledCurrentIndicator
-          imageIndex={translateValue / carouselWidthSize}
+          imageIndex={currentImageValue / carouselWidthSize}
         />
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
@@ -205,15 +208,15 @@ export const StyledSlider = styled.div<SliderProps>`
   overflow: hidden;
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
-    right: 15px;
+    right: 20px;
   }
-  @media screen and (max-width: 699px) {
+  ${getMediaQuery('MOBILE')} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
-    right: 15px;
+    right: 20px;
   }
 `
 
@@ -221,18 +224,18 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   height: 440px;
   transition: 0.5s;
-  transform: ${({ translateValue }): string =>
-    `translateX(-${translateValue}px)`};
+  transform: ${({ currentImageValue }): string =>
+    `translateX(-${currentImageValue}px)`};
 
   ${getMediaQuery('TABLET')} {
     height: 400px;
-    transform: ${({ translateValue }): string =>
-      `translateX(-${translateValue}vw)`};
+    transform: ${({ currentImageValue }): string =>
+      `translateX(-${currentImageValue}vw)`};
   }
   ${getMediaQuery('MOBILE')} {
     height: 360px;
-    transform: ${({ translateValue }): string =>
-      `translateX(-${translateValue}vw)`};
+    transform: ${({ currentImageValue }): string =>
+      `translateX(-${currentImageValue}vw)`};
   }
 `
 

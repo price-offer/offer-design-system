@@ -15,7 +15,8 @@ export const isArrow = Template.bind({})
 isArrow.args = {
   images: [
     { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` }
+    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
+    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
   ],
   isArrow: true,
   name: 'products',
@@ -26,7 +27,10 @@ export const NoArrow = Template.bind({})
 NoArrow.args = {
   images: [
     { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` }
+    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
+    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` },
+    { id: 4, url: `${IMAGE.CATEGORY_CAR}` },
+    { id: 5, url: `${IMAGE.CATEGORY_BOOK}` }
   ],
   isArrow: false,
   name: 'products',

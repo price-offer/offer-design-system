@@ -1,8 +1,28 @@
-import type { ReactElement, SetStateAction, TouchEventHandler } from 'react'
+import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import { ICON } from '@constants/icons'
 import styled from '@emotion/styled'
 import useMediaQuery from 'hook/useMediaQuery'
+
+type GetMediaQuery = (breakPoint: keyof typeof BREAKE_POINTS) => string
+const BREAKE_POINTS = {
+  DESKTOP: 1920,
+  MOBILE: 699,
+  TABLET: 1023
+} as const
+
+const getMediaQuery: GetMediaQuery = breakpoint => {
+  switch (breakpoint) {
+    case 'DESKTOP':
+      return `@media (max-width: ${BREAKE_POINTS.DESKTOP}px)`
+    case 'MOBILE':
+      return `@media (max-width: ${BREAKE_POINTS.MOBILE}px)`
+    case 'TABLET':
+      return `@media (max-width: ${BREAKE_POINTS.TABLET}px)`
+    default:
+      return ``
+  }
+}
 
 export interface CarouselProps {
   images: { url: string; id: number }[]
@@ -28,6 +48,10 @@ interface ImageProps {
   size: number
 }
 
+interface ArrowProps {
+  translateValue: number | null
+}
+
 interface IndicatorBoxProps {
   isArrow: boolean
 }
@@ -44,7 +68,7 @@ const Carousel = ({
   size = 687,
   name
 }: CarouselProps): ReactElement => {
-  const desktop = useMediaQuery(`(min-width:769px)`)
+  const desktop = useMediaQuery(`(min-width:1023px)`)
 
   const carouselWidthSize = desktop ? size : 100
   const translateValueOfLastImage = carouselWidthSize * (images.length - 1)
@@ -75,15 +99,6 @@ const Carousel = ({
     }
   }
 
-  const handleMouseDown = (e: { clientX: SetStateAction<number> }): void => {
-    setStartClientX(e.clientX)
-    setCursorOn(true)
-  }
-
-  const handleMouseUp = (e: { clientX: SetStateAction<number> }): void => {
-    setEndClientX(e.clientX)
-    setCursorOn(false)
-  }
   const handleTouchStart: TouchEventHandler<HTMLDivElement> = e => {
     setEndClientX(e.touches[0].clientX)
     setCursorOn(true)
@@ -95,8 +110,8 @@ const Carousel = ({
 
   useEffect(() => {
     const dragSpace = Math.abs(startClientX - endClientX)
-    const userSlideRight = endClientX < startClientX && dragSpace > 100
-    const userSlideLeft = endClientX > startClientX && dragSpace > 100
+    const userSlideRight = endClientX > startClientX && dragSpace > 200
+    const userSlideLeft = endClientX < startClientX && dragSpace > 200
     if (startClientX === 0) {
       return
     }
@@ -112,8 +127,6 @@ const Carousel = ({
       <StyledSlider
         cursorOn={cursorOn}
         size={carouselWidthSize}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
         <StyledImageBox translateValue={translateValue || null}>
@@ -130,20 +143,30 @@ const Carousel = ({
         </StyledImageBox>
         {isArrow && (
           <StyledArrowBox>
-            <StyledArrow
-              alt="arrow-left"
-              src={arrowLeft}
-              onClick={(): void => {
-                handleOffset(NAV_TYPE.LEFT)
-              }}
-            />
-            <StyledArrow
-              alt="arrow-right"
-              src={arrowRight}
-              onClick={(): void => {
-                handleOffset(NAV_TYPE.RIGHT)
-              }}
-            />
+            {translateValue === 0 ? (
+              <div />
+            ) : (
+              <StyledRightArrow
+                alt="arrow-left"
+                src={arrowLeft}
+                translateValue={translateValue}
+                onClick={(): void => {
+                  handleOffset(NAV_TYPE.LEFT)
+                }}
+              />
+            )}
+            {translateValue === translateValueOfLastImage ? (
+              <div />
+            ) : (
+              <StyledLeftArrow
+                alt="arrow-right"
+                src={arrowRight}
+                translateValue={translateValue}
+                onClick={(): void => {
+                  handleOffset(NAV_TYPE.RIGHT)
+                }}
+              />
+            )}
           </StyledArrowBox>
         )}
       </StyledSlider>
@@ -182,12 +205,12 @@ export const StyledSlider = styled.div<SliderProps>`
   overflow: hidden;
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
     right: 15px;
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 699px) {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
     right: 15px;
@@ -197,15 +220,21 @@ export const StyledSlider = styled.div<SliderProps>`
 export const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   height: 440px;
-  transition: 1s;
+  transition: 0.5s;
   transform: ${({ translateValue }): string =>
     `translateX(-${translateValue}px)`};
-  @media screen and (max-width: 768px) {
+
+  ${getMediaQuery('TABLET')} {
     height: 400px;
     transform: ${({ translateValue }): string =>
       `translateX(-${translateValue}vw)`};
   }
-  @media screen and (max-width: 360px) {
+  /* @media screen and (max-width: 768px) {
+    height: 400px;
+    transform: ${({ translateValue }): string =>
+    `translateX(-${translateValue}vw)`};
+  } */
+  @media screen and (max-width: 699px) {
     height: 360px;
     transform: ${({ translateValue }): string =>
       `translateX(-${translateValue}vw)`};
@@ -215,13 +244,13 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
 export const StyledImage = styled.img<ImageProps>`
   width: ${({ size }): string => `${size}px`};
   height: 440px;
-  object-fit: fill;
+  object-fit: cover;
   object-position: center;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     width: ${({ size }): string => `${size}vw`};
     height: 400px;
   }
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 699px) {
     width: ${({ size }): string => `${size}vw`};
     height: 360px;
   }
@@ -237,12 +266,25 @@ export const StyledArrowBox = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     display: none;
   }
 `
 
-export const StyledArrow = styled.img`
+export const StyledRightArrow = styled.img<ArrowProps>`
+  display: ${({ translateValue }): string =>
+    translateValue === 0 ? 'none;' : ''};
+  width: 40px;
+  height: 60px;
+  background-color: ${({ theme }): string => theme.colors.background.white};
+  color: ${({ theme }): string => theme.colors.background.white};
+  font-size: 2rem;
+  cursor: pointer;
+`
+
+export const StyledLeftArrow = styled.img<ArrowProps>`
+  display: ${({ translateValue }): string =>
+    translateValue === undefined ? 'none;' : ''};
   width: 40px;
   height: 60px;
   background-color: ${({ theme }): string => theme.colors.background.white};
@@ -259,7 +301,7 @@ export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     bottom: 27px;
   }
 `
@@ -272,7 +314,7 @@ export const StyledIndicator = styled.div`
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
@@ -293,15 +335,15 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   border-radius: 100px;
   cursor: pointer;
   transform: ${({ imageIndex }): string =>
-    `translate(${imageIndex * 18}px,-50%)`};
-  transition: transform 0.5s;
-  @media screen and (max-width: 768px) {
+    `translate(${imageIndex * 17}px,-50%)`};
+  transition: transform 0.2s;
+  @media screen and (max-width: 1023px) {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     transform: ${({ imageIndex }): string =>
-      `translate(${imageIndex * 16}px,-50%)`};
-    transition: transform 0.5s;
+      `translate(${imageIndex * 15}px,-50%)`};
+    transition: transform 0.2s;
   }
 `

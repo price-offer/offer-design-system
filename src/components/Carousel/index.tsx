@@ -229,12 +229,7 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
     transform: ${({ translateValue }): string =>
       `translateX(-${translateValue}vw)`};
   }
-  /* @media screen and (max-width: 768px) {
-    height: 400px;
-    transform: ${({ translateValue }): string =>
-    `translateX(-${translateValue}vw)`};
-  } */
-  @media screen and (max-width: 699px) {
+  ${getMediaQuery('MOBILE')} {
     height: 360px;
     transform: ${({ translateValue }): string =>
       `translateX(-${translateValue}vw)`};
@@ -246,11 +241,11 @@ export const StyledImage = styled.img<ImageProps>`
   height: 440px;
   object-fit: cover;
   object-position: center;
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     width: ${({ size }): string => `${size}vw`};
     height: 400px;
   }
-  @media screen and (max-width: 699px) {
+  ${getMediaQuery('MOBILE')} {
     width: ${({ size }): string => `${size}vw`};
     height: 360px;
   }
@@ -266,7 +261,7 @@ export const StyledArrowBox = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     display: none;
   }
 `
@@ -301,7 +296,7 @@ export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     bottom: 27px;
   }
 `
@@ -314,7 +309,7 @@ export const StyledIndicator = styled.div`
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
@@ -337,7 +332,7 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   transform: ${({ imageIndex }): string =>
     `translate(${imageIndex * 17}px,-50%)`};
   transition: transform 0.2s;
-  @media screen and (max-width: 1023px) {
+  ${getMediaQuery('TABLET')} {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};

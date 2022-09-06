@@ -28,9 +28,7 @@ NoArrow.args = {
   images: [
     { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
     { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
-    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` },
-    { id: 4, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 5, url: `${IMAGE.CATEGORY_BOOK}` }
+    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
   ],
   isArrow: false,
   name: 'products',

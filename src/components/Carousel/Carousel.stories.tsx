@@ -8,15 +8,17 @@ export default {
   component: Carousel,
   title: 'Component/Carousel'
 } as Meta<CarouselProps>
+const images = [
+  { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
+  { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
+  { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
+]
 
 const Template: Story<CarouselProps> = args => <Carousel {...args} />
 
 export const isArrow = Template.bind({})
 isArrow.args = {
-  images: [
-    { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` }
-  ],
+  images,
   isArrow: true,
   name: 'products',
   size: 687
@@ -24,11 +26,7 @@ isArrow.args = {
 export const NoArrow = Template.bind({})
 
 NoArrow.args = {
-  images: [
-    { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
-    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
-  ],
+  images,
   isArrow: false,
   name: 'products',
   size: 687

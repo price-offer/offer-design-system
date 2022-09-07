@@ -15,8 +15,7 @@ export const isArrow = Template.bind({})
 isArrow.args = {
   images: [
     { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
-    { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
+    { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` }
   ],
   isArrow: true,
   name: 'products',

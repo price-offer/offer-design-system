@@ -4,10 +4,6 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
-const ICON_SIZE = {
-  LARGE: 24,
-  SMALL: 16
-}
 export const BUTTON_STYLE_KEYS = {
   GHOST: 'ghost',
   OUTLINE: 'outline',
@@ -16,6 +12,7 @@ export const BUTTON_STYLE_KEYS = {
   SOLID_PRIMARY: 'solidPrimary',
   SOLID_SUB: 'solidSub'
 }
+const ICON_SIZE = 24
 
 type ButtonStyle = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'large' | 'medium' | 'small'
@@ -34,12 +31,12 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps): ReactElement => {
-  const iconSize = size === 'small' ? ICON_SIZE.SMALL : ICON_SIZE.LARGE
+  const isSmallSize = size === 'small'
 
   return (
     <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
-      {iconUrl && (
-        <img alt="icon" height={iconSize} src={iconUrl} width={iconSize} />
+      {!isSmallSize && iconUrl && (
+        <img alt="icon" height={ICON_SIZE} src={iconUrl} width={ICON_SIZE} />
       )}
       {children}
     </StyledButton>
@@ -62,7 +59,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     applyButtonColor(theme, buttonStyle as ButtonStyle)}
 
   img {
-    padding-right: 4px;
+    margin-right: 4px;
     filter: ${({ theme, buttonStyle }): string =>
       hexToCSSFilter(applyFontColor(theme, buttonStyle)).filter};
   }
@@ -84,6 +81,8 @@ const applyButtonSizeStyle = (
               };`
     case 'small':
       return `display: inline-flex;
+              height: 32px;
+              padding: 4px 8px;
               border-radius: ${theme.radius.round4};`
     default:
       return ``

@@ -8,6 +8,10 @@ export default {
     color: {
       control: { type: 'color' }
     },
+    tag: {
+      controle: { type: 'radio' },
+      options: ['p', 'span']
+    },
     textStyle: {
       control: { type: 'radio' },
       options: [...Object.keys(fonts)]

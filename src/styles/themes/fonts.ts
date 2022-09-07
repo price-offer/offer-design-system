@@ -1,6 +1,6 @@
 import type { ThemeOption } from '@types'
 
-type FontStyleKeys = keyof typeof fonts
+export type FontStyleKeys = keyof typeof fonts
 type FontStyleValues = typeof fonts[FontStyleKeys]
 
 export type Fonts = ThemeOption<FontStyleKeys, FontStyleValues>

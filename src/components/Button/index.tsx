@@ -13,13 +13,12 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children: string
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'buttonStyle' | 'size'>
-interface ApplyButtonColorProps {
-  theme: Theme
-  buttonStyle: ButtonStyle
-}
-interface ApplyButtonSizeStyleProps extends ApplyButtonColorProps {
+type ApplyButtonColor = (theme: Theme, buttnStyle: ButtonStyle) => string
+type ApplyButtonSizeStyle = (
+  theme: Theme,
+  buttnStyle: ButtonStyle,
   size: ButtonSize
-}
+) => string
 
 const ICON_SIZE = 24
 export const BUTTON_STYLE_KEYS = {
@@ -66,25 +65,24 @@ const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   cursor: pointer;
   color: ${({ theme, buttonStyle }): string =>
-    applyButtonFontColor({ buttonStyle, theme })};
+    applyButtonFontColor(theme, buttonStyle)};
 
   ${({ theme }): string => theme.fonts.body02B}
   ${({ theme, size, buttonStyle }): string =>
-    applyButtonSizeStyle({ buttonStyle, size, theme })}
-  ${({ theme, buttonStyle }): string =>
-    applyButtonColor({ buttonStyle, theme })}
+    applyButtonSizeStyle(theme, buttonStyle, size)}
+  ${({ theme, buttonStyle }): string => applyButtonColor(theme, buttonStyle)}
 
   img {
     margin-right: 4px;
     filter: ${({ theme, buttonStyle }): string =>
-      hexToCSSFilter(applyButtonFontColor({ buttonStyle, theme })).filter};
+      hexToCSSFilter(applyButtonFontColor(theme, buttonStyle)).filter};
   }
 `
-const applyButtonSizeStyle = ({
+const applyButtonSizeStyle: ApplyButtonSizeStyle = (
   theme,
-  size,
-  buttonStyle
-}: ApplyButtonSizeStyleProps): string => {
+  buttonStyle,
+  size
+) => {
   const { round100, round4 } = theme.radius
 
   switch (size) {
@@ -107,10 +105,7 @@ const applyButtonSizeStyle = ({
   }
 }
 
-const applyButtonColor = ({
-  theme,
-  buttonStyle
-}: ApplyButtonColorProps): string => {
+const applyButtonColor: ApplyButtonColor = (theme, buttonStyle) => {
   const { gray20, black, gray05, white } = theme.colors.grayScale
   const {
     SOLID_DISABLED,
@@ -141,8 +136,5 @@ const applyButtonColor = ({
   }
 }
 
-const applyButtonFontColor = ({
-  theme,
-  buttonStyle
-}: ApplyButtonColorProps): string =>
+const applyButtonFontColor: ApplyButtonColor = (theme, buttonStyle) =>
   theme.colors.grayScale[FONT_COLOR[buttonStyle]]

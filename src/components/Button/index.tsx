@@ -4,18 +4,8 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
-export const BUTTON_STYLE_KEYS = {
-  GHOST: 'ghost',
-  OUTLINE: 'outline',
-  OUTLINE_DISABLED: 'outlineDisabled',
-  SOLID_DISABLED: 'solidDisabled',
-  SOLID_PRIMARY: 'solidPrimary',
-  SOLID_SUB: 'solidSub'
-}
-const ICON_SIZE = 24
-
 type ButtonStyle = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
-type ButtonSize = 'large' | 'medium' | 'small'
+type ButtonSize = 'small' | 'medium' | 'large'
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   buttonStyle?: ButtonStyle
   size?: ButtonSize
@@ -23,6 +13,31 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children: string
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'buttonStyle' | 'size'>
+interface ApplyButtonColorProps {
+  theme: Theme
+  buttonStyle: ButtonStyle
+}
+interface ApplyButtonSizeStyleProps extends ApplyButtonColorProps {
+  size: ButtonSize
+}
+
+const ICON_SIZE = 24
+export const BUTTON_STYLE_KEYS = {
+  GHOST: 'ghost',
+  OUTLINE: 'outline',
+  OUTLINE_DISABLED: 'outlineDisabled',
+  SOLID_DISABLED: 'solidDisabled',
+  SOLID_PRIMARY: 'solidPrimary',
+  SOLID_SUB: 'solidSub'
+} as const
+const FONT_COLOR = {
+  ghost: 'gray50',
+  outline: 'gray90',
+  outlineDisabled: 'gray30',
+  solidDisabled: 'gray30',
+  solidPrimary: 'white',
+  solidSub: 'gray90'
+} as const
 
 export const Button = ({
   size = 'medium',
@@ -32,10 +47,11 @@ export const Button = ({
   ...props
 }: ButtonProps): ReactElement => {
   const isSmallSize = size === 'small'
+  const isShowIcon = !isSmallSize && iconUrl
 
   return (
     <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
-      {!isSmallSize && iconUrl && (
+      {isShowIcon && (
         <img alt="icon" height={ICON_SIZE} src={iconUrl} width={ICON_SIZE} />
       )}
       {children}
@@ -50,25 +66,27 @@ const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   cursor: pointer;
   color: ${({ theme, buttonStyle }): string =>
-    applyFontColor(theme, buttonStyle)};
+    applyButtonFontColor({ buttonStyle, theme })};
 
   ${({ theme }): string => theme.fonts.body02B}
   ${({ theme, size, buttonStyle }): string =>
-    applyButtonSizeStyle(theme, size, buttonStyle)}
+    applyButtonSizeStyle({ buttonStyle, size, theme })}
   ${({ theme, buttonStyle }): string =>
-    applyButtonColor(theme, buttonStyle as ButtonStyle)}
+    applyButtonColor({ buttonStyle, theme })}
 
   img {
     margin-right: 4px;
     filter: ${({ theme, buttonStyle }): string =>
-      hexToCSSFilter(applyFontColor(theme, buttonStyle)).filter};
+      hexToCSSFilter(applyButtonFontColor({ buttonStyle, theme })).filter};
   }
 `
-const applyButtonSizeStyle = (
-  theme: Theme,
-  size: ButtonSize,
-  buttonStyle: ButtonStyle
-): string => {
+const applyButtonSizeStyle = ({
+  theme,
+  size,
+  buttonStyle
+}: ApplyButtonSizeStyleProps): string => {
+  const { round100, round4 } = theme.radius
+
   switch (size) {
     case 'large':
       return `width: 370px;
@@ -77,58 +95,54 @@ const applyButtonSizeStyle = (
       return `width: 370px;
               height: 48px;
               border-radius: ${
-                buttonStyle.indexOf('outline') >= 0 && theme.radius.round100
+                buttonStyle.indexOf('outline') >= 0 && round100
               };`
     case 'small':
       return `display: inline-flex;
               height: 32px;
               padding: 4px 8px;
-              border-radius: ${theme.radius.round4};`
+              border-radius: ${round4};`
     default:
       return ``
   }
 }
 
-const applyButtonColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
-  const { grayScale } = theme.colors
+const applyButtonColor = ({
+  theme,
+  buttonStyle
+}: ApplyButtonColorProps): string => {
+  const { gray20, black, gray05, white } = theme.colors.grayScale
+  const {
+    SOLID_DISABLED,
+    SOLID_PRIMARY,
+    SOLID_SUB,
+    OUTLINE,
+    OUTLINE_DISABLED,
+    GHOST
+  } = BUTTON_STYLE_KEYS
 
   switch (buttonStyle) {
-    case 'solidDisabled':
-      return `background-color: ${grayScale.gray20};`
-    case 'solidPrimary':
-      return `background-color: ${grayScale.black};`
-    case 'solidSub':
-      return `background-color: ${grayScale.gray05};`
-    case 'outline':
-      return `background-color: ${grayScale.white};
-              border: 1px solid ${grayScale.gray20};`
-    case 'outlineDisabled':
-      return `background-color: ${grayScale.white};
-              border: 1px solid ${grayScale.gray20};`
-    case 'ghost':
+    case SOLID_DISABLED:
+      return `background-color: ${gray20};`
+    case SOLID_PRIMARY:
+      return `background-color: ${black};`
+    case SOLID_SUB:
+      return `background-color: ${gray05};`
+    case OUTLINE:
+      return `background-color: ${white};
+              border: 1px solid ${gray20};`
+    case OUTLINE_DISABLED:
+      return `background-color: ${white};
+              border: 1px solid ${gray20};`
+    case GHOST:
       return `background-color: transparent;`
     default:
       return ``
   }
 }
 
-const applyFontColor = (theme: Theme, buttonStyle: ButtonStyle): string => {
-  const { grayScale } = theme.colors
-
-  switch (buttonStyle) {
-    case 'solidDisabled':
-      return grayScale.white
-    case 'solidPrimary':
-      return grayScale.white
-    case 'solidSub':
-      return grayScale.gray90
-    case 'outline':
-      return grayScale.gray90
-    case 'outlineDisabled':
-      return grayScale.gray30
-    case 'ghost':
-      return grayScale.gray50
-    default:
-      return ``
-  }
-}
+const applyButtonFontColor = ({
+  theme,
+  buttonStyle
+}: ApplyButtonColorProps): string =>
+  theme.colors.grayScale[FONT_COLOR[buttonStyle]]

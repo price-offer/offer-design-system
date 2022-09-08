@@ -2,27 +2,7 @@ import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import { ICON } from '@constants/icons'
 import styled from '@emotion/styled'
-import useMediaQuery from 'hook/useMediaQuery'
-
-type GetMediaQuery = (breakPoint: keyof typeof BREAKE_POINTS) => string
-const BREAKE_POINTS = {
-  DESKTOP: 1920,
-  MOBILE: 699,
-  TABLET: 1023
-} as const
-
-const getMediaQuery: GetMediaQuery = breakpoint => {
-  switch (breakpoint) {
-    case 'DESKTOP':
-      return `@media (max-width: ${BREAKE_POINTS.DESKTOP}px)`
-    case 'MOBILE':
-      return `@media (max-width: ${BREAKE_POINTS.MOBILE}px)`
-    case 'TABLET':
-      return `@media (max-width: ${BREAKE_POINTS.TABLET}px)`
-    default:
-      return ``
-  }
-}
+import { useMediaQuery } from '@hooks/useMediaQuery'
 
 export interface CarouselProps {
   images: { url: string; id: number }[]
@@ -64,6 +44,8 @@ const NAV_TYPE = {
 
 const ARROW_RIGHT = ICON.CHEVRON_RIGHT_40
 const ARROW_LEFT = ICON.CHEVRON_LEFT_40
+const FULL_SCREEN_WIDTH = 100
+const USER_DRAG_LENGTH = 100
 
 const Carousel = ({
   images,
@@ -71,21 +53,24 @@ const Carousel = ({
   size = 687,
   name
 }: CarouselProps): ReactElement => {
-  const desktop = useMediaQuery(`(min-width:1023px)`)
-  const carouselWidthSize = desktop ? size : 100
+  const isDesktop = useMediaQuery(`(min-width:1023px)`)
+  const carouselWidthSize = isDesktop ? size : FULL_SCREEN_WIDTH
   const lastImageValue = carouselWidthSize * (images.length - 1)
   const [currentImageValue, setCurrentImageValue] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
 
-  const handleIndicator = (imageIndex: number): void => {
-    setCurrentImageValue((imageIndex - 1) * carouselWidthSize)
-  }
+  const isFirstImage = currentImageValue === 0
+  const isLastImage = currentImageValue === lastImageValue
 
-  const TRANSLATE_VALUE_OF_NAV_TYPE = {
+  const VALUE_OF_NAV_TYPE = {
     LEFT: -carouselWidthSize,
     RIGHT: carouselWidthSize
+  }
+
+  const handleIndicator = (imageIndex: number): void => {
+    setCurrentImageValue((imageIndex - 1) * carouselWidthSize)
   }
 
   const handleOffset: HandleOffset = navType => {
@@ -95,7 +80,7 @@ const Carousel = ({
     if (currentImageValue === endPoint) {
       setCurrentImageValue(prevTranslateValue)
     } else {
-      setCurrentImageValue(prev => prev + TRANSLATE_VALUE_OF_NAV_TYPE[navType])
+      setCurrentImageValue(prev => prev + VALUE_OF_NAV_TYPE[navType])
     }
   }
 
@@ -109,12 +94,11 @@ const Carousel = ({
   }
 
   useEffect(() => {
-    const userDragLength = 100
     const dragSpace = Math.abs(startClientX - endClientX)
     const userSlideRight =
-      endClientX > startClientX && dragSpace > userDragLength
+      endClientX > startClientX && dragSpace > USER_DRAG_LENGTH
     const userSlideLeft =
-      endClientX < startClientX && dragSpace > userDragLength
+      endClientX < startClientX && dragSpace > USER_DRAG_LENGTH
     if (startClientX === 0) {
       return
     }
@@ -146,7 +130,7 @@ const Carousel = ({
         </StyledImageBox>
         {isArrow && (
           <StyledArrowBox>
-            {currentImageValue === 0 ? (
+            {isFirstImage ? (
               <div />
             ) : (
               <StyledRightArrow
@@ -158,7 +142,7 @@ const Carousel = ({
                 }}
               />
             )}
-            {currentImageValue === lastImageValue ? (
+            {isLastImage ? (
               <div />
             ) : (
               <StyledLeftArrow
@@ -208,12 +192,13 @@ export const StyledSlider = styled.div<SliderProps>`
   overflow: hidden;
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
-  ${getMediaQuery('TABLET')} {
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
     right: 20px;
   }
-  ${getMediaQuery('MOBILE')} {
+  ${({ theme }): string => theme.mediaQuery.mobile} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
     right: 20px;
@@ -227,13 +212,14 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
   transform: ${({ currentImageValue }): string =>
     `translateX(-${currentImageValue}px)`};
 
-  ${getMediaQuery('TABLET')} {
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     height: 400px;
     transform: ${({ currentImageValue }): string =>
       `translateX(-${currentImageValue}vw)`};
   }
-  ${getMediaQuery('MOBILE')} {
-    height: 360px;
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    height: 400px;
     transform: ${({ currentImageValue }): string =>
       `translateX(-${currentImageValue}vw)`};
   }
@@ -244,11 +230,12 @@ export const StyledImage = styled.img<ImageProps>`
   height: 440px;
   object-fit: cover;
   object-position: center;
-  ${getMediaQuery('TABLET')} {
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     width: ${({ size }): string => `${size}vw`};
     height: 400px;
   }
-  ${getMediaQuery('MOBILE')} {
+  ${({ theme }): string => theme.mediaQuery.mobile} {
     width: ${({ size }): string => `${size}vw`};
     height: 360px;
   }
@@ -264,7 +251,8 @@ export const StyledArrowBox = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  ${getMediaQuery('TABLET')} {
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     display: none;
   }
 `
@@ -295,7 +283,7 @@ export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
-  ${getMediaQuery('TABLET')} {
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     bottom: 27px;
   }
 `
@@ -308,7 +296,7 @@ export const StyledIndicator = styled.div`
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
-  ${getMediaQuery('TABLET')} {
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
@@ -331,7 +319,7 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   transform: ${({ imageIndex }): string =>
     `translate(${imageIndex * 17}px,-50%)`};
   transition: transform 0.2s;
-  ${getMediaQuery('TABLET')} {
+  ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};

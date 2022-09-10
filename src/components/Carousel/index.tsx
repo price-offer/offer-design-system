@@ -1,8 +1,8 @@
 import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
-import { ICON } from '@constants/icons'
+import { ICON } from '@constants'
 import styled from '@emotion/styled'
-import { useMediaQuery } from '@hooks/useMediaQuery'
+import { useMediaQuery } from '@hooks'
 
 export interface CarouselProps {
   images: { url: string; id: number }[]

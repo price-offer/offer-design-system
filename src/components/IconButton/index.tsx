@@ -106,7 +106,7 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
         `
       default:
         return `
-          box-shadow: 0px 2px 10px ${theme.colors.dim.opacity50};
+          box-shadow: 0px 2px 10px ${theme.colors.dim.opacity25};
         `
     }
   }};

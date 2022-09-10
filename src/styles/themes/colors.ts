@@ -40,6 +40,7 @@ export const colors = {
     subWeak: '#E1D8FA'
   },
   dim: {
+    opacity25: '#00000040',
     opacity50: '#00000080',
     opacity70: '#000000B2'
   },

@@ -14,7 +14,7 @@ export default {
     }
   },
   component: Divider,
-  title: 'Component/Divider'
+  title: 'Components/Divider'
 } as Meta
 
 const Template: Story<DividerProps> = args => <Divider {...args} />

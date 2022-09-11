@@ -89,7 +89,7 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   width: ${({ size }): string => `${size}px`};
   height: ${({ size }): string => `${size}px`};
   background-color: white;
-  border-radius: ${({ theme }) => theme.radius.round100};
+  border-radius: ${({ theme }): string => theme.radius.round100};
   border: none;
   cursor: pointer;
 

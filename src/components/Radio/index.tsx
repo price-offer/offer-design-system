@@ -69,7 +69,7 @@ const StyledInputWrapper = styled.label`
   }
 
   input:checked ~ span {
-    background-color: #ff6e59;
+    background-color: ${({ theme }): string => theme.colors.brand.primary};
     border: none;
   }
   input:checked ~ span:after {
@@ -81,7 +81,7 @@ const StyledInputWrapper = styled.label`
     width: 10px;
     height: 10px;
     border-radius: 100px;
-    background: white;
+    background: ${({ theme }): string => theme.colors.grayScale.white};
   }
 `
 
@@ -98,8 +98,8 @@ const StyledCheckMark = styled.span`
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: white;
-  border: solid #e8e8ea;
+  background-color: ${({ theme }): string => theme.colors.grayScale.white};
+  border: solid ${({ theme }): string => theme.colors.grayScale.gray10};
   border-radius: 50%;
   :after {
     content: '';

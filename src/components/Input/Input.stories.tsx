@@ -42,3 +42,10 @@ Chatting.args = {
   inputStyle: 'chatting',
   placeholder: '내용을 입력하세요'
 }
+
+export const Search = Template.bind({})
+Search.args = {
+  inputSize: 'large',
+  inputStyle: 'search',
+  placeholder: '내용을 입력하세요'
+}

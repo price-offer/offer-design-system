@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactElement } from 'react'
+import { ChattingInput } from './Chatting'
 import { DefaultInput } from './Default'
 import type { DefaultInputProps } from './Default'
 
@@ -24,6 +25,8 @@ export const Input = ({
     switch (inputStyle) {
       case INPUT_STYLE_KEYS.DEFAULT:
         return <DefaultInput {...props} />
+      case INPUT_STYLE_KEYS.CHATTING:
+        return <ChattingInput {...props} />
       default:
         return <DefaultInput {...props} />
     }

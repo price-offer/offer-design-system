@@ -35,3 +35,10 @@ Default.args = {
   placeholder: '내용을 입력하세요',
   status: 'success'
 }
+
+export const Chatting = Template.bind({})
+Chatting.args = {
+  inputSize: 'large',
+  inputStyle: 'chatting',
+  placeholder: '내용을 입력하세요'
+}

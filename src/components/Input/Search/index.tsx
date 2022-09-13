@@ -17,7 +17,7 @@ type InputSizeStylesheet = {
   }
 }
 
-const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
+const INPUT_STYLESHEET: InputSizeStylesheet = {
   large: {
     FONT: 'body01R',
     HEIGHT: 56,
@@ -80,4 +80,4 @@ const StyledInputIcon = styled.img<StyledInputProps>`
 const getStylesheetValue = (
   inputSize: InputSize,
   styleOption: InputStyleOption
-): StylesheetValue => INPUT_SIZE_STYLESHEET[inputSize][styleOption]
+): StylesheetValue => INPUT_STYLESHEET[inputSize][styleOption]

@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
+type InputSize = 'large' | 'small'
 export interface DefaultInputProps extends HTMLAttributes<HTMLInputElement> {
   label?: string
   status?: 'none' | 'success' | 'error' | 'default'
@@ -10,16 +11,13 @@ export interface DefaultInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
 }
 
-type InputSize = 'large' | 'small'
 type StyledInputProps = StyledProps<DefaultInputProps, 'hasWon' | 'inputSize'>
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
 type StyledWonProps = StyledProps<DefaultInputProps, 'inputSize'>
+type InputStyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
+type StylesheetValue = string | number
 type InputSizeStylesheet = {
-  [key in InputSize]: {
-    FONT: string
-    HEIGHT: number
-    PADDING_BOTTOM: number
-  }
+  [key in InputSize]: { [key in InputStyleOption]: StylesheetValue }
 }
 
 const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
@@ -72,29 +70,33 @@ const StyledLabel = styled.label`
 `
 const StyledInput = styled.input<StyledInputProps>`
   margin: 8px 0;
-  padding: ${({ inputSize, hasWon }): string =>
-    `${inputPaddingBottom(inputSize)}px ${
-      hasWon ? 35 : 12
-    }px ${inputPaddingBottom(inputSize)}px 12px`};
+  padding: ${({ inputSize, hasWon }): string => `
+      ${getStylesheetValue(inputSize, 'PADDING_BOTTOM')}px 
+      ${hasWon ? 35 : 12}px 
+      ${getStylesheetValue(inputSize, 'PADDING_BOTTOM')}px 12px
+    `};
   width: 328px;
-  height: ${({ inputSize }): string => `${inputHeight(inputSize)}px`};
+  height: ${({ inputSize }): string =>
+    `${getStylesheetValue(inputSize, 'HEIGHT')}px`};
   background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
 
   &::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
 
-    ${({ theme, inputSize }): string => theme.fonts[inputFont(inputSize)]}
+    ${({ theme, inputSize }): string =>
+      theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
   }
 `
 
 const StyledWon = styled.span<StyledWonProps>`
   position: absolute;
   bottom: ${({ inputSize }): string =>
-    `${inputPaddingBottom(inputSize) + 8}px`};
+    `${(getStylesheetValue(inputSize, 'PADDING_BOTTOM') as number) + 8}px`};
   right: 12px;
   color: ${({ theme }): string => theme.colors.grayScale.gray90};
-  ${({ theme, inputSize }): string => theme.fonts[inputFont(inputSize)]}
+  ${({ theme, inputSize }): string =>
+    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
 `
 const StyledStatus = styled.span<StyledStatusProps>`
   color: ${({ theme, status }): string => {
@@ -111,11 +113,7 @@ const StyledStatus = styled.span<StyledStatusProps>`
   ${({ theme }): string => theme.fonts.caption};
 `
 
-const inputHeight = (inputSize: InputSize): number =>
-  INPUT_SIZE_STYLESHEET[inputSize].HEIGHT
-
-const inputPaddingBottom = (inputSize: InputSize): number =>
-  INPUT_SIZE_STYLESHEET[inputSize].PADDING_BOTTOM
-
-const inputFont = (inputSize: InputSize): string =>
-  INPUT_SIZE_STYLESHEET[inputSize].FONT
+const getStylesheetValue = (
+  inputSize: InputSize,
+  styleOption: InputStyleOption
+): StylesheetValue => INPUT_SIZE_STYLESHEET[inputSize][styleOption]

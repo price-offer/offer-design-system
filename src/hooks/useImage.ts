@@ -30,7 +30,7 @@ export const useImage: UseImage = ({
     imgRef.current.onload = handleLoad
     imgRef.current.onerror = handleError
     imgRef.current.src = src || fallbackSrc
-  }, [src, fallbackSrc, isError])
+  }, [src, fallbackSrc, isError, onError, onLoad])
 
   const handleError = (): void => {
     onError?.()

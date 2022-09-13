@@ -16,6 +16,7 @@ export default {
 const Template: Story<ImageProps> = args => <Image {...args} />
 export const Primary = Template.bind({})
 Primary.args = {
+  alt: 'Image',
   boxSize: '276px',
   fallbackSrc: 'https://via.placeholder.com/200',
   objectFit: 'cover',

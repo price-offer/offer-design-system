@@ -6,6 +6,7 @@ import { useImage } from '@hooks'
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 
 export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
+  alt: string
   src: string
   boxSize: string
   radius?: string
@@ -23,6 +24,7 @@ interface ApplyStyleParams {
 type ApplyStyle = (params: ApplyStyleParams) => string
 
 export const Image = ({
+  alt,
   src,
   fallbackSrc = '',
   objectFit = 'cover',
@@ -38,6 +40,7 @@ export const Image = ({
       {!isError && (
         <StyledImage
           ref={imgRef}
+          alt={alt}
           boxSize={boxSize}
           objectFit={objectFit}
           radius={radius}

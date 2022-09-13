@@ -27,7 +27,7 @@ Sender.args = {
 }
 
 Sender.parameters = {
-  backgrounds: { default: 'dark' }
+  backgrounds: { default: 'light' }
 }
 
 export const Recevier = Template.bind({})

@@ -35,16 +35,19 @@ const StyledBubble = styled.div<StyledBubbleProps>`
   max-width: 332px;
   max-height: 144px;
   height: 100%;
+  line-height: 24px;
   color: ${({ user, theme }): string =>
     user === 'sender'
       ? theme.colors.grayScale.white
-      : theme.colors.grayScale.black};
+      : theme.colors.grayScale.gray90};
   font-size: 14px;
   font-weight: 400;
   background-color: ${({ user, theme }): string =>
     user === 'sender'
       ? theme.colors.brand.primary
       : theme.colors.grayScale.white};
-  border-radius: 16px 0px 16px 16px;
+  border-radius: ${({ user }): string =>
+    user === 'sender' ? '16px 0px 16px 16px' : '0px 16px 16px 16px'};
+
   padding: 12px 16px;
 `

@@ -1,7 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 import { ChattingBubble } from './index'
 import type { ChattingBubbleProps } from './index'
-import styled from '@emotion/styled'
 
 export default {
   argTypes: {
@@ -40,5 +39,5 @@ Recevier.args = {
 }
 
 Recevier.parameters = {
-  backgrounds: { default: 'dark' }
+  backgrounds: { default: 'light' }
 }

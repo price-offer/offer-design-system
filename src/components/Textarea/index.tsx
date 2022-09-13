@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
 import { useCallback, useRef } from 'react'
 import styled from '@emotion/styled'
 
@@ -7,6 +7,7 @@ export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
   placeholder?: string
   children: string
   guideMessage?: string
+  textAreaStyle?: CSSProperties
   BgType: 'filled' | 'ghost'
 }
 
@@ -16,6 +17,7 @@ export const TextArea = ({
   children,
   guideMessage,
   BgType,
+  textAreaStyle,
   ...props
 }: TextAreaProps): ReactElement => {
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -35,6 +37,7 @@ export const TextArea = ({
         ref={ref}
         BgType={BgType}
         placeholder={placeholder}
+        style={textAreaStyle}
         onInput={handleResizeHeight}>
         {children}
       </StyledTextArea>

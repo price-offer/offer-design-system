@@ -14,15 +14,16 @@ export default {
 } as Meta<ChattingBubbleProps>
 
 const Template: Story<ChattingBubbleProps> = args => (
-  <StyledBackGround>
+  <div>
     <ChattingBubble {...args} />
-  </StyledBackGround>
+  </div>
 )
 
 export const Sender = Template.bind({})
 
 Sender.args = {
-  children: 'Sender입니다.',
+  children:
+    'Sender입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
   user: 'sender'
 }
 
@@ -33,12 +34,11 @@ Sender.parameters = {
 export const Recevier = Template.bind({})
 
 Recevier.args = {
-  children: 'Recevier입니다.',
+  children:
+    'Recevier입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
   user: 'receiver'
 }
 
 Recevier.parameters = {
   backgrounds: { default: 'dark' }
 }
-
-const StyledBackGround = styled.div``

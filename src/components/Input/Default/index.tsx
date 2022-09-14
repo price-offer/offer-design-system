@@ -94,7 +94,6 @@ const StyledWon = styled.span<StyledWonProps>`
   bottom: ${({ inputSize }): string =>
     `${(getStylesheetValue(inputSize, 'PADDING_BOTTOM') as number) + 8}px`};
   right: 12px;
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
   ${({ theme, inputSize }): string =>
     theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
 `

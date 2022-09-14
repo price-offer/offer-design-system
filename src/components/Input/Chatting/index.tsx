@@ -69,7 +69,6 @@ const StyledInput = styled.input<StyledInputProps>`
         ${getStylesheetValue(inputSize, 'RIGHT')}px 
     `};
   background-color: ${({ theme }): string => theme.colors.background.gray02};
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
   border: none;
   border-radius: ${({ theme }): string => theme.radius.round16};
 

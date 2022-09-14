@@ -57,7 +57,6 @@ const StyledInput = styled.input<StyledInputProps>`
     `${getStylesheetValue(inputSize, 'WIDTH')}px`};
   height: ${({ inputSize }): string =>
     `${getStylesheetValue(inputSize, 'HEIGHT')}px`};
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
   background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
   ${({ inputSize, theme }): string =>

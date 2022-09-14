@@ -35,13 +35,15 @@ const StyledBubble = styled.div<StyledBubbleProps>`
   max-width: 332px;
   max-height: 144px;
   height: 100%;
-  line-height: 24px;
+  padding: 12px 16px;
   color: ${({ user, theme }): string =>
     user === 'sender'
       ? theme.colors.grayScale.white
       : theme.colors.grayScale.gray90};
-  font-size: 14px;
-  font-weight: 400;
+  //폰트 스타일
+  ${({ user, theme }): string =>
+    user === 'sender' ? theme.fonts.body01M : theme.fonts.body01R}
+  //
   background-color: ${({ user, theme }): string =>
     user === 'sender'
       ? theme.colors.brand.primary
@@ -49,5 +51,9 @@ const StyledBubble = styled.div<StyledBubbleProps>`
   border-radius: ${({ user }): string =>
     user === 'sender' ? '16px 0px 16px 16px' : '0px 16px 16px 16px'};
 
-  padding: 12px 16px;
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    padding: 8px 12px;
+    ${({ user, theme }): string =>
+      user === 'sender' ? theme.fonts.body02M : theme.fonts.body02R}
+  }
 `

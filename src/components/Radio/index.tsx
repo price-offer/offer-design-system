@@ -5,7 +5,7 @@ export interface RadioProps extends HTMLAttributes<HTMLDivElement> {
   formName: string
   items: { code: string; name: string }[]
   radioDirection: string
-  onChange(e: unknown): void
+  onChange(e: React.FormEvent<HTMLInputElement>): void
 }
 
 interface FormProps extends HTMLAttributes<HTMLDivElement> {
@@ -18,7 +18,7 @@ const Radio = ({
   radioDirection = 'horizental',
   ...props
 }: RadioProps): ReactElement => {
-  const handleRadiobutton = (e: unknown): void => {
+  const handleRadiobutton = (e: React.FormEvent<HTMLInputElement>): void => {
     onChange && onChange(e)
   }
 

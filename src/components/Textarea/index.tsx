@@ -9,6 +9,7 @@ export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
   guideMessage?: string
   textAreaStyle?: CSSProperties
   BgType: 'filled' | 'ghost'
+  autoFocus?: boolean
 }
 
 export const TextArea = ({
@@ -18,6 +19,7 @@ export const TextArea = ({
   guideMessage,
   BgType,
   textAreaStyle,
+  autoFocus,
   ...props
 }: TextAreaProps): ReactElement => {
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -36,6 +38,7 @@ export const TextArea = ({
       <StyledTextArea
         ref={ref}
         BgType={BgType}
+        autoFocus={autoFocus}
         placeholder={placeholder}
         style={textAreaStyle}
         onInput={handleResizeHeight}>
@@ -72,6 +75,10 @@ const StyledTextArea = styled.textarea<TextAreaProps>`
   ::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
     ${({ theme }): string => theme.fonts.body02M};
+  }
+  :focus {
+    background-color: ${({ BgType, theme }): string =>
+      BgType && BgType === 'filled' ? theme.colors.background.gray04 : ''};
   }
 `
 

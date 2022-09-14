@@ -1,2 +1,5 @@
 export * from './Badge'
+export * from './Button'
+export * from './Carousel'
 export * from './Divider'
+export * from './Text'

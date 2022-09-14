@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactElement } from 'react'
 import { ChattingInput } from './Chatting'
 import { DefaultInput } from './Default'
 import type { DefaultInputProps } from './Default'
+import { EditInput } from './Edit'
 import { SearchInput } from './Search'
 
 type InputStyle = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
@@ -30,6 +31,8 @@ export const Input = ({
         return <ChattingInput {...props} />
       case INPUT_STYLE_KEYS.SEARCH:
         return <SearchInput {...props} />
+      case INPUT_STYLE_KEYS.EDIT:
+        return <EditInput {...props} />
       default:
         return <DefaultInput {...props} />
     }

@@ -18,7 +18,6 @@ export const ChattingBubble = ({
   const redex = /\s/gi
   const BlankChatLength = children?.length
   const NoBlankchatLength = children?.replace(redex, '').length
-
   const overChatLength = BlankChatLength - NoBlankchatLength
   return (
     <StyledBubble {...props} user={user}>
@@ -52,6 +51,8 @@ const StyledBubble = styled.div<StyledBubbleProps>`
     user === 'sender' ? '16px 0px 16px 16px' : '0px 16px 16px 16px'};
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
+    max-width: 230px;
+    max-height: 136px;
     padding: 8px 12px;
     ${({ user, theme }): string =>
       user === 'sender' ? theme.fonts.body02M : theme.fonts.body02R}

@@ -23,9 +23,9 @@ export const TextArea = ({
   ...props
 }: TextAreaProps): ReactElement => {
   const ref = useRef<HTMLTextAreaElement>(null)
-
+  const isRefValueNull = ref === null || ref.current === null
   const handleResizeHeight = useCallback(() => {
-    if (ref === null || ref.current === null) {
+    if (isRefValueNull) {
       return
     }
     ref.current.style.height = '120px'
@@ -75,6 +75,10 @@ const StyledTextArea = styled.textarea<TextAreaProps>`
   ::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
     ${({ theme }): string => theme.fonts.body02M};
+  }
+  :hover {
+    background-color: ${({ BgType, theme }): string =>
+      BgType && BgType === 'filled' ? theme.colors.background.gray04 : ''};
   }
   :focus {
     background-color: ${({ BgType, theme }): string =>

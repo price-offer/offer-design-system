@@ -1,5 +1,6 @@
 import { css, Global } from '@emotion/react'
 import { FontCSS, ResetCSS } from '@styles'
+import { colors } from '@themes'
 import type { ReactElement } from 'react'
 
 const globalStyle = css`
@@ -10,6 +11,7 @@ const globalStyle = css`
   body {
     font-family: Pretendard;
     font-weight: normal;
+    color: ${colors.grayScale.gray90};
   }
 `
 

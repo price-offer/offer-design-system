@@ -41,6 +41,7 @@ export const colors = {
   },
   dim: {
     opacity25: '#00000040',
+    opacity40: '#00000066',
     opacity50: '#00000080',
     opacity70: '#000000B2'
   },

@@ -22,7 +22,6 @@
   ],
   "rules": {
     "sort-imports": ["error", { "ignoreCase": true }],
-    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
     "default-case-last": "error",
     "func-style": ["error", "expression"],
     "no-console": "error",
@@ -39,10 +38,13 @@
     ],
     "react/jsx-pascal-case": ["error"],
     "react/react-in-jsx-scope": "off",
-    "react/self-closing-comp": ["error", {
-      "component": true,
-      "html": true
-    }],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
     "@typescript-eslint/array-type": ["error", { "default": "array" }],
     "@typescript-eslint/ban-tslint-comment": "error",
     "@typescript-eslint/consistent-indexed-object-style": [

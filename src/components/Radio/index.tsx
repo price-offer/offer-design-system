@@ -57,10 +57,11 @@ const StyledInputWrapper = styled.label`
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding-left: 30px;
-  padding-top: 2px;
-  margin-bottom: 12px;
-
+  padding-left: 25px;
+  padding-top: 3px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: ${({ theme }): string => theme.colors.grayScale.gray90};
   &.vertical {
     margin-bottom: 20px;
   }

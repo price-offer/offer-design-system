@@ -55,6 +55,8 @@ const StyledBubble = styled.div<StyledBubbleProps>`
     max-height: 136px;
     padding: 8px 12px;
     ${({ user, theme }): string =>
-      user === 'sender' ? theme.fonts.body02M : theme.fonts.body02R}
+      user === 'sender'
+        ? theme.fonts.body02M
+        : 'font-size: 14px; font-weight: regular; line-height: 20px; letter-spacing: -0.4%;'}
   }
 `

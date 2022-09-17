@@ -97,7 +97,16 @@ const StyledFileListWrapper = styled.div`
   display: flex;
   gap: 8px;
   margin-left: 8px;
-  overflow-y: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  ::-webkit-scrollbar {
+    height: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: ${({ theme }): string => theme.colors.grayScale.black};
+  }
 `
 const StyledFileWrapper = styled.div`
   position: relative;

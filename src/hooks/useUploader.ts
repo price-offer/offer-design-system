@@ -77,11 +77,9 @@ export const useUploader: UseUploader = ({ fileList, onChange }) => {
     const reader = new FileReader()
     reader.readAsDataURL(imageFile)
     reader.onload = (): void => {
-      const isFirst = files.length === 0
       const newFile = {
         id: uuidV4(),
-        isRepresent: isFirst || false,
-        name: 'new!',
+        isRepresent: files.length === 0,
         url: `${reader.result}`
       }
 

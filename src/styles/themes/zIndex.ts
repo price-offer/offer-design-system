@@ -7,5 +7,6 @@ export type ZIndex = ThemeOption<ZIndexKeys, ZIndexValues>
 
 export const zIndex = {
   modal: 300,
+  modalIcon: 400,
   selectbox: 200
 } as const

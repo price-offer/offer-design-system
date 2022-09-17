@@ -10,7 +10,11 @@ export default {
   title: 'Components/ImageUploader'
 } as Meta<ImageUploaderProps>
 
-const Template: Story<ImageUploaderProps> = args => <ImageUploader {...args} />
+const Template: Story<ImageUploaderProps> = args => (
+  <div style={{ maxHeight: '304px', maxWidth: '1200px' }}>
+    <ImageUploader {...args} />
+  </div>
+)
 export const Primary = Template.bind({})
 Primary.args = {
   fileList: [

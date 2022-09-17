@@ -79,7 +79,7 @@ const StyledUploaderWrapper = styled.div<StyledUploaderWrapperProps>`
   ${({ theme, haveFiles }): string => `
     ${theme.mediaQuery.desktop} {
       display: flex;
-      padding: 12px;
+      padding: 12px 12px 5px 12px;
       background-color: ${theme.colors.grayScale.gray05};
     }
     ${theme.mediaQuery.tablet} {

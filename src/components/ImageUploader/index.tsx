@@ -1,11 +1,10 @@
-import { Button, Image } from '@components'
+import { Badge, Button, Image } from '@components'
+import type { HTMLAttributes, ReactElement } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
-import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
-import { Uploader } from './Uploader'
 import { useMediaQuery } from '@hooks/useMediaQuery'
-import { useState } from 'react'
+import { useUploader } from '@hooks/useUploader'
 
 export interface File {
   isRepresent: boolean
@@ -26,57 +25,95 @@ interface StyledFileLengthProps {
   isMax: boolean
 }
 
-type HandleChange = (params: OnChangeParams) => void
+interface StyledUploaderWrapperProps {
+  haveFiles: boolean
+}
 
 export const ImageUploader = ({
   fileList,
   onChange
 }: ImageUploaderProps): ReactElement => {
+  const {
+    fileListRef,
+    uploaderRef,
+    uploaderId,
+    files,
+    clickTrigger,
+    addFile,
+    removeFile
+  } = useUploader({
+    fileList,
+    onChange
+  })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')
-  const [files, setFiles] = useState<File[]>(fileList)
+  const listImageSize = isLessThanTablet ? '80px' : '280px'
+  const haveFiles = files.length > 0
   const isMax = files.length === 10
 
-  const handleChange: HandleChange = params => {
-    setFiles(params.fileList)
-    onChange?.(params)
-  }
-
   return (
-    <Uploader
-      acceptFileType="image/*"
-      fileList={fileList}
-      onChange={handleChange}>
-      <>
-        {isLessThanTablet && (
-          <StyledMobileTrigger>
-            <StyledTriggerIcon
-              alt="picture-icon"
-              boxSize="40px"
-              src={ICON.PICTURE_40}
-            />
-            <StyledFileLength isMax={isMax}>
-              ({files.length}/10)
-            </StyledFileLength>
-          </StyledMobileTrigger>
-        )}
-        {!isLessThanTablet && (
-          <StyledPcTrigger>
-            <StyledTriggerIcon
-              alt="picture-icon"
-              boxSize="40px"
-              src={ICON.PICTURE_40}
-            />
-            <StyledPcMeta>
-              <p>상품 이미지 추가</p>
-              <StyledFileLength isMax={isMax}>
-                ({files.length}/10)
-              </StyledFileLength>
-            </StyledPcMeta>
-            <Button size="small">사진 업로드</Button>
-          </StyledPcTrigger>
-        )}
-      </>
-    </Uploader>
+    <StyledUploaderWrapper haveFiles={haveFiles}>
+      <StyledFileListWrapper ref={fileListRef}>
+        {files?.map(({ id, isRepresent, url }, index) => (
+          <StyledFileWrapper key={id}>
+            {isRepresent && (
+              <StyledFileBadge colorScheme="orange">대표 사진</StyledFileBadge>
+            )}
+            <Image alt={`file-${index}`} boxSize={listImageSize} src={url} />
+            <div onClick={removeFile}>
+              <StyledRemoveButtonWrapper>
+                <StyledRemoveButton
+                  alt={`close-icon_${index}`}
+                  boxSize="16px"
+                  data-id="close-icon"
+                  src={ICON.CLOSE_16}
+                />
+              </StyledRemoveButtonWrapper>
+            </div>
+          </StyledFileWrapper>
+        ))}
+      </StyledFileListWrapper>
+      <div onClick={clickTrigger}>
+        <StyledUploaderTrigger>
+          <>
+            {isLessThanTablet && (
+              <StyledMobileTrigger>
+                <StyledTriggerIcon
+                  alt="picture-icon"
+                  boxSize="40px"
+                  src={ICON.PICTURE_40}
+                />
+                <StyledFileLength isMax={isMax}>
+                  ({files.length}/10)
+                </StyledFileLength>
+              </StyledMobileTrigger>
+            )}
+            {!isLessThanTablet && (
+              <StyledPcTrigger>
+                <StyledTriggerIcon
+                  alt="picture-icon"
+                  boxSize="40px"
+                  src={ICON.PICTURE_40}
+                />
+                <StyledPcMeta>
+                  <p>상품 이미지 추가</p>
+                  <StyledFileLength isMax={isMax}>
+                    ({files.length}/10)
+                  </StyledFileLength>
+                </StyledPcMeta>
+                <Button size="small">사진 업로드</Button>
+              </StyledPcTrigger>
+            )}
+          </>
+        </StyledUploaderTrigger>
+        <StyledUploaderInput
+          ref={uploaderRef}
+          accept="image/*"
+          id={uploaderId}
+          type="file"
+          onChange={addFile}
+        />
+      </div>
+    </StyledUploaderWrapper>
   )
 }
 
@@ -138,4 +175,87 @@ const StyledMobileTrigger = styled.div`
   width: 80px;
   height: 80px;
   cursor: pointer;
+`
+
+/** Use Uploader */
+const StyledUploaderWrapper = styled.div<StyledUploaderWrapperProps>`
+  ${({ theme, haveFiles }): string => `
+    ${theme.mediaQuery.desktop} {
+      display: flex;
+      padding: 12px 12px 5px 12px;
+      background-color: ${theme.colors.grayScale.gray05};
+    }
+    ${theme.mediaQuery.tablet} {
+      display: ${haveFiles ? 'flex' : 'inline-flex'};
+      padding: 0px;
+      background-color: ${theme.colors.background.white};
+    }
+    justify-content: ${haveFiles ? 'flex-start' : 'center'};
+    user-select: none;
+    `}
+`
+/* File List */
+const StyledFileListWrapper = styled.div`
+  order: 2;
+  display: flex;
+  gap: 8px;
+  margin-left: 8px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  ::-webkit-scrollbar {
+    height: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: ${({ theme }): string => theme.colors.grayScale.black};
+  }
+`
+const StyledFileWrapper = styled.div`
+  position: relative;
+`
+const StyledFileBadge = styled(Badge)`
+  ${({ theme }): string => `
+    ${theme.mediaQuery.desktop} {
+      bottom: 4px;
+      left: 4px;
+    }
+    ${theme.mediaQuery.tablet} {
+      bottom: 0;
+      left: 0;
+    }
+    position: absolute;
+  `}
+`
+const StyledRemoveButtonWrapper = styled.div`
+  ${({ theme }): string => `
+    ${theme.mediaQuery.desktop} {
+      top: 4px;
+      right: 4px;
+      padding: 4px;
+    }
+    ${theme.mediaQuery.tablet} {
+      top: 0;
+      right: 0;
+      padding: 2px;
+    }
+    cursor: pointer;
+    display: inline-flex;
+    position: absolute;
+    background-color: ${theme.colors.grayScale.black};
+  `}
+`
+const StyledRemoveButton = styled(Image)`
+  ${({ theme }): string => `
+    filter: ${hexToCSSFilter(theme.colors.background.white).filter}};
+  `}
+`
+
+/* Uploader */
+const StyledUploaderTrigger = styled.div`
+  cursor: pointer;
+  order: 1;
+`
+const StyledUploaderInput = styled.input<HTMLAttributes<HTMLInputElement>>`
+  display: none;
 `

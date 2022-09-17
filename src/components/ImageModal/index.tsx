@@ -19,10 +19,17 @@ interface ImageInfo {
   src: string
   id: string
 }
+interface TranslateValue {
+  imageWidth: number
+  imageCount: number
+}
 
 type StyledDIMProps = StyledProps<ImageModalProps, 'isOpen'>
 interface StyledImageContainerProps {
-  translateValue: number
+  translateValue: TranslateValue
+}
+interface StyledImageProps {
+  isFixedHeight: boolean
 }
 
 const RESIZE_HEIGHT = 640
@@ -35,16 +42,28 @@ export const ImageModal = ({
   isOpen = false,
   name
 }: ImageModalProps): ReactElement => {
-  const resizeImageWidths = images.map(({ src }) => {
+  const imagesInfo = images.map(({ src, id }) => {
     const image = new Image()
     image.src = src
-    const resizeWidth = image.width * (RESIZE_HEIGHT / image.height)
+    const height = image.height
+    const resizeWidth = image.width * (RESIZE_HEIGHT / height)
 
-    return resizeWidth
+    return {
+      height,
+      id,
+      resizeWidth,
+      src
+    }
   })
-  const firstImageWidth = resizeImageWidths[0] / 2 + IMAGE_GAP_HALF
-  const firstImageId = images[0].id
-  const [translateValue, setTranslateValue] = useState<number>(firstImageWidth)
+  const firstImageWidth = imagesInfo[0].resizeWidth / 2 + IMAGE_GAP_HALF
+  const firstImageId = imagesInfo[0].id
+  const initialTranslateValue = {
+    imageCount: 0,
+    imageWidth: firstImageWidth
+  }
+  const [translateValue, setTranslateValue] = useState<TranslateValue>(
+    initialTranslateValue
+  )
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
   const imageModalRef = useClickAway<HTMLDivElement>(() => {
     handleCloseModal()
@@ -54,30 +73,43 @@ export const ImageModal = ({
     onClose?.()
 
     setSelectedImageId(firstImageId)
-    setTranslateValue(firstImageWidth)
+    setTranslateValue(initialTranslateValue)
   }
 
   const handleClickIndicator: MouseEventHandler<HTMLDivElement> = (e): void => {
     const selectedId = e.currentTarget.dataset.id || ''
-    const nextTranslateValue = [...images].reduce(
+    const nextTranslateValue = [...imagesInfo].reduce(
       (sumValue, currentImage, idx, images) => {
+        const { imageWidth: prevImageWidth } = sumValue
         const { id } = currentImage
-        const resizeImageWidth = resizeImageWidths[idx]
+        const resizeImageWidth = imagesInfo[idx].resizeWidth
 
         if (id === selectedId) {
           // for early return
           images.splice(1)
-          return sumValue + resizeImageWidth / 2 + IMAGE_GAP_HALF
+          return {
+            imageCount: idx,
+            imageWidth: prevImageWidth + resizeImageWidth / 2 + IMAGE_GAP_HALF
+          }
         }
 
-        return sumValue + resizeImageWidth + IMAGE_GAP_HALF
+        return {
+          imageCount: idx,
+          imageWidth: prevImageWidth + resizeImageWidth + IMAGE_GAP_HALF
+        }
       },
-      0
+      {
+        imageCount: 0,
+        imageWidth: 0
+      }
     )
 
     setSelectedImageId(selectedId)
     setTranslateValue(nextTranslateValue)
   }
+
+  const calculateSizeRate = (width: number, height: number): number =>
+    width / height
 
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
@@ -86,13 +118,18 @@ export const ImageModal = ({
       </StyledCloseIcon>
       <StyledImageModal ref={imageModalRef}>
         <StyledImageContainer translateValue={translateValue}>
-          {images.map(({ src, id }) => (
-            <StyledImage key={id} alt={`${name}-${id}`} src={src} />
+          {imagesInfo.map(({ src, id, resizeWidth, height }) => (
+            <StyledImage
+              key={id}
+              alt={`${name}-${id}`}
+              isFixedHeight={calculateSizeRate(resizeWidth, height) < 5 / 3}
+              src={src}
+            />
           ))}
         </StyledImageContainer>
-        {images.length > 1 && (
+        {imagesInfo.length > 1 && (
           <StyledIndicatorBox ref={imageModalRef}>
-            {images.map(({ id }) => (
+            {imagesInfo.map(({ id }) => (
               <StyledIndicator
                 key={id}
                 className={selectedImageId === id ? 'selected' : ''}
@@ -119,21 +156,63 @@ const StyledDIM = styled.div<StyledDIMProps>`
   height: 100vh;
   z-index: ${({ theme }): string => theme.zIndex.ImageModal};
   background-color: ${({ theme }): string => theme.colors.dim.opacity70};
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    background: linear-gradient();
+  }
 `
 
 const StyledImageModal = styled.div`
   width: 0;
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    width: auto;
+  }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    width: auto;
+  }
 `
 
 const StyledImageContainer = styled.div<StyledImageContainerProps>`
   display: flex;
   gap: 12px;
   transition: 0.6s ease-in-out;
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    transform: translate((0, 0));
+    gap: 0;
+    transform: ${({ translateValue }): string =>
+      `translate(-${translateValue.imageCount * 100}vw, 0);`};
+  }
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    transform: translate((0, 0));
+    gap: 0;
+    transform: ${({ translateValue }): string =>
+      `translate(-${translateValue.imageCount * 100}vw, 0);`};
+  }
+
   transform: ${({ translateValue }): string =>
-    `translate(calc(50vw - ${translateValue}px), 0)}, 0)`};
+    `translate(calc(50vw - ${translateValue.imageWidth}px), 0)}, 0)`};
 `
-const StyledImage = styled.img`
+const StyledImage = styled.img<StyledImageProps>`
   height: ${RESIZE_HEIGHT}px;
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    width: 100vw;
+    height: auto;
+    object-fit: contain;
+
+    ${({ isFixedHeight }): string =>
+      isFixedHeight ? `height: 100vh; width:100vw;` : ''}
+  }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    width: 100vw;
+    height: 100vw;
+    ${({ isFixedHeight }): string =>
+      isFixedHeight ? `height: 100vh; width:100vw;` : ''}
+  }
 `
 
 const StyledCloseIcon = styled.button`
@@ -150,6 +229,16 @@ const StyledCloseIcon = styled.button`
     filter: ${({ theme }): string =>
       hexToCSSFilter(theme.colors.grayScale.gray30).filter};
   }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    top: 54px;
+    right: 22px;
+  }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    top: 35px;
+    right: 16px;
+  }
 `
 
 const StyledIndicatorBox = styled.div`
@@ -159,6 +248,14 @@ const StyledIndicatorBox = styled.div`
   transform: translate(-50%, 0);
   display: flex;
   gap: 8px;
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    bottom: 53px;
+  }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    bottom: 52px;
+  }
 `
 
 const StyledIndicator = styled.div`

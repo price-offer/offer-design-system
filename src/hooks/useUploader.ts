@@ -53,13 +53,13 @@ export const useUploader: UseUploader = ({ fileList, onChange }) => {
 
     const firstToIndexFileList = files.slice(0, fileIndex)
     const indexToLastFileList = files.slice(fileIndex + 1)
+    const newFiles = [...firstToIndexFileList, ...indexToLastFileList]
 
     const isRepresent = files[fileIndex].isRepresent && files.length > 1
     if (isRepresent) {
-      firstToIndexFileList[0].isRepresent = true
+      newFiles[0].isRepresent = true
     }
 
-    const newFiles = [...firstToIndexFileList, ...indexToLastFileList]
     onChange({ eventType: 'remove', fileList: newFiles })
     setFiles(newFiles)
   }

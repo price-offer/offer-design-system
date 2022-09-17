@@ -1,7 +1,8 @@
 import type { Meta, Story } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { ImageUploader } from './index'
 import type { ImageUploaderProps } from './index'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidV4 } from 'uuid'
 
 export default {
   argTypes: {},
@@ -14,19 +15,57 @@ export const Primary = Template.bind({})
 Primary.args = {
   fileList: [
     {
-      id: uuidv4(),
+      id: uuidV4(),
       isRepresent: false,
-      name: '테스트 이미지1',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     },
     {
-      id: uuidv4(),
+      id: uuidV4(),
       isRepresent: true,
-      name: '테스트 이미지2',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+    },
+    {
+      id: uuidV4(),
+      isRepresent: false,
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     }
   ],
-  onChange: ({ eventType, fileList }): void => {
-    console.log(eventType, fileList)
+  onChange: (params): void => {
+    action(JSON.stringify(params))
   }
 }

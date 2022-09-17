@@ -7,28 +7,28 @@ export interface ImageInfo {
   id: string
   url: string
 }
-export interface OnChangeParams {
+interface OnChangeParams {
   eventType: 'upload' | 'remove'
-  imgList: ImageInfo[]
+  imageList: ImageInfo[]
 }
 export interface ImageUploaderProps {
-  defaultImgList: ImageInfo[]
+  imageList: ImageInfo[]
   onChange(params: OnChangeParams): void
 }
 
 export const ImageUploader = ({
-  defaultImgList,
+  imageList: defaultImageList,
   onChange
 }: ImageUploaderProps): ReactElement => {
   const {
     imageListRef,
     uploaderRef,
-    images,
-    clickTrigger,
+    imageList,
+    openUploader,
     addImage,
     removeImage
   } = useImageUploader({
-    defaultImgList,
+    defaultImageList,
     onChange
   })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')
@@ -37,9 +37,9 @@ export const ImageUploader = ({
   return (
     <Uploader
       addImage={addImage}
-      clickTrigger={clickTrigger}
+      imageList={imageList}
       imageListRef={imageListRef}
-      images={images}
+      openUploader={openUploader}
       removeImage={removeImage}
       uploaderRef={uploaderRef}
     />

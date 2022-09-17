@@ -12,14 +12,13 @@ import type { ImageInfo } from '@components/ImageUploader'
 import styled from '@emotion/styled'
 
 interface UploaderProps {
-  images: ImageInfo[]
+  imageList: ImageInfo[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
   imageListRef: MutableRefObject<HTMLDivElement | null>
   addImage: ChangeEventHandler<HTMLInputElement>
   removeImage: MouseEventHandler<HTMLDivElement>
-  clickTrigger: MouseEventHandler<HTMLDivElement>
+  openUploader: MouseEventHandler<HTMLDivElement>
 }
-
 interface StyledProps {
   isMaximum: boolean
   isShowListType: boolean
@@ -28,18 +27,18 @@ interface StyledProps {
 export const MobileUploader = ({
   imageListRef,
   uploaderRef,
-  images,
-  clickTrigger,
+  imageList,
+  openUploader,
   addImage,
   removeImage
 }: UploaderProps): ReactElement => {
-  const isShowListType = images.length > 0
-  const isMaximum = images.length === 10
-  const imgTotal = `(${images.length}/10)`
+  const isShowListType = imageList.length > 0
+  const isMaximum = imageList.length === 10
+  const imgTotal = `(${imageList.length}/10)`
 
   return (
     <StyledUploaderWrapper isShowListType={isShowListType}>
-      <StyledTrigger onClick={clickTrigger}>
+      <StyledTrigger onClick={openUploader}>
         <StyledTriggerIcon
           alt="picture-icon"
           boxSize="40px"
@@ -54,7 +53,7 @@ export const MobileUploader = ({
         />
       </StyledTrigger>
       <StyledImageList ref={imageListRef}>
-        {images?.map(({ id, isRepresent, url }, index) => (
+        {imageList?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
             {isRepresent && (
               <StyledBadge colorScheme="orange">대표 사진</StyledBadge>
@@ -100,7 +99,7 @@ const StyledTrigger = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80px;
+  min-width: 80px;
   height: 80px;
   cursor: pointer;
 `

@@ -17,7 +17,7 @@ const Template: Story<ImageUploaderProps> = args => (
 )
 export const Primary = Template.bind({})
 Primary.args = {
-  defaultImgList: [
+  imageList: [
     {
       id: uuidV4(),
       isRepresent: false,

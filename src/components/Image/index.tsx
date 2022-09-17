@@ -61,7 +61,7 @@ const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
 const StyledImage = styled.img<StyledImgProps>`
   ${({ boxSize, radius, objectFit }): string => `
     ${applyStyle({ boxSize, radius })}
-    object-fit: ${objectFit}
+    object-fit: ${objectFit};
   `}
 `
 

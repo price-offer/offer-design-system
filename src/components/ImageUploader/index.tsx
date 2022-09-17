@@ -5,17 +5,17 @@ import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import styled from '@emotion/styled'
 
-export interface Img {
+export interface ImageInfo {
   isRepresent: boolean
   id: string
   url: string
 }
 export interface OnChangeParams {
   eventType: 'upload' | 'remove'
-  imgList: Img[]
+  imgList: ImageInfo[]
 }
 export interface ImageUploaderProps {
-  defaultImgList: Img[]
+  defaultImgList: ImageInfo[]
   onChange(params: OnChangeParams): void
 }
 interface StyledFileLengthProps {
@@ -29,26 +29,32 @@ export const ImageUploader = ({
   defaultImgList,
   onChange
 }: ImageUploaderProps): ReactElement => {
-  const { imgListRef, uploaderRef, files, clickTrigger, addFile, removeFile } =
-    useImageUploader({
-      defaultImgList,
-      onChange
-    })
+  const {
+    imageListRef,
+    uploaderRef,
+    images,
+    clickTrigger,
+    addImage,
+    removeImage
+  } = useImageUploader({
+    defaultImgList,
+    onChange
+  })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')
   const listImageSize = isLessThanTablet ? '80px' : '280px'
-  const haveFiles = files.length > 0
-  const isMax = files.length === 10
+  const haveFiles = images.length > 0
+  const isMax = images.length === 10
 
   return (
     <StyledUploaderWrapper haveFiles={haveFiles}>
-      <StyledFileListWrapper ref={imgListRef}>
-        {files?.map(({ id, isRepresent, url }, index) => (
+      <StyledFileListWrapper ref={imageListRef}>
+        {images?.map(({ id, isRepresent, url }, index) => (
           <StyledFileWrapper key={id}>
             {isRepresent && (
               <StyledFileBadge colorScheme="orange">대표 사진</StyledFileBadge>
             )}
             <Image alt={`file-${index}`} boxSize={listImageSize} src={url} />
-            <div onClick={removeFile}>
+            <div onClick={removeImage}>
               <StyledRemoveButtonWrapper>
                 <StyledRemoveButton
                   alt={`close-icon_${index}`}
@@ -72,7 +78,7 @@ export const ImageUploader = ({
                   src={ICON.PICTURE_40}
                 />
                 <StyledFileLength isMax={isMax}>
-                  ({files.length}/10)
+                  ({images.length}/10)
                 </StyledFileLength>
               </StyledMobileTrigger>
             )}
@@ -86,7 +92,7 @@ export const ImageUploader = ({
                 <StyledPcMeta>
                   <p>상품 이미지 추가</p>
                   <StyledFileLength isMax={isMax}>
-                    ({files.length}/10)
+                    ({images.length}/10)
                   </StyledFileLength>
                 </StyledPcMeta>
                 <Button size="small">사진 업로드</Button>
@@ -98,7 +104,7 @@ export const ImageUploader = ({
           ref={uploaderRef}
           accept="image/*"
           type="file"
-          onChange={addFile}
+          onChange={addImage}
         />
       </div>
     </StyledUploaderWrapper>

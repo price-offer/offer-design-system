@@ -3,21 +3,21 @@ import type {
   MouseEventHandler,
   MutableRefObject
 } from 'react'
-import type { Img, OnChangeParams } from '@components'
+import type { ImageInfo, OnChangeParams } from '@components'
 import { useRef, useState } from 'react'
 import { v4 as uuidV4 } from 'uuid'
 
 interface Params {
-  defaultImgList: Img[]
+  defaultImgList: ImageInfo[]
   onChange(params: OnChangeParams): void
 }
 
 interface Returns {
-  files: Img[]
+  images: ImageInfo[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
-  imgListRef: MutableRefObject<HTMLDivElement | null>
-  addFile: ChangeEventHandler<HTMLInputElement>
-  removeFile: MouseEventHandler<HTMLDivElement>
+  imageListRef: MutableRefObject<HTMLDivElement | null>
+  addImage: ChangeEventHandler<HTMLInputElement>
+  removeImage: MouseEventHandler<HTMLDivElement>
   clickTrigger: MouseEventHandler<HTMLDivElement>
 }
 
@@ -28,11 +28,11 @@ export const useImageUploader: UseImageUploader = ({
   onChange
 }) => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
-  const imgListRef = useRef<HTMLDivElement | null>(null)
-  const [files, setFiles] = useState<Img[]>(fileList)
+  const imageListRef = useRef<HTMLDivElement | null>(null)
+  const [images, setImages] = useState<ImageInfo[]>(fileList)
 
   const clickTrigger: MouseEventHandler<HTMLDivElement> = () => {
-    if (files.length === 10) {
+    if (images.length === 10) {
       alert('사진은 최대 10장만 추가가 가능합니다.')
       return
     }
@@ -40,32 +40,32 @@ export const useImageUploader: UseImageUploader = ({
     uploaderRef.current?.click()
   }
 
-  const removeFile: MouseEventHandler<HTMLDivElement> = (e): void => {
-    if (!imgListRef.current) {
+  const removeImage: MouseEventHandler<HTMLDivElement> = (e): void => {
+    if (!imageListRef.current) {
       return
     }
 
-    const closeIcons = imgListRef.current.querySelectorAll(
+    const closeIcons = imageListRef.current.querySelectorAll(
       '[data-id="close-icon"]'
     )
     const fileIndex = Array.from(closeIcons).findIndex(
       icon => icon === e.target
     )
 
-    const firstToIndexFileList = files.slice(0, fileIndex)
-    const indexToLastFileList = files.slice(fileIndex + 1)
+    const firstToIndexFileList = images.slice(0, fileIndex)
+    const indexToLastFileList = images.slice(fileIndex + 1)
     const newFiles = [...firstToIndexFileList, ...indexToLastFileList]
 
-    const isRepresent = files[fileIndex].isRepresent && files.length > 1
+    const isRepresent = images[fileIndex].isRepresent && images.length > 1
     if (isRepresent) {
       newFiles[0].isRepresent = true
     }
 
     onChange({ eventType: 'remove', imgList: newFiles })
-    setFiles(newFiles)
+    setImages(newFiles)
   }
 
-  const addFile: ChangeEventHandler<HTMLInputElement> = e => {
+  const addImage: ChangeEventHandler<HTMLInputElement> = e => {
     const formData = new FormData()
 
     if (!e.target.files) {
@@ -78,25 +78,25 @@ export const useImageUploader: UseImageUploader = ({
     const reader = new FileReader()
     reader.readAsDataURL(imageFile)
     reader.onload = (): void => {
-      const newFile = {
+      const newImage = {
         id: uuidV4(),
-        isRepresent: files.length === 0,
+        isRepresent: images.length === 0,
         url: `${reader.result}`
       }
 
-      const newFiles = [...files, newFile]
-      onChange({ eventType: 'upload', imgList: newFiles })
-      setFiles(newFiles)
+      const newImgList = [...images, newImage]
+      onChange({ eventType: 'upload', imgList: newImgList })
+      setImages(newImgList)
       e.target.value = ''
     }
   }
 
   return {
-    addFile,
+    addImage,
     clickTrigger,
-    files,
-    imgListRef,
-    removeFile,
+    imageListRef,
+    images,
+    removeImage,
     uploaderRef
   }
 }

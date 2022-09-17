@@ -8,15 +8,14 @@ import { useRef, useState } from 'react'
 import { v4 as uuidV4 } from 'uuid'
 
 interface Params {
-  fileList: Img[]
+  defaultImgList: Img[]
   onChange(params: OnChangeParams): void
 }
 
 interface Returns {
   files: Img[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
-  fileListRef: MutableRefObject<HTMLDivElement | null>
-  uploaderId: string
+  imgListRef: MutableRefObject<HTMLDivElement | null>
   addFile: ChangeEventHandler<HTMLInputElement>
   removeFile: MouseEventHandler<HTMLDivElement>
   clickTrigger: MouseEventHandler<HTMLDivElement>
@@ -24,11 +23,13 @@ interface Returns {
 
 type UseImageUploader = (params: Params) => Returns
 
-export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
+export const useImageUploader: UseImageUploader = ({
+  defaultImgList: fileList,
+  onChange
+}) => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
-  const fileListRef = useRef<HTMLDivElement | null>(null)
+  const imgListRef = useRef<HTMLDivElement | null>(null)
   const [files, setFiles] = useState<Img[]>(fileList)
-  const uploaderId = uuidV4()
 
   const clickTrigger: MouseEventHandler<HTMLDivElement> = () => {
     if (files.length === 10) {
@@ -40,11 +41,11 @@ export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
   }
 
   const removeFile: MouseEventHandler<HTMLDivElement> = (e): void => {
-    if (!fileListRef.current) {
+    if (!imgListRef.current) {
       return
     }
 
-    const closeIcons = fileListRef.current.querySelectorAll(
+    const closeIcons = imgListRef.current.querySelectorAll(
       '[data-id="close-icon"]'
     )
     const fileIndex = Array.from(closeIcons).findIndex(
@@ -60,7 +61,7 @@ export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
       newFiles[0].isRepresent = true
     }
 
-    onChange({ eventType: 'remove', fileList: newFiles })
+    onChange({ eventType: 'remove', imgList: newFiles })
     setFiles(newFiles)
   }
 
@@ -84,7 +85,7 @@ export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
       }
 
       const newFiles = [...files, newFile]
-      onChange({ eventType: 'upload', fileList: newFiles })
+      onChange({ eventType: 'upload', imgList: newFiles })
       setFiles(newFiles)
       e.target.value = ''
     }
@@ -93,10 +94,9 @@ export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
   return {
     addFile,
     clickTrigger,
-    fileListRef,
     files,
+    imgListRef,
     removeFile,
-    uploaderId,
     uploaderRef
   }
 }

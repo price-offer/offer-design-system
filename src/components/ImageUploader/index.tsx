@@ -12,13 +12,12 @@ export interface Img {
 }
 export interface OnChangeParams {
   eventType: 'upload' | 'remove'
-  fileList: Img[]
+  imgList: Img[]
 }
 export interface ImageUploaderProps {
-  fileList: Img[]
+  defaultImgList: Img[]
   onChange(params: OnChangeParams): void
 }
-
 interface StyledFileLengthProps {
   isMax: boolean
 }
@@ -27,21 +26,14 @@ interface StyledUploaderWrapperProps {
 }
 
 export const ImageUploader = ({
-  fileList,
+  defaultImgList,
   onChange
 }: ImageUploaderProps): ReactElement => {
-  const {
-    fileListRef,
-    uploaderRef,
-    uploaderId,
-    files,
-    clickTrigger,
-    addFile,
-    removeFile
-  } = useImageUploader({
-    fileList,
-    onChange
-  })
+  const { imgListRef, uploaderRef, files, clickTrigger, addFile, removeFile } =
+    useImageUploader({
+      defaultImgList,
+      onChange
+    })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')
   const listImageSize = isLessThanTablet ? '80px' : '280px'
   const haveFiles = files.length > 0
@@ -49,7 +41,7 @@ export const ImageUploader = ({
 
   return (
     <StyledUploaderWrapper haveFiles={haveFiles}>
-      <StyledFileListWrapper ref={fileListRef}>
+      <StyledFileListWrapper ref={imgListRef}>
         {files?.map(({ id, isRepresent, url }, index) => (
           <StyledFileWrapper key={id}>
             {isRepresent && (
@@ -105,7 +97,6 @@ export const ImageUploader = ({
         <StyledUploaderInput
           ref={uploaderRef}
           accept="image/*"
-          id={uploaderId}
           type="file"
           onChange={addFile}
         />

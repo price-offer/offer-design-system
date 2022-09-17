@@ -1,10 +1,9 @@
 import { Badge, Button, Image } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
+import { useImageUploader, useMediaQuery } from '@hooks'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import styled from '@emotion/styled'
-import { useMediaQuery } from '@hooks/useMediaQuery'
-import { useUploader } from '@hooks/useUploader'
 
 export interface File {
   isRepresent: boolean
@@ -41,7 +40,7 @@ export const ImageUploader = ({
     clickTrigger,
     addFile,
     removeFile
-  } = useUploader({
+  } = useImageUploader({
     fileList,
     onChange
   })

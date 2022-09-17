@@ -3,17 +3,17 @@ import type {
   MouseEventHandler,
   MutableRefObject
 } from 'react'
-import type { File, OnChangeParams } from '@components'
+import type { Img, OnChangeParams } from '@components'
 import { useRef, useState } from 'react'
 import { v4 as uuidV4 } from 'uuid'
 
 interface Params {
-  fileList: File[]
+  fileList: Img[]
   onChange(params: OnChangeParams): void
 }
 
 interface Returns {
-  files: File[]
+  files: Img[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
   fileListRef: MutableRefObject<HTMLDivElement | null>
   uploaderId: string
@@ -27,7 +27,7 @@ type UseImageUploader = (params: Params) => Returns
 export const useImageUploader: UseImageUploader = ({ fileList, onChange }) => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
   const fileListRef = useRef<HTMLDivElement | null>(null)
-  const [files, setFiles] = useState<File[]>(fileList)
+  const [files, setFiles] = useState<Img[]>(fileList)
   const uploaderId = uuidV4()
 
   const clickTrigger: MouseEventHandler<HTMLDivElement> = () => {

@@ -5,25 +5,23 @@ import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import styled from '@emotion/styled'
 
-export interface File {
+export interface Img {
   isRepresent: boolean
   id: string
   url: string
 }
-
 export interface OnChangeParams {
   eventType: 'upload' | 'remove'
-  fileList: File[]
+  fileList: Img[]
 }
-
 export interface ImageUploaderProps {
-  fileList: File[]
+  fileList: Img[]
   onChange(params: OnChangeParams): void
 }
+
 interface StyledFileLengthProps {
   isMax: boolean
 }
-
 interface StyledUploaderWrapperProps {
   haveFiles: boolean
 }

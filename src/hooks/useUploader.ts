@@ -88,6 +88,7 @@ export const useUploader: UseUploader = ({ fileList, onChange }) => {
       const newFiles = [...files, newFile]
       onChange({ eventType: 'upload', fileList: newFiles })
       setFiles(newFiles)
+      e.target.value = ''
     }
   }
 

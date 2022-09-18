@@ -8,6 +8,10 @@ export default {
     colorScheme: {
       control: 'radio',
       options: ['none', 'light', 'dark']
+    },
+    size: {
+      control: 'radio',
+      options: ['small', 'medium']
     }
   },
   component: SelectBox,
@@ -23,7 +27,7 @@ Primary.args = {
   },
   options: [
     {
-      text: '선택1',
+      text: '선택122222222222',
       value: 'select1'
     },
     {
@@ -31,5 +35,6 @@ Primary.args = {
       value: 'select2'
     }
   ],
+  size: 'small',
   value: 'select1'
 }

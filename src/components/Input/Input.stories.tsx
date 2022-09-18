@@ -15,9 +15,6 @@ export default {
       control: 'radio',
       options: Object.values(INPUT_STYLE_KEYS)
     },
-    message: {
-      control: 'string'
-    },
     status: {
       control: 'radio',
       options: ['error', 'success', 'default', 'none']
@@ -35,6 +32,7 @@ Default.args = {
   inputSize: 'large',
   inputStyle: INPUT_STYLE_KEYS.DEFAULT,
   label: '라벨',
+  message: '안내 메세지',
   placeholder: '내용을 입력하세요',
   status: 'success'
 }

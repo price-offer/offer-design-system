@@ -36,7 +36,7 @@ const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
 export const DefaultInput = ({
   label,
   status = 'default',
-  message,
+  message = '',
   hasWon = false,
   inputSize = 'large',
   ...args

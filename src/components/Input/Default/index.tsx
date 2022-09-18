@@ -99,14 +99,13 @@ const StyledWon = styled.span<StyledWonProps>`
 `
 const StyledStatus = styled.span<StyledStatusProps>`
   color: ${({ theme, status }): string => {
-    const hasStatus = 'error' || 'success'
+    const hasStatus = status === 'error' || status === 'success'
 
-    switch (status) {
-      case hasStatus:
-        return theme.colors.action[status]
-      default:
-        return theme.colors.grayScale.gray50
+    if (!hasStatus) {
+      return theme.colors.grayScale.gray50
     }
+
+    return theme.colors.action[status]
   }};
 
   ${({ theme }): string => theme.fonts.caption};

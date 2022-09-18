@@ -35,6 +35,5 @@ Primary.args = {
       value: 'select2'
     }
   ],
-  size: 'small',
-  value: 'select1'
+  size: 'small'
 }

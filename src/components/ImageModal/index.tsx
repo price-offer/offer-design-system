@@ -4,7 +4,6 @@ import { ICON } from '@constants'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
-import { useClickAway } from '@hooks'
 import { useState } from 'react'
 
 export interface ImageModalProps {
@@ -69,9 +68,6 @@ export const ImageModal = ({
     initialTranslateValue
   )
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
-  const imageModalRef = useClickAway<HTMLDivElement>(() => {
-    handleCloseModal()
-  })
 
   const handleCloseModal = (): void => {
     onClose?.()
@@ -122,7 +118,7 @@ export const ImageModal = ({
       <StyledCloseIcon onClick={handleCloseModal}>
         <img alt="close-button" src={ICON.CLOSE_24} />
       </StyledCloseIcon>
-      <StyledImageModal ref={imageModalRef}>
+      <StyledImageModal>
         <StyledImageContainer translateValue={translateValue}>
           {imagesInfo.map(({ src, id, resizeWidth, height }) => (
             <StyledImage
@@ -134,7 +130,7 @@ export const ImageModal = ({
           ))}
         </StyledImageContainer>
         {imagesInfo.length > 1 && (
-          <StyledIndicatorBox ref={imageModalRef}>
+          <StyledIndicatorBox>
             {imagesInfo.map(({ id }) => (
               <StyledIndicator
                 key={id}

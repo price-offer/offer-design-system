@@ -8,18 +8,22 @@ type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
   alt: string
   src: string
-  boxSize: string
+  width?: string
+  height?: string
+  boxSize?: string
   radius?: string
   fallbackSrc?: string
   objectFit?: ObjectFit
 }
 type StyledImgProps = StyledProps<
   ImageProps,
-  'boxSize' | 'radius' | 'objectFit'
+  'boxSize' | 'radius' | 'objectFit' | 'width' | 'height'
 >
 interface ApplyStyleParams {
   boxSize: string
   radius: string
+  width: string
+  height: string
 }
 type ApplyStyle = (params: ApplyStyleParams) => string
 
@@ -28,6 +32,8 @@ export const Image = ({
   src,
   fallbackSrc = '',
   objectFit = 'cover',
+  width = '',
+  height = '',
   boxSize = '276px',
   radius = '0px',
   ...props
@@ -36,15 +42,24 @@ export const Image = ({
 
   return (
     <>
-      {isError && <StyledPlaceholder boxSize={boxSize} radius={radius} />}
+      {isError && (
+        <StyledPlaceholder
+          boxSize={boxSize}
+          height={height}
+          radius={radius}
+          width={width}
+        />
+      )}
       {!isError && (
         <StyledImage
           ref={imgRef}
           alt={alt}
           boxSize={boxSize}
+          height={height}
           objectFit={objectFit}
           radius={radius}
           src={src}
+          width={width}
           {...props}
         />
       )}
@@ -53,22 +68,22 @@ export const Image = ({
 }
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
-  ${({ boxSize, radius, theme }): string => `
-    ${applyStyle({ boxSize, radius })}
+  ${({ boxSize, radius, theme, width, height }): string => `
+    ${applyStyle({ boxSize, height, radius, width })}
     background-color: ${theme.colors.grayScale.gray10}
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`
-  ${({ boxSize, radius, objectFit }): string => `
-    ${applyStyle({ boxSize, radius })}
+  ${({ boxSize, radius, objectFit, width, height }): string => `
+    ${applyStyle({ boxSize, height, radius, width })}
     object-fit: ${objectFit};
   `}
 `
 
-const applyStyle: ApplyStyle = ({ radius, boxSize }) => {
+const applyStyle: ApplyStyle = ({ radius, boxSize, width, height }) => {
   return `
-    width: ${boxSize};
-    height: ${boxSize};
+    width: ${width || boxSize};
+    height: ${height || boxSize};
     border-radius: ${radius};
   `
 }

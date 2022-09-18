@@ -19,7 +19,9 @@ Primary.args = {
   alt: 'Image',
   boxSize: '276px',
   fallbackSrc: 'https://via.placeholder.com/200',
+  height: '',
   objectFit: 'cover',
   radius: '0px',
-  src: 'https://via.placeholder.com/150'
+  src: 'https://via.placeholder.com/150',
+  width: ''
 }

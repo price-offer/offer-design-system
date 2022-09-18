@@ -11,9 +11,10 @@ interface OnChangeParams {
   eventType: 'upload' | 'remove'
   imageList: ImageInfo[]
 }
+export type ImageUploaderOnChangeHandler = (params: OnChangeParams) => void
 export interface ImageUploaderProps {
   imageList: ImageInfo[]
-  onChange(params: OnChangeParams): void
+  onChange: ImageUploaderOnChangeHandler
 }
 
 export const ImageUploader = ({

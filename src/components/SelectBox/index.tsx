@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 type ColorScheme = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
-interface Option {
+interface SelectBoxOption {
   text: string
   value: string | number
 }
@@ -19,9 +19,11 @@ export interface SelectBoxProps {
   size?: Size
   placeholder?: string
   value?: string | number
-  options: Option[]
-  onChange(options: Option): void
+  options: SelectBoxOption[]
+  onChange(options: SelectBoxOption): void
 }
+export type SelectBoxOnChangeHandler = (options: SelectBoxOption) => void
+
 type StyledSelectProps = StyledProps<SelectBoxProps, 'colorScheme' | 'size'> & {
   isEmpty: boolean
 }
@@ -44,7 +46,7 @@ export const SelectBox = ({
   onChange
 }: SelectBoxProps): ReactElement => {
   const [isShowOptions, setIsShowOptions] = useState<boolean>(false)
-  const [selectedOption, setSelectedOption] = useState<Option>({
+  const [selectedOption, setSelectedOption] = useState<SelectBoxOption>({
     text: options.find(option => option.value === value)?.text || '',
     value
   })
@@ -85,7 +87,7 @@ export const SelectBox = ({
           />
         </StyledTrigger>
         {isShowOptions && (
-          <StyledOptionsWrapper>
+          <StyledOptionsWrapper size={size}>
             <StyledOptionsList>
               {options?.map(({ text, value }, index) => (
                 <StyledOptionItem key={value}>
@@ -136,10 +138,10 @@ const TriggerIcon = styled(Image)<StyledSelectProps>`
     }
   `}
 `
-const StyledOptionsWrapper = styled.div`
+const StyledOptionsWrapper = styled.div<Pick<StyledSelectProps, 'size'>>`
   position: absolute;
   left: 0;
-  top: 48px;
+  top: ${({ size }): string => `${size === 'small' ? '40px' : '48px'}`};
 `
 const StyledOptionsList = styled.ul`
   display: flex;
@@ -147,6 +149,7 @@ const StyledOptionsList = styled.ul`
   padding: 12px 4px;
   gap: 8px;
   user-select: none;
+  min-width: 120px;
   border-radius: 4px;
   ${({ theme }): string => `
     background-color: ${theme.colors.grayScale.white};

@@ -227,7 +227,7 @@ const StyledCloseIcon = styled.button`
   top: 64px;
   right: 64px;
   padding: 0;
-  z-index: 400;
+  z-index: ${({ theme }): string => theme.zIndex.modalIcon};
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -253,7 +253,7 @@ const StyledIndicatorBox = styled.div`
   bottom: 172px;
   left: 50vw;
   transform: translate(-50%, 0);
-  z-index: 400;
+  z-index: ${({ theme }): string => theme.zIndex.modalIcon};
   display: flex;
   gap: 8px;
 

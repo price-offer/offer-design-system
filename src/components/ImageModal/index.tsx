@@ -1,10 +1,10 @@
 import type { MouseEventHandler, ReactElement } from 'react'
+import { useRef, useState } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
-import { useState } from 'react'
 
 export interface ImageModalProps {
   parentElement: HTMLElement
@@ -26,6 +26,7 @@ interface TranslateValue {
 type StyledDIMProps = StyledProps<ImageModalProps, 'isOpen'>
 interface StyledImageContainerProps {
   translateValue: TranslateValue
+  initialTranslateValue: TranslateValue
 }
 interface StyledImageProps {
   isFixedHeight: boolean
@@ -64,16 +65,15 @@ export const ImageModal = ({
     imageCount: 0,
     imageWidth: firstImageWidth
   }
-  const [translateValue, setTranslateValue] = useState<TranslateValue>(
-    initialTranslateValue
-  )
+  const translateValue = useRef<TranslateValue>(initialTranslateValue)
+  console.log('translateValue: ', translateValue.current)
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
 
   const handleCloseModal = (): void => {
     onClose?.()
 
     setSelectedImageId(firstImageId)
-    setTranslateValue(initialTranslateValue)
+    translateValue.current = initialTranslateValue
   }
 
   const handleClickIndicator: MouseEventHandler<HTMLDivElement> = (e): void => {
@@ -105,7 +105,7 @@ export const ImageModal = ({
     )
 
     setSelectedImageId(selectedId)
-    setTranslateValue(nextTranslateValue)
+    translateValue.current = nextTranslateValue
   }
 
   const calculateSizeRate = (width: number, height: number): number =>
@@ -118,30 +118,30 @@ export const ImageModal = ({
       <StyledCloseIcon onClick={handleCloseModal}>
         <img alt="close-button" src={ICON.CLOSE_24} />
       </StyledCloseIcon>
-      <StyledImageModal>
-        <StyledImageContainer translateValue={translateValue}>
-          {imagesInfo.map(({ src, id, resizeWidth, height }) => (
-            <StyledImage
+      <StyledImageContainer
+        initialTranslateValue={initialTranslateValue}
+        translateValue={translateValue.current}>
+        {imagesInfo.map(({ src, id, resizeWidth, height }) => (
+          <StyledImage
+            key={id}
+            alt={`${name}-${id}`}
+            isFixedHeight={calculateSizeRate(resizeWidth, height) < 5 / 3}
+            src={src}
+          />
+        ))}
+      </StyledImageContainer>
+      {imagesInfo.length > 1 && (
+        <StyledIndicatorBox>
+          {imagesInfo.map(({ id }) => (
+            <StyledIndicator
               key={id}
-              alt={`${name}-${id}`}
-              isFixedHeight={calculateSizeRate(resizeWidth, height) < 5 / 3}
-              src={src}
+              className={selectedImageId === id ? 'selected' : ''}
+              data-id={id}
+              onClick={handleClickIndicator}
             />
           ))}
-        </StyledImageContainer>
-        {imagesInfo.length > 1 && (
-          <StyledIndicatorBox>
-            {imagesInfo.map(({ id }) => (
-              <StyledIndicator
-                key={id}
-                className={selectedImageId === id ? 'selected' : ''}
-                data-id={id}
-                onClick={handleClickIndicator}
-              />
-            ))}
-          </StyledIndicatorBox>
-        )}
-      </StyledImageModal>
+        </StyledIndicatorBox>
+      )}
     </StyledDIM>,
     parentElement
   )
@@ -157,21 +157,11 @@ const StyledDIM = styled.div<StyledDIMProps>`
   width: 100vw;
   height: 100vh;
   z-index: ${({ theme }): string => theme.zIndex.modal};
+  overflow: hidden;
   background-color: ${({ theme }): string => theme.colors.dim.opacity70};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     background: linear-gradient();
-  }
-`
-
-const StyledImageModal = styled.div`
-  width: 0;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
-    width: auto;
-  }
-
-  ${({ theme }): string => theme.mediaQuery.mobile} {
-    width: auto;
   }
 `
 
@@ -194,8 +184,10 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
       `translate(-${translateValue.imageCount * 100}vw, 0);`};
   }
 
-  transform: ${({ translateValue }): string =>
-    `translate(calc(50vw - ${translateValue.imageWidth}px), 0)}, 0)`};
+  transform: ${({ translateValue, initialTranslateValue }): string =>
+    `translate(calc(50vw - ${
+      translateValue.imageWidth || initialTranslateValue.imageWidth
+    }px), 0)}, 0)`};
 `
 
 const StyledImage = styled.img<StyledImageProps>`

@@ -27,7 +27,7 @@ Primary.args = {
   },
   options: [
     {
-      text: '선택122222222222',
+      text: '선택1',
       value: 'select1'
     },
     {

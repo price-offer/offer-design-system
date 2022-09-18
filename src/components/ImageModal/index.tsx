@@ -32,6 +32,10 @@ interface StyledImageProps {
   isFixedHeight: boolean
 }
 
+interface StyledGradientProps {
+  direction: 'top' | 'bottom'
+}
+
 const RESIZE_HEIGHT = 640
 const IMAGE_GAP_HALF = 6
 
@@ -113,6 +117,8 @@ export const ImageModal = ({
 
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
+      <StyledGradient direction="top" />
+      <StyledGradient direction="bottom" />
       <StyledCloseIcon onClick={handleCloseModal}>
         <img alt="close-button" src={ICON.CLOSE_24} />
       </StyledCloseIcon>
@@ -154,7 +160,7 @@ const StyledDIM = styled.div<StyledDIMProps>`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: ${({ theme }): string => theme.zIndex.ImageModal};
+  z-index: ${({ theme }): string => theme.zIndex.modal};
   background-color: ${({ theme }): string => theme.colors.dim.opacity70};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
@@ -195,6 +201,7 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   transform: ${({ translateValue }): string =>
     `translate(calc(50vw - ${translateValue.imageWidth}px), 0)}, 0)`};
 `
+
 const StyledImage = styled.img<StyledImageProps>`
   height: ${RESIZE_HEIGHT}px;
 
@@ -246,6 +253,7 @@ const StyledIndicatorBox = styled.div`
   bottom: 172px;
   left: 50vw;
   transform: translate(-50%, 0);
+  z-index: 400;
   display: flex;
   gap: 8px;
 
@@ -273,5 +281,28 @@ const StyledIndicator = styled.div`
     transition: 0.6s ease-out;
     background-color: ${({ theme }): string => theme.colors.grayScale.white};
     opacity: 1;
+  }
+`
+
+const StyledGradient = styled.div<StyledGradientProps>`
+  display: none;
+  position: absolute;
+  z-index: 350;
+  width: 100vw;
+  height: 120px;
+
+  ${({ direction, theme }): string =>
+    direction === 'top'
+      ? `top: 0;
+        background: linear-gradient(180deg, ${theme.colors.dim.opacity70} 0%, rgba(0,0,0,0) 100%);`
+      : `bottom: 0;
+        background: linear-gradient(180deg,  rgba(0,0,0,0) 0%, ${theme.colors.dim.opacity70} 100%);`}
+
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    display: block;
+  }
+
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    display: block;
   }
 `

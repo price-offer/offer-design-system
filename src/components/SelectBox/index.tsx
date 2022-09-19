@@ -34,7 +34,7 @@ interface GetFontColorParams {
   theme: Theme
 }
 type GetFontColor = (params: GetFontColorParams) => string
-type ApplySize = (size: Size) => string
+type ApplySize = (size: Size, theme: Theme) => string
 type ApplyColorScheme = (colorScheme: ColorScheme, theme: Theme) => string
 
 export const SelectBox = ({
@@ -123,9 +123,8 @@ const StyledTrigger = styled.div<StyledSelectProps>`
     align-items: center;
     position: relative;
     cursor: pointer;
-    font-size: 14px;
     ${applyColorScheme(colorScheme, theme)}
-    ${applySize(size)}
+    ${applySize(size, theme)}
     color:${getFontColor({ colorScheme, isEmpty, size, theme })};
   `}
 `
@@ -186,23 +185,23 @@ const StyledOptionLabel = styled.label`
 const StyledOption = styled.input`
   display: none;
 `
-const applySize: ApplySize = size => {
+const applySize: ApplySize = (size, theme) => {
+  const { body02B, body02M } = theme.fonts.body
+
   switch (size) {
     case 'small':
       return `
         height: 32px;
         padding: 4px 8px;
-        font-weight: bold;
-        line-height: 24px;
         border-radius: 4px;
+        ${body02B}
       `
     case 'medium':
       return `
         height: 40px;
         padding: 12px 10px;
-        font-weight: 500;
-        line-height: 20px;
         border-radius: 6px;
+        ${body02M}
       `
   }
 }

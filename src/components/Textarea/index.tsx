@@ -1,5 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
@@ -32,6 +32,13 @@ export const TextArea = ({
     ref.current.style.height = ref.current.scrollHeight + 'px'
   }, [])
 
+  useEffect(() => {
+    if (ref === null || ref.current === null) {
+      return
+    }
+    ref.current.style.height = '120px'
+    ref.current.style.height = ref.current.scrollHeight + 'px'
+  }, [])
   return (
     <StyledTextAreaWrapper {...props}>
       {label && <StyledLabel>{label}</StyledLabel>}

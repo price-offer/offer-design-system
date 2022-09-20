@@ -34,6 +34,7 @@ interface GetFontColorParams {
   theme: Theme
 }
 type GetFontColor = (params: GetFontColorParams) => string
+type ApplyIconColor = (colorScheme: ColorScheme, theme: Theme) => string
 type ApplySize = (size: Size, theme: Theme) => string
 type ApplyColorScheme = (colorScheme: ColorScheme, theme: Theme) => string
 
@@ -81,8 +82,6 @@ export const SelectBox = ({
             alt="trigger-icon"
             boxSize="16px"
             colorScheme={colorScheme}
-            isEmpty={isEmpty}
-            size={size}
             src={ICON.CHEVRON_DOWN_16}
           />
         </StyledTrigger>
@@ -128,14 +127,9 @@ const StyledTrigger = styled.div<StyledSelectProps>`
     color:${getFontColor({ colorScheme, isEmpty, size, theme })};
   `}
 `
-const TriggerIcon = styled(Image)<StyledSelectProps>`
+const TriggerIcon = styled(Image)<Pick<StyledSelectProps, 'colorScheme'>>`
   margin-left: 4px;
-
-  ${({ colorScheme, isEmpty, size, theme }): string => `
-    filter: ${
-      hexToCSSFilter(getFontColor({ colorScheme, isEmpty, size, theme })).filter
-    }
-  `}
+  ${({ colorScheme, theme }): string => applyIconColor(colorScheme, theme)}
 `
 const StyledOptionsWrapper = styled.div<Pick<StyledSelectProps, 'size'>>`
   position: absolute;
@@ -186,7 +180,7 @@ const StyledOption = styled.input`
   display: none;
 `
 const applySize: ApplySize = (size, theme) => {
-  const { body02B, body02M } = theme.fonts.body
+  const { body02B, body02M } = theme.fonts
 
   switch (size) {
     case 'small':
@@ -239,5 +233,16 @@ const getFontColor: GetFontColor = ({ isEmpty, colorScheme, size, theme }) => {
       return `${isEmpty ? gray50 : smallPrimary}`
     case 'medium':
       return `${isEmpty ? gray50 : mediumPrimary}`
+  }
+}
+
+const applyIconColor: ApplyIconColor = (colorScheme, theme) => {
+  const { gray90, white } = theme.colors.grayScale
+  const isDark = colorScheme === 'dark'
+
+  if (isDark) {
+    return `filter: ${hexToCSSFilter(white).filter}`
+  } else {
+    return `filter: ${hexToCSSFilter(gray90).filter}`
   }
 }

@@ -24,6 +24,9 @@ interface Returns {
   openUploader: MouseEventHandler<HTMLDivElement>
 }
 
+const MAX_LIST_LENGTH = 10
+const NOTICE_MESSAGE = '사진은 최대 10장만 추가 가능합니다.'
+
 export const useImageUploader = ({
   defaultImageList,
   onChange
@@ -34,7 +37,7 @@ export const useImageUploader = ({
 
   const openUploader: MouseEventHandler<HTMLDivElement> = () => {
     if (imageList.length === 10) {
-      alert('사진은 최대 10장만 추가 가능합니다.')
+      alert(NOTICE_MESSAGE)
       return
     }
 
@@ -68,6 +71,15 @@ export const useImageUploader = ({
 
   const addImage: ChangeEventHandler<HTMLInputElement> = e => {
     if (!e.target.files) {
+      return
+    }
+
+    const imageFiles = e.target.files
+    const isOverListLength =
+      MAX_LIST_LENGTH - (imageList.length + imageFiles.length) < 0
+
+    if (isOverListLength) {
+      alert(NOTICE_MESSAGE)
       return
     }
 

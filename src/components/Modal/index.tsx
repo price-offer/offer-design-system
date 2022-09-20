@@ -1,12 +1,12 @@
+import type { HTMLAttributes, ReactElement } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import ReactDOM from 'react-dom'
-import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { useClickAway } from '@hooks'
 
-export interface ModalProps {
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   content: ReactElement
   parentElement: HTMLElement
   isOpen?: boolean
@@ -24,7 +24,8 @@ export const Modal = ({
   height = 0,
   onClose,
   parentElement,
-  isOpen = false
+  isOpen = false,
+  ...props
 }: ModalProps): ReactElement => {
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
@@ -32,7 +33,7 @@ export const Modal = ({
 
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
-      <StyledModal ref={modalRef} height={height} width={width}>
+      <StyledModal {...props} ref={modalRef} height={height} width={width}>
         <StyledCloseIcon onClick={onClose}>
           <img alt="close-button" src={ICON.CLOSE_24} />
         </StyledCloseIcon>

@@ -1,4 +1,4 @@
-import type { MouseEventHandler, ReactElement } from 'react'
+import type { HTMLAttributes, MouseEventHandler, ReactElement } from 'react'
 import { useRef, useState } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-export interface ImageModalProps {
+export interface ImageModalProps extends HTMLAttributes<HTMLDivElement> {
   parentElement: HTMLElement
   isOpen?: boolean
   images: ImageInfo[]
@@ -44,7 +44,8 @@ export const ImageModal = ({
   parentElement,
   images,
   isOpen = false,
-  name
+  name,
+  ...props
 }: ImageModalProps): ReactElement => {
   const imagesInfo = images.map(({ src, id }) => {
     const image = new Image()
@@ -66,7 +67,6 @@ export const ImageModal = ({
     imageWidth: firstImageWidth
   }
   const translateValue = useRef<TranslateValue>(initialTranslateValue)
-  console.log('translateValue: ', translateValue.current)
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
 
   const handleCloseModal = (): void => {
@@ -119,6 +119,7 @@ export const ImageModal = ({
         <img alt="close-button" src={ICON.CLOSE_24} />
       </StyledCloseIcon>
       <StyledImageContainer
+        {...props}
         initialTranslateValue={initialTranslateValue}
         translateValue={translateValue.current}>
         {imagesInfo.map(({ src, id, resizeWidth, height }) => (

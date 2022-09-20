@@ -71,10 +71,7 @@ export const useImageUploader = ({
       return
     }
 
-    const formData = new FormData()
     const imageFile = e.target.files[0]
-    formData.append('image', imageFile)
-
     const reader = new FileReader()
     reader.readAsDataURL(imageFile)
     reader.onload = (): void => {

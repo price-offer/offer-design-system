@@ -9,13 +9,11 @@ export default {
     }
   },
   component: ChattingBubble,
-  title: 'Component/ChattingBubble'
+  title: 'Components/ChattingBubble'
 } as Meta<ChattingBubbleProps>
 
 const Template: Story<ChattingBubbleProps> = args => (
-  <div>
-    <ChattingBubble {...args} />
-  </div>
+  <ChattingBubble {...args} />
 )
 
 export const Sender = Template.bind({})
@@ -23,7 +21,7 @@ export const Sender = Template.bind({})
 Sender.args = {
   children:
     'Sender입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
-  user: 'sender'
+  type: 'send'
 }
 
 Sender.parameters = {
@@ -35,7 +33,7 @@ export const Receiver = Template.bind({})
 Receiver.args = {
   children:
     'Receiver입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
-  user: 'receiver'
+  type: 'receive'
 }
 
 Receiver.parameters = {

@@ -54,6 +54,7 @@ export const DesktopUploader = ({
           <StyledUploaderInput
             ref={uploaderRef}
             accept="image/*"
+            multiple
             type="file"
             onChange={addImage}
           />

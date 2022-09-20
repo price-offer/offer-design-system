@@ -1,9 +1,8 @@
 import type { Meta, Story } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import Radio from './index'
+import { Radio } from './index'
 import type { RadioProps } from './index'
 export default {
-  argTypes: {},
   component: Radio,
   title: 'Component/Radio'
 } as Meta<RadioProps>

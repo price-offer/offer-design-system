@@ -20,12 +20,12 @@ Primary.args = {
   imageList: [
     {
       id: uuidV4(),
-      isRepresent: false,
+      isRepresent: true,
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     },
     {
       id: uuidV4(),
-      isRepresent: true,
+      isRepresent: false,
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     },
     {

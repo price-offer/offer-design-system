@@ -99,15 +99,18 @@ export const useImageUploader = ({
     })
 
     const imageFiles = await Promise.all(fulfilledImageFiles)
-    imageFiles.forEach(file => {
+    imageFiles.forEach((file, index) => {
+      const isRepresent = imageList.length === 0 && index === 0
       const imageUrl = isValidImageUrl(file) ? file : ''
       const newImage = {
         id: uuidV4(),
-        isRepresent: imageList.length === 0,
+        isRepresent,
         url: imageUrl
       }
 
-      setImageList(prevImageList => [...prevImageList, newImage])
+      setImageList(prevImageList => {
+        return [...prevImageList, newImage]
+      })
     })
 
     onChange({ eventType: 'upload', imageList })

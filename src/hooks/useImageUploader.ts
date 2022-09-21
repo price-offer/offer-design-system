@@ -4,7 +4,7 @@ import type {
   MutableRefObject
 } from 'react'
 import { useRef, useState } from 'react'
-import type { ImageInfo } from '@components'
+import type { ImageInfo } from '@components/ImageUploader'
 import { v4 as uuidV4 } from 'uuid'
 
 interface OnChangeParams {
@@ -23,6 +23,9 @@ interface Returns {
   removeImage: MouseEventHandler<HTMLDivElement>
   openUploader: MouseEventHandler<HTMLDivElement>
 }
+
+const isValidImageUrl = (file: unknown): file is string =>
+  typeof file === 'string'
 
 const MAX_LIST_LENGTH = 10
 const NOTICE_MESSAGE = '사진은 최대 10장만 추가 가능합니다.'
@@ -69,35 +72,46 @@ export const useImageUploader = ({
     setImageList(newFiles)
   }
 
-  const addImage: ChangeEventHandler<HTMLInputElement> = e => {
-    if (!e.target.files) {
+  const addImage: ChangeEventHandler<HTMLInputElement> = async e => {
+    const files = e.target.files
+
+    if (!files) {
       return
     }
 
-    const imageFiles = e.target.files
     const isOverListLength =
-      MAX_LIST_LENGTH - (imageList.length + imageFiles.length) < 0
-
+      MAX_LIST_LENGTH - (imageList.length + files.length) < 0
     if (isOverListLength) {
       alert(NOTICE_MESSAGE)
       return
     }
 
-    const imageFile = e.target.files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(imageFile)
-    reader.onload = (): void => {
+    const fulfilledImageFiles = Array.from(files).map(file => {
+      const reader = new FileReader()
+
+      return new Promise(resolve => {
+        reader.onload = (): void => {
+          resolve(reader.result)
+        }
+
+        reader.readAsDataURL(file)
+      })
+    })
+
+    const imageFiles = await Promise.all(fulfilledImageFiles)
+    imageFiles.forEach(file => {
+      const imageUrl = isValidImageUrl(file) ? file : ''
       const newImage = {
         id: uuidV4(),
         isRepresent: imageList.length === 0,
-        url: `${reader.result}`
+        url: imageUrl
       }
 
-      const newImageList = [...imageList, newImage]
-      onChange({ eventType: 'upload', imageList: newImageList })
-      setImageList(newImageList)
-      e.target.value = ''
-    }
+      setImageList(prevImageList => [...prevImageList, newImage])
+    })
+
+    onChange({ eventType: 'upload', imageList })
+    e.target.value = ''
   }
 
   return {

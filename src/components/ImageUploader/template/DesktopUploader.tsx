@@ -147,8 +147,11 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background: ${({ theme }): string => theme.colors.grayScale.black};
+    background-color: ${({ theme }): string => theme.colors.dim.opacity50};
   }
+
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;

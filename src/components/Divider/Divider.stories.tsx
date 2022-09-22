@@ -18,14 +18,8 @@ export default {
 } as Meta
 
 const Template: Story<DividerProps> = args => <Divider {...args} />
-export const Horizontal = Template.bind({})
-Horizontal.args = {
+export const Default = Template.bind({})
+Default.args = {
   orientation: 'horizontal',
-  size: 'regular'
-}
-
-export const Vertical = Template.bind({})
-Vertical.args = {
-  orientation: 'vertical',
   size: 'regular'
 }

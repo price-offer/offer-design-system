@@ -23,8 +23,8 @@ export default {
 
 const Template: Story<TextProps> = args => <Text {...args} />
 
-export const Primary = Template.bind({})
-Primary.args = {
+export const Default = Template.bind({})
+Default.args = {
   children: 'hello',
   textStyle: 'body01M'
 }

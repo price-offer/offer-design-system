@@ -9,7 +9,7 @@ interface SearchInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
 }
 
-type InputStyleOption = 'WIDTH' | 'HEIGHT' | 'PADDING_TOP' | 'FONT'
+type InputStyleOption = 'WIDTH' | 'HEIGHT' | 'PADDING_TOP' | 'FONT' | 'ICON_TOP'
 type StylesheetValue = string | number
 type StyledFontOption = {
   [key in Extract<InputStyleOption, 'FONT'>]: string
@@ -28,12 +28,14 @@ const INPUT_STYLESHEET: InputSizeStylesheet = {
   large: {
     FONT: 'body01R',
     HEIGHT: 56,
+    ICON_TOP: 15,
     PADDING_TOP: 18,
     WIDTH: 360
   },
   small: {
     FONT: 'body02R',
     HEIGHT: 40,
+    ICON_TOP: 7,
     PADDING_TOP: 10,
     WIDTH: 328
   }
@@ -72,11 +74,19 @@ const StyledInput = styled.input<StyledInputProps>`
   ::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
   }
+
+  &:hover {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
+  }
+
+  &:focus {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
+  }
 `
 
 const StyledInputIcon = styled.img<StyledInputProps>`
   top: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'PADDING_TOP')}px`};
+    `${getStylesheetValue(inputSize, 'ICON_TOP')}px`};
   left: 12px;
   position: absolute;
   filter: ${({ theme }): string =>

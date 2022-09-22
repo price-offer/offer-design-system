@@ -94,10 +94,19 @@ const StyledInput = styled.input<StyledInputProps>`
   border: none;
   border-radius: ${({ theme }): string => theme.radius.round16};
 
-  ${({ theme }): string => theme.fonts.body01R}
+  ${({ theme, inputSize }): string =>
+    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
 
   &::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
+  }
+
+  &:hover {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
+  }
+
+  &:focus {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
   }
 `
 

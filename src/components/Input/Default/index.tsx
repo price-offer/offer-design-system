@@ -89,21 +89,30 @@ const StyledInput = styled.input<StyledInputProps>`
   background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
 
-  &::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale.gray50};
+  ${({ theme, inputSize }): string =>
+    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
 
-    ${({ theme, inputSize }): string =>
-      theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
+  ::placeholder {
+    color: ${({ theme }): string => theme.colors.grayScale.gray50};
+  }
+
+  &:hover {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
+  }
+
+  &:focus {
+    background-color: ${({ theme }): string => theme.colors.background.gray04};
   }
 `
 
 const StyledWon = styled.span<StyledWonProps>`
   position: absolute;
   bottom: ${({ inputSize }): string =>
-    `${(getStylesheetValue(inputSize, 'PADDING_BOTTOM') as number) + 8}px`};
+    `${(getStylesheetValue(inputSize, 'PADDING_BOTTOM') as number) + 9}px`};
   right: 12px;
   ${({ theme, inputSize }): string =>
     theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
+  color:${({ theme }): string => theme.colors.grayScale.gray90};
 `
 const StyledStatus = styled.span<StyledStatusProps>`
   color: ${({ theme, status }): string => {

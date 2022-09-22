@@ -11,14 +11,22 @@ export interface DefaultInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
 }
 
+type InputStyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
+type StyledFontOption = {
+  [key in Extract<InputStyleOption, 'FONT'>]: string
+}
+type StyledOption = {
+  [key in Exclude<InputStyleOption, 'FONT'>]: number
+}
+type StyledInputOption = StyledFontOption & StyledOption
+type StylesheetValue = string | number
+type InputSizeStylesheet = {
+  [key in InputSize]: StyledInputOption
+}
+
 type StyledInputProps = StyledProps<DefaultInputProps, 'hasWon' | 'inputSize'>
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
 type StyledWonProps = StyledProps<DefaultInputProps, 'inputSize'>
-type InputStyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
-type StylesheetValue = string | number
-type InputSizeStylesheet = {
-  [key in InputSize]: { [key in InputStyleOption]: StylesheetValue }
-}
 
 const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
   large: {

@@ -3,19 +3,26 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 type InputSize = 'small' | 'large'
-type InputStyleOption = 'WIDTH' | 'HEIGHT' | 'FONT'
 export interface EditInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
   label?: string
   message?: string
 }
+
+type InputStyleOption = 'WIDTH' | 'HEIGHT' | 'FONT'
+type StyledFontOption = {
+  [key in Extract<InputStyleOption, 'FONT'>]: string
+}
+type StyledOption = {
+  [key in Exclude<InputStyleOption, 'FONT'>]: number
+}
+type StyledInputOption = StyledFontOption & StyledOption
+type InputSizeStylesheet = {
+  [key in InputSize]: StyledInputOption
+}
+
 type StylesheetValue = number | string
 type StyledInputProps = StyledProps<EditInputProps, 'inputSize'>
-type InputSizeStylesheet = {
-  [key in InputSize]: {
-    [key in InputStyleOption]: StylesheetValue
-  }
-}
 
 const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
   large: {

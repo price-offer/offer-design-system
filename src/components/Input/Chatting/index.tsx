@@ -6,28 +6,49 @@ import type { StyledProps } from '@types'
 import { useState } from 'react'
 
 type InputSize = 'large' | 'small'
-type InputStyleOption = 'WIDTH' | 'RIGHT' | 'TOP' | 'BUTTON_RIGHT'
 interface ChattingInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
 }
-type StyledInputProps = StyledProps<ChattingInputProps, 'inputSize'>
-type InputSizeStylesheet = {
-  [key in InputSize]: {
-    [key in InputStyleOption]: number
-  }
+
+type InputStyleOption =
+  | 'WIDTH'
+  | 'RIGHT'
+  | 'TOP'
+  | 'BUTTON_RIGHT'
+  | 'HEIGHT'
+  | 'BUTTON_TOP'
+  | 'FONT'
+type InputStyleValue = number | string
+type StyledFontOption = {
+  [key in Extract<InputStyleOption, 'FONT'>]: string
 }
+type StyledOption = {
+  [key in Exclude<InputStyleOption, 'FONT'>]: number
+}
+type InputSizeStylesheet = {
+  [key in InputSize]: StyledInputOption
+}
+
+type StyledInputOption = StyledFontOption & StyledOption
+type StyledInputProps = StyledProps<ChattingInputProps, 'inputSize'>
 
 const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
   large: {
     BUTTON_RIGHT: 10,
+    BUTTON_TOP: 8,
+    FONT: 'body01R',
+    HEIGHT: 48,
     RIGHT: 20,
     TOP: 12,
     WIDTH: 639
   },
   small: {
     BUTTON_RIGHT: 8,
+    BUTTON_TOP: 4,
+    FONT: 'body02R',
+    HEIGHT: 40,
     RIGHT: 12,
-    TOP: 4,
+    TOP: 10,
     WIDTH: 328
   }
 }
@@ -61,10 +82,11 @@ const StyledInputForm = styled.form`
 const StyledInput = styled.input<StyledInputProps>`
   width: ${({ inputSize }): string =>
     `${getStylesheetValue(inputSize, 'WIDTH')}px`};
-  height: 48px;
+  height: ${({ inputSize }): string =>
+    `${getStylesheetValue(inputSize, 'HEIGHT')}px`};
   padding: ${({ inputSize }): string => `
         ${getStylesheetValue(inputSize, 'TOP')}px 
-        ${getStylesheetValue(inputSize, 'RIGHT') + 40}px 
+        ${(getStylesheetValue(inputSize, 'RIGHT') as number) + 40}px 
         ${getStylesheetValue(inputSize, 'TOP')}px 
         ${getStylesheetValue(inputSize, 'RIGHT')}px 
     `};
@@ -83,7 +105,8 @@ const StyledInputButton = styled.button<StyledInputProps>`
   position: absolute;
   right: ${({ inputSize }): string =>
     `${getStylesheetValue(inputSize, 'BUTTON_RIGHT')}px`};
-  top: 8px;
+  top: ${({ inputSize }): string =>
+    `${getStylesheetValue(inputSize, 'BUTTON_TOP')}px`};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,4 +130,4 @@ const StyledInputButton = styled.button<StyledInputProps>`
 const getStylesheetValue = (
   inputSize: InputSize,
   styleOption: InputStyleOption
-): number => INPUT_SIZE_STYLESHEET[inputSize][styleOption]
+): InputStyleValue => INPUT_SIZE_STYLESHEET[inputSize][styleOption]

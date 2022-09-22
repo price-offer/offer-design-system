@@ -8,14 +8,21 @@ type InputSize = 'small' | 'large'
 interface SearchInputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
 }
-type StyledInputProps = StyledProps<SearchInputProps, 'inputSize'>
+
 type InputStyleOption = 'WIDTH' | 'HEIGHT' | 'PADDING_TOP' | 'FONT'
 type StylesheetValue = string | number
-type InputSizeStylesheet = {
-  [key in InputSize]: {
-    [key in InputStyleOption]: StylesheetValue
-  }
+type StyledFontOption = {
+  [key in Extract<InputStyleOption, 'FONT'>]: string
 }
+type StyledOption = {
+  [key in Exclude<InputStyleOption, 'FONT'>]: number
+}
+type InputSizeStylesheet = {
+  [key in InputSize]: StyledInputOption
+}
+
+type StyledInputProps = StyledProps<SearchInputProps, 'inputSize'>
+type StyledInputOption = StyledFontOption & StyledOption
 
 const INPUT_STYLESHEET: InputSizeStylesheet = {
   large: {

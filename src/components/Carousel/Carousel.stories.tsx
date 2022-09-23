@@ -16,18 +16,10 @@ const images = [
 
 const Template: Story<CarouselProps> = args => <Carousel {...args} />
 
-export const isArrow = Template.bind({})
-isArrow.args = {
+export const Default = Template.bind({})
+Default.args = {
   images,
   isArrow: true,
-  name: 'products',
-  size: 687
-}
-export const NoArrow = Template.bind({})
-
-NoArrow.args = {
-  images,
-  isArrow: false,
   name: 'products',
   size: 687
 }

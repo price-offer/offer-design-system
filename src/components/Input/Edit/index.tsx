@@ -115,7 +115,7 @@ const StyledInputMessage = styled.span<StyledMessageProps>`
     return theme.colors.action[status]
   }};
 
-  ${({ theme }): string => theme.fonts.caption}
+  ${({ theme }): string => theme.fonts.caption01M}
 `
 
 const getStylesheetValue = (

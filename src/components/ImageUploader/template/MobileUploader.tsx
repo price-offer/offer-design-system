@@ -119,12 +119,15 @@ const StyledImageList = styled.div`
   overflow-y: hidden;
 
   ::-webkit-scrollbar {
-    height: 7px;
+    height: 5px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background: ${({ theme }): string => theme.colors.grayScale.black};
+    background-color: ${({ theme }): string => theme.colors.dim.opacity50};
   }
+
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;

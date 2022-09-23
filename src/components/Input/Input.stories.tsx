@@ -36,26 +36,3 @@ Default.args = {
   placeholder: '내용을 입력하세요',
   status: 'success'
 }
-
-export const Chatting = Template.bind({})
-Chatting.args = {
-  inputSize: 'large',
-  inputStyle: INPUT_STYLE_KEYS.CHATTING,
-  placeholder: '내용을 입력하세요'
-}
-
-export const Search = Template.bind({})
-Search.args = {
-  inputSize: 'large',
-  inputStyle: INPUT_STYLE_KEYS.SEARCH,
-  placeholder: '내용을 입력하세요'
-}
-
-export const Edit = Template.bind({})
-Edit.args = {
-  inputSize: 'large',
-  inputStyle: INPUT_STYLE_KEYS.EDIT,
-  label: '라벨',
-  message: '안내 메세지',
-  placeholder: '내용을 입력하세요'
-}

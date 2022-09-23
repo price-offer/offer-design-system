@@ -34,8 +34,8 @@ const Template: Story<ModalProps> = args => {
   )
 }
 
-export const Basic = Template.bind({})
-Basic.args = {
+export const Default = Template.bind({})
+Default.args = {
   content: <div>Hello World!</div>,
   height: 300,
   parentElement

@@ -34,8 +34,8 @@ const Template: Story<ImageModalProps> = args => {
   )
 }
 
-export const Basic = Template.bind({})
-Basic.args = {
+export const Default = Template.bind({})
+Default.args = {
   images: [
     {
       id: '1',
@@ -51,17 +51,5 @@ Basic.args = {
     }
   ],
   name: 'cat-detail',
-  parentElement
-}
-
-export const OneImage = Template.bind({})
-OneImage.args = {
-  images: [
-    {
-      id: '4',
-      src: 'http://placekitten.com/200/300'
-    }
-  ],
-  name: 'solo-cat',
   parentElement
 }

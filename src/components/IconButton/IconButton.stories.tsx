@@ -9,12 +9,7 @@ export default {
 
 const Template: Story<IconButtonProps> = args => <IconButton {...args} />
 
-export const Basic = Template.bind({})
-Basic.args = {
+export const Default = Template.bind({})
+Default.args = {
   iconButtonStyle: ICON_BUTTON_STYLE_KEYS.CHEVRON_LEFT
-}
-
-export const Toggle = Template.bind({})
-Toggle.args = {
-  iconButtonStyle: ICON_BUTTON_STYLE_KEYS.HEART
 }

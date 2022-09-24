@@ -1,5 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
@@ -25,22 +25,23 @@ export const TextArea = ({
   autoFocus,
   ...props
 }: TextAreaProps): ReactElement => {
+  const [isRefNull, SetisRefNull] = useState<boolean>(false)
   const ref = useRef<HTMLTextAreaElement>(null)
+  const textAreaDefaultHeight = '120px'
   const isRefValueNull = ref === null || ref.current === null
   const isFilled = bgType === 'filled'
-  const textAreaHeight = '120px'
-
-  const handleResizeHeight = useCallback(() => {
-    if (isRefValueNull) {
-      return
-    }
-    ref.current.style.height = ref.current.style.height = textAreaHeight
-    ref.current.scrollHeight + 'px'
-  }, [])
-
   useEffect(() => {
     handleResizeHeight()
-  }, [])
+  }, [isRefNull])
+
+  const handleResizeHeight = (): void => {
+    if (isRefValueNull) {
+      SetisRefNull(true)
+      return
+    }
+    ref.current.style.height = textAreaDefaultHeight
+    ref.current.style.height = `${ref.current.scrollHeight + 'px'}`
+  }
 
   return (
     <div {...props}>
@@ -72,7 +73,6 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   outline: none;
   min-width: 328px;
   max-width: 100%;
-  height: 120px;
   padding: 10px 12px;
   border: none;
   color: ${({ theme }): string => theme.colors.grayScale.gray90};

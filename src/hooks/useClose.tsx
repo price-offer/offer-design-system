@@ -5,11 +5,9 @@ interface Params {
   onClose: Dispatch<SetStateAction<boolean>>
 }
 
-interface Returns {
-  ref: MutableRefObject<HTMLDivElement | null>
-}
+type UseClose = (params: Params) => MutableRefObject<HTMLDivElement | null>
 
-export const useClose = ({ onClose }: Params): Returns => {
+export const useClose: UseClose = ({ onClose }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   const handleClose = (e: MouseEvent): void => {
@@ -28,5 +26,5 @@ export const useClose = ({ onClose }: Params): Returns => {
     }
   }, [])
 
-  return { ref }
+  return ref
 }

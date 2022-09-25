@@ -24,7 +24,7 @@ export const useClose: UseClose = ({ onClose }) => {
         handleClose(e)
       })
     }
-  }, [])
+  }, [onClose])
 
   return ref
 }

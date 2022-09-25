@@ -20,8 +20,8 @@ export const AVATAR_SIZE = {
 } as const
 
 export const Avatar = ({
-  alt = 'avatar',
-  src = '',
+  alt,
+  src,
   size = 'small'
 }: AvatarProps): ReactElement => {
   const isBlank = src === ''

@@ -39,7 +39,7 @@ const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
     WIDTH: 360,
     WON_BOTTOM: 14
   }
-}
+} as const
 
 export const EditInput = ({
   inputSize = 'large',

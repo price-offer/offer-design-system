@@ -39,7 +39,7 @@ const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
     HEIGHT: 40,
     PADDING_BOTTOM: 10
   }
-}
+} as const
 
 export const DefaultInput = ({
   label,

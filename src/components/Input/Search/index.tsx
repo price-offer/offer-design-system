@@ -39,7 +39,7 @@ const INPUT_STYLESHEET: InputSizeStylesheet = {
     PADDING_TOP: 10,
     WIDTH: 328
   }
-}
+} as const
 
 export const SearchInput = ({
   inputSize = 'large',

@@ -51,7 +51,7 @@ const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
     TOP: 10,
     WIDTH: 328
   }
-}
+} as const
 
 export const ChattingInput = ({
   inputSize = 'large',

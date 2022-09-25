@@ -15,11 +15,5 @@ export default {
 
 const Template: Story<BadgeProps> = args => <Badge {...args} />
 
-export const Gray = Template.bind({})
-Gray.args = { children: 'Badge', colorScheme: 'gray' }
-
-export const Orange = Template.bind({})
-Orange.args = { children: 'Badge', colorScheme: 'orange' }
-
-export const Purple = Template.bind({})
-Purple.args = { children: 'Badge', colorScheme: 'purple' }
+export const Default = Template.bind({})
+Default.args = { children: 'Badge', colorScheme: 'gray' }

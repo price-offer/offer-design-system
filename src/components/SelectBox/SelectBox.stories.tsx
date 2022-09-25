@@ -19,8 +19,8 @@ export default {
 } as Meta<SelectBoxProps>
 
 const Template: Story<SelectBoxProps> = args => <SelectBox {...args} />
-export const Primary = Template.bind({})
-Primary.args = {
+export const Default = Template.bind({})
+Default.args = {
   colorScheme: 'light',
   onChange: (options): void => {
     action(JSON.stringify(options))

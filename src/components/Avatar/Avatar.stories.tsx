@@ -14,8 +14,8 @@ export default {
 } as Meta<AvatarProps>
 
 const Template: Story<AvatarProps> = args => <Avatar {...args} />
-export const Primary = Template.bind({})
-Primary.args = {
+export const Default = Template.bind({})
+Default.args = {
   alt: 'avatar',
   size: 'medium',
   src: 'https://picsum.photos/100'

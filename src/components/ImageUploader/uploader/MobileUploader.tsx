@@ -1,24 +1,10 @@
 import { Badge, Image } from '@components'
-import type {
-  ChangeEventHandler,
-  HTMLAttributes,
-  MouseEventHandler,
-  MutableRefObject,
-  ReactElement
-} from 'react'
+import type { HTMLAttributes, ReactElement } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
-import type { ImageInfo } from '@components/ImageUploader'
 import styled from '@emotion/styled'
+import type { UploaderProps } from '../index'
 
-interface UploaderProps {
-  imageList: ImageInfo[]
-  uploaderRef: MutableRefObject<HTMLInputElement | null>
-  imageListRef: MutableRefObject<HTMLDivElement | null>
-  addImage: ChangeEventHandler<HTMLInputElement>
-  removeImage: MouseEventHandler<HTMLDivElement>
-  openUploader: MouseEventHandler<HTMLDivElement>
-}
 interface StyledProps {
   isMaximum: boolean
   isShowListType: boolean

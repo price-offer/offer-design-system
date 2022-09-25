@@ -1,28 +1,11 @@
+import type { ChangeEventHandler, MouseEventHandler } from 'react'
 import type {
-  ChangeEventHandler,
-  MouseEventHandler,
-  MutableRefObject
-} from 'react'
+  ImageInfo,
+  ImageUploaderProps,
+  UploaderProps
+} from '@components/ImageUploader'
 import { useRef, useState } from 'react'
-import type { ImageInfo } from '@components/ImageUploader'
 import { v4 as uuidV4 } from 'uuid'
-
-interface OnChangeParams {
-  eventType: 'upload' | 'remove'
-  imageList: ImageInfo[]
-}
-interface Params {
-  defaultImageList: ImageInfo[]
-  onChange(params: OnChangeParams): void
-}
-interface Returns {
-  imageList: ImageInfo[]
-  uploaderRef: MutableRefObject<HTMLInputElement | null>
-  imageListRef: MutableRefObject<HTMLDivElement | null>
-  addImage: ChangeEventHandler<HTMLInputElement>
-  removeImage: MouseEventHandler<HTMLDivElement>
-  openUploader: MouseEventHandler<HTMLDivElement>
-}
 
 const isValidImageUrl = (file: unknown): file is string =>
   typeof file === 'string'
@@ -31,14 +14,14 @@ const MAX_LIST_LENGTH = 10
 const NOTICE_MESSAGE = '사진은 최대 10장만 추가 가능합니다.'
 
 export const useImageUploader = ({
-  defaultImageList,
+  imageList: defaultImageList,
   onChange
-}: Params): Returns => {
+}: ImageUploaderProps): UploaderProps => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
   const imageListRef = useRef<HTMLDivElement | null>(null)
   const [imageList, setImageList] = useState<ImageInfo[]>(defaultImageList)
 
-  const openUploader: MouseEventHandler<HTMLDivElement> = () => {
+  const openUploader = (): void => {
     if (imageList.length === 10) {
       alert(NOTICE_MESSAGE)
       return

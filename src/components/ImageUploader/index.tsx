@@ -1,12 +1,27 @@
-import { DesktopUploader, MobileUploader } from './template'
+import type {
+  ChangeEventHandler,
+  MouseEventHandler,
+  MutableRefObject,
+  ReactElement
+} from 'react'
+import { DesktopUploader, MobileUploader } from './uploader'
 import { useImageUploader, useMediaQuery } from '@hooks'
-import type { ReactElement } from 'react'
 
 export interface ImageInfo {
   isRepresent: boolean
   id: string
   url: string
 }
+export interface UploaderProps {
+  imageList: ImageInfo[]
+  uploaderRef: MutableRefObject<HTMLInputElement | null>
+  imageListRef: MutableRefObject<HTMLDivElement | null>
+  addImage: ChangeEventHandler<HTMLInputElement>
+  removeImage: MouseEventHandler<HTMLDivElement>
+  openUploader(): void
+}
+
+/* ImageUploader Props */
 interface OnChangeParams {
   eventType: 'upload' | 'remove'
   imageList: ImageInfo[]
@@ -29,7 +44,7 @@ export const ImageUploader = ({
     addImage,
     removeImage
   } = useImageUploader({
-    defaultImageList,
+    imageList: defaultImageList,
     onChange
   })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')

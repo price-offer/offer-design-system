@@ -20,7 +20,7 @@ export const useImage: UseImage = ({
   onLoad
 }) => {
   const imgRef = useRef<HTMLImageElement | null>(null)
-  const [isError, setIsError] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean>(true)
 
   useEffect(() => {
     if (!imgRef.current) {

@@ -8,13 +8,14 @@ export interface SelectBoxOption {
   text: string
   value: string | number
 }
+export type SelectBoxChangeHandler = (item: SelectBoxOption) => void
 export interface SelectBoxProps {
   colorScheme?: ColorScheme
   size?: Size
   placeholder?: string
   value?: string | number
   options: SelectBoxOption[]
-  onChange(option: SelectBoxOption): void
+  onChange: SelectBoxChangeHandler
 }
 
 /* Style Type */

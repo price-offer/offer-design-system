@@ -1,5 +1,6 @@
 import type {
   ColorScheme,
+  SelectBoxChangeHandler,
   SelectBoxOption,
   SelectBoxProps,
   Size
@@ -12,7 +13,6 @@ import styled from '@emotion/styled'
 import { Trigger } from './Trigger'
 import { useClose } from '@hooks'
 
-type HandleChangeValue = (item: SelectBoxOption) => void
 interface SelectProps extends SelectBoxProps {
   children: ReactNode
 }
@@ -23,7 +23,7 @@ interface SelectContextState {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>> | null
   value: number | string
-  setValue: HandleChangeValue | null
+  setValue: SelectBoxChangeHandler | null
   options: SelectBoxOption[]
 }
 interface SelectStyleContextState {
@@ -57,7 +57,7 @@ export const Select = ({
   const [value, setValue] = useState<number | string>(defaultValue)
   const ref = useClose({ onClose: setIsOpen })
 
-  const handleChangeValue: HandleChangeValue = item => {
+  const handleChangeValue: SelectBoxChangeHandler = item => {
     onChange(item)
     setValue(item.value)
     setIsOpen(false)

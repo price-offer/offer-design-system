@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
 import { Select } from './Select'
+import type { StyledProps } from '@types'
 
 export type ColorScheme = 'none' | 'light' | 'dark'
 export type Size = 'small' | 'medium'
@@ -13,14 +14,21 @@ export interface SelectBoxProps {
   placeholder?: string
   value?: string | number
   options: SelectBoxOption[]
-  onChange(options: SelectBoxOption): void
+  onChange(option: SelectBoxOption): void
+}
+
+/* Style Type */
+export interface StyledSelectProps
+  extends StyledProps<SelectBoxProps, 'colorScheme' | 'size'> {
+  isEmpty: boolean
+  isSelected: boolean
 }
 
 export const SelectBox = ({
-  size = 'small',
-  colorScheme = 'light',
-  value = '',
-  placeholder = '값을 선택하세요.',
+  size,
+  colorScheme,
+  value,
+  placeholder,
   options,
   onChange
 }: SelectBoxProps): ReactElement => {

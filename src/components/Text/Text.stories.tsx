@@ -9,11 +9,11 @@ export default {
       control: { type: 'color' }
     },
     tag: {
-      controle: { type: 'radio' },
+      control: { type: 'radio' },
       options: ['p', 'span']
     },
     textStyle: {
-      control: { type: 'radio' },
+      control: { type: 'select' },
       options: [...Object.keys(fonts)]
     }
   },

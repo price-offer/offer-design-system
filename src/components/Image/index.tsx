@@ -48,6 +48,7 @@ export const Image = ({
           height={height}
           radius={radius}
           width={width}
+          {...props}
         />
       )}
       {!isError && (

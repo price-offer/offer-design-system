@@ -1,5 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
@@ -25,29 +25,38 @@ export const TextArea = ({
   autoFocus,
   ...props
 }: TextAreaProps): ReactElement => {
-  const [isRefNull, SetisRefNull] = useState<boolean>(false)
-  const ref = useRef<HTMLTextAreaElement>(null)
+  // const [isRefNull, SetisRefNull] = useState<boolean>(false)
+  // const ref = useRef<HTMLTextAreaElement>(null)
   const textAreaDefaultHeight = '120px'
-  const isRefValueNull = ref === null || ref.current === null
   const isFilled = bgType === 'filled'
+  const [textAreaElement, setTextAreaElement] = useState<HTMLTextAreaElement>()
+  const isRefValueNull =
+    textAreaElement === undefined || textAreaElement === null
+
+  const handleTextAreaElement = (elem: HTMLTextAreaElement): void => {
+    if (textAreaElement !== undefined && !elem) {
+      return
+    }
+    setTextAreaElement(elem)
+  }
+
   useEffect(() => {
     handleResizeHeight()
-  }, [isRefNull])
+  }, [textAreaElement])
 
   const handleResizeHeight = (): void => {
     if (isRefValueNull) {
-      SetisRefNull(true)
       return
     }
-    ref.current.style.height = textAreaDefaultHeight
-    ref.current.style.height = `${ref.current.scrollHeight + 'px'}`
+    textAreaElement.style.height = textAreaDefaultHeight
+    textAreaElement.style.height = `${textAreaElement.scrollHeight + 'px'}`
   }
 
   return (
     <div {...props}>
       <StyledLabel>{label}</StyledLabel>
       <StyledTextArea
-        ref={ref}
+        ref={handleTextAreaElement}
         autoFocus={autoFocus}
         isFilled={isFilled}
         placeholder={placeholder}

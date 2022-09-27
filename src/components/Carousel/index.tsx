@@ -99,15 +99,20 @@ const Carousel = ({
       endClientX > startClientX && dragSpace > USER_DRAG_LENGTH
     const userSlideLeft =
       endClientX < startClientX && dragSpace > USER_DRAG_LENGTH
+
     if (startClientX === 0) {
       return
     }
     if (userSlideRight) {
       handleOffset(NAV_TYPE.RIGHT)
+      setStartClientX(0)
+      setEndClientX(0)
     } else if (userSlideLeft) {
       handleOffset(NAV_TYPE.LEFT)
+      setStartClientX(0)
+      setEndClientX(0)
     }
-  }, [endClientX])
+  }, [startClientX, endClientX])
 
   return (
     <StyledCarouselWrapper>

@@ -55,7 +55,7 @@ export const Select = ({
 }: SelectProps): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [value, setValue] = useState<number | string>(defaultValue)
-  const ref = useClose({ onClose: setIsOpen })
+  const ref = useClose<HTMLDivElement>({ onClose: setIsOpen })
 
   const handleChangeValue: SelectBoxChangeHandler = item => {
     onChange(item)

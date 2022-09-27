@@ -5,10 +5,10 @@ interface Params {
   onClose: Dispatch<SetStateAction<boolean>>
 }
 
-type UseClose = (params: Params) => MutableRefObject<HTMLDivElement | null>
-
-export const useClose: UseClose = ({ onClose }) => {
-  const ref = useRef<HTMLDivElement | null>(null)
+export const useClose = <T extends HTMLElement>({
+  onClose
+}: Params): MutableRefObject<T | null> => {
+  const ref = useRef<T | null>(null)
 
   const handleClose = (e: MouseEvent): void => {
     !ref.current?.contains(e.target as Element) && onClose(false)

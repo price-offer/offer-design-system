@@ -1,5 +1,10 @@
-import type { HTMLAttributes, MouseEventHandler, ReactElement } from 'react'
-import { useEffect, useState } from 'react'
+import type {
+  HTMLAttributes,
+  MouseEventHandler,
+  ReactElement,
+  TouchEventHandler
+} from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import ReactDOM from 'react-dom'
@@ -36,6 +41,7 @@ interface StyledGradientProps {
 
 const RESIZE_HEIGHT = 640
 const IMAGE_GAP_HALF = 6
+const TOUCH_START_END_DIRRERENCE = 30
 
 export const ImageModal = ({
   onClose,
@@ -68,15 +74,15 @@ export const ImageModal = ({
     initialTranslateValue
   )
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
+  const clientX = useRef<number | null>(null)
 
   useEffect(() => {
     setSelectedImageId(firstImageId)
     setTranslateValue(initialTranslateValue)
   }, [isOpen])
 
-  const handleClickIndicator: MouseEventHandler<HTMLDivElement> = (e): void => {
-    const selectedId = e.currentTarget.dataset.id || ''
-    const nextTranslateValue = [...imagesInfo].reduce(
+  const getNextTranslateValue = (selectedId: string): TranslateValue =>
+    [...imagesInfo].reduce(
       (sumValue, currentImage, idx, images) => {
         const { imageWidth: prevImageWidth } = sumValue
         const { id } = currentImage
@@ -102,15 +108,63 @@ export const ImageModal = ({
       }
     )
 
+  const handleClickIndicator: MouseEventHandler<HTMLDivElement> = (e): void => {
+    const selectedId = e.currentTarget.dataset.id || ''
+
     setSelectedImageId(selectedId)
-    setTranslateValue(nextTranslateValue)
+    setTranslateValue(getNextTranslateValue(selectedId))
+  }
+
+  const hadnleTouchStart: TouchEventHandler = (e): void => {
+    if (clientX.current === null) {
+      clientX.current = e.changedTouches[0].pageX
+    }
+  }
+
+  const handleTouchEnd: TouchEventHandler = (e): void => {
+    const prevTouchX = clientX.current
+    const curTouchX = e.changedTouches[0].pageX
+    const currentImageIdx = translateValue.imageCount
+
+    if (prevTouchX === null) {
+      return
+    }
+
+    if (prevTouchX - curTouchX > TOUCH_START_END_DIRRERENCE) {
+      const nextImageIndex = currentImageIdx + 1
+      const nextImage = imagesInfo[nextImageIndex]
+      const updateImageId = nextImage ? nextImage.id : imagesInfo[0].id
+
+      setSelectedImageId(updateImageId)
+      setTranslateValue(getNextTranslateValue(updateImageId))
+
+      return
+    }
+
+    if (curTouchX - prevTouchX > TOUCH_START_END_DIRRERENCE) {
+      const prevImageIdx = currentImageIdx - 1
+      const prevImage = imagesInfo[prevImageIdx]
+      const updateImageId = prevImage
+        ? prevImage.id
+        : imagesInfo[imagesInfo.length - 1].id
+
+      setSelectedImageId(updateImageId)
+      setTranslateValue(getNextTranslateValue(updateImageId))
+
+      return
+    }
+
+    clientX.current = null
   }
 
   const calculateSizeRate = (width: number, height: number): number =>
     width / height
 
   return ReactDOM.createPortal(
-    <StyledDIM isOpen={isOpen}>
+    <StyledDIM
+      isOpen={isOpen}
+      onTouchEnd={handleTouchEnd}
+      onTouchStart={hadnleTouchStart}>
       <StyledGradient direction="top" />
       <StyledGradient direction="bottom" />
       <StyledCloseIcon onClick={onClose}>

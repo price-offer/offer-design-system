@@ -201,12 +201,10 @@ export const StyledSlider = styled.div<SliderProps>`
   ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
-    right: 20px;
   }
   ${({ theme }): string => theme.mediaQuery.mobile} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
-    right: 20px;
   }
 `
 
@@ -249,14 +247,11 @@ export const StyledImage = styled.img<ImageProps>`
 export const StyledArrowBox = styled.div`
   position: absolute;
   top: 0;
-  left: -20px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-
   ${({ theme }): string => theme.mediaQuery.tablet} {
     display: none;
   }

@@ -6,7 +6,7 @@ import type { RadioProps } from './index'
 
 export default {
   component: Radio,
-  title: 'Component/Radio'
+  title: 'Components/Radio'
 } as Meta<RadioProps>
 
 const Template: Story<RadioProps> = args => <Radio {...args} />
@@ -28,7 +28,7 @@ Default.args = {
       name: '옵션 3'
     }
   ],
-  onChange: (e: ChangeEvent<HTMLInputElement>): void => {
+  onChangeRadioButton: (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)
   }

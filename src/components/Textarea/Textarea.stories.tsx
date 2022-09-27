@@ -9,7 +9,7 @@ export default {
     }
   },
   component: TextArea,
-  title: 'Component/TextArea'
+  title: 'Components/TextArea'
 } as Meta<TextAreaProps>
 
 const Template: Story<TextAreaProps> = args => <TextArea {...args} />

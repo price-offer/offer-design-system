@@ -28,7 +28,7 @@ Default.args = {
       name: '옵션 3'
     }
   ],
-  onChangeRadioButton: (e: ChangeEvent<HTMLInputElement>): void => {
+  onChange: (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)
   }

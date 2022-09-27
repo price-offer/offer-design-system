@@ -2,28 +2,28 @@ import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
+export interface RadioProps extends HTMLAttributes<HTMLDivElement> {
   formName: string
   items: { code: string; name: string }[]
-  Direction: 'horizontal' | 'vertical'
-  onChangeRadioButton(e: ChangeEvent<HTMLInputElement>): void
+  direction: 'horizontal' | 'vertical'
+  onChange(e: ChangeEvent<HTMLInputElement>): void
 }
 
-type StyledFormProps = StyledProps<RadioProps, 'Direction'>
+type StyledFormProps = StyledProps<RadioProps, 'direction'>
 
 export const Radio = ({
   formName,
-  onChangeRadioButton,
+  onChange,
   items,
-  Direction = 'horizontal',
+  direction = 'horizontal',
   ...props
 }: RadioProps): ReactElement => {
   const handleRadiobutton = (e: ChangeEvent<HTMLInputElement>): void => {
-    onChangeRadioButton(e)
+    onChange(e)
   }
 
   const radioList = items?.map(({ code, name }) => (
-    <StyledInputWrapper key={code} className={`${Direction}`}>
+    <StyledInputWrapper key={code} className={`${direction}`}>
       {name}
       <StyledInput
         id={code}
@@ -37,15 +37,15 @@ export const Radio = ({
   ))
 
   return (
-    <StyledForm {...props} Direction={Direction}>
-      {radioList}
-    </StyledForm>
+    <div {...props}>
+      <StyledForm direction={direction}>{radioList}</StyledForm>
+    </div>
   )
 }
 
 const StyledForm = styled.form<StyledFormProps>`
-  display: ${({ Direction }): string =>
-    Direction === 'vertical' ? 'block' : 'flex'};
+  display: ${({ direction }): string =>
+    direction === 'vertical' ? 'block' : 'flex'};
   gap: 10px;
 `
 const StyledInputWrapper = styled.label`

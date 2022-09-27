@@ -1,4 +1,4 @@
-import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { useRef } from 'react'
 
@@ -7,9 +7,9 @@ export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
   placeholder?: string
   children?: string
   guideMessage?: string
-  textAreaStyle?: CSSProperties
   bgType?: 'filled' | 'ghost'
   autoFocus?: boolean
+  onInput?(e: ChangeEvent<HTMLTextAreaElement>): void
 }
 
 interface StyledTextAreaProps {
@@ -21,20 +21,21 @@ export const TextArea = ({
   children = '',
   guideMessage = '',
   bgType = 'filled',
-  textAreaStyle,
   autoFocus,
+  onInput,
   ...props
 }: TextAreaProps): ReactElement => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const textAreaDefaultHeight = '120px'
   const isFilled = bgType === 'filled'
 
-  const handleResizeHeight = (): void => {
+  const handleResizeHeight = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     if (!textAreaRef || !textAreaRef.current) {
       return
     }
     textAreaRef.current.style.height = textAreaDefaultHeight
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`
+    onInput?.(e)
   }
 
   return (
@@ -47,7 +48,6 @@ export const TextArea = ({
         isFilled={isFilled}
         placeholder={placeholder}
         rows={1}
-        style={textAreaStyle}
         onInput={handleResizeHeight}>
         {children}
       </StyledTextArea>

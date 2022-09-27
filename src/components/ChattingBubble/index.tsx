@@ -17,14 +17,14 @@ export const ChattingBubble = ({
   ...props
 }: ChattingBubbleProps): ReactElement => {
   const newLineRegex = /\s/gi
-  const blankChatLength = children?.length
-  const noBlankchatLength = children?.replace(newLineRegex, '').length
-  const overChatLength = blankChatLength - noBlankchatLength
+  const blankChatLength = children.length
+  const noBlankChatLength = children.replace(newLineRegex, '').length
+  const overChatLength = blankChatLength - noBlankChatLength
   const isSend = type === 'send'
 
   return (
     <StyledBubble {...props} isSend={isSend} type={type}>
-      {noBlankchatLength <= 100
+      {noBlankChatLength <= 100
         ? children
         : children?.substring(0, 100 + overChatLength)}
     </StyledBubble>

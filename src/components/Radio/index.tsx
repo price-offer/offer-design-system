@@ -2,24 +2,24 @@ import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-export interface RadioProps extends HTMLAttributes<HTMLDivElement> {
+export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
   formName: string
   items: { code: string; name: string }[]
   radioDirection: 'horizontal' | 'vertical'
-  onChange(e: ChangeEvent<HTMLInputElement>): void
+  onChangeRadioButton(e: ChangeEvent<HTMLInputElement>): void
 }
 
 type StyledFormProps = StyledProps<RadioProps, 'radioDirection'>
 
 export const Radio = ({
   formName,
-  onChange,
+  onChangeRadioButton,
   items,
   radioDirection = 'horizontal',
   ...props
 }: RadioProps): ReactElement => {
   const handleRadiobutton = (e: ChangeEvent<HTMLInputElement>): void => {
-    onChange(e)
+    onChangeRadioButton(e)
   }
 
   const radioList = items?.map(({ code, name }) => (
@@ -37,13 +37,12 @@ export const Radio = ({
   ))
 
   return (
-    <StyledRadioWrapper {...props}>
-      <StyledForm radioDirection={radioDirection}>{radioList}</StyledForm>
-    </StyledRadioWrapper>
+    <StyledForm {...props} radioDirection={radioDirection}>
+      {radioList}
+    </StyledForm>
   )
 }
 
-const StyledRadioWrapper = styled.div``
 const StyledForm = styled.form<StyledFormProps>`
   display: ${({ radioDirection }): string =>
     radioDirection === 'vertical' ? 'block' : 'flex'};

@@ -16,9 +16,9 @@ export const ChattingBubble = ({
   children,
   ...props
 }: ChattingBubbleProps): ReactElement => {
-  const redex = /\s/gi
+  const newLineRegex = /\s/gi
   const blankChatLength = children?.length
-  const noBlankchatLength = children?.replace(redex, '').length
+  const noBlankchatLength = children?.replace(newLineRegex, '').length
   const overChatLength = blankChatLength - noBlankchatLength
   const isSend = type === 'send'
 

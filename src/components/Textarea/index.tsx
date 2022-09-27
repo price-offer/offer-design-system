@@ -1,8 +1,8 @@
 import type { CSSProperties, HTMLAttributes, ReactElement } from 'react'
-import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import { useRef } from 'react'
 
-export interface TextAreaProps extends HTMLAttributes<HTMLDivElement> {
+export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
   label?: string
   placeholder?: string
   children?: string
@@ -25,38 +25,24 @@ export const TextArea = ({
   autoFocus,
   ...props
 }: TextAreaProps): ReactElement => {
-  // const [isRefNull, SetisRefNull] = useState<boolean>(false)
-  // const ref = useRef<HTMLTextAreaElement>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const textAreaDefaultHeight = '120px'
   const isFilled = bgType === 'filled'
-  const [textAreaElement, setTextAreaElement] = useState<HTMLTextAreaElement>()
-  const isRefValueNull =
-    textAreaElement === undefined || textAreaElement === null
-
-  const handleTextAreaElement = (elem: HTMLTextAreaElement): void => {
-    if (textAreaElement !== undefined && !elem) {
-      return
-    }
-    setTextAreaElement(elem)
-  }
-
-  useEffect(() => {
-    handleResizeHeight()
-  }, [textAreaElement])
 
   const handleResizeHeight = (): void => {
-    if (isRefValueNull) {
+    if (!textAreaRef || !textAreaRef.current) {
       return
     }
-    textAreaElement.style.height = textAreaDefaultHeight
-    textAreaElement.style.height = `${textAreaElement.scrollHeight + 'px'}`
+    textAreaRef.current.style.height = textAreaDefaultHeight
+    textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`
   }
 
   return (
-    <div {...props}>
+    <>
       <StyledLabel>{label}</StyledLabel>
       <StyledTextArea
-        ref={handleTextAreaElement}
+        {...props}
+        ref={textAreaRef}
         autoFocus={autoFocus}
         isFilled={isFilled}
         placeholder={placeholder}
@@ -66,7 +52,7 @@ export const TextArea = ({
         {children}
       </StyledTextArea>
       <StyledGuideMessage>{guideMessage}</StyledGuideMessage>
-    </div>
+    </>
   )
 }
 
@@ -80,6 +66,7 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   display: inline-block;
   resize: none;
   outline: none;
+  height: 120px;
   min-width: 328px;
   max-width: 100%;
   padding: 10px 12px;
@@ -107,7 +94,5 @@ const StyledGuideMessage = styled.p`
   display: block;
   margin-top: 8px;
   color: ${({ theme }): string => theme.colors.grayScale.gray50};
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
+  ${({ theme }): string => theme.fonts.caption};
 `

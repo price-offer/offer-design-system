@@ -4,9 +4,6 @@ import type { InputProps } from './index'
 
 export default {
   argTypes: {
-    hasWon: {
-      control: 'boolean'
-    },
     inputSize: {
       control: 'radio',
       options: ['small', 'large']
@@ -14,6 +11,9 @@ export default {
     inputStyle: {
       control: 'radio',
       options: Object.values(INPUT_STYLE_KEYS)
+    },
+    isPrice: {
+      control: 'boolean'
     },
     status: {
       control: 'radio',
@@ -28,9 +28,9 @@ const Template: Story<InputProps> = args => <Input {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  hasWon: true,
   inputSize: 'large',
-  inputStyle: INPUT_STYLE_KEYS.DEFAULT,
+  inputStyle: 'default',
+  isPrice: true,
   label: '라벨',
   message: '안내 메세지',
   placeholder: '내용을 입력하세요',

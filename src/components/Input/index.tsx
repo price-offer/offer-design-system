@@ -1,15 +1,27 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { ChattingInput } from './Chatting'
-import { DefaultInput } from './Default'
-import type { DefaultInputProps } from './Default'
-import { EditInput } from './Edit'
-import { SearchInput } from './Search'
+import { ChattingInput } from './ChattingInput'
+import { DefaultInput } from './DefaultInput'
+import { EditInput } from './EditInput'
+import { SearchInput } from './SearchInput'
 
 type InputStyle = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
-export interface InputProps
-  extends HTMLAttributes<HTMLInputElement>,
-    DefaultInputProps {
+export type InputSize = 'large' | 'small'
+export interface InputProps extends HTMLAttributes<HTMLInputElement> {
   inputStyle?: InputStyle
+  inputSize?: InputSize
+  label?: string
+  status?: 'none' | 'success' | 'error' | 'default'
+  message?: string
+  isPrice?: boolean
+}
+
+export type InputStyleOption<T extends string> = {
+  [key in Extract<T, 'FONT'>]: string
+} & {
+  [key in Exclude<T, 'FONT'>]: number
+}
+export type InputStylesheet<T> = {
+  [key in InputSize]: T
 }
 
 export const INPUT_STYLE_KEYS = {
@@ -17,21 +29,22 @@ export const INPUT_STYLE_KEYS = {
   DEFAULT: 'default',
   EDIT: 'edit',
   SEARCH: 'search'
-}
+} as const
 
 export const Input = ({
   inputStyle = 'default',
   ...props
 }: InputProps): ReactElement => {
   const renderInput = (inputStyle: InputStyle): ReactElement => {
+    const { EDIT, DEFAULT, CHATTING, SEARCH } = INPUT_STYLE_KEYS
     switch (inputStyle) {
-      case INPUT_STYLE_KEYS.DEFAULT:
+      case DEFAULT:
         return <DefaultInput {...props} />
-      case INPUT_STYLE_KEYS.CHATTING:
+      case CHATTING:
         return <ChattingInput {...props} />
-      case INPUT_STYLE_KEYS.SEARCH:
+      case SEARCH:
         return <SearchInput {...props} />
-      case INPUT_STYLE_KEYS.EDIT:
+      case EDIT:
         return <EditInput {...props} />
       default:
         return <DefaultInput {...props} />

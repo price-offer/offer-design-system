@@ -1,34 +1,23 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type {
+  InputProps as DefaultInputProps,
+  InputStyleOption,
+  InputStylesheet
+} from './index'
+import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-type InputSize = 'large' | 'small'
-export interface DefaultInputProps extends HTMLAttributes<HTMLInputElement> {
-  label?: string
-  status?: 'none' | 'success' | 'error' | 'default'
-  message?: string
-  hasWon?: boolean
-  inputSize?: InputSize
-}
+type DefaultSTyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
+type DefaultStylesheet = InputStyleOption<DefaultSTyleOption>
 
-type InputStyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
-type StyledFontOption = {
-  [key in Extract<InputStyleOption, 'FONT'>]: string
+interface StyledPriceUnitProps {
+  inputStylesheet: DefaultStylesheet
 }
-type StyledOption = {
-  [key in Exclude<InputStyleOption, 'FONT'>]: number
-}
-type StyledInputOption = StyledFontOption & StyledOption
-type StylesheetValue = string | number
-type InputSizeStylesheet = {
-  [key in InputSize]: StyledInputOption
-}
-
-type StyledInputProps = StyledProps<DefaultInputProps, 'hasWon' | 'inputSize'>
+type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
+  StyledPriceUnitProps
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
-type StyledWonProps = StyledProps<DefaultInputProps, 'inputSize'>
 
-const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
+const DEFUALT_STYLESHEET: InputStylesheet<DefaultStylesheet> = {
   large: {
     FONT: 'subtitle01M',
     HEIGHT: 54,
@@ -45,18 +34,25 @@ export const DefaultInput = ({
   label,
   status = 'default',
   message = '',
-  hasWon = false,
+  isPrice = false,
   inputSize = 'large',
   ...args
 }: DefaultInputProps): ReactElement => {
   const hasMessage = status !== 'none'
+  const inputStylesheet = DEFUALT_STYLESHEET[inputSize]
 
   return (
     <StyledWrapper>
       <StyledLabel>
         {label}
-        <StyledInput hasWon={hasWon} inputSize={inputSize} {...args} />
-        <StyledWon inputSize={inputSize}>{hasWon && '원'}</StyledWon>
+        <StyledInput
+          inputStylesheet={inputStylesheet}
+          isPrice={isPrice}
+          {...args}
+        />
+        <StyledPriceUnit inputStylesheet={inputStylesheet}>
+          {isPrice && '원'}
+        </StyledPriceUnit>
       </StyledLabel>
       {hasMessage && <StyledStatus status={status}>{message}</StyledStatus>}
     </StyledWrapper>
@@ -78,19 +74,18 @@ const StyledLabel = styled.label`
 `
 const StyledInput = styled.input<StyledInputProps>`
   margin: 8px 0;
-  padding: ${({ inputSize, hasWon }): string => `
-      ${getStylesheetValue(inputSize, 'PADDING_BOTTOM')}px 
-      ${hasWon ? 35 : 12}px 
-      ${getStylesheetValue(inputSize, 'PADDING_BOTTOM')}px 12px
+  padding: ${({ inputStylesheet, isPrice }): string => `
+      ${inputStylesheet['PADDING_BOTTOM']}px 
+      ${isPrice ? 35 : 12}px 
+      ${inputStylesheet['PADDING_BOTTOM']}px 12px
     `};
   width: 328px;
-  height: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'HEIGHT')}px`};
+  height: ${({ inputStylesheet }): string => `${inputStylesheet['HEIGHT']}px`};
   background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
 
-  ${({ theme, inputSize }): string =>
-    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
+  ${({ theme, inputStylesheet }): string =>
+    theme.fonts[inputStylesheet['FONT']]}
 
   ::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
@@ -105,13 +100,13 @@ const StyledInput = styled.input<StyledInputProps>`
   }
 `
 
-const StyledWon = styled.span<StyledWonProps>`
+const StyledPriceUnit = styled.span<StyledPriceUnitProps>`
   position: absolute;
-  bottom: ${({ inputSize }): string =>
-    `${(getStylesheetValue(inputSize, 'PADDING_BOTTOM') as number) + 9}px`};
+  bottom: ${({ inputStylesheet }): string =>
+    `${(inputStylesheet['PADDING_BOTTOM'] as number) + 9}px`};
   right: 12px;
-  ${({ theme, inputSize }): string =>
-    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
+  ${({ theme, inputStylesheet }): string =>
+    theme.fonts[inputStylesheet['FONT']]}
   color:${({ theme }): string => theme.colors.grayScale.gray90};
 `
 const StyledStatus = styled.span<StyledStatusProps>`
@@ -127,8 +122,3 @@ const StyledStatus = styled.span<StyledStatusProps>`
 
   ${({ theme }): string => theme.fonts.caption01M};
 `
-
-const getStylesheetValue = (
-  inputSize: InputSize,
-  styleOption: InputStyleOption
-): StylesheetValue => INPUT_SIZE_STYLESHEET[inputSize][styleOption]

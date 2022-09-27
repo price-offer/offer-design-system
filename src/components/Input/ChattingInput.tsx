@@ -1,16 +1,16 @@
-import type { ChangeEventHandler, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEventHandler, ReactElement } from 'react'
+import type { InputProps, InputStyleOption, InputStylesheet } from './index'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
 import { useState } from 'react'
 
-type InputSize = 'large' | 'small'
-interface ChattingInputProps extends HTMLAttributes<HTMLInputElement> {
-  inputSize?: InputSize
-}
+type ChattingInputProps = Omit<
+  InputProps,
+  'label' | 'status' | 'message' | 'isPrice'
+>
 
-type InputStyleOption =
+type ChattingStyleOption =
   | 'WIDTH'
   | 'RIGHT'
   | 'TOP'
@@ -18,21 +18,13 @@ type InputStyleOption =
   | 'HEIGHT'
   | 'BUTTON_TOP'
   | 'FONT'
-type InputStyleValue = number | string
-type StyledFontOption = {
-  [key in Extract<InputStyleOption, 'FONT'>]: string
-}
-type StyledOption = {
-  [key in Exclude<InputStyleOption, 'FONT'>]: number
-}
-type InputSizeStylesheet = {
-  [key in InputSize]: StyledInputOption
+type ChattingStylesheet = InputStyleOption<ChattingStyleOption>
+
+interface StyledInputProps {
+  inputStylesheet: ChattingStylesheet
 }
 
-type StyledInputOption = StyledFontOption & StyledOption
-type StyledInputProps = StyledProps<ChattingInputProps, 'inputSize'>
-
-const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
+const CHATTING_STYLESHEET: InputStylesheet<ChattingStylesheet> = {
   large: {
     BUTTON_RIGHT: 10,
     BUTTON_TOP: 8,
@@ -51,7 +43,7 @@ const INPUT_SIZE_STYLESHEET: InputSizeStylesheet = {
     TOP: 10,
     WIDTH: 328
   }
-} as const
+}
 
 export const ChattingInput = ({
   inputSize = 'large',
@@ -59,6 +51,8 @@ export const ChattingInput = ({
   ...props
 }: ChattingInputProps): ReactElement => {
   const [inputValue, setInputValue] = useState<string>('')
+  const inputStylesheet = CHATTING_STYLESHEET[inputSize]
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     onChange && onChange(e)
     setInputValue(e.currentTarget.value)
@@ -66,8 +60,14 @@ export const ChattingInput = ({
 
   return (
     <StyledInputForm>
-      <StyledInput inputSize={inputSize} onChange={handleChange} {...props} />
-      <StyledInputButton disabled={!inputValue} inputSize={inputSize}>
+      <StyledInput
+        inputStylesheet={inputStylesheet}
+        onChange={handleChange}
+        {...props}
+      />
+      <StyledInputButton
+        disabled={!inputValue}
+        inputStylesheet={inputStylesheet}>
         <img src={ICON.ARROW_UP_24} />
       </StyledInputButton>
     </StyledInputForm>
@@ -80,22 +80,20 @@ const StyledInputForm = styled.form`
 `
 
 const StyledInput = styled.input<StyledInputProps>`
-  width: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'WIDTH')}px`};
-  height: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'HEIGHT')}px`};
-  padding: ${({ inputSize }): string => `
-        ${getStylesheetValue(inputSize, 'TOP')}px 
-        ${(getStylesheetValue(inputSize, 'RIGHT') as number) + 40}px 
-        ${getStylesheetValue(inputSize, 'TOP')}px 
-        ${getStylesheetValue(inputSize, 'RIGHT')}px 
+  width: ${({ inputStylesheet }): string => `${inputStylesheet['WIDTH']}px`};
+  height: ${({ inputStylesheet }): string => `${inputStylesheet['HEIGHT']}px`};
+  padding: ${({ inputStylesheet }): string => `
+        ${inputStylesheet['FONT']}px 
+        ${inputStylesheet['RIGHT'] + 40}px 
+        ${inputStylesheet['TOP']}px 
+        ${inputStylesheet['RIGHT']}px 
     `};
   background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
   border-radius: ${({ theme }): string => theme.radius.round16};
 
-  ${({ theme, inputSize }): string =>
-    theme.fonts[getStylesheetValue(inputSize, 'FONT')]}
+  ${({ theme, inputStylesheet }): string =>
+    theme.fonts[inputStylesheet['FONT']]}
 
   &::placeholder {
     color: ${({ theme }): string => theme.colors.grayScale.gray50};
@@ -112,10 +110,9 @@ const StyledInput = styled.input<StyledInputProps>`
 
 const StyledInputButton = styled.button<StyledInputProps>`
   position: absolute;
-  right: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'BUTTON_RIGHT')}px`};
-  top: ${({ inputSize }): string =>
-    `${getStylesheetValue(inputSize, 'BUTTON_TOP')}px`};
+  right: ${({ inputStylesheet }): string =>
+    `${inputStylesheet['BUTTON_RIGHT']}px`};
+  top: ${({ inputStylesheet }): string => `${inputStylesheet['BUTTON_TOP']}px`};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,8 +132,3 @@ const StyledInputButton = styled.button<StyledInputProps>`
       hexToCSSFilter(theme.colors.grayScale.white).filter};
   }
 `
-
-const getStylesheetValue = (
-  inputSize: InputSize,
-  styleOption: InputStyleOption
-): InputStyleValue => INPUT_SIZE_STYLESHEET[inputSize][styleOption]

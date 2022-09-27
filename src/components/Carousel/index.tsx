@@ -300,7 +300,6 @@ export const StyledIndicator = styled.div`
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
-    opacity: 0.5;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   }
 `
@@ -312,7 +311,6 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   position: absolute;
   left: 0;
   top: 50%;
-  font-size: 20px;
   margin: 0 1px;
   border-radius: 100px;
   cursor: pointer;

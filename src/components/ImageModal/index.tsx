@@ -1,5 +1,5 @@
 import type { HTMLAttributes, MouseEventHandler, ReactElement } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
 import ReactDOM from 'react-dom'
@@ -26,12 +26,10 @@ interface TranslateValue {
 type StyledDIMProps = StyledProps<ImageModalProps, 'isOpen'>
 interface StyledImageContainerProps {
   translateValue: TranslateValue
-  initialTranslateValue: TranslateValue
 }
 interface StyledImageProps {
   isFixedHeight: boolean
 }
-
 interface StyledGradientProps {
   direction: 'top' | 'bottom'
 }
@@ -66,15 +64,15 @@ export const ImageModal = ({
     imageCount: 0,
     imageWidth: firstImageWidth
   }
-  const translateValue = useRef<TranslateValue>(initialTranslateValue)
+  const [translateValue, setTranslateValue] = useState<TranslateValue>(
+    initialTranslateValue
+  )
   const [selectedImageId, setSelectedImageId] = useState<string>(firstImageId)
 
-  const handleCloseModal = (): void => {
-    onClose?.()
-
+  useEffect(() => {
     setSelectedImageId(firstImageId)
-    translateValue.current = initialTranslateValue
-  }
+    setTranslateValue(initialTranslateValue)
+  }, [isOpen])
 
   const handleClickIndicator: MouseEventHandler<HTMLDivElement> = (e): void => {
     const selectedId = e.currentTarget.dataset.id || ''
@@ -105,7 +103,7 @@ export const ImageModal = ({
     )
 
     setSelectedImageId(selectedId)
-    translateValue.current = nextTranslateValue
+    setTranslateValue(nextTranslateValue)
   }
 
   const calculateSizeRate = (width: number, height: number): number =>
@@ -115,13 +113,10 @@ export const ImageModal = ({
     <StyledDIM isOpen={isOpen}>
       <StyledGradient direction="top" />
       <StyledGradient direction="bottom" />
-      <StyledCloseIcon onClick={handleCloseModal}>
+      <StyledCloseIcon onClick={onClose}>
         <img alt="close-button" src={ICON.CLOSE_24} />
       </StyledCloseIcon>
-      <StyledImageContainer
-        {...props}
-        initialTranslateValue={initialTranslateValue}
-        translateValue={translateValue.current}>
+      <StyledImageContainer {...props} translateValue={translateValue}>
         {imagesInfo.map(({ src, id, resizeWidth, height }) => (
           <StyledImage
             key={id}
@@ -185,10 +180,8 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
       `translate(-${translateValue.imageCount * 100}vw, 0);`};
   }
 
-  transform: ${({ translateValue, initialTranslateValue }): string =>
-    `translate(calc(50vw - ${
-      translateValue.imageWidth || initialTranslateValue.imageWidth
-    }px), 0)}, 0)`};
+  transform: ${({ translateValue }): string =>
+    `translate(calc(50vw - ${translateValue.imageWidth}px), 0)}, 0)`};
 `
 
 const StyledImage = styled.img<StyledImageProps>`

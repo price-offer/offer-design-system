@@ -33,7 +33,7 @@ const FONT_COLOR = {
   ghost: 'gray50',
   outline: 'gray90',
   outlineDisabled: 'gray30',
-  solidDisabled: 'gray30',
+  solidDisabled: 'white',
   solidPrimary: 'white',
   solidSub: 'gray90'
 } as const

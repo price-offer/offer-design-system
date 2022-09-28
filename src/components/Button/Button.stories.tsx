@@ -26,15 +26,8 @@ export default {
 
 const Template: Story<ButtonProps> = args => <Button {...args} />
 
-export const Basic = Template.bind({})
-Basic.args = {
-  buttonStyle: 'solidPrimary',
-  children: 'CTA 버튼',
-  size: 'large'
-}
-
-export const Icon = Template.bind({})
-Icon.args = {
+export const Default = Template.bind({})
+Default.args = {
   buttonStyle: 'ghost',
   children: 'CTA 버튼',
   iconUrl: ICON.HEART_24,

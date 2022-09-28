@@ -99,15 +99,20 @@ const Carousel = ({
       endClientX > startClientX && dragSpace > USER_DRAG_LENGTH
     const userSlideLeft =
       endClientX < startClientX && dragSpace > USER_DRAG_LENGTH
+
     if (startClientX === 0) {
       return
     }
     if (userSlideRight) {
       handleOffset(NAV_TYPE.RIGHT)
+      setStartClientX(0)
+      setEndClientX(0)
     } else if (userSlideLeft) {
       handleOffset(NAV_TYPE.LEFT)
+      setStartClientX(0)
+      setEndClientX(0)
     }
-  }, [endClientX])
+  }, [startClientX, endClientX])
 
   return (
     <StyledCarouselWrapper>
@@ -196,12 +201,10 @@ export const StyledSlider = styled.div<SliderProps>`
   ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
-    right: 20px;
   }
   ${({ theme }): string => theme.mediaQuery.mobile} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
-    right: 20px;
   }
 `
 
@@ -244,14 +247,11 @@ export const StyledImage = styled.img<ImageProps>`
 export const StyledArrowBox = styled.div`
   position: absolute;
   top: 0;
-  left: -20px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-
   ${({ theme }): string => theme.mediaQuery.tablet} {
     display: none;
   }
@@ -300,7 +300,6 @@ export const StyledIndicator = styled.div`
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
-    opacity: 0.5;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   }
 `
@@ -312,7 +311,6 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   position: absolute;
   left: 0;
   top: 50%;
-  font-size: 20px;
   margin: 0 1px;
   border-radius: 100px;
   cursor: pointer;

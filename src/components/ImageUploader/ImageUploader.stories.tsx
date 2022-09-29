@@ -5,7 +5,6 @@ import type { ImageUploaderProps } from './index'
 import { v4 as uuidV4 } from 'uuid'
 
 export default {
-  argTypes: {},
   component: ImageUploader,
   title: 'Components/ImageUploader'
 } as Meta<ImageUploaderProps>

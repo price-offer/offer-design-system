@@ -1,7 +1,7 @@
 import { Badge, Button, Image } from '@components'
+import type { HTMLAttributes, ReactElement } from 'react'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { ICON } from '@constants'
-import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { UploaderProps } from '../index'
 
@@ -10,20 +10,27 @@ interface StyledProps {
   isShowListType: boolean
 }
 
+type DesktopUploaderProps = {
+  isMaximum: boolean
+  imgTotal: string
+  isShowListType: boolean
+} & UploaderProps &
+  HTMLAttributes<HTMLDivElement>
+
 export const DesktopUploader = ({
   imageListRef,
   uploaderRef,
   imageList,
   openUploader,
   addImage,
-  removeImage
-}: UploaderProps): ReactElement => {
-  const isShowListType = imageList.length > 0
-  const isMaximum = imageList.length === 10
-  const imgTotal = `(${imageList.length}/10)`
-
+  removeImage,
+  isShowListType,
+  isMaximum,
+  imgTotal,
+  ...props
+}: DesktopUploaderProps): ReactElement => {
   return (
-    <StyledUploaderWrapper isShowListType={isShowListType}>
+    <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
           <StyledTriggerIcon
@@ -54,7 +61,10 @@ export const DesktopUploader = ({
               <StyledBadge colorScheme="orange">대표 사진</StyledBadge>
             )}
             <Image alt={`file-${index}`} boxSize="280px" src={url} />
-            <StyledRemoveButtonWrapper onClick={removeImage}>
+            <StyledRemoveButtonWrapper
+              onClick={(): void => {
+                removeImage(index)
+              }}>
               <StyledRemoveButton
                 alt={`close-icon_${index}`}
                 boxSize="16px"

@@ -1,17 +1,17 @@
-import type { ChangeEventHandler, MouseEventHandler } from 'react'
 import type {
   ImageInfo,
   ImageUploaderProps,
   UploaderProps
 } from '@components/ImageUploader'
 import { useRef, useState } from 'react'
+import type { ChangeEventHandler } from 'react'
+import { NOTICE_MESSAGE } from '@constants'
 import { v4 as uuidV4 } from 'uuid'
 
 const isValidImageUrl = (file: unknown): file is string =>
   typeof file === 'string'
 
 const MAX_LIST_LENGTH = 10
-const NOTICE_MESSAGE = '사진은 최대 10장만 추가 가능합니다.'
 
 export const useImageUploader = ({
   imageList: defaultImageList,
@@ -22,31 +22,23 @@ export const useImageUploader = ({
   const [imageList, setImageList] = useState<ImageInfo[]>(defaultImageList)
 
   const openUploader = (): void => {
-    if (imageList.length === 10) {
-      alert(NOTICE_MESSAGE)
+    if (imageList.length === MAX_LIST_LENGTH) {
+      alert(NOTICE_MESSAGE.IMAGE_UPLOAD)
       return
     }
 
     uploaderRef.current?.click()
   }
 
-  const removeImage: MouseEventHandler<HTMLDivElement> = e => {
+  const removeImage = (index: number): void => {
     if (!imageListRef.current) {
       return
     }
 
-    const closeIcons = imageListRef.current.querySelectorAll(
-      '[data-id="close-icon"]'
-    )
-    const fileIndex = Array.from(closeIcons).findIndex(
-      icon => icon === e.target
-    )
+    const newFiles = [...imageList]
+    newFiles.splice(index, 1)
 
-    const firstToIndexFileList = imageList.slice(0, fileIndex)
-    const indexToLastFileList = imageList.slice(fileIndex + 1)
-    const newFiles = [...firstToIndexFileList, ...indexToLastFileList]
-
-    const isRepresent = imageList[fileIndex].isRepresent && imageList.length > 1
+    const isRepresent = imageList[index].isRepresent && imageList.length > 1
     if (isRepresent) {
       newFiles[0].isRepresent = true
     }
@@ -65,7 +57,7 @@ export const useImageUploader = ({
     const isOverListLength =
       MAX_LIST_LENGTH - (imageList.length + files.length) < 0
     if (isOverListLength) {
-      alert(NOTICE_MESSAGE)
+      alert(NOTICE_MESSAGE.IMAGE_UPLOAD)
       return
     }
 
@@ -82,20 +74,18 @@ export const useImageUploader = ({
     })
 
     const imageFiles = await Promise.all(fulfilledImageFiles)
-    imageFiles.forEach((file, index) => {
+    const newImageList = imageFiles.map((file, index) => {
       const isRepresent = imageList.length === 0 && index === 0
       const imageUrl = isValidImageUrl(file) ? file : ''
-      const newImage = {
+
+      return {
         id: uuidV4(),
         isRepresent,
         url: imageUrl
       }
-
-      setImageList(prevImageList => {
-        return [...prevImageList, newImage]
-      })
     })
 
+    setImageList(prevImageList => [...prevImageList, ...newImageList])
     onChange({ eventType: 'upload', imageList })
     e.target.value = ''
   }

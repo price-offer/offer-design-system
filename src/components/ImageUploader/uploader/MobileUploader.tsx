@@ -10,20 +10,27 @@ interface StyledProps {
   isShowListType: boolean
 }
 
+type MobileUploaderProps = {
+  isMaximum: boolean
+  imgTotal: string
+  isShowListType: boolean
+} & UploaderProps &
+  HTMLAttributes<HTMLDivElement>
+
 export const MobileUploader = ({
   imageListRef,
   uploaderRef,
   imageList,
   openUploader,
   addImage,
-  removeImage
-}: UploaderProps): ReactElement => {
-  const isShowListType = imageList.length > 0
-  const isMaximum = imageList.length === 10
-  const imgTotal = `(${imageList.length}/10)`
-
+  removeImage,
+  isShowListType,
+  isMaximum,
+  imgTotal,
+  ...props
+}: MobileUploaderProps): ReactElement => {
   return (
-    <StyledUploaderWrapper isShowListType={isShowListType}>
+    <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
         <StyledTriggerIcon
           alt="picture-icon"
@@ -46,11 +53,13 @@ export const MobileUploader = ({
               <StyledBadge colorScheme="orange">대표 사진</StyledBadge>
             )}
             <Image alt={`file-${index}`} boxSize="80px" src={url} />
-            <StyledRemoveButtonWrapper onClick={removeImage}>
+            <StyledRemoveButtonWrapper
+              onClick={(): void => {
+                removeImage(index)
+              }}>
               <StyledRemoveButton
                 alt={`close-icon_${index}`}
                 boxSize="16px"
-                data-id="close-icon"
                 src={ICON.CLOSE_16}
               />
             </StyledRemoveButtonWrapper>

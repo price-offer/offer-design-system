@@ -15,17 +15,18 @@ export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
   fallbackSrc?: string
   objectFit?: ObjectFit
 }
+
 type StyledImgProps = StyledProps<
   ImageProps,
   'boxSize' | 'radius' | 'objectFit' | 'width' | 'height'
 >
-interface ApplyStyleParams {
+interface ApplyShapeParams {
   boxSize: string
   radius: string
   width: string
   height: string
 }
-type ApplyStyle = (params: ApplyStyleParams) => string
+type ApplyShape = (params: ApplyShapeParams) => string
 
 export const Image = ({
   alt,
@@ -91,18 +92,18 @@ export const Image = ({
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
   ${({ boxSize, radius, theme, width, height }): string => `
-    ${applyStyle({ boxSize, height, radius, width })}
+    ${applyShape({ boxSize, height, radius, width })}
     background-color: ${theme.colors.grayScale.gray10}
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`
   ${({ boxSize, radius, objectFit, width, height }): string => `
-    ${applyStyle({ boxSize, height, radius, width })}
+    ${applyShape({ boxSize, height, radius, width })}
     object-fit: ${objectFit};
   `}
 `
 
-const applyStyle: ApplyStyle = ({ radius, boxSize, width, height }) => {
+const applyShape: ApplyShape = ({ radius, boxSize, width, height }) => {
   return `
     width: ${width || boxSize};
     height: ${height || boxSize};

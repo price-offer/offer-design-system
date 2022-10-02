@@ -5,7 +5,6 @@ import { useRef } from 'react'
 export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
   label?: string
   placeholder?: string
-  children?: string
   guideMessage?: string
   bgType?: 'filled' | 'ghost'
   autoFocus?: boolean
@@ -18,7 +17,6 @@ interface StyledTextAreaProps {
 export const TextArea = ({
   label = '',
   placeholder = '내용을 입력하세요.',
-  children = '',
   guideMessage = '',
   bgType = 'filled',
   autoFocus,
@@ -26,14 +24,14 @@ export const TextArea = ({
   ...props
 }: TextAreaProps): ReactElement => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
-  const textAreaDefaultHeight = '120px'
+  const TEXT_AREA_DEFAULT_HEIGHT = '120px'
   const isFilled = bgType === 'filled'
 
   const handleResizeHeight = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     if (!textAreaRef || !textAreaRef.current) {
       return
     }
-    textAreaRef.current.style.height = textAreaDefaultHeight
+    textAreaRef.current.style.height = TEXT_AREA_DEFAULT_HEIGHT
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`
     onInput?.(e)
   }
@@ -48,9 +46,8 @@ export const TextArea = ({
         isFilled={isFilled}
         placeholder={placeholder}
         rows={1}
-        onInput={handleResizeHeight}>
-        {children}
-      </StyledTextArea>
+        onInput={handleResizeHeight}
+      />
       <StyledGuideMessage>{guideMessage}</StyledGuideMessage>
     </>
   )

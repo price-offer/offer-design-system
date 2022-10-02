@@ -1,6 +1,6 @@
 import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
-import { ICON } from '@constants'
+import { Icon } from '@components'
 import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
@@ -41,9 +41,6 @@ const NAV_TYPE = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 } as const
-
-const ARROW_RIGHT = ICON.CHEVRON_RIGHT_40
-const ARROW_LEFT = ICON.CHEVRON_LEFT_40
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
@@ -138,26 +135,26 @@ const Carousel = ({
             {isFirstImage ? (
               <div />
             ) : (
-              <StyledRightArrow
-                alt="arrow-left"
+              <StyledLeftArrow
                 currentImageValue={currentImageValue}
-                src={ARROW_LEFT}
+                type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.LEFT)
-                }}
-              />
+                }}>
+                <Icon iconType="chevronLeft" size={40} />
+              </StyledLeftArrow>
             )}
             {isLastImage ? (
               <div />
             ) : (
-              <StyledLeftArrow
-                alt="arrow-right"
+              <StyledRightArrow
                 currentImageValue={currentImageValue}
-                src={ARROW_RIGHT}
+                type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.RIGHT)
-                }}
-              />
+                }}>
+                <Icon iconType="chevronRight" size={40} />
+              </StyledRightArrow>
             )}
           </StyledArrowBox>
         )}
@@ -257,21 +254,19 @@ export const StyledArrowBox = styled.div`
   }
 `
 
-export const StyledRightArrow = styled.img<ArrowProps>`
+export const StyledRightArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
+  border: none;
   background-color: ${({ theme }): string => theme.colors.background.white};
-  color: ${({ theme }): string => theme.colors.background.white};
-  font-size: 2rem;
   cursor: pointer;
 `
 
-export const StyledLeftArrow = styled.img<ArrowProps>`
+export const StyledLeftArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
+  border: none;
   background-color: ${({ theme }): string => theme.colors.background.white};
-  color: ${({ theme }): string => theme.colors.background.white};
-  font-size: 2rem;
   cursor: pointer;
 `
 

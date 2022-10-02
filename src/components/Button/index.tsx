@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
+import { Icon } from '@components'
+import type { IconType } from '@components'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
@@ -9,10 +10,11 @@ type ButtonSize = 'small' | 'medium' | 'large'
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   buttonStyle?: ButtonStyle
   size?: ButtonSize
-  iconUrl?: string
+  iconType?: IconType
   children: string
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'buttonStyle' | 'size'>
+type StyledIconProps = StyledProps<ButtonProps, 'buttonStyle'>
 type ApplyButtonColor = (theme: Theme, buttnStyle: ButtonStyle) => string
 type ApplyButtonSizeStyle = (
   theme: Theme,
@@ -20,7 +22,6 @@ type ApplyButtonSizeStyle = (
   size: ButtonSize
 ) => string
 
-const ICON_SIZE = 24
 export const BUTTON_STYLE_KEYS = {
   GHOST: 'ghost',
   OUTLINE: 'outline',
@@ -41,18 +42,13 @@ const FONT_COLOR = {
 export const Button = ({
   size = 'medium',
   buttonStyle = 'solidPrimary',
-  iconUrl,
+  iconType,
   children,
   ...props
 }: ButtonProps): ReactElement => {
-  const isSmallSize = size === 'small'
-  const isShowIcon = !isSmallSize && iconUrl
-
   return (
     <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
-      {isShowIcon && (
-        <img alt="icon" height={ICON_SIZE} src={iconUrl} width={ICON_SIZE} />
-      )}
+      {iconType && <StyledIcon buttonStyle={buttonStyle} iconType={iconType} />}
       {children}
     </StyledButton>
   )
@@ -71,12 +67,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   ${({ theme, size, buttonStyle }): string =>
     applyButtonSizeStyle(theme, buttonStyle, size)}
   ${({ theme, buttonStyle }): string => applyButtonColor(theme, buttonStyle)}
-
-  img {
-    margin-right: 4px;
-    filter: ${({ theme, buttonStyle }): string =>
-      hexToCSSFilter(applyButtonFontColor(theme, buttonStyle)).filter};
-  }
 `
 const applyButtonSizeStyle: ApplyButtonSizeStyle = (
   theme,
@@ -104,6 +94,12 @@ const applyButtonSizeStyle: ApplyButtonSizeStyle = (
       return ``
   }
 }
+
+const StyledIcon = styled(Icon)<StyledIconProps>`
+  margin-right: 4px;
+  color: ${({ theme, buttonStyle }): string =>
+    applyButtonFontColor(theme, buttonStyle)};
+`
 
 const applyButtonColor: ApplyButtonColor = (theme, buttonStyle) => {
   const { gray20, black, gray05, white } = theme.colors.grayScale

@@ -1,51 +1,79 @@
-import { useEffect, useRef, useState } from 'react'
-import type { MutableRefObject } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-interface UseImageParams {
+type NativeImageProps = React.ImgHTMLAttributes<HTMLImageElement>
+type ImageEvent = React.SyntheticEvent<HTMLImageElement, Event>
+interface UseImageProps {
   src: string
   fallbackSrc?: string
-  onError?(): void
-  onLoad?(): void
+  onLoad?: NativeImageProps['onLoad']
+  onError?: NativeImageProps['onError']
 }
-interface UseImageReturn {
-  imgRef: MutableRefObject<HTMLImageElement | null>
-  isError: boolean
-}
-type UseImage = (params: UseImageParams) => UseImageReturn
 
-export const useImage: UseImage = ({
+type Status = 'loading' | 'failed' | 'pending' | 'loaded'
+
+export const useImage = ({
   src,
-  fallbackSrc = '',
-  onError,
-  onLoad
-}) => {
-  const imgRef = useRef<HTMLImageElement | null>(null)
-  const [isError, setIsError] = useState<boolean>(true)
+  fallbackSrc,
+  onLoad,
+  onError
+}: UseImageProps): Status => {
+  const [status, setStatus] = useState<Status>('pending')
+  const imageRef = useRef<HTMLImageElement | null>()
+
+  useLayoutEffect(() => {
+    if (typeof window === undefined) {
+      return
+    }
+
+    if (status === 'loading') {
+      load()
+    }
+
+    return () => {
+      init()
+    }
+  }, [status])
 
   useEffect(() => {
-    if (!imgRef.current) {
-      imgRef.current = new Image()
-    }
-
-    imgRef.current.onload = handleLoad
-    imgRef.current.onerror = handleError
-    imgRef.current.src = src || fallbackSrc
-  }, [src, fallbackSrc, isError, onError, onLoad])
-
-  const handleError = (): void => {
-    onError?.()
-
-    if (fallbackSrc) {
-      setIsError(false)
+    if (src) {
+      setStatus('loading')
     } else {
-      setIsError(true)
+      setStatus('pending')
     }
+  }, [src, fallbackSrc])
+
+  const load = (): void => {
+    if (!src) {
+      return
+    }
+
+    init()
+
+    const img = new Image()
+    img.src = src
+    img.onload = (event): void => {
+      init()
+      setStatus('loaded')
+      onLoad?.(event as unknown as ImageEvent)
+    }
+    img.onerror = (error): void => {
+      init()
+      setStatus('failed')
+      onError?.(error as unknown as ImageEvent)
+    }
+
+    imageRef.current = img
   }
 
-  const handleLoad = (): void => {
-    onLoad?.()
-    setIsError(false)
+  const init = (): void => {
+    if (!imageRef.current) {
+      return
+    }
+
+    imageRef.current.onload = null
+    imageRef.current.onerror = null
+    imageRef.current = null
   }
 
-  return { imgRef, isError }
+  return status
 }

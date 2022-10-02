@@ -9,14 +9,20 @@ interface UseImageProps {
   onError?: NativeImageProps['onError']
 }
 
-type Status = 'loading' | 'failed' | 'pending' | 'loaded'
+type Status = 'loading' | 'failed' | 'pending' | 'loaded' | 'failedFallback'
+
+interface UseImageReturn {
+  status: Status
+  onFallbackError(): void
+  onLoadImage(): void
+}
 
 export const useImage = ({
   src,
   fallbackSrc,
   onLoad,
   onError
-}: UseImageProps): Status => {
+}: UseImageProps): UseImageReturn => {
   const [status, setStatus] = useState<Status>('pending')
   const imageRef = useRef<HTMLImageElement | null>()
 
@@ -75,5 +81,13 @@ export const useImage = ({
     imageRef.current = null
   }
 
-  return status
+  const onFallbackError = (): void => {
+    setStatus('failedFallback')
+  }
+
+  const onLoadImage = (): void => {
+    setStatus('loaded')
+  }
+
+  return { onFallbackError, onLoadImage, status }
 }

@@ -30,7 +30,7 @@ type ApplyStyle = (params: ApplyStyleParams) => string
 export const Image = ({
   alt,
   src,
-  fallbackSrc = '',
+  fallbackSrc,
   objectFit = 'cover',
   width = '',
   height = '',
@@ -38,11 +38,32 @@ export const Image = ({
   radius = '0px',
   ...props
 }: ImageProps): ReactElement => {
-  const { imgRef, isError } = useImage({ fallbackSrc, src })
+  const { onFallbackError, onLoadImage, status } = useImage({
+    fallbackSrc,
+    src
+  })
+  const isLoaded = status === 'loaded'
+
+  const isShowFallback = fallbackSrc && !isLoaded && status !== 'failedFallback'
+  if (isShowFallback) {
+    return (
+      <StyledImage
+        alt={alt}
+        boxSize={boxSize}
+        height={height}
+        objectFit={objectFit}
+        radius={radius}
+        src={fallbackSrc}
+        width={width}
+        onError={onFallbackError}
+        {...props}
+      />
+    )
+  }
 
   return (
     <>
-      {isError && (
+      {!isLoaded && (
         <StyledPlaceholder
           boxSize={boxSize}
           height={height}
@@ -51,9 +72,8 @@ export const Image = ({
           {...props}
         />
       )}
-      {!isError && (
+      {isLoaded && (
         <StyledImage
-          ref={imgRef}
           alt={alt}
           boxSize={boxSize}
           height={height}
@@ -61,6 +81,7 @@ export const Image = ({
           radius={radius}
           src={src}
           width={width}
+          onLoad={onLoadImage}
           {...props}
         />
       )}

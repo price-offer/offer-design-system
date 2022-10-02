@@ -1,10 +1,10 @@
+import type { HTMLAttributes, ReactElement } from 'react'
 import { ICON } from '@constants'
 import { Image } from '@components'
-import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-export interface AvatarProps {
+export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   alt: string
   src: string
   size?: keyof typeof AVATAR_SIZE
@@ -22,17 +22,25 @@ export const AVATAR_SIZE = {
 export const Avatar = ({
   alt,
   src,
-  size = 'small'
+  size = 'small',
+  ...props
 }: AvatarProps): ReactElement => {
   const isBlank = src === ''
 
   return (
     <>
       {!isBlank && (
-        <Image alt={alt} boxSize={AVATAR_SIZE[size]} radius="100%" src={src} />
+        <div {...props}>
+          <Image
+            alt={alt}
+            boxSize={AVATAR_SIZE[size]}
+            radius="100%"
+            src={src}
+          />
+        </div>
       )}
       {isBlank && (
-        <StyledBlankAvatarWrapper size={size}>
+        <StyledBlankAvatarWrapper size={size} {...props}>
           <Image
             alt={alt}
             boxSize="51%"

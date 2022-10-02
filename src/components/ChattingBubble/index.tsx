@@ -41,14 +41,6 @@ const StyledBubble = styled.p<StyledBubbleProps>`
   max-width: 332px;
   max-height: 144px;
   padding: 12px 16px;
-  /* color: ${({ theme, isSend }): string =>
-    isSend ? theme.colors.grayScale.white : theme.colors.grayScale.gray90};
-  ${({ theme, isSend }): string =>
-    isSend ? theme.fonts.body01M : theme.fonts.body01R}
-  background-color: ${({ theme, isSend }): string =>
-    isSend ? theme.colors.brand.primary : theme.colors.grayScale.white};
-  border-radius: ${({ isSend }): string =>
-    isSend ? '16px 0px 16px 16px' : '0px 16px 16px 16px'}; */
 
   ${({ theme, isSend }): string => {
     if (isSend) {
@@ -73,8 +65,6 @@ const StyledBubble = styled.p<StyledBubbleProps>`
     max-height: 136px;
     padding: 8px 12px;
     ${({ theme, isSend }): string =>
-      isSend
-        ? theme.fonts.body02M
-        : 'font-size: 14px; font-weight: regular; line-height: 20px; letter-spacing: -0.4%;'}
+      isSend ? theme.fonts.body02M : theme.fonts.body02R}
   }
 `

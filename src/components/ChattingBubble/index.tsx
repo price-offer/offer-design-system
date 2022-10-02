@@ -1,13 +1,13 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
+import type { StyledProps } from '@types'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
   type: 'send' | 'receive'
   children: string
 }
 
-interface StyledBubbleProps {
-  type: 'send' | 'receive'
+type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'type'> & {
   isSend: boolean
 }
 
@@ -21,12 +21,16 @@ export const ChattingBubble = ({
   const noBlankChatLength = children.replace(newLineRegex, '').length
   const overChatLength = blankChatLength - noBlankChatLength
   const isSend = type === 'send'
+  const MAXIMUM_NUMBER_OF_CHATTINGBUBBLE = 100
 
   return (
     <StyledBubble {...props} isSend={isSend} type={type}>
-      {noBlankChatLength <= 100
+      {noBlankChatLength <= MAXIMUM_NUMBER_OF_CHATTINGBUBBLE
         ? children
-        : children?.substring(0, 100 + overChatLength)}
+        : children?.substring(
+            0,
+            MAXIMUM_NUMBER_OF_CHATTINGBUBBLE + overChatLength
+          )}
     </StyledBubble>
   )
 }
@@ -37,14 +41,32 @@ const StyledBubble = styled.p<StyledBubbleProps>`
   max-width: 332px;
   max-height: 144px;
   padding: 12px 16px;
-  color: ${({ theme, isSend }): string =>
+  /* color: ${({ theme, isSend }): string =>
     isSend ? theme.colors.grayScale.white : theme.colors.grayScale.gray90};
   ${({ theme, isSend }): string =>
     isSend ? theme.fonts.body01M : theme.fonts.body01R}
   background-color: ${({ theme, isSend }): string =>
     isSend ? theme.colors.brand.primary : theme.colors.grayScale.white};
   border-radius: ${({ isSend }): string =>
-    isSend ? '16px 0px 16px 16px' : '0px 16px 16px 16px'};
+    isSend ? '16px 0px 16px 16px' : '0px 16px 16px 16px'}; */
+
+  ${({ theme, isSend }): string => {
+    if (isSend) {
+      return `
+          color: ${theme.colors.grayScale.white};
+          background-color: ${theme.colors.brand.primary};
+          border-radius: 16px 0px 16px 16px;
+          ${theme.fonts.body01M}
+          `
+    }
+
+    return `
+       color: ${theme.colors.grayScale.gray90};
+       background-color: ${theme.colors.grayScale.white};
+       border-radius: 0px 16px 16px 16px;
+       ${theme.fonts.body01R}
+    `
+  }}
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
     max-width: 230px;

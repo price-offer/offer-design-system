@@ -16,26 +16,14 @@ const Template: Story<ChattingBubbleProps> = args => (
   <ChattingBubble {...args} />
 )
 
-export const Sender = Template.bind({})
+export const Default = Template.bind({})
 
-Sender.args = {
+Default.args = {
   children:
     'Sender입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
   type: 'send'
 }
 
-Sender.parameters = {
-  backgrounds: { default: 'light' }
-}
-
-export const Receiver = Template.bind({})
-
-Receiver.args = {
-  children:
-    'Receiver입니다. 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대화 대화대화대 문장으로 대화를 나눠볼까요? 최대 입력가능 문자수는 100자. 여기까지가 최대',
-  type: 'receive'
-}
-
-Receiver.parameters = {
+Default.parameters = {
   backgrounds: { default: 'light' }
 }

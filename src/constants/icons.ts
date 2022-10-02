@@ -1,69 +1,33 @@
-import ARROW_LEFT from '/public/icons/arrow_left.svg'
-import ARROW_UP from '/public/icons/arrow_up.svg'
-import AVATAR from '/public/icons/avatar.svg'
-import BOX from '/public/icons/box.svg'
-import CAMERA from '/public/icons/camera.svg'
-import CHECK from '/public/icons/check.svg'
-import CHECK_CIRCLE from '/public/icons/check_circle.svg'
-import CHECK_CIRCLE_FILL from '/public/icons/check_circle_fill.svg'
-import CHEVRON_DOWN from '/public/icons/chevron_down.svg'
-import CHEVRON_LEFT from '/public/icons/chevron_left.svg'
-import CHEVRON_RIGHT from '/public/icons/chevron_right.svg'
-import CLOCK from '/public/icons/clock.svg'
-import CLOSE from '/public/icons/close.svg'
-import FILTER from '/public/icons/filter.svg'
-import GOOGLE from '/public/icons/google.svg'
-import HEART from '/public/icons/heart.svg'
-import HEART_FILL from '/public/icons/heart_fill.svg'
-import KAKAO from '/public/icons/kakao.svg'
-import MEH from '/public/icons/meh.svg'
-import MEH_FILL from '/public/icons/meh_fill.svg'
-import MENU from '/public/icons/menu.svg'
-import MESSAGE from '/public/icons/message.svg'
-import MORE from '/public/icons/more.svg'
-import PICTURE from '/public/icons/picture.svg'
-import REFRESH from '/public/icons/refresh.svg'
-import SAD from '/public/icons/sad.svg'
-import SAD_FILL from '/public/icons/sad_fill.svg'
-import SEARCH from '/public/icons/search.svg'
-import SETTING from '/public/icons/setting.svg'
-import SMILE from '/public/icons/smile.svg'
-import SMILE_FILL from '/public/icons/smile_fill.svg'
-import STORE from '/public/icons/store.svg'
-import TRIANGLE_DOWN from '/public/icons/triangle_down.svg'
-
-export const ICON = {
-  ARROW_LEFT,
-  ARROW_UP,
-  AVATAR,
-  BOX,
-  CAMERA,
-  CHECK,
-  CHECK_CIRCLE,
-  CHECK_CIRCLE_FILL,
-  CHEVRON_DOWN,
-  CHEVRON_LEFT,
-  CHEVRON_RIGHT,
-  CLOCK,
-  CLOSE,
-  FILTER,
-  GOOGLE,
-  HEART,
-  HEART_FILL,
-  KAKAO,
-  MEH,
-  MEH_FILL,
-  MENU,
-  MESSAGE,
-  MORE,
-  PICTURE,
-  REFRESH,
-  SAD,
-  SAD_FILL,
-  SEARCH,
-  SETTING,
-  SMILE,
-  SMILE_FILL,
-  STORE,
-  TRIANGLE_DOWN
-}
+export { ReactComponent as ArrowLef } from '/public/icons/arrow_left.svg'
+export { ReactComponent as ArrowUp } from '/public/icons/arrow_up.svg'
+export { ReactComponent as Avatar } from '/public/icons/avatar.svg'
+export { ReactComponent as Box } from '/public/icons/box.svg'
+export { ReactComponent as Camera } from '/public/icons/camera.svg'
+export { ReactComponent as Check } from '/public/icons/check.svg'
+export { ReactComponent as CheckCircle } from '/public/icons/check_circle.svg'
+export { ReactComponent as CheckCircleFill } from '/public/icons/check_circle_fill.svg'
+export { ReactComponent as ChevronDown } from '/public/icons/chevron_down.svg'
+export { ReactComponent as ChevronLeft } from '/public/icons/chevron_left.svg'
+export { ReactComponent as ChevronRight } from '/public/icons/chevron_right.svg'
+export { ReactComponent as Clock } from '/public/icons/clock.svg'
+export { ReactComponent as Close } from '/public/icons/close.svg'
+export { ReactComponent as Filter } from '/public/icons/filter.svg'
+export { ReactComponent as Google } from '/public/icons/google.svg'
+export { ReactComponent as Heart } from '/public/icons/heart.svg'
+export { ReactComponent as HeartFill } from '/public/icons/heart_fill.svg'
+export { ReactComponent as Kakao } from '/public/icons/kakao.svg'
+export { ReactComponent as Meh } from '/public/icons/meh.svg'
+export { ReactComponent as MehFill } from '/public/icons/meh_fill.svg'
+export { ReactComponent as Menu } from '/public/icons/menu.svg'
+export { ReactComponent as Message } from '/public/icons/message.svg'
+export { ReactComponent as More } from '/public/icons/more.svg'
+export { ReactComponent as Picture } from '/public/icons/picture.svg'
+export { ReactComponent as Refresh } from '/public/icons/refresh.svg'
+export { ReactComponent as Sad } from '/public/icons/sad.svg'
+export { ReactComponent as SadFill } from '/public/icons/sad_fill.svg'
+export { ReactComponent as Search } from '/public/icons/search.svg'
+export { ReactComponent as Setting } from '/public/icons/setting.svg'
+export { ReactComponent as Smile } from '/public/icons/smile.svg'
+export { ReactComponent as SmileFill } from '/public/icons/smile_fill.svg'
+export { ReactComponent as Store } from '/public/icons/store.svg'
+export { ReactComponent as TriangleDown } from '/public/icons/triangle_down.svg'

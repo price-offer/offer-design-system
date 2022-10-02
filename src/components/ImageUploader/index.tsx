@@ -5,7 +5,8 @@ import type {
   ReactElement
 } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
-import { useImageUploader, useMediaQuery } from '@hooks'
+import { useImageUploader } from './useImageUploader'
+import { useMediaQuery } from '@hooks'
 
 export interface ImageInfo {
   isRepresent: boolean

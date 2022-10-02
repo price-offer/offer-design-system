@@ -1,8 +1,4 @@
-import type {
-  ImageInfo,
-  ImageUploaderProps,
-  UploaderProps
-} from '@components/ImageUploader'
+import type { ImageInfo, ImageUploaderProps, UploaderProps } from './index'
 import { useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
 import { NOTICE_MESSAGE } from '@constants'

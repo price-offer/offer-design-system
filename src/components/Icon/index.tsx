@@ -37,14 +37,14 @@ import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
+export type IconType = keyof typeof ICON_TYPES
 export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   size?: number
   color?: string
-  iconType: keyof typeof ICON_TYPES
+  iconType: IconType
 }
 
 type StyledIconWrapperProps = StyledProps<IconProps, 'color'>
-
 export const ICON_TYPES = {
   arrowLef: ArrowLef,
   arrowUp: ArrowUp,
@@ -84,17 +84,19 @@ export const ICON_TYPES = {
 export const Icon = ({
   iconType,
   size = 24,
-  color = 'black'
+  color = 'black',
+  ...props
 }: IconProps): ReactElement => {
   const IconSvg = ICON_TYPES[iconType]
 
   return (
     <StyledIconWrapper color={color}>
-      <IconSvg height={size} width={size} />
+      <IconSvg height={size} width={size} {...props} />
     </StyledIconWrapper>
   )
 }
 
 const StyledIconWrapper = styled.i<StyledIconWrapperProps>`
+  display: flex;
   color: ${({ color }): string => color};
 `

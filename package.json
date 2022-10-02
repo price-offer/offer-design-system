@@ -48,11 +48,11 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-storybook": "^0.6.4",
-    "hex-to-css-filter": "^5.4.0",
     "husky": "^8.0.0",
     "prettier": "^2.7.1",
     "typescript": "4.7.4",
     "vite": "^3.0.7",
+    "vite-plugin-svgr": "^2.2.1",
     "vite-tsconfig-paths": "^3.5.0"
   },
   "bugs": {

@@ -1,6 +1,6 @@
 import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
-import { ICON } from '@constants'
+import { Icon } from '@components'
 import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
@@ -41,9 +41,6 @@ const NAV_TYPE = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 } as const
-
-const ARROW_RIGHT = ICON.CHEVRON_RIGHT_40
-const ARROW_LEFT = ICON.CHEVRON_LEFT_40
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
@@ -99,15 +96,20 @@ const Carousel = ({
       endClientX > startClientX && dragSpace > USER_DRAG_LENGTH
     const userSlideLeft =
       endClientX < startClientX && dragSpace > USER_DRAG_LENGTH
+
     if (startClientX === 0) {
       return
     }
     if (userSlideRight) {
       handleOffset(NAV_TYPE.RIGHT)
+      setStartClientX(0)
+      setEndClientX(0)
     } else if (userSlideLeft) {
       handleOffset(NAV_TYPE.LEFT)
+      setStartClientX(0)
+      setEndClientX(0)
     }
-  }, [endClientX])
+  }, [startClientX, endClientX])
 
   return (
     <StyledCarouselWrapper>
@@ -133,26 +135,26 @@ const Carousel = ({
             {isFirstImage ? (
               <div />
             ) : (
-              <StyledRightArrow
-                alt="arrow-left"
+              <StyledLeftArrow
                 currentImageValue={currentImageValue}
-                src={ARROW_LEFT}
+                type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.LEFT)
-                }}
-              />
+                }}>
+                <Icon iconType="chevronLeft" size={40} />
+              </StyledLeftArrow>
             )}
             {isLastImage ? (
               <div />
             ) : (
-              <StyledLeftArrow
-                alt="arrow-right"
+              <StyledRightArrow
                 currentImageValue={currentImageValue}
-                src={ARROW_RIGHT}
+                type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.RIGHT)
-                }}
-              />
+                }}>
+                <Icon iconType="chevronRight" size={40} />
+              </StyledRightArrow>
             )}
           </StyledArrowBox>
         )}
@@ -196,12 +198,10 @@ export const StyledSlider = styled.div<SliderProps>`
   ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 400px;
-    right: 20px;
   }
   ${({ theme }): string => theme.mediaQuery.mobile} {
     max-width: ${({ size }): string => `${size}vw`};
     height: 360px;
-    right: 20px;
   }
 `
 
@@ -244,34 +244,29 @@ export const StyledImage = styled.img<ImageProps>`
 export const StyledArrowBox = styled.div`
   position: absolute;
   top: 0;
-  left: -20px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-
   ${({ theme }): string => theme.mediaQuery.tablet} {
     display: none;
   }
 `
 
-export const StyledRightArrow = styled.img<ArrowProps>`
+export const StyledRightArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
+  border: none;
   background-color: ${({ theme }): string => theme.colors.background.white};
-  color: ${({ theme }): string => theme.colors.background.white};
-  font-size: 2rem;
   cursor: pointer;
 `
 
-export const StyledLeftArrow = styled.img<ArrowProps>`
+export const StyledLeftArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
+  border: none;
   background-color: ${({ theme }): string => theme.colors.background.white};
-  color: ${({ theme }): string => theme.colors.background.white};
-  font-size: 2rem;
   cursor: pointer;
 `
 
@@ -300,7 +295,6 @@ export const StyledIndicator = styled.div`
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.background.white};
-    opacity: 0.5;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   }
 `
@@ -312,7 +306,6 @@ export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   position: absolute;
   left: 0;
   top: 50%;
-  font-size: 20px;
   margin: 0 1px;
   border-radius: 100px;
   cursor: pointer;

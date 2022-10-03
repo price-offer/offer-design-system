@@ -14,8 +14,10 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children: string
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'buttonStyle' | 'size'>
-type StyledIconProps = StyledProps<ButtonProps, 'buttonStyle'>
-type ApplyButtonColor = (theme: Theme, buttnStyle: ButtonStyle) => string
+type GetFontColor = (
+  buttnStyle: ButtonStyle
+) => typeof FONT_COLOR[keyof typeof FONT_COLOR]
+type ApplyButtonColor = (theme: Theme, buttonStyle: ButtonStyle) => string
 type ApplyButtonSizeStyle = (
   theme: Theme,
   buttnStyle: ButtonStyle,
@@ -48,7 +50,12 @@ export const Button = ({
 }: ButtonProps): ReactElement => {
   return (
     <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
-      {iconType && <StyledIcon buttonStyle={buttonStyle} iconType={iconType} />}
+      {iconType && (
+        <StyledIcon
+          color={{ scheme: getFontColor(buttonStyle), type: 'grayScale' }}
+          type={iconType}
+        />
+      )}
       {children}
     </StyledButton>
   )
@@ -61,13 +68,18 @@ const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   cursor: pointer;
   color: ${({ theme, buttonStyle }): string =>
-    applyButtonFontColor(theme, buttonStyle)};
+    theme.colors.grayScale[getFontColor(buttonStyle)]};
 
-  ${({ theme }): string => theme.fonts.body02B}
+  ${({ theme }): string => theme.fonts.body02B};
   ${({ theme, size, buttonStyle }): string =>
     applyButtonSizeStyle(theme, buttonStyle, size)}
   ${({ theme, buttonStyle }): string => applyButtonColor(theme, buttonStyle)}
 `
+
+const StyledIcon = styled(Icon)`
+  margin-right: 4px;
+`
+
 const applyButtonSizeStyle: ApplyButtonSizeStyle = (
   theme,
   buttonStyle,
@@ -94,12 +106,6 @@ const applyButtonSizeStyle: ApplyButtonSizeStyle = (
       return ``
   }
 }
-
-const StyledIcon = styled(Icon)<StyledIconProps>`
-  margin-right: 4px;
-  color: ${({ theme, buttonStyle }): string =>
-    applyButtonFontColor(theme, buttonStyle)};
-`
 
 const applyButtonColor: ApplyButtonColor = (theme, buttonStyle) => {
   const { gray20, black, gray05, white } = theme.colors.grayScale
@@ -132,5 +138,4 @@ const applyButtonColor: ApplyButtonColor = (theme, buttonStyle) => {
   }
 }
 
-const applyButtonFontColor: ApplyButtonColor = (theme, buttonStyle) =>
-  theme.colors.grayScale[FONT_COLOR[buttonStyle]]
+const getFontColor: GetFontColor = buttonStyle => FONT_COLOR[buttonStyle]

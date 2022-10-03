@@ -1,16 +1,15 @@
 import type { ThemeOption } from '@types'
 
-type BackgroundColorKeys = keyof typeof colors.background
+export type BackgroundColorKeys = keyof typeof colors.background
 type BackgroundColorValues = typeof colors.background[BackgroundColorKeys]
-type BrandColorKeys = keyof typeof colors.brand
+export type BrandColorKeys = keyof typeof colors.brand
 type BrandColorValues = typeof colors.brand[BrandColorKeys]
-type ActionColorKeys = keyof typeof colors.action
+export type ActionColorKeys = keyof typeof colors.action
 type ActionColorValues = typeof colors.action[ActionColorKeys]
-type GrayScaleColorKeys = keyof typeof colors.grayScale
+export type GrayScaleColorKeys = keyof typeof colors.grayScale
 type GrayScaleColorValues = typeof colors.grayScale[GrayScaleColorKeys]
-type DimColorKeys = keyof typeof colors.dim
+export type DimColorKeys = keyof typeof colors.dim
 type DimColorValues = typeof colors.dim[DimColorKeys]
-
 export interface Colors {
   background: ThemeOption<BackgroundColorKeys, BackgroundColorValues>
   brand: ThemeOption<BrandColorKeys, BrandColorValues>

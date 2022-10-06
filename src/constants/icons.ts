@@ -1,4 +1,4 @@
-export { ReactComponent as ArrowLef } from '/public/icons/arrow_left.svg'
+export { ReactComponent as ArrowLeft } from '/public/icons/arrow_left.svg'
 export { ReactComponent as ArrowUp } from '/public/icons/arrow_up.svg'
 export { ReactComponent as Avatar } from '/public/icons/avatar.svg'
 export { ReactComponent as Box } from '/public/icons/box.svg'

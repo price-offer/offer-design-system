@@ -1,5 +1,5 @@
 import {
-  ArrowLef,
+  ArrowLeft,
   ArrowUp,
   Avatar,
   Box,
@@ -46,7 +46,7 @@ export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
 
 type StyledIconWrapperProps = StyledProps<IconProps, 'color'>
 export const ICON_TYPES = {
-  arrowLef: ArrowLef,
+  arrowLeft: ArrowLeft,
   arrowUp: ArrowUp,
   avatar: Avatar,
   box: Box,

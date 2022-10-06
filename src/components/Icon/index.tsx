@@ -1,10 +1,3 @@
-import type {
-  ActionColorKeys,
-  BackgroundColorKeys,
-  BrandColorKeys,
-  DimColorKeys,
-  GrayScaleColorKeys
-} from '@styles/themes'
 import {
   ArrowLeft,
   ArrowUp,
@@ -42,29 +35,16 @@ import {
 } from '@constants/icons'
 import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
+import type { StyledProps } from '@types'
 
 export type IconType = keyof typeof ICON_TYPES
-interface IconColorOption<Type, Scheme> {
-  type: Type
-  scheme: Scheme
-}
-type IconColor =
-  | IconColorOption<'action', ActionColorKeys>
-  | IconColorOption<'background', BackgroundColorKeys>
-  | IconColorOption<'brand', BrandColorKeys>
-  | IconColorOption<'dim', DimColorKeys>
-  | IconColorOption<'grayScale', GrayScaleColorKeys>
-export interface IconProps
-  extends Omit<HTMLAttributes<HTMLOrSVGElement>, 'color'> {
+export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   size?: number
-  color?: IconColor
-  type: IconType
+  color?: string
+  iconType: IconType
 }
 
-interface StyledIconWrapperProps {
-  _color: IconColor
-}
-
+type StyledIconWrapperProps = StyledProps<IconProps, 'color'>
 export const ICON_TYPES = {
   arrowLeft: ArrowLeft,
   arrowUp: ArrowUp,
@@ -102,15 +82,15 @@ export const ICON_TYPES = {
 } as const
 
 export const Icon = ({
-  type,
-  color = { scheme: 'black', type: 'grayScale' },
+  iconType,
   size = 24,
+  color = 'black',
   ...props
 }: IconProps): ReactElement => {
-  const IconSvg = ICON_TYPES[type]
+  const IconSvg = ICON_TYPES[iconType]
 
   return (
-    <StyledIconWrapper _color={color}>
+    <StyledIconWrapper color={color}>
       <IconSvg height={size} width={size} {...props} />
     </StyledIconWrapper>
   )
@@ -118,6 +98,5 @@ export const Icon = ({
 
 const StyledIconWrapper = styled.i<StyledIconWrapperProps>`
   display: flex;
-  color: ${({ theme, _color }): string =>
-    `${theme.colors[_color.type][_color.scheme]}`};
+  color: ${({ color }): string => color};
 `

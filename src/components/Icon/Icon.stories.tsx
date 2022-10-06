@@ -6,7 +6,7 @@ const iconTypeKeys = Object.keys(ICON_TYPES)
 
 export default {
   argType: {
-    type: {
+    iconType: {
       control: 'select',
       option: [...iconTypeKeys]
     }
@@ -19,10 +19,7 @@ const Template: Story<IconProps> = args => <Icon {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  color: {
-    scheme: 'primary',
-    type: 'brand'
-  },
-  size: 24,
-  type: 'box'
+  color: 'blue',
+  iconType: 'box',
+  size: 24
 }

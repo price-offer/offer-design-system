@@ -2,13 +2,13 @@ import { Icon, ICON_TYPES } from './index'
 import type { Meta, Story } from '@storybook/react'
 import type { IconProps } from './index'
 
-const iconTypeKeys = Object.keys(ICON_TYPES)
+const typeKeys = Object.keys(ICON_TYPES)
 
 export default {
   argType: {
-    iconType: {
+    type: {
       control: 'select',
-      option: [...iconTypeKeys]
+      option: [...typeKeys]
     }
   },
   component: Icon,
@@ -20,6 +20,6 @@ const Template: Story<IconProps> = args => <Icon {...args} />
 export const Default = Template.bind({})
 Default.args = {
   color: 'blue',
-  iconType: 'box',
-  size: 24
+  size: 24,
+  type: 'box'
 }

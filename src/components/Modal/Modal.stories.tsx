@@ -8,9 +8,6 @@ export default {
   title: 'Components/Modal'
 } as Meta<ModalProps>
 
-const parentElement = document.createElement('div')
-document.body.append(parentElement)
-
 const Template: Story<ModalProps> = args => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -36,7 +33,7 @@ const Template: Story<ModalProps> = args => {
 
 export const Default = Template.bind({})
 Default.args = {
-  content: <div>Hello World!</div>,
+  children: <div>Hello World!</div>,
   height: 300,
-  parentElement
+  isOpen: false
 }

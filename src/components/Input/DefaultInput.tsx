@@ -1,60 +1,47 @@
-import type {
-  InputProps as DefaultInputProps,
-  InputStyleOption,
-  InputStylesheet
-} from './index'
-import type { ReactElement } from 'react'
+import type { ChangeEventHandler, ReactElement } from 'react'
+import type { MainInputProps as DefaultInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import { VALIDATE_MESSAGE } from '@constants'
+import { validationNumber } from '@utils/validation'
 
-type DefaultSTyleOption = 'FONT' | 'HEIGHT' | 'PADDING_BOTTOM'
-type DefaultStylesheet = InputStyleOption<DefaultSTyleOption>
-
-interface StyledPriceUnitProps {
-  inputStylesheet: DefaultStylesheet
-}
+type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
 type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
   StyledPriceUnitProps
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
 
-const DEFUALT_STYLESHEET: InputStylesheet<DefaultStylesheet> = {
-  large: {
-    FONT: 'subtitle01M',
-    HEIGHT: 54,
-    PADDING_BOTTOM: 16
-  },
-  small: {
-    FONT: 'body02M',
-    HEIGHT: 40,
-    PADDING_BOTTOM: 10
-  }
-} as const
-
 export const DefaultInput = ({
   label,
   status = 'default',
-  message = '',
+  guideMessage = '',
   isPrice = false,
-  inputSize = 'large',
+  isSmall,
+  onChange,
   ...args
 }: DefaultInputProps): ReactElement => {
-  const hasMessage = status !== 'none'
-  const inputStylesheet = DEFUALT_STYLESHEET[inputSize]
+  const hasGuideMessage = status !== 'none'
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
+    onChange?.(e)
+    e.target.value = validationNumber(e.target.value, isPrice)
+  }
 
   return (
     <StyledWrapper>
       <StyledLabel>
         {label}
         <StyledInput
-          inputStylesheet={inputStylesheet}
           isPrice={isPrice}
+          isSmall={isSmall}
+          onChange={handleInputChange}
           {...args}
         />
-        <StyledPriceUnit inputStylesheet={inputStylesheet}>
-          {isPrice && '원'}
+        <StyledPriceUnit isSmall={isSmall}>
+          {isPrice && VALIDATE_MESSAGE.PRICE_UNIT}
         </StyledPriceUnit>
       </StyledLabel>
-      {hasMessage && <StyledStatus status={status}>{message}</StyledStatus>}
+      {hasGuideMessage && (
+        <StyledStatus status={status}>{guideMessage}</StyledStatus>
+      )}
     </StyledWrapper>
   )
 }
@@ -68,57 +55,68 @@ const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
   position: relative;
-  color: ${({ theme }): string => theme.colors.grayScale.gray70};
 
-  ${({ theme }): string => theme.fonts.body01M};
+  ${({ theme }): string => `
+    color: ${theme.colors.grayScale.gray70};
+    ${theme.fonts.body01M}
+  `}
 `
 const StyledInput = styled.input<StyledInputProps>`
   margin: 8px 0;
-  padding: ${({ inputStylesheet, isPrice }): string => `
-      ${inputStylesheet['PADDING_BOTTOM']}px 
-      ${isPrice ? 35 : 12}px 
-      ${inputStylesheet['PADDING_BOTTOM']}px 12px
-    `};
   width: 328px;
-  height: ${({ inputStylesheet }): string => `${inputStylesheet['HEIGHT']}px`};
-  background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
 
-  ${({ theme, inputStylesheet }): string =>
-    theme.fonts[inputStylesheet['FONT']]}
+  ${({ isSmall, isPrice }): string => {
+    if (isSmall) {
+      return `
+          padding: 10px ${isPrice ? 35 : 12}px 10px 12px;
+          height: 40px;
+      `
+    }
+    return `
+      padding: 16px ${isPrice ? 35 : 12}px 16px 12px;
+      height: 54px;
+    `
+  }}
 
-  ::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale.gray50};
-  }
+  ${({ theme, isSmall }): string => `
+    background-color: ${theme.colors.background.gray02};
+    ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
 
-  &:hover {
-    background-color: ${({ theme }): string => theme.colors.background.gray04};
-  }
+    ::placeholder {
+    color: ${theme.colors.grayScale.gray50};
+    }
 
-  &:focus {
-    background-color: ${({ theme }): string => theme.colors.background.gray04};
-  }
+    &:hover {
+      background-color: ${theme.colors.background.gray04};
+    }
+
+    &:focus {
+      background-color: ${theme.colors.background.gray04};
+    }
+  `}
 `
 
 const StyledPriceUnit = styled.span<StyledPriceUnitProps>`
   position: absolute;
-  bottom: ${({ inputStylesheet }): string =>
-    `${(inputStylesheet['PADDING_BOTTOM'] as number) + 9}px`};
   right: 12px;
-  ${({ theme, inputStylesheet }): string =>
-    theme.fonts[inputStylesheet['FONT']]}
-  color:${({ theme }): string => theme.colors.grayScale.gray90};
+
+  ${({ isSmall, theme }): string => `
+    color:${theme.colors.grayScale.gray90};
+    bottom: ${isSmall ? '19px' : '25px'};
+    ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
+  `}
 `
 const StyledStatus = styled.span<StyledStatusProps>`
   color: ${({ theme, status }): string => {
-    const hasStatus = status === 'error' || status === 'success'
+    const isGray = status === 'error' || status === 'success'
 
-    if (!hasStatus) {
+    if (!isGray) {
       return theme.colors.grayScale.gray50
     }
 
     return theme.colors.action[status]
   }};
 
-  ${({ theme }): string => theme.fonts.caption01M};
+  ${({ theme }): string => theme.fonts.caption01M}
 `

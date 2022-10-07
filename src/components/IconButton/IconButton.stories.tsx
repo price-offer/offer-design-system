@@ -1,5 +1,5 @@
-import { ICON_BUTTON_STYLE_KEYS, IconButton } from './index'
 import type { Meta, Story } from '@storybook/react'
+import { IconButton } from './index'
 import type { IconButtonProps } from './index'
 
 export default {
@@ -11,5 +11,10 @@ const Template: Story<IconButtonProps> = args => <IconButton {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  iconButtonStyle: ICON_BUTTON_STYLE_KEYS.CHEVRON_LEFT
+  color: 'primary',
+  iconButtonStyle: 'rounded',
+  size: 'small',
+  toggleColor: 'primaryWeak',
+  toggleType: 'arrowUp',
+  type: 'arrowLeft'
 }

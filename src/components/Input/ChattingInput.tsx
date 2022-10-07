@@ -1,57 +1,27 @@
 import type { ChangeEventHandler, ReactElement } from 'react'
-import type { InputProps, InputStyleOption, InputStylesheet } from './index'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { IconButton } from '@components'
+import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
+import type { StyledProps } from '@types'
 import { useState } from 'react'
 
 type ChattingInputProps = Omit<
-  InputProps,
+  MainInputProps,
   'label' | 'status' | 'message' | 'isPrice'
 >
 
-type ChattingStyleOption =
-  | 'WIDTH'
-  | 'RIGHT'
-  | 'TOP'
-  | 'BUTTON_RIGHT'
-  | 'HEIGHT'
-  | 'BUTTON_TOP'
-  | 'FONT'
-type ChattingStylesheet = InputStyleOption<ChattingStyleOption>
-
-interface StyledInputProps {
-  inputStylesheet: ChattingStylesheet
-}
-
-const CHATTING_STYLESHEET: InputStylesheet<ChattingStylesheet> = {
-  large: {
-    BUTTON_RIGHT: 10,
-    BUTTON_TOP: 8,
-    FONT: 'body01R',
-    HEIGHT: 48,
-    RIGHT: 20,
-    TOP: 12,
-    WIDTH: 639
-  },
-  small: {
-    BUTTON_RIGHT: 8,
-    BUTTON_TOP: 4,
-    FONT: 'body02R',
-    HEIGHT: 40,
-    RIGHT: 12,
-    TOP: 10,
-    WIDTH: 328
-  }
+type StyledInputProps = StyledProps<ChattingInputProps, 'isSmall'>
+type StyledIconButtonProps = StyledProps<ChattingInputProps, 'isSmall'> & {
+  disabled: boolean
 }
 
 export const ChattingInput = ({
-  inputSize = 'large',
+  isSmall,
   onChange,
   ...props
 }: ChattingInputProps): ReactElement => {
   const [inputValue, setInputValue] = useState<string>('')
-  const inputStylesheet = CHATTING_STYLESHEET[inputSize]
+  const isDisabled = !inputValue
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     onChange && onChange(e)
@@ -60,16 +30,15 @@ export const ChattingInput = ({
 
   return (
     <StyledInputForm>
-      <StyledInput
-        inputStylesheet={inputStylesheet}
-        onChange={handleChange}
-        {...props}
+      <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
+      <StyledIconButton
+        color={isDisabled ? 'primaryWeak' : 'primary'}
+        disabled={isDisabled}
+        iconButtonStyle="rounded"
+        isSmall={isSmall}
+        size="medium"
+        type="arrowUp"
       />
-      <StyledInputButton
-        disabled={!inputValue}
-        inputStylesheet={inputStylesheet}>
-        <img src={ICON.ARROW_UP_24} />
-      </StyledInputButton>
     </StyledInputForm>
   )
 }
@@ -80,55 +49,68 @@ const StyledInputForm = styled.form`
 `
 
 const StyledInput = styled.input<StyledInputProps>`
-  width: ${({ inputStylesheet }): string => `${inputStylesheet['WIDTH']}px`};
-  height: ${({ inputStylesheet }): string => `${inputStylesheet['HEIGHT']}px`};
-  padding: ${({ inputStylesheet }): string => `
-        ${inputStylesheet['FONT']}px 
-        ${inputStylesheet['RIGHT'] + 40}px 
-        ${inputStylesheet['TOP']}px 
-        ${inputStylesheet['RIGHT']}px 
-    `};
-  background-color: ${({ theme }): string => theme.colors.background.gray02};
   border: none;
-  border-radius: ${({ theme }): string => theme.radius.round16};
 
-  ${({ theme, inputStylesheet }): string =>
-    theme.fonts[inputStylesheet['FONT']]}
+  ${({ theme, isSmall }): string => `
+    background-color: ${theme.colors.background.gray02};
+    border-radius: ${theme.radius.round16};
+     ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
-  &::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale.gray50};
-  }
+    &::placeholder {
+      color: ${theme.colors.grayScale.gray50};
+    }
 
-  &:hover {
-    background-color: ${({ theme }): string => theme.colors.background.gray04};
-  }
+    &:hover {
+      background-color: ${theme.colors.background.gray04};
+    }
 
-  &:focus {
-    background-color: ${({ theme }): string => theme.colors.background.gray04};
-  }
+    &:focus {
+      background-color: ${theme.colors.background.gray04};
+    }
+  `}
+
+  ${({ isSmall }): string => {
+    if (isSmall) {
+      return `
+        width: 328px;
+        height: 40px;
+        padding: 10px 52px 10px 12px;
+      `
+    }
+    return `
+      width: 639px;
+      height: 48px;
+      padding: 12px 60px 12px 20px;
+    `
+  }}
 `
 
-const StyledInputButton = styled.button<StyledInputProps>`
+const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
   position: absolute;
-  right: ${({ inputStylesheet }): string =>
-    `${inputStylesheet['BUTTON_RIGHT']}px`};
-  top: ${({ inputStylesheet }): string => `${inputStylesheet['BUTTON_TOP']}px`};
-  display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
-  background-color: ${({ theme }): string => theme.colors.brand.primary};
   border: none;
-  border-radius: ${({ theme }): string => theme.radius.round100};
   cursor: pointer;
 
-  &:disabled {
-    background-color: ${({ theme }): string => theme.colors.brand.primaryWeak};
-  }
+  ${({ isSmall }): string => {
+    if (isSmall) {
+      return `
+        right: 8px;
+        top: 4px;
+      `
+    }
 
-  img {
-    filter: ${({ theme }): string =>
-      hexToCSSFilter(theme.colors.grayScale.white).filter};
+    return `
+      right: 10px;
+      top: 8px;
+    `
+  }}
+
+  ${({ theme }): string => `
+    border-radius: ${theme.radius.round100};
+  `}
+
+  &:disabled {
+    cursor: default;
   }
 `

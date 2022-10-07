@@ -11,10 +11,13 @@ export interface InputProps extends HTMLAttributes<HTMLInputElement> {
   inputSize?: InputSize
   label?: string
   status?: 'none' | 'success' | 'error' | 'default'
-  message?: string
+  guideMessage?: string
   isPrice?: boolean
 }
 
+export type MainInputProps = Omit<InputProps, 'inputSize'> & {
+  isSmall: boolean
+}
 export type InputStyleOption<T extends string> = {
   [key in Extract<T, 'FONT'>]: string
 } & {
@@ -33,21 +36,25 @@ export const INPUT_STYLE_KEYS = {
 
 export const Input = ({
   inputStyle = 'default',
+  inputSize = 'small',
   ...props
 }: InputProps): ReactElement => {
   const renderInput = (inputStyle: InputStyle): ReactElement => {
     const { EDIT, DEFAULT, CHATTING, SEARCH } = INPUT_STYLE_KEYS
+    const isSmall = inputSize === 'small'
+    const inputTypeProps = { isSmall, ...props }
+
     switch (inputStyle) {
       case DEFAULT:
-        return <DefaultInput {...props} />
+        return <DefaultInput {...inputTypeProps} />
       case CHATTING:
-        return <ChattingInput {...props} />
+        return <ChattingInput {...inputTypeProps} />
       case SEARCH:
-        return <SearchInput {...props} />
+        return <SearchInput {...inputTypeProps} />
       case EDIT:
-        return <EditInput {...props} />
+        return <EditInput {...inputTypeProps} />
       default:
-        return <DefaultInput {...props} />
+        return <DefaultInput {...inputTypeProps} />
     }
   }
 

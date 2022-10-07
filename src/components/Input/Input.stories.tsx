@@ -28,11 +28,11 @@ const Template: Story<InputProps> = args => <Input {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
+  guideMessage: '안내 메세지',
   inputSize: 'large',
   inputStyle: 'default',
   isPrice: true,
   label: '라벨',
-  message: '안내 메세지',
   placeholder: '내용을 입력하세요',
   status: 'success'
 }

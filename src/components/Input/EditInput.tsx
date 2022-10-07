@@ -1,52 +1,45 @@
-import type { InputProps, InputStyleOption, InputStylesheet } from './index'
-import type { ReactElement } from 'react'
+import type { ChangeEventHandler, ReactElement } from 'react'
+import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import { VALIDATE_MESSAGE } from '@constants'
+import { validationNumber } from '@utils/validation'
 
-type EditInputProps = Omit<InputProps, 'isPrice'>
-
-type EditStyleOption = 'WIDTH' | 'HEIGHT' | 'FONT' | 'PRICE_UNIT_BOTTOM'
-type EditStylesheet = InputStyleOption<EditStyleOption>
+type EditInputProps = Omit<MainInputProps, 'isPrice'>
 
 interface StyledInputProps {
-  inputStylesheet: EditStylesheet
+  isSmall: boolean
 }
-type StyledMessageProps = StyledProps<EditInputProps, 'status'>
-
-const EDIT_STYLESHEET: InputStylesheet<EditStylesheet> = {
-  large: {
-    FONT: 'display02M',
-    HEIGHT: 36,
-    PRICE_UNIT_BOTTOM: 16,
-    WIDTH: 714
-  },
-  small: {
-    FONT: 'body01R',
-    HEIGHT: 32,
-    PRICE_UNIT_BOTTOM: 14,
-    WIDTH: 360
-  }
-} as const
+type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
 
 export const EditInput = ({
-  inputSize = 'large',
   label = '',
-  message = '',
+  guideMessage = '',
   status = 'default',
+  isSmall,
+  onChange,
   ...props
 }: EditInputProps): ReactElement => {
-  const hasMessage = status !== 'none'
-  const inputStylesheet = EDIT_STYLESHEET[inputSize]
+  const hasGuideMessage = status !== 'none'
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    onChange?.(e)
+    e.target.value = validationNumber(e.target.value, true)
+  }
 
   return (
     <StyledInputForm>
       <StyledInputLabel>
         {label}
-        <StyledInput inputStylesheet={inputStylesheet} {...props} />
-        <StyledPriceUnit inputStylesheet={inputStylesheet}>원</StyledPriceUnit>
+        <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
+        <StyledPriceUnit isSmall={isSmall}>
+          {VALIDATE_MESSAGE.PRICE_UNIT}
+        </StyledPriceUnit>
       </StyledInputLabel>
-      {hasMessage && (
-        <StyledInputMessage status={status}>{message}</StyledInputMessage>
+      {hasGuideMessage && (
+        <StyledInputGuideMessage status={status}>
+          {guideMessage}
+        </StyledInputGuideMessage>
       )}
     </StyledInputForm>
   )
@@ -60,38 +53,53 @@ const StyledInputLabel = styled.label`
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  color: ${({ theme }): string => theme.colors.grayScale.gray70};
 
-  ${({ theme }): string => theme.fonts.body01M}
+  ${({ theme }): string => `
+    color: ${theme.colors.grayScale.gray70};
+    ${theme.fonts.body01M}
+  `}
 `
 const StyledInput = styled.input<StyledInputProps>`
-  width: ${({ inputStylesheet }): string => `${inputStylesheet['WIDTH']}px`};
-  height: ${({ inputStylesheet }): string => `${inputStylesheet['HEIGHT']}px`};
   padding: 8px 20px 8px 0;
   margin-bottom: 8px;
   border: none;
-  border-bottom: ${({ theme }): string =>
-    `1px solid ${theme.colors.grayScale.black}`};
 
-  ${({ inputStylesheet, theme }): string =>
-    theme.fonts[inputStylesheet['FONT']]}
+  ${({ isSmall, theme }): string => `
+    border-bottom: 1px solid ${theme.colors.grayScale.black};
+    ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
 
-  ::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale.gray50};
-  }
+    ::placeholder {
+      color: ${theme.colors.grayScale.gray50};
+    }
+  `}
+
+  ${({ isSmall }): string => {
+    if (isSmall) {
+      return `
+        width: 360px;
+        height: 32px;
+      `
+    }
+
+    return `
+        width: 714px;
+        height: 36px;
+      `
+  }}
 `
 
 const StyledPriceUnit = styled.span<StyledInputProps>`
   position: absolute;
-  bottom: ${({ inputStylesheet }): string =>
-    `${inputStylesheet['PRICE_UNIT_BOTTOM']}px`};
   right: 0;
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
 
-  ${({ theme }): string => theme.fonts.subtitle01M}
+  ${({ theme, isSmall }): string => `
+    bottom: ${isSmall ? '14px' : '16px'};
+    color: ${theme.colors.grayScale.gray90};
+    ${theme.fonts.subtitle01M}
+  `}
 `
 
-const StyledInputMessage = styled.span<StyledMessageProps>`
+const StyledInputGuideMessage = styled.span<StyledGuideMessageProps>`
   color: ${({ theme, status }): string => {
     const hasStatus = status === 'error' || status === 'success'
 

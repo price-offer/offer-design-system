@@ -1,70 +1,86 @@
 import type { HTMLAttributes, MouseEventHandler, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { Icon } from '@components'
+import type { IconType } from '@components'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import type { Theme } from '@emotion/react'
 import { useState } from 'react'
 
-type IconButtonStyle =
-  typeof ICON_BUTTON_STYLE_KEYS[keyof typeof ICON_BUTTON_STYLE_KEYS]
+type IconButtonColor =
+  | 'white'
+  | 'black'
+  | 'gray30'
+  | 'primary'
+  | 'primaryWeak'
+  | 'sub'
+  | 'subWeak'
+
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  iconButtonStyle?: IconButtonStyle
   onClick?: MouseEventHandler
-}
-type IconButtonStyleSheet = {
-  [key in IconButtonStyle]: {
-    iconUrl: string
-    size: number
-    toggleIconUrl?: string
-  }
-}
-type StyledIconButtonProps = StyledProps<IconButtonProps, 'iconButtonStyle'> & {
-  size: number
-  isToggle: boolean
+  type: IconType
+  size?: 'small' | 'medium' | 'large'
+  color?: IconButtonColor
+  toggleType?: IconType
+  toggleColor?: IconButtonColor
+  hasShadow?: boolean
+  iconButtonStyle?: 'rounded' | 'square' | 'ghost'
 }
 
-export const ICON_BUTTON_STYLE_KEYS = {
-  CHEVRON_LEFT: 'chevronLeft',
-  CHEVRON_RIGHT: 'chevronRight',
-  FAB: 'FAB',
-  HEART: 'heart'
-} as const
-const ICON_BUTTON_STYLE_SHEET: IconButtonStyleSheet = {
-  FAB: {
-    iconUrl: ICON.ARROW_UP_24,
-    size: 40
+type StyledIconButtonProps = StyledProps<
+  IconButtonProps,
+  'size' | 'hasShadow' | 'iconButtonStyle'
+> & {
+  isToggle: boolean
+  color: IconButtonColor
+}
+
+type StyledIconProps = StyledProps<StyledIconButtonProps, 'iconButtonStyle'> & {
+  iconColor: IconButtonColor
+}
+
+const ICON_BUTTON_SIZE = {
+  large: {
+    BUTTON: 40,
+    ICON: 24
   },
-  chevronLeft: {
-    iconUrl: ICON.CHEVRON_LEFT_16,
-    size: 24
+  medium: {
+    BUTTON: 32,
+    ICON: 16
   },
-  chevronRight: {
-    iconUrl: ICON.CHEVRON_RIGHT_16,
-    size: 24
-  },
-  heart: {
-    iconUrl: ICON.HEART_16,
-    size: 24,
-    toggleIconUrl: ICON.HEART_ACTIVE_16
+  small: {
+    BUTTON: 24,
+    ICON: 16
   }
-} as const
+}
 
 export const IconButton = ({
-  iconButtonStyle = 'heart',
-  onClick
+  onClick,
+  type,
+  color,
+  size = 'small',
+  toggleType,
+  toggleColor,
+  hasShadow = false,
+  iconButtonStyle = 'ghost',
+  ...props
 }: IconButtonProps): ReactElement => {
-  const {
-    iconUrl,
-    size,
-    toggleIconUrl = ''
-  } = ICON_BUTTON_STYLE_SHEET[iconButtonStyle]
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const renderIcon = isToggle ? toggleIconUrl : iconUrl
+  const isToggleButton = !!toggleType
+  const renderIcon =
+    isToggleButton && isToggle
+      ? {
+          color: toggleColor || 'black',
+          type: toggleType
+        }
+      : {
+          color: color || 'black',
+          type
+        }
 
   const handleClick: MouseEventHandler = e => {
     onClick && onClick(e)
 
-    if (!toggleIconUrl) {
+    if (!isToggleButton) {
       return
     }
 
@@ -73,11 +89,19 @@ export const IconButton = ({
 
   return (
     <StyledIconButton
+      {...props}
+      color={renderIcon?.color}
+      hasShadow={hasShadow}
       iconButtonStyle={iconButtonStyle}
       isToggle={isToggle}
       size={size}
       onClick={handleClick}>
-      <img alt="icon-button" src={renderIcon} />
+      <StyledIcon
+        iconButtonStyle={iconButtonStyle}
+        iconColor={renderIcon?.color}
+        size={ICON_BUTTON_SIZE[size].ICON}
+        type={renderIcon?.type}
+      />
     </StyledIconButton>
   )
 }
@@ -86,28 +110,52 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${({ size }): string => `${size}px`};
-  height: ${({ size }): string => `${size}px`};
-  background-color: white;
-  border-radius: ${({ theme }): string => theme.radius.round100};
   border: none;
   cursor: pointer;
 
-  ${({ theme, iconButtonStyle, isToggle }): string => {
-    switch (iconButtonStyle) {
-      case ICON_BUTTON_STYLE_KEYS.HEART:
-        return `
-         ${
-           !isToggle &&
-           `img{filter: ${
-             hexToCSSFilter(theme.colors.grayScale.gray20).filter
-           };}`
-         }
-        `
-      default:
-        return `
-          box-shadow: 0px 2px 10px ${theme.colors.dim.opacity25};
-        `
+  ${({ size, theme, iconButtonStyle, hasShadow, color }): string => {
+    const isGhost = iconButtonStyle === 'ghost'
+    const isRounded = iconButtonStyle === 'rounded'
+
+    return `
+      width: ${ICON_BUTTON_SIZE[size].BUTTON}px;
+      height: ${ICON_BUTTON_SIZE[size].BUTTON}px;
+      background-color: ${
+        isGhost ? 'transparent' : applyIconButtonColor(color, theme)
+      };
+      border-radius: ${isRounded ? theme.radius.round100 : 'none'};
+      box-shadow: ${
+        hasShadow ? `0px 2px 10px ${theme.colors.dim.opacity25}` : 'none'
+      };
+    `
+  }}
+`
+
+const StyledIcon = styled(Icon)<StyledIconProps>`
+  color: ${({ theme, iconColor, iconButtonStyle }): string => {
+    const isBlack = iconButtonStyle !== 'ghost' && iconColor === 'white'
+    const isGhost = iconButtonStyle !== 'ghost'
+
+    if (isBlack) {
+      return theme.colors.grayScale.black
     }
+
+    if (isGhost) {
+      return theme.colors.grayScale.white
+    }
+
+    return applyIconButtonColor(iconColor, theme)
   }};
 `
+
+const applyIconButtonColor = (color: IconButtonColor, theme: Theme): string => {
+  const { brand, grayScale } = theme.colors
+  const isGrayScale =
+    color === 'black' || color === 'white' || color === 'gray30'
+
+  if (isGrayScale) {
+    return grayScale[color]
+  }
+
+  return brand[color]
+}

@@ -1,14 +1,13 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { useEffect, useMemo } from 'react'
+import { IconButton } from '@components'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { useClickAway } from '@hooks'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-  content: ReactElement
-  parentElement: HTMLElement
+  children: ReactElement
   isOpen?: boolean
   width?: number
   height?: number
@@ -19,28 +18,42 @@ type StyledModalProps = StyledProps<ModalProps, 'width' | 'height'>
 type StyledDIMProps = StyledProps<ModalProps, 'isOpen'>
 
 export const Modal = ({
-  content,
+  children,
   width = 400,
   height = 0,
   onClose,
-  parentElement,
   isOpen = false,
   ...props
 }: ModalProps): ReactElement => {
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
   })
+  const topElement: HTMLDivElement = useMemo(
+    () => document.createElement('div'),
+    []
+  )
+
+  useEffect(() => {
+    document.body.append(topElement)
+
+    return (): void => {
+      document.body.removeChild(topElement)
+    }
+  }, [])
 
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
       <StyledModal {...props} ref={modalRef} height={height} width={width}>
-        <StyledCloseIcon onClick={onClose}>
-          <img alt="close-button" src={ICON.CLOSE_24} />
-        </StyledCloseIcon>
-        {content}
+        <StyledCloseIcon
+          color="gray30"
+          iconButtonStyle="ghost"
+          type="close"
+          onClick={onClose}
+        />
+        {children}
       </StyledModal>
     </StyledDIM>,
-    parentElement
+    topElement
   )
 }
 
@@ -66,17 +79,8 @@ const StyledModal = styled.div<StyledModalProps>`
   box-shadow: ${({ theme }): string =>
     `0px 3px 20px ${theme.colors.dim.opacity40}`};
 `
-const StyledCloseIcon = styled.button`
+const StyledCloseIcon = styled(IconButton)`
   position: absolute;
   top: 20px;
   right: 20px;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-
-  img {
-    filter: ${({ theme }): string =>
-      hexToCSSFilter(theme.colors.grayScale.gray30).filter};
-  }
 `

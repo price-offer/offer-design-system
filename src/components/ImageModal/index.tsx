@@ -5,8 +5,7 @@ import type {
   TouchEventHandler
 } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { IconButton } from '@components'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
@@ -167,9 +166,7 @@ export const ImageModal = ({
       onTouchStart={hadnleTouchStart}>
       <StyledGradient direction="top" />
       <StyledGradient direction="bottom" />
-      <StyledCloseIcon onClick={onClose}>
-        <img alt="close-button" src={ICON.CLOSE_24} />
-      </StyledCloseIcon>
+      <StyledCloseIcon type="close" onClick={onClose} />
       <StyledImageContainer {...props} translateValue={translateValue}>
         {imagesInfo.map(({ src, id, resizeWidth, height }) => (
           <StyledImage
@@ -258,20 +255,19 @@ const StyledImage = styled.img<StyledImageProps>`
   }
 `
 
-const StyledCloseIcon = styled.button`
+const StyledCloseIcon = styled(IconButton)`
   position: absolute;
   top: 64px;
   right: 64px;
   padding: 0;
-  z-index: ${({ theme }): string => theme.zIndex.modalIcon};
   border: none;
   background-color: transparent;
   cursor: pointer;
 
-  img {
-    filter: ${({ theme }): string =>
-      hexToCSSFilter(theme.colors.grayScale.gray30).filter};
-  }
+  ${({ theme }): string => `
+    z-index: ${theme.zIndex.modalIcon};
+    color:${theme.colors.grayScale.gray30};
+  `}
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
     top: 54px;

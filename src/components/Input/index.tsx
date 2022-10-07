@@ -14,17 +14,8 @@ export interface InputProps extends HTMLAttributes<HTMLInputElement> {
   guideMessage?: string
   isPrice?: boolean
 }
-
 export type MainInputProps = Omit<InputProps, 'inputSize'> & {
   isSmall: boolean
-}
-export type InputStyleOption<T extends string> = {
-  [key in Extract<T, 'FONT'>]: string
-} & {
-  [key in Exclude<T, 'FONT'>]: number
-}
-export type InputStylesheet<T> = {
-  [key in InputSize]: T
 }
 
 export const INPUT_STYLE_KEYS = {

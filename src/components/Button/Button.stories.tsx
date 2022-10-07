@@ -1,7 +1,6 @@
 import { Button, BUTTON_STYLE_KEYS } from './index'
 import type { Meta, Story } from '@storybook/react'
 import type { ButtonProps } from './index'
-import { ICON } from '@constants'
 
 export default {
   argTypes: {
@@ -30,6 +29,6 @@ export const Default = Template.bind({})
 Default.args = {
   buttonStyle: 'ghost',
   children: 'CTA 버튼',
-  iconUrl: ICON.HEART_24,
+  iconType: 'heart',
   size: 'medium'
 }

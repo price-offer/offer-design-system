@@ -4,10 +4,8 @@ import { useRef } from 'react'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
   label?: string
-  placeholder?: string
   guideMessage?: string
   bgType?: 'filled' | 'ghost'
-  autoFocus?: boolean
   onInput?(e: ChangeEvent<HTMLTextAreaElement>): void
 }
 
@@ -19,7 +17,6 @@ export const TextArea = ({
   placeholder = '내용을 입력하세요.',
   guideMessage = '',
   bgType = 'filled',
-  autoFocus,
   onInput,
   ...props
 }: TextAreaProps): ReactElement => {
@@ -42,7 +39,6 @@ export const TextArea = ({
       <StyledTextArea
         {...props}
         ref={textAreaRef}
-        autoFocus={autoFocus}
         isFilled={isFilled}
         placeholder={placeholder}
         rows={1}

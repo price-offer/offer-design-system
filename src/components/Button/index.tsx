@@ -48,7 +48,7 @@ export const Button = ({
 }: ButtonProps): ReactElement => {
   return (
     <StyledButton buttonStyle={buttonStyle} size={size} {...props}>
-      {iconType && <StyledIcon buttonStyle={buttonStyle} iconType={iconType} />}
+      {iconType && <StyledIcon buttonStyle={buttonStyle} type={iconType} />}
       {children}
     </StyledButton>
   )

@@ -141,7 +141,7 @@ const Carousel = ({
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.LEFT)
                 }}>
-                <Icon iconType="chevronLeft" size={40} />
+                <Icon size={40} type="chevronLeft" />
               </StyledLeftArrow>
             )}
             {isLastImage ? (
@@ -153,7 +153,7 @@ const Carousel = ({
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.RIGHT)
                 }}>
-                <Icon iconType="chevronRight" size={40} />
+                <Icon size={40} type="chevronRight" />
               </StyledRightArrow>
             )}
           </StyledArrowBox>

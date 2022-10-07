@@ -14,11 +14,12 @@
     "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
-    "lint:fix": "tsc --noEmit && eslint --fix './src/**/*.{ts,tsx}'",
+    "lint": "tsc --noEmit && eslint --ext './src/**/*.{ts,tsx}'",
+    "lint:fix": "tsc --noEmit && eslint --fix --ext './src/**/*.{ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token=43263771fe52"
+    "chromatic": "npx chromatic --project-token=43263771fe52",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",

@@ -2,11 +2,11 @@ import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
-export interface RadioProps extends HTMLAttributes<HTMLDivElement> {
+export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
   formName: string
   items: { code: string; name: string }[]
   direction: 'horizontal' | 'vertical'
-  onChange(e: ChangeEvent<HTMLInputElement>): void
+  onChange(e: ChangeEvent<HTMLFormElement>): void
 }
 
 type StyledFormProps = StyledProps<RadioProps, 'direction'>
@@ -18,7 +18,9 @@ export const Radio = ({
   direction = 'horizontal',
   ...props
 }: RadioProps): ReactElement => {
-  const handleRadiobutton = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleRadiobutton = (
+    e: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLFormElement>
+  ): void => {
     onChange(e)
   }
 
@@ -37,9 +39,9 @@ export const Radio = ({
   ))
 
   return (
-    <div {...props}>
-      <StyledForm direction={direction}>{radioList}</StyledForm>
-    </div>
+    <StyledForm {...props} direction={direction}>
+      {radioList}
+    </StyledForm>
   )
 }
 
@@ -55,7 +57,6 @@ const StyledInputWrapper = styled.label`
   align-items: center;
   flex-direction: row;
   padding-left: 25px;
-  padding-top: 3px;
   margin-bottom: 8px;
   ${({ theme }): string => theme.fonts.body02R};
 

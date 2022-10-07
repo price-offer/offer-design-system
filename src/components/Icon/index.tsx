@@ -1,5 +1,5 @@
 import {
-  ArrowLef,
+  ArrowLeft,
   ArrowUp,
   Avatar,
   Box,
@@ -41,12 +41,12 @@ export type IconType = keyof typeof ICON_TYPES
 export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   size?: number
   color?: string
-  iconType: IconType
+  type: IconType
 }
 
 type StyledIconWrapperProps = StyledProps<IconProps, 'color'>
 export const ICON_TYPES = {
-  arrowLef: ArrowLef,
+  arrowLeft: ArrowLeft,
   arrowUp: ArrowUp,
   avatar: Avatar,
   box: Box,
@@ -82,12 +82,12 @@ export const ICON_TYPES = {
 } as const
 
 export const Icon = ({
-  iconType,
+  type,
   size = 24,
   color = 'black',
   ...props
 }: IconProps): ReactElement => {
-  const IconSvg = ICON_TYPES[iconType]
+  const IconSvg = ICON_TYPES[type]
 
   return (
     <StyledIconWrapper color={color}>

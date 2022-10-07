@@ -1,7 +1,6 @@
-import { Badge, Image } from '@components'
+import { Badge, Icon, Image } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { colors } from '@themes'
 import styled from '@emotion/styled'
 import type { UploaderProps } from '../index'
 
@@ -32,11 +31,7 @@ export const MobileUploader = ({
   return (
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <StyledTriggerIcon
-          alt="picture-icon"
-          boxSize="40px"
-          src={ICON.PICTURE_40}
-        />
+        <Icon color={colors.grayScale.gray30} size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum}>{imgTotal}</StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}
@@ -57,11 +52,7 @@ export const MobileUploader = ({
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <StyledRemoveButton
-                alt={`close-icon_${index}`}
-                boxSize="16px"
-                src={ICON.CLOSE_16}
-              />
+              <Icon color={colors.grayScale.white} size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}
@@ -98,10 +89,6 @@ const StyledTrigger = styled.div`
   min-width: 80px;
   height: 80px;
   cursor: pointer;
-`
-const StyledTriggerIcon = styled(Image)`
-  filter: ${({ theme }): string =>
-    hexToCSSFilter(theme.colors.grayScale.gray30).filter};
 `
 const StyledUploaderInput = styled.input<HTMLAttributes<HTMLInputElement>>`
   display: none;
@@ -141,10 +128,5 @@ const StyledRemoveButtonWrapper = styled.div`
     display: inline-flex;
     position: absolute;
     background-color: ${theme.colors.grayScale.black};
-  `}
-`
-const StyledRemoveButton = styled(Image)`
-  ${({ theme }): string => `
-    filter: ${hexToCSSFilter(theme.colors.background.white).filter}};
   `}
 `

@@ -1,22 +1,29 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { ICON } from '@constants'
-import { Image } from '@components'
+import { Icon, Image } from '@components'
+import { colors } from '@styles/themes'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   alt: string
   src: string
-  size?: keyof typeof AVATAR_SIZE
+  size?: keyof typeof AVATAR_WRAPPER_SIZE
 }
 
 type StyledBlankAvatarWrapperProps = StyledProps<AvatarProps, 'size'>
 
-export const AVATAR_SIZE = {
+export const AVATAR_WRAPPER_SIZE = {
   large: '112px',
   medium: '80px',
   small: '46px',
   xsmall: '32px'
+} as const
+
+const AVATAR_IMAGE_SIZE = {
+  large: 55,
+  medium: 40,
+  small: 23,
+  xsmall: 16
 } as const
 
 export const Avatar = ({
@@ -33,7 +40,7 @@ export const Avatar = ({
         <div {...props}>
           <Image
             alt={alt}
-            boxSize={AVATAR_SIZE[size]}
+            boxSize={AVATAR_WRAPPER_SIZE[size]}
             radius="100%"
             src={src}
           />
@@ -41,11 +48,10 @@ export const Avatar = ({
       )}
       {isBlank && (
         <StyledBlankAvatarWrapper size={size} {...props}>
-          <Image
-            alt={alt}
-            boxSize="51%"
-            objectFit="contain"
-            src={ICON.AVATAR}
+          <Icon
+            color={colors.grayScale.gray20}
+            size={AVATAR_IMAGE_SIZE[size]}
+            type="avatar"
           />
         </StyledBlankAvatarWrapper>
       )}
@@ -59,8 +65,8 @@ const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   align-items: center;
   border-radius: 100%;
   ${({ theme, size }): string => `
-    width: ${AVATAR_SIZE[size]};
-    height: ${AVATAR_SIZE[size]};
+    width: ${AVATAR_WRAPPER_SIZE[size]};
+    height: ${AVATAR_WRAPPER_SIZE[size]};
     background-color: ${theme.colors.grayScale.gray05};
   `}
 `

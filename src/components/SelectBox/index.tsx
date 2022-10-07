@@ -1,7 +1,6 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
-import { Image } from '@components'
+import { colors } from '@themes'
+import { Icon } from '@components'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
@@ -34,7 +33,7 @@ type GetFontColorParams = Omit<StyledSelectProps, 'isSelected'> & {
   theme: Theme
 }
 type GetFontColor = (params: GetFontColorParams) => string
-type ApplyColor = (colorScheme: ColorScheme, theme: Theme) => string
+type ApplyColorScheme = (colorScheme: ColorScheme, theme: Theme) => string
 type ApplySize = (size: Size, theme: Theme) => string
 
 export const SelectBox = ({
@@ -63,6 +62,13 @@ export const SelectBox = ({
     setIsOpen(false)
   }
 
+  const getIconColor = (): string => {
+    const { gray90, white } = colors.grayScale
+    const isDark = colorScheme === 'dark'
+
+    return isDark ? white : gray90
+  }
+
   return (
     <StyledSelectBoxWrapper ref={ref} {...props}>
       <StyledTriggerWrapper
@@ -72,10 +78,9 @@ export const SelectBox = ({
         onClick={handleOpenOptions}>
         <span>{text}</span>
         <StyledTriggerArrow
-          alt="trigger-icon"
-          boxSize="16px"
-          colorScheme={colorScheme}
-          src={ICON.CHEVRON_DOWN_16}
+          color={getIconColor()}
+          size={16}
+          type="chevronDown"
         />
       </StyledTriggerWrapper>
       {isOpen && (
@@ -116,11 +121,8 @@ const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
     color:${getFontColor({ colorScheme, isEmpty, size, theme })};
   `}
 `
-const StyledTriggerArrow = styled(Image)<
-  Pick<StyledSelectProps, 'colorScheme'>
->`
+const StyledTriggerArrow = styled(Icon)`
   margin-left: 4px;
-  ${({ colorScheme, theme }): string => applyIconColor(colorScheme, theme)}
 `
 
 /** OptionList  */
@@ -191,7 +193,7 @@ const applySize: ApplySize = (size, theme) => {
       `
   }
 }
-const applyColorScheme: ApplyColor = (colorScheme, theme) => {
+const applyColorScheme: ApplyColorScheme = (colorScheme, theme) => {
   const { black, gray20, white } = theme.colors.grayScale
 
   switch (colorScheme) {
@@ -224,10 +226,4 @@ const getFontColor: GetFontColor = ({ isEmpty, colorScheme, size, theme }) => {
     case 'medium':
       return `${isEmpty ? gray50 : mediumPrimary}`
   }
-}
-const applyIconColor: ApplyColor = (colorScheme, theme) => {
-  const { gray90, white } = theme.colors.grayScale
-  const isDark = colorScheme === 'dark'
-
-  return `filter: ${hexToCSSFilter(isDark ? white : gray90).filter}`
 }

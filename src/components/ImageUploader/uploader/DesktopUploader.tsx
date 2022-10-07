@@ -1,7 +1,6 @@
-import { Badge, Button, Image } from '@components'
+import { Badge, Button, Icon, Image } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
-import { hexToCSSFilter } from 'hex-to-css-filter'
-import { ICON } from '@constants'
+import { colors } from '@themes'
 import styled from '@emotion/styled'
 import type { UploaderProps } from '../index'
 
@@ -33,11 +32,7 @@ export const DesktopUploader = ({
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
-          <StyledTriggerIcon
-            alt="picture-icon"
-            boxSize="40px"
-            src={ICON.PICTURE_40}
-          />
+          <Icon color={colors.grayScale.gray30} size={40} type="picture" />
           <StyledDescription>
             <p>상품 이미지 추가</p>
             <StyledImageTotal isMaximum={isMaximum}>
@@ -65,12 +60,7 @@ export const DesktopUploader = ({
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <StyledRemoveButton
-                alt={`close-icon_${index}`}
-                boxSize="16px"
-                data-id="close-icon"
-                src={ICON.CLOSE_16}
-              />
+              <Icon color={colors.grayScale.white} size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}
@@ -104,10 +94,6 @@ const StyledTrigger = styled.div<Pick<StyledProps, 'isShowListType'>>`
     padding-bottom: ${isShowListType ? '' : '90px'};
     pointer-events: none;
   `}
-`
-const StyledTriggerIcon = styled(Image)`
-  filter: ${({ theme }): string =>
-    hexToCSSFilter(theme.colors.grayScale.gray30).filter};
 `
 const StyledUploaderInput = styled.input`
   display: none;
@@ -167,10 +153,5 @@ const StyledRemoveButtonWrapper = styled.div`
     display: inline-flex;
     position: absolute;
     background-color: ${theme.colors.grayScale.black};
-  `}
-`
-const StyledRemoveButton = styled(Image)`
-  ${({ theme }): string => `
-    filter: ${hexToCSSFilter(theme.colors.background.white).filter}};
   `}
 `

@@ -14,18 +14,20 @@
     "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
-    "lint:fix": "tsc --noEmit && eslint --fix './src/**/*.{ts,tsx}'",
+    "lint": "tsc --noEmit && eslint --ext './src/**/*.{ts,tsx}'",
+    "lint:fix": "tsc --noEmit && eslint --fix --ext './src/**/*.{ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token=43263771fe52"
+    "chromatic": "npx chromatic --project-token=43263771fe52",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
@@ -38,6 +40,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",

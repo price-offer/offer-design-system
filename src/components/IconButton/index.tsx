@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
-type IconButtonColor =
+export type IconButtonColor =
   | 'white'
   | 'black'
   | 'gray30'
@@ -13,13 +13,15 @@ type IconButtonColor =
   | 'primaryWeak'
   | 'sub'
   | 'subWeak'
+type IconButtonSize = 'small' | 'medium' | 'large'
+type IconButtonShape = 'rounded' | 'square' | 'ghost'
 
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   icon: IconType
-  size?: 'small' | 'medium' | 'large'
+  size?: IconButtonSize
   color?: IconButtonColor
   hasShadow?: boolean
-  shape?: 'rounded' | 'square' | 'ghost'
+  shape?: IconButtonShape
 }
 
 type StyledIconButtonProps = StyledProps<
@@ -89,7 +91,9 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
       };
       border-radius: ${isRounded ? theme.radius.round100 : 'none'};
       box-shadow: ${
-        hasShadow ? `0px 2px 10px ${theme.colors.dim.opacity25}` : 'none'
+        hasShadow && !isGhost
+          ? `0px 2px 10px ${theme.colors.dim.opacity25}`
+          : 'none'
       };
     `
   }}

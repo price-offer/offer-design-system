@@ -18,7 +18,7 @@ export const fonts = {
     'font-size: 14px; font-weight: normal; line-height: 26px; letter-spacing: -0.1px;',
   body02M: 'font-size: 14px; font-weight: 500; line-height: 20px;',
   body02R:
-    'font-size: 14px; font-weight: normal; line-height: 14px; letter-spacing: -0.1px;',
+    'font-size: 14px; font-weight: normal; line-height: 20px; letter-spacing: -0.1px;',
   caption01B:
     'font-size: 12px; font-weight: bold; line-height: 16px; letter-spacing: -0.05px;',
   caption01M:

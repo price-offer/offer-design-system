@@ -1,9 +1,9 @@
 import type { ChangeEventHandler, ReactElement } from 'react'
+import { convertToNumber, toLocaleCurrency } from '@utils/format'
 import type { MainInputProps as DefaultInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { VALIDATE_MESSAGE } from '@constants'
-import { validationNumber } from '@utils/validation'
 
 type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
 type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
@@ -21,8 +21,13 @@ export const DefaultInput = ({
 }: DefaultInputProps): ReactElement => {
   const hasGuideMessage = status !== 'none'
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
+    if (isPrice) {
+      const numberValue = convertToNumber(e.target.value)
+
+      e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
+    }
+
     onChange?.(e)
-    e.target.value = validationNumber(e.target.value, isPrice)
   }
 
   return (

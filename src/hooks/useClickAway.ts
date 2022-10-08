@@ -32,7 +32,7 @@ export const useClickAway = <T extends HTMLElement>(
         document.removeEventListener(eventName, handleEvent)
       }
     }
-  }, [ref])
+  }, [])
 
   return ref
 }

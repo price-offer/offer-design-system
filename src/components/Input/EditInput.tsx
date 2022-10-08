@@ -1,9 +1,9 @@
 import type { ChangeEventHandler, ReactElement } from 'react'
+import { convertToNumber, toLocaleCurrency } from '@utils/format'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { VALIDATE_MESSAGE } from '@constants'
-import { validationNumber } from '@utils/validation'
 
 type EditInputProps = Omit<MainInputProps, 'isPrice'>
 
@@ -23,8 +23,10 @@ export const EditInput = ({
   const hasGuideMessage = status !== 'none'
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    const numberValue = convertToNumber(e.target.value)
+    e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
+
     onChange?.(e)
-    e.target.value = validationNumber(e.target.value, true)
   }
 
   return (

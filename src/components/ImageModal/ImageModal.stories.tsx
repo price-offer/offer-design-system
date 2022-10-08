@@ -8,9 +8,6 @@ export default {
   title: 'Components/ImageModal'
 } as Meta<ImageModalProps>
 
-const parentElement = document.createElement('div')
-document.body.append(parentElement)
-
 const Template: Story<ImageModalProps> = args => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -50,6 +47,5 @@ Default.args = {
       src: 'http://placekitten.com/400/800'
     }
   ],
-  name: 'cat-detail',
-  parentElement
+  name: 'cat-detail'
 }

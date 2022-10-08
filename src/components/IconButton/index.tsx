@@ -1,10 +1,9 @@
-import type { HTMLAttributes, MouseEventHandler, ReactElement } from 'react'
+import type { HTMLAttributes, ReactElement } from 'react'
 import { Icon } from '@components'
 import type { IconType } from '@components'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
-import { useState } from 'react'
 
 type IconButtonColor =
   | 'white'
@@ -16,26 +15,19 @@ type IconButtonColor =
   | 'subWeak'
 
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  onClick?: MouseEventHandler
-  type: IconType
+  icon: IconType
   size?: 'small' | 'medium' | 'large'
   color?: IconButtonColor
-  toggleType?: IconType
-  toggleColor?: IconButtonColor
   hasShadow?: boolean
-  iconButtonStyle?: 'rounded' | 'square' | 'ghost'
+  shape?: 'rounded' | 'square' | 'ghost'
 }
 
 type StyledIconButtonProps = StyledProps<
   IconButtonProps,
-  'size' | 'hasShadow' | 'iconButtonStyle'
-> & {
-  isToggle: boolean
-  color: IconButtonColor
-}
-
-type StyledIconProps = StyledProps<StyledIconButtonProps, 'iconButtonStyle'> & {
-  iconColor: IconButtonColor
+  'size' | 'hasShadow' | 'shape' | 'color'
+>
+type StyledIconProps = StyledProps<StyledIconButtonProps, 'shape'> & {
+  colorType: IconButtonColor
 }
 
 const ICON_BUTTON_SIZE = {
@@ -54,53 +46,25 @@ const ICON_BUTTON_SIZE = {
 }
 
 export const IconButton = ({
-  onClick,
-  type,
-  color,
+  color = 'black',
   size = 'small',
-  toggleType,
-  toggleColor,
+  shape = 'ghost',
   hasShadow = false,
-  iconButtonStyle = 'ghost',
+  icon,
   ...props
 }: IconButtonProps): ReactElement => {
-  const [isToggle, setIsToggle] = useState<boolean>(false)
-  const isToggleButton = !!toggleType
-  const renderIcon =
-    isToggleButton && isToggle
-      ? {
-          color: toggleColor || 'black',
-          type: toggleType
-        }
-      : {
-          color: color || 'black',
-          type
-        }
-
-  const handleClick: MouseEventHandler = e => {
-    onClick && onClick(e)
-
-    if (!isToggleButton) {
-      return
-    }
-
-    setIsToggle(!isToggle)
-  }
-
   return (
     <StyledIconButton
       {...props}
-      color={renderIcon?.color}
+      color={color}
       hasShadow={hasShadow}
-      iconButtonStyle={iconButtonStyle}
-      isToggle={isToggle}
-      size={size}
-      onClick={handleClick}>
+      shape={shape}
+      size={size}>
       <StyledIcon
-        iconButtonStyle={iconButtonStyle}
-        iconColor={renderIcon?.color}
+        colorType={color}
+        shape={shape}
         size={ICON_BUTTON_SIZE[size].ICON}
-        type={renderIcon?.type}
+        type={icon}
       />
     </StyledIconButton>
   )
@@ -113,9 +77,9 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   border: none;
   cursor: pointer;
 
-  ${({ size, theme, iconButtonStyle, hasShadow, color }): string => {
-    const isGhost = iconButtonStyle === 'ghost'
-    const isRounded = iconButtonStyle === 'rounded'
+  ${({ size, theme, shape, hasShadow, color }): string => {
+    const isGhost = shape === 'ghost'
+    const isRounded = shape === 'rounded'
 
     return `
       width: ${ICON_BUTTON_SIZE[size].BUTTON}px;
@@ -132,9 +96,9 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
 `
 
 const StyledIcon = styled(Icon)<StyledIconProps>`
-  color: ${({ theme, iconColor, iconButtonStyle }): string => {
-    const isBlack = iconButtonStyle !== 'ghost' && iconColor === 'white'
-    const isGhost = iconButtonStyle !== 'ghost'
+  color: ${({ theme, colorType, shape }): string => {
+    const isBlack = shape !== 'ghost' && colorType === 'white'
+    const isGhost = shape !== 'ghost'
 
     if (isBlack) {
       return theme.colors.grayScale.black
@@ -144,18 +108,21 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
       return theme.colors.grayScale.white
     }
 
-    return applyIconButtonColor(iconColor, theme)
+    return applyIconButtonColor(colorType, theme)
   }};
 `
 
-const applyIconButtonColor = (color: IconButtonColor, theme: Theme): string => {
+const applyIconButtonColor = (
+  colorType: IconButtonColor,
+  theme: Theme
+): string => {
   const { brand, grayScale } = theme.colors
   const isGrayScale =
-    color === 'black' || color === 'white' || color === 'gray30'
+    colorType === 'black' || colorType === 'white' || colorType === 'gray30'
 
   if (isGrayScale) {
-    return grayScale[color]
+    return grayScale[colorType]
   }
 
-  return brand[color]
+  return brand[colorType]
 }

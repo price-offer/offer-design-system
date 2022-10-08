@@ -28,15 +28,12 @@ export const Modal = ({
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
   })
-  const topElement: HTMLDivElement = useMemo(
-    () => document.createElement('div'),
-    []
-  )
+  const topElement = useMemo(() => document.createElement('div'), [])
 
   useEffect(() => {
     document.body.append(topElement)
 
-    return (): void => {
+    return () => {
       document.body.removeChild(topElement)
     }
   }, [])
@@ -46,8 +43,8 @@ export const Modal = ({
       <StyledModal {...props} ref={modalRef} height={height} width={width}>
         <StyledCloseIcon
           color="gray30"
-          iconButtonStyle="ghost"
-          type="close"
+          icon="close"
+          shape="ghost"
           onClick={onClose}
         />
         {children}

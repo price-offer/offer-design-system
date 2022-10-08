@@ -12,9 +12,7 @@ const Template: Story<IconButtonProps> = args => <IconButton {...args} />
 export const Default = Template.bind({})
 Default.args = {
   color: 'primary',
-  iconButtonStyle: 'rounded',
-  size: 'small',
-  toggleColor: 'primaryWeak',
-  toggleType: 'arrowUp',
-  type: 'arrowLeft'
+  icon: 'arrowLeft',
+  shape: 'rounded',
+  size: 'small'
 }

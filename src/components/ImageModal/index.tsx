@@ -166,7 +166,12 @@ export const ImageModal = ({
       onTouchStart={handleTouchStart}>
       <StyledGradient direction="top" />
       <StyledGradient direction="bottom" />
-      <StyledCloseIcon color="gray30" type="close" onClick={onClose} />
+      <StyledCloseIcon
+        color="gray30"
+        icon="close"
+        size="medium"
+        onClick={onClose}
+      />
       <StyledImageContainer
         {...props}
         imageCount={getImageCount()}

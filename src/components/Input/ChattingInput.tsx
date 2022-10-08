@@ -34,10 +34,10 @@ export const ChattingInput = ({
       <StyledIconButton
         color={isDisabled ? 'primaryWeak' : 'primary'}
         disabled={isDisabled}
-        iconButtonStyle="rounded"
+        icon="arrowUp"
         isSmall={isSmall}
+        shape="rounded"
         size="medium"
-        type="arrowUp"
       />
     </StyledInputForm>
   )

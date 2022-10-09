@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactElement, TouchEventHandler } from 'react'
+import { IconButton, Image as ImageComponent } from '@components'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { IconButton } from '@components'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
@@ -26,8 +26,8 @@ interface StyledImageModalProps {
   direction: 'top' | 'bottom'
 }
 interface StyledImageContainerProps {
-  imageCount: number
-  imageWidth: number
+  currentImageIndex: number
+  sumOfHandoverImageWidth: number
 }
 type StyledImageProps = Pick<StyledImageModalProps, 'isFixedHeight'>
 type StyledGradientProps = Pick<StyledImageModalProps, 'direction'>
@@ -35,6 +35,14 @@ type StyledGradientProps = Pick<StyledImageModalProps, 'direction'>
 const DEFAULT_RESIZE_HEIGHT = 640
 const IMAGE_GAP_HALF = 6
 const TOUCH_START_END_DIFFERENCE = 30
+const TOUCH_NAV_TYPE = {
+  LEFT: 'left',
+  RIGHT: 'right'
+} as const
+const VALUE_OF_TOUCH_NAV_TYPE = {
+  left: -1,
+  right: 1
+} as const
 
 export const ImageModal = ({
   onClose,
@@ -44,9 +52,9 @@ export const ImageModal = ({
   ...props
 }: ImageModalProps): ReactElement => {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
-  const firstImageId = images[0].id
-  const [currentImageId, setCurrentImageId] = useState<string>(firstImageId)
-  const clientX = useRef<number | null>(null)
+  const initImageId = images[0].id
+  const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
+  const startClientX = useRef<number | null>(null)
   const topElement = useMemo(() => document.createElement('div'), [])
 
   useEffect(() => {
@@ -62,7 +70,7 @@ export const ImageModal = ({
   }, [images])
 
   useEffect(() => {
-    setCurrentImageId(firstImageId)
+    isOpen && setCurrentImageId(initImageId)
   }, [isOpen])
 
   const getImagesInfo = async (): Promise<void> => {
@@ -76,7 +84,16 @@ export const ImageModal = ({
             height: image.height,
             id,
             src,
-            width: image.width * (DEFAULT_RESIZE_HEIGHT / image.height)
+            width: (image.width * DEFAULT_RESIZE_HEIGHT) / image.height
+          })
+        }
+
+        image.onerror = (): void => {
+          resolve({
+            height: DEFAULT_RESIZE_HEIGHT,
+            id,
+            src: null,
+            width: 500
           })
         }
       })
@@ -87,13 +104,12 @@ export const ImageModal = ({
     )) as ResizeImageInfo[]
   }
 
-  const getSumImageWidth = (): number =>
+  const getSumOfHandoverImageWidth = (): number =>
     [...imagesInfo.current].reduce(
-      (sumImageWidth, currentImage, idx, images) => {
+      (sumImageWidth, currentImage, index, images) => {
         const { id, width } = currentImage
 
         if (currentImageId === id) {
-          // for early return
           images.splice(1)
           return sumImageWidth + width / 2 + IMAGE_GAP_HALF
         }
@@ -103,7 +119,7 @@ export const ImageModal = ({
       0
     )
 
-  const getImageCount = (): number => {
+  const getCurrentImageIndex = (): number => {
     return imagesInfo.current.findIndex(({ id }) => currentImageId === id)
   }
 
@@ -112,48 +128,30 @@ export const ImageModal = ({
   }
 
   const handleTouchStart: TouchEventHandler = (e): void => {
-    if (clientX.current === null) {
-      clientX.current = e.changedTouches[0].pageX
+    if (startClientX.current === null) {
+      startClientX.current = e.changedTouches[0].pageX
     }
   }
 
   const handleTouchEnd: TouchEventHandler = (e): void => {
-    const previousTouchX = clientX.current
+    const images = imagesInfo.current
+    const prevTouchX = startClientX.current
     const currentTouchX = e.changedTouches[0].pageX
-    const currentImageIdx = getImageCount()
+    const currentImageIndex = getCurrentImageIndex()
+    const isNotMoved = !prevTouchX
 
-    if (previousTouchX === null) {
+    if (isNotMoved) {
       return
     }
 
-    const goNextImage =
-      previousTouchX - currentTouchX > TOUCH_START_END_DIFFERENCE
-    const goPreviousImage =
-      currentTouchX - previousTouchX > TOUCH_START_END_DIFFERENCE
+    const isRight = prevTouchX - currentTouchX > TOUCH_START_END_DIFFERENCE
+    const touchNavType = isRight ? TOUCH_NAV_TYPE.RIGHT : TOUCH_NAV_TYPE.LEFT
+    const newCurrentImage =
+      images[currentImageIndex + VALUE_OF_TOUCH_NAV_TYPE[touchNavType]]
+    const defaultImageId = isRight ? images[0].id : images[images.length - 1].id
+    const newCurrentImageId = newCurrentImage?.id || defaultImageId
 
-    if (goNextImage) {
-      const nextImageIndex = currentImageIdx + 1
-      const nextImage = imagesInfo.current[nextImageIndex]
-      const newCurrentImageId = nextImage
-        ? nextImage.id
-        : imagesInfo.current[0].id
-
-      setCurrentImageId(newCurrentImageId)
-      return
-    }
-
-    if (goPreviousImage) {
-      const prevImageIdx = currentImageIdx - 1
-      const prevImage = imagesInfo.current[prevImageIdx]
-      const newCurrentImageId = prevImage
-        ? prevImage.id
-        : imagesInfo.current[imagesInfo.current.length - 1].id
-
-      setCurrentImageId(newCurrentImageId)
-      return
-    }
-
-    clientX.current = null
+    setCurrentImageId(newCurrentImageId)
   }
 
   const calculateSizeRate = (width: number, height: number): number =>
@@ -174,14 +172,16 @@ export const ImageModal = ({
       />
       <StyledImageContainer
         {...props}
-        imageCount={getImageCount()}
-        imageWidth={getSumImageWidth()}>
+        currentImageIndex={getCurrentImageIndex()}
+        sumOfHandoverImageWidth={getSumOfHandoverImageWidth()}>
         {imagesInfo.current.map(({ src, id, width, height }) => (
           <StyledImage
             key={id}
             alt={`${name}-${id}`}
+            height={`${height}px`}
             isFixedHeight={calculateSizeRate(width, height) < 5 / 3}
             src={src}
+            width={`${width}px`}
           />
         ))}
       </StyledImageContainer>
@@ -229,22 +229,22 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   ${({ theme }): string => theme.mediaQuery.mobile} {
     transform: translate((0, 0));
     gap: 0;
-    transform: ${({ imageCount }): string =>
-      `translate(-${imageCount * 100}vw, 0);`};
+    transform: ${({ currentImageIndex }): string =>
+      `translate(-${currentImageIndex * 100}vw, 0);`};
   }
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     transform: translate((0, 0));
     gap: 0;
-    transform: ${({ imageCount }): string =>
-      `translate(-${imageCount * 100}vw, 0);`};
+    transform: ${({ currentImageIndex }): string =>
+      `translate(-${currentImageIndex * 100}vw, 0);`};
   }
 
-  transform: ${({ imageWidth }): string =>
-    `translate(calc(50vw - ${imageWidth}px), 0)}, 0)`};
+  transform: ${({ sumOfHandoverImageWidth }): string =>
+    `translate(calc(50vw - ${sumOfHandoverImageWidth}px), 0)}, 0)`};
 `
 
-const StyledImage = styled.img<StyledImageProps>`
+const StyledImage = styled(ImageComponent)<StyledImageProps>`
   height: ${DEFAULT_RESIZE_HEIGHT}px;
 
   ${({ theme }): string => theme.mediaQuery.tablet} {

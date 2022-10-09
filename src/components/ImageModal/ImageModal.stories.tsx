@@ -36,7 +36,7 @@ Default.args = {
   images: [
     {
       id: '1',
-      src: 'http://placekitten.com/200/300'
+      src: 'errorImage'
     },
     {
       id: '2',

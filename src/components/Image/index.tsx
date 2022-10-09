@@ -93,7 +93,7 @@ export const Image = ({
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
   ${({ boxSize, radius, theme, width, height }): string => `
     ${applyShape({ boxSize, height, radius, width })}
-    background-color: ${theme.colors.grayScale.gray10}
+    background-color: ${theme.colors.grayScale.gray10};
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`

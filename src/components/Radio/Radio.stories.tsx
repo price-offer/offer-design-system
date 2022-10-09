@@ -28,7 +28,7 @@ Default.args = {
       name: '옵션 3'
     }
   ],
-  onChange: (e: ChangeEvent<HTMLInputElement>): void => {
+  onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)
   }

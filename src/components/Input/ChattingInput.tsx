@@ -11,7 +11,7 @@ type ChattingInputProps = Omit<
 >
 
 type StyledInputProps = StyledProps<ChattingInputProps, 'isSmall'>
-type StyledIconButtonProps = StyledProps<ChattingInputProps, 'isSmall'> & {
+type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
 
@@ -24,7 +24,7 @@ export const ChattingInput = ({
   const isDisabled = !inputValue
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    onChange && onChange(e)
+    onChange?.(e)
     setInputValue(e.currentTarget.value)
   }
 

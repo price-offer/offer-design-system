@@ -1,8 +1,8 @@
 import type { HTMLAttributes, ReactElement } from 'react'
+import type { SelectOnChangeHandler, StyledProps } from '@types'
 import { colors } from '@themes'
 import { Icon } from '@components'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 import { useClose } from '@hooks'
 import { useState } from 'react'
@@ -13,15 +13,14 @@ interface Option {
   text: string
   value: string | number
 }
-type OnChangeValue = (item: Option) => void
 export type SelectBoxProps = {
   colorScheme?: ColorScheme
   size?: Size
   placeholder?: string
   value?: string | number
   options: Option[]
-  onChange: OnChangeValue
-} & HTMLAttributes<HTMLDivElement>
+  onChange: SelectOnChangeHandler
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 
 /** Styled Type */
 interface StyledSelectProps
@@ -56,7 +55,7 @@ export const SelectBox = ({
     setIsOpen?.(true)
   }
 
-  const handleChangeValue: OnChangeValue = item => {
+  const handleChangeValue: SelectOnChangeHandler = item => {
     onChange(item)
     setValue(item.value)
     setIsOpen(false)

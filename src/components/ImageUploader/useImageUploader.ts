@@ -1,6 +1,7 @@
-import type { ImageInfo, ImageUploaderProps, UploaderProps } from './index'
+import type { ImageUploaderProps, UploaderProps } from './index'
 import { useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
+import type { ImageInfo } from '@types'
 import { NOTICE_MESSAGE } from '@constants'
 import { v4 as uuidV4 } from 'uuid'
 

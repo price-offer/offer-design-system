@@ -17,7 +17,7 @@ export type SelectBoxProps = {
   colorScheme?: ColorScheme
   size?: Size
   placeholder?: string
-  value?: string | number
+  value: string | number
   options: Option[]
   onChange: SelectOnChangeHandler
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>

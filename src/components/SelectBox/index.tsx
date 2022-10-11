@@ -7,14 +7,14 @@ import type { Theme } from '@emotion/react'
 import { useClose } from '@hooks'
 import { useState } from 'react'
 
-type ColorScheme = 'none' | 'light' | 'dark'
+type ColorType = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
 interface Item {
   text: string
   value: string | number
 }
 export type SelectBoxProps = {
-  colorScheme?: ColorScheme
+  colorType?: ColorType
   size?: Size
   placeholder?: string
   value: string | number
@@ -24,7 +24,7 @@ export type SelectBoxProps = {
 
 /** Styled Type */
 interface StyledSelectProps
-  extends StyledProps<SelectBoxProps, 'colorScheme' | 'size'> {
+  extends StyledProps<SelectBoxProps, 'colorType' | 'size'> {
   isEmpty: boolean
   isSelected: boolean
 }
@@ -32,11 +32,11 @@ type GetFontColorParams = Omit<StyledSelectProps, 'isSelected'> & {
   theme: Theme
 }
 type GetFontColor = (params: GetFontColorParams) => string
-type ApplyColorScheme = (colorScheme: ColorScheme, theme: Theme) => string
+type ApplyColorScheme = (colorType: ColorType, theme: Theme) => string
 type ApplySize = (size: Size, theme: Theme) => string
 
 export const SelectBox = ({
-  colorScheme = 'light',
+  colorType = 'light',
   size = 'small',
   placeholder = '값을 입력하세요.',
   value: defaultValue = '',
@@ -62,7 +62,7 @@ export const SelectBox = ({
 
   const getIconColor = (): string => {
     const { gray90, white } = colors.grayScale
-    const isDark = colorScheme === 'dark'
+    const isDark = colorType === 'dark'
 
     return isDark ? white : gray90
   }
@@ -70,7 +70,7 @@ export const SelectBox = ({
   return (
     <StyledSelectBoxWrapper ref={ref} {...props}>
       <StyledTriggerWrapper
-        colorScheme={colorScheme}
+        colorType={colorType}
         isEmpty={isEmpty}
         size={size}
         onClick={handleOpenOptions}>
@@ -107,16 +107,16 @@ const StyledSelectBoxWrapper = styled.div`
 
 /** Trigger */
 const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
-  ${({ colorScheme, isEmpty, theme, size }): string => `
+  ${({ colorType: colorType, isEmpty, theme, size }): string => `
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     position: relative;
     cursor: pointer;
-    ${applyColorScheme(colorScheme, theme)}
+    ${applyColorScheme(colorType, theme)}
     ${applySize(size, theme)}
-    color:${getFontColor({ colorScheme, isEmpty, size, theme })};
+    color:${getFontColor({ colorType: colorType, isEmpty, size, theme })};
   `}
 `
 const StyledTriggerArrow = styled(Icon)`
@@ -191,10 +191,10 @@ const applySize: ApplySize = (size, theme) => {
       `
   }
 }
-const applyColorScheme: ApplyColorScheme = (colorScheme, theme) => {
+const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
   const { black, gray20, white } = theme.colors.grayScale
 
-  switch (colorScheme) {
+  switch (colorType) {
     case 'none':
       return `
         background-color: none;
@@ -212,9 +212,14 @@ const applyColorScheme: ApplyColorScheme = (colorScheme, theme) => {
       `
   }
 }
-const getFontColor: GetFontColor = ({ isEmpty, colorScheme, size, theme }) => {
+const getFontColor: GetFontColor = ({
+  isEmpty,
+  colorType: colorType,
+  size,
+  theme
+}) => {
   const { gray50, gray90, black, white } = theme.colors.grayScale
-  const isDark = colorScheme === 'dark'
+  const isDark = colorType === 'dark'
   const smallPrimary = isDark ? white : gray90
   const mediumPrimary = isDark ? white : black
 

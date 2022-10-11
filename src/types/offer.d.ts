@@ -1,9 +1,9 @@
 /** SelectBox  */
-interface SelectOptions {
+interface SelectItem {
   text: string
   value: string | number
 }
-export declare type SelectOnChangeHandler = (item: SelectOptions) => void
+export declare type SelectOnChangeHandler = (item: SelectItem) => void
 
 /**  ImageUploader */
 export interface ImageInfo {

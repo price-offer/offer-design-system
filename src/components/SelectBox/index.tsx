@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 type ColorScheme = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
-interface Option {
+interface Item {
   text: string
   value: string | number
 }
@@ -18,7 +18,7 @@ export type SelectBoxProps = {
   size?: Size
   placeholder?: string
   value: string | number
-  options: Option[]
+  items: Item[]
   onChange: SelectOnChangeHandler
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 
@@ -40,15 +40,14 @@ export const SelectBox = ({
   size = 'small',
   placeholder = '값을 입력하세요.',
   value: defaultValue = '',
-  options,
+  items,
   onChange,
   ...props
 }: SelectBoxProps): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [value, setValue] = useState<number | string>(defaultValue)
   const ref = useClose<HTMLDivElement>({ onClose: setIsOpen })
-  const text =
-    options.find(option => option.value === value)?.text || placeholder
+  const text = items.find(option => option.value === value)?.text || placeholder
   const isEmpty = value === ''
 
   const handleOpenOptions = (): void => {
@@ -85,7 +84,7 @@ export const SelectBox = ({
       {isOpen && (
         <StyledOptionListWrapper size={size}>
           <StyledOptionList>
-            {options?.map(item => (
+            {items?.map(item => (
               <StyledOptionsWrapper
                 key={item.value}
                 isSelected={value === item.value}

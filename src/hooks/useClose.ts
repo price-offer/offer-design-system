@@ -5,6 +5,10 @@ interface Params {
   onClose: Dispatch<SetStateAction<boolean>>
 }
 
+/** ref 외부 클릭 시, onClose 이벤트를 호출하는 hook입니다.
+ * @param { { onClose: Dispatch<SetStateAction<boolean>> }} params onClose 이벤트를 정합니다.
+ * @return { MutableRefObject<T | null> } ref 외부 클릭 시, onClose를 발생시킬 ref를 반환합니다.
+ */
 export const useClose = <T extends HTMLElement>({
   onClose
 }: Params): MutableRefObject<T | null> => {

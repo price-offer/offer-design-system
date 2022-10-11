@@ -17,6 +17,15 @@ interface UseImageReturn {
   onLoadImage(): void
 }
 
+/** image의 현재 상태에 따른 렌더링을 도와주는 hook입니다
+ * @param { string } src 이미지의 상태를 추적할 src 속성을 정합니다.
+ * @param { (string | undefined) } fallbackSrc src props의 이미지 대신 추적할 src 속성을 정합니다.
+ * @param { NativeImageProps['onLoad'] } onLoad image의 src 속성에서 onload 이벤트 호출 시 실행시킬 함수를 정합니다.
+ * @param { NativeImageProps['onError'] } onError image의 src 속성에서 onerror 이벤트 호출 시 실행시킬 함수를 정합니다.
+ * @return { () => void } onFallbackError fallbackSrc 사용 시, fallback Image의 onerror에 정의합니다.
+ * @return { () => void } onLoadImage fallbackSrc 사용 시, Image의 onload에 정의합니다.
+ * @return { 'loading' | 'failed' | 'pending' | 'loaded' | 'failedFallback' } status 현재 hook의 이미지 상태
+ */
 export const useImage = ({
   src,
   fallbackSrc,

@@ -3,9 +3,24 @@ import styled from '@emotion/styled'
 import { useRef } from 'react'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
+  /** TextArea 컴포넌트 상단의 label 정합니다.
+   * @type string
+   */
   label?: string
+
+  /** TextArea 컴포넌트 하단의 guideMessage 정합니다.
+   * @type string
+   */
   guideMessage?: string
+
+  /** TextArea 컴포넌트의 type을 정합니다.
+   * @type 'filled' | 'ghost'
+   */
   bgType?: 'filled' | 'ghost'
+
+  /** TextArea 컴포넌트의 onInput을 정의합니다.
+   * @type void
+   */
   onInput?(e: ChangeEvent<HTMLTextAreaElement>): void
 }
 

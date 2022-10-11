@@ -5,9 +5,24 @@ import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
 export interface CarouselProps {
+  /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
+   * @type { url: string, id: number } []
+   */
   images: { url: string; id: number }[]
+
+  /** Carousel 컴포넌트에 화살표의 유무를 정합니다.
+   * @type boolean
+   */
   isArrow: boolean
+
+  /** Carousel 컴포넌트에 들어갈 이미지들의 크기를 정합니다.
+   * @type number
+   */
   size?: number
+
+  /** Carousel 컴포넌트의 이름을 정합니다.(이미지들의 alt에도 사용)
+   * @type string
+   */
   name: string
 }
 
@@ -44,6 +59,10 @@ const NAV_TYPE = {
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
+/**
+ * 어떤 역할을 하는 props인지 적기
+ * @type 타입 적기
+ */
 const Carousel = ({
   images,
   isArrow,

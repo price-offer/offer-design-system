@@ -3,9 +3,24 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
+  /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
+   * @type string
+   */
   formName: string
+
+  /** Radio 컴포넌트의 들어갈 요소들을 정합니다
+   * @type { code: string, name: string } []
+   */
   items: { code: string; name: string }[]
+
+  /** Radio 컴포넌트의 방향을 정합니다.
+   * @type 'horizontal' | 'vertical'
+   */
   direction: 'horizontal' | 'vertical'
+
+  /** Radio 컴포넌트의 onChange를 정의합니다.
+   * @type void
+   */
   onChange(e: ChangeEvent<HTMLFormElement>): void
 }
 

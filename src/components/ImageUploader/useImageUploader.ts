@@ -32,16 +32,16 @@ export const useImageUploader = ({
       return
     }
 
-    const newFiles = [...images]
-    newFiles.splice(index, 1)
+    const newImages = [...images]
+    newImages.splice(index, 1)
 
     const isRepresent = images[index].isRepresent && images.length > 1
     if (isRepresent) {
-      newFiles[0].isRepresent = true
+      newImages[0].isRepresent = true
     }
 
-    onChange({ eventType: 'remove', imageList: newFiles })
-    setImages(newFiles)
+    onChange({ eventType: 'remove', images: newImages })
+    setImages(newImages)
   }
 
   const addImage: ChangeEventHandler<HTMLInputElement> = async e => {
@@ -71,7 +71,7 @@ export const useImageUploader = ({
     })
 
     const imageFiles = await Promise.all(fulfilledImageFiles)
-    const newImageList = imageFiles.map((file, index) => {
+    const newImages = imageFiles.map((file, index) => {
       const isRepresent = images.length === 0 && index === 0
       const imageUrl = isValidImageUrl(file) ? file : ''
 
@@ -82,8 +82,8 @@ export const useImageUploader = ({
       }
     })
 
-    setImages(prevImageList => [...prevImageList, ...newImageList])
-    onChange({ eventType: 'upload', imageList: images })
+    setImages(prevImageList => [...prevImageList, ...newImages])
+    onChange({ eventType: 'upload', images })
     e.target.value = ''
   }
 

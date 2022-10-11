@@ -13,7 +13,7 @@ export interface ImageInfo {
 }
 interface ImageUploaderParams {
   eventType: 'upload' | 'remove'
-  imageList: ImageInfo[]
+  images: ImageInfo[]
 }
 export declare type UploaderOnChangeHandler = (
   params: ImageUploaderParams

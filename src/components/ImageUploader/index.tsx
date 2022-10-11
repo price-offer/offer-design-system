@@ -5,14 +5,10 @@ import type {
   ReactElement
 } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
+import type { ImageInfo, UploaderOnChangeHandler } from '@types'
 import { useImageUploader } from './useImageUploader'
 import { useMediaQuery } from '@hooks'
 
-export interface ImageInfo {
-  isRepresent: boolean
-  id: string
-  url: string
-}
 export interface UploaderProps {
   imageList: ImageInfo[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
@@ -23,15 +19,10 @@ export interface UploaderProps {
 }
 
 /* ImageUploader Props */
-interface OnChangeParams {
-  eventType: 'upload' | 'remove'
-  imageList: ImageInfo[]
-}
-export type ImageUploaderOnChangeHandler = (params: OnChangeParams) => void
 export type ImageUploaderProps = {
   imageList: ImageInfo[]
-  onChange: ImageUploaderOnChangeHandler
-} & HTMLAttributes<HTMLDivElement>
+  onChange: UploaderOnChangeHandler
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 
 const MAX_LIST_LENGTH = 10
 

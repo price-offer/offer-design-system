@@ -19,7 +19,7 @@ type DesktopUploaderProps = {
 export const DesktopUploader = ({
   imageListRef,
   uploaderRef,
-  imageList,
+  images,
   openUploader,
   addImage,
   removeImage,
@@ -32,7 +32,7 @@ export const DesktopUploader = ({
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
-          <Icon colorType={colors.grayScale.gray30} size={40} type="picture" />
+          <Icon color={colors.grayScale.gray30} size={40} type="picture" />
           <StyledDescription>
             <p>상품 이미지 추가</p>
             <StyledImageTotal isMaximum={isMaximum}>
@@ -50,7 +50,7 @@ export const DesktopUploader = ({
         </StyledTrigger>
       </StyledTriggerWrapper>
       <StyledImageList ref={imageListRef}>
-        {imageList?.map(({ id, isRepresent, url }, index) => (
+        {images?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
             {isRepresent && (
               <StyledBadge colorType="orange">대표 사진</StyledBadge>

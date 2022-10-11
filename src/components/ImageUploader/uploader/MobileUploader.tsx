@@ -19,7 +19,7 @@ type MobileUploaderProps = {
 export const MobileUploader = ({
   imageListRef,
   uploaderRef,
-  imageList,
+  images,
   openUploader,
   addImage,
   removeImage,
@@ -42,7 +42,7 @@ export const MobileUploader = ({
         />
       </StyledTrigger>
       <StyledImageList ref={imageListRef}>
-        {imageList?.map(({ id, isRepresent, url }, index) => (
+        {images?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
             {isRepresent && (
               <StyledBadge colorType="orange">대표 사진</StyledBadge>
@@ -52,7 +52,7 @@ export const MobileUploader = ({
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon colorType={colors.grayScale.white} size={16} type="close" />
+              <Icon color={colors.grayScale.white} size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

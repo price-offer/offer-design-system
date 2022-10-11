@@ -165,7 +165,7 @@ export const ImageModal = ({
       <StyledGradient direction="top" />
       <StyledGradient direction="bottom" />
       <StyledCloseIcon
-        color="gray30"
+        colorType="gray30"
         icon="close"
         size="medium"
         onClick={onClose}

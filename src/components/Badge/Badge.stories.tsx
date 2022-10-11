@@ -4,7 +4,7 @@ import type { BadgeProps } from './index'
 
 export default {
   argTypes: {
-    colorScheme: {
+    colorType: {
       control: { type: 'radio' },
       options: ['gray', 'orange', 'purple']
     }
@@ -16,4 +16,4 @@ export default {
 const Template: Story<BadgeProps> = args => <Badge {...args} />
 
 export const Default = Template.bind({})
-Default.args = { children: 'Badge', colorScheme: 'gray' }
+Default.args = { children: 'Badge', colorType: 'gray' }

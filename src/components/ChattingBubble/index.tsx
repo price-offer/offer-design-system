@@ -3,16 +3,16 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
-  type: 'send' | 'receive'
+  messageType: 'send' | 'receive'
   children: string
 }
 
-type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'type'> & {
+type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'messageType'> & {
   isSend: boolean
 }
 
 export const ChattingBubble = ({
-  type,
+  messageType,
   children,
   ...props
 }: ChattingBubbleProps): ReactElement => {
@@ -20,11 +20,11 @@ export const ChattingBubble = ({
   const blankChatLength = children.length
   const noBlankChatLength = children.replace(newLineRegex, '').length
   const overChatLength = blankChatLength - noBlankChatLength
-  const isSend = type === 'send'
+  const isSend = messageType === 'send'
   const MAXIMUM_NUMBER_OF_CHATTINGBUBBLE = 100
 
   return (
-    <StyledBubble {...props} isSend={isSend} type={type}>
+    <StyledBubble {...props} isSend={isSend} messageType={messageType}>
       {noBlankChatLength <= MAXIMUM_NUMBER_OF_CHATTINGBUBBLE
         ? children
         : children?.substring(

@@ -42,7 +42,7 @@ export const Modal = ({
     <StyledDIM isOpen={isOpen}>
       <StyledModal {...props} ref={modalRef} height={height} width={width}>
         <StyledCloseIcon
-          color="gray30"
+          colorType="gray30"
           icon="close"
           shape="ghost"
           onClick={onClose}

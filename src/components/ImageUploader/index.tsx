@@ -10,7 +10,7 @@ import { useImageUploader } from './useImageUploader'
 import { useMediaQuery } from '@hooks'
 
 export interface UploaderProps {
-  imageList: ImageInfo[]
+  images: ImageInfo[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
   imageListRef: MutableRefObject<HTMLDivElement | null>
   addImage: ChangeEventHandler<HTMLInputElement>
@@ -20,39 +20,39 @@ export interface UploaderProps {
 
 /* ImageUploader Props */
 export type ImageUploaderProps = {
-  imageList: ImageInfo[]
+  images: ImageInfo[]
   onChange: UploaderOnChangeHandler
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 
 const MAX_LIST_LENGTH = 10
 
 export const ImageUploader = ({
-  imageList: defaultImageList,
+  images: defaultImages,
   onChange,
   ...props
 }: ImageUploaderProps): ReactElement => {
   const {
     imageListRef,
     uploaderRef,
-    imageList,
+    images,
     openUploader,
     addImage,
     removeImage
   } = useImageUploader({
-    imageList: defaultImageList,
+    images: defaultImages,
     onChange
   })
   const isLessThanTablet = useMediaQuery('(max-width:1023px)')
   const Uploader = isLessThanTablet ? MobileUploader : DesktopUploader
-  const isShowListType = imageList.length > 0
-  const isMaximum = imageList.length === MAX_LIST_LENGTH
-  const imgTotal = `(${imageList.length}/${MAX_LIST_LENGTH})`
+  const isShowListType = images.length > 0
+  const isMaximum = images.length === MAX_LIST_LENGTH
+  const imgTotal = `(${images.length}/${MAX_LIST_LENGTH})`
 
   return (
     <Uploader
       addImage={addImage}
-      imageList={imageList}
       imageListRef={imageListRef}
+      images={images}
       imgTotal={imgTotal}
       isMaximum={isMaximum}
       isShowListType={isShowListType}

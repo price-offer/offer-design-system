@@ -4,6 +4,9 @@ import styled from '@emotion/styled'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
+  /** Badge 컴포넌트의 컬러의 타입을 정합니다.
+   * @type 'gray' | 'orange' | 'purple'
+   */
   colorType: BadgeColorType
 }
 

@@ -2,7 +2,13 @@ import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 
 export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
+  /** Divider 컴포넌트의 방향을 정합니다.
+   * @type 'vertical' | 'horizontal' | undefined
+   */
   direction?: 'vertical' | 'horizontal'
+  /** Divider 컴포넌트의 크기를 정합니다.
+   * @type 'bold' | 'regular'
+   */
   size?: 'bold' | 'regular'
 }
 type StyledDividerProps = Pick<DividerProps, 'direction'>

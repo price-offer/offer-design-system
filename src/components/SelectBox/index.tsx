@@ -14,11 +14,29 @@ interface Item {
   value: string | number
 }
 export type SelectBoxProps = {
+  /** SelectBox의 컬러 타입을 정합니다.
+   * @type 'none' | 'light' | 'dark' | undefined
+   */
   colorType?: SelectColorType
+  /** SelectBox의 크기를 정합니다.
+   * @type 'small' | 'medium' | undefined
+   */
   size?: Size
+  /** SelectBox의 값이 없을 경우 보여질 placeholder를 정합니다.
+   * @type string | undefined
+   */
   placeholder?: string
+  /** SelectBox의 value를 정합니다.
+   * @type string  | number
+   */
   value: string | number
+  /** SelectBox의 옵션들을 정합니다.
+   * @type { text: string, value: string | number }[]
+   */
   items: Item[]
+  /** SelectBox의 onChange 이벤트 발생 시, 호출될 함수를 정합니다.
+   * @type SelectOnChangeHandler
+   */
   onChange: SelectOnChangeHandler
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 

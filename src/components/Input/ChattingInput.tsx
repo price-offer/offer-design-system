@@ -32,7 +32,7 @@ export const ChattingInput = ({
     <StyledInputForm>
       <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
       <StyledIconButton
-        color={isDisabled ? 'primaryWeak' : 'primary'}
+        colorType={isDisabled ? 'primaryWeak' : 'primary'}
         disabled={isDisabled}
         icon="arrowUp"
         isSmall={isSmall}

@@ -2,33 +2,33 @@ import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 
 export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
-  orientation?: 'vertical' | 'horizontal'
+  direction?: 'vertical' | 'horizontal'
   size?: 'bold' | 'regular'
 }
-type StyledDividerProps = Pick<DividerProps, 'orientation'>
+type StyledDividerProps = Pick<DividerProps, 'direction'>
 
 export const Divider = ({
-  orientation = 'horizontal',
+  direction = 'horizontal',
   size = 'regular',
   ...props
 }: DividerProps): ReactElement => {
   return (
-    <StyledDividerWrapper orientation={orientation} {...props}>
-      <StyledDivider orientation={orientation} size={size} />
+    <StyledDividerWrapper direction={direction} {...props}>
+      <StyledDivider direction={direction} size={size} />
     </StyledDividerWrapper>
   )
 }
 
 const StyledDividerWrapper = styled.div<StyledDividerProps>`
-  display: ${({ orientation }): string =>
-    orientation === 'horizontal' ? 'block' : 'inline-block'};
+  display: ${({ direction }): string =>
+    direction === 'horizontal' ? 'block' : 'inline-block'};
 `
 const StyledDivider = styled.hr<DividerProps>`
   margin: 0;
   padding: 0;
   width: 100%;
-  display: ${({ orientation }): string =>
-    orientation === 'horizontal' ? 'block' : 'inline'};
+  display: ${({ direction }): string =>
+    direction === 'horizontal' ? 'block' : 'inline'};
   border: ${({ theme, size }): string => {
     const { border, colors } = theme
 

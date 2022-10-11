@@ -52,7 +52,9 @@ export const DesktopUploader = ({
       <StyledImageList ref={imageListRef}>
         {images?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
-            {isRepresent && <StyledBadge colorType="orange">대표 사진</StyledBadge>}
+            {isRepresent && (
+              <StyledBadge colorType="orange">대표 사진</StyledBadge>
+            )}
             <Image alt={`file-${index}`} boxSize="280px" src={url} />
             <StyledRemoveButtonWrapper
               onClick={(): void => {

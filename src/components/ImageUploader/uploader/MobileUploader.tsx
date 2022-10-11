@@ -31,7 +31,7 @@ export const MobileUploader = ({
   return (
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <Icon color={colors.grayScale.gray30} size={40} type="picture" />
+        <Icon colorType={colors.grayScale.gray30} size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum}>{imgTotal}</StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}
@@ -44,13 +44,15 @@ export const MobileUploader = ({
       <StyledImageList ref={imageListRef}>
         {imageList?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
-            {isRepresent && <StyledBadge colorType="orange">대표 사진</StyledBadge>}
+            {isRepresent && (
+              <StyledBadge colorType="orange">대표 사진</StyledBadge>
+            )}
             <Image alt={`file-${index}`} boxSize="80px" src={url} />
             <StyledRemoveButtonWrapper
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color={colors.grayScale.white} size={16} type="close" />
+              <Icon colorType={colors.grayScale.white} size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

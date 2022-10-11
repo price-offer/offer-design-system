@@ -7,14 +7,14 @@ import type { Theme } from '@emotion/react'
 import { useClose } from '@hooks'
 import { useState } from 'react'
 
-type ColorType = 'none' | 'light' | 'dark'
+type SelectColorType = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
 interface Item {
   text: string
   value: string | number
 }
 export type SelectBoxProps = {
-  colorType?: ColorType
+  colorType?: SelectColorType
   size?: Size
   placeholder?: string
   value: string | number
@@ -32,7 +32,7 @@ type GetFontColorParams = Omit<StyledSelectProps, 'isSelected'> & {
   theme: Theme
 }
 type GetFontColor = (params: GetFontColorParams) => string
-type ApplyColorScheme = (colorType: ColorType, theme: Theme) => string
+type ApplyColorScheme = (colorType: SelectColorType, theme: Theme) => string
 type ApplySize = (size: Size, theme: Theme) => string
 
 export const SelectBox = ({
@@ -107,7 +107,7 @@ const StyledSelectBoxWrapper = styled.div`
 
 /** Trigger */
 const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
-  ${({ colorType: colorType, isEmpty, theme, size }): string => `
+  ${({ colorType, isEmpty, theme, size }): string => `
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
@@ -116,7 +116,7 @@ const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
     cursor: pointer;
     ${applyColorScheme(colorType, theme)}
     ${applySize(size, theme)}
-    color:${getFontColor({ colorType: colorType, isEmpty, size, theme })};
+    color:${getFontColor({ colorType, isEmpty, size, theme })};
   `}
 `
 const StyledTriggerArrow = styled(Icon)`
@@ -212,12 +212,7 @@ const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
       `
   }
 }
-const getFontColor: GetFontColor = ({
-  isEmpty,
-  colorType: colorType,
-  size,
-  theme
-}) => {
+const getFontColor: GetFontColor = ({ isEmpty, colorType, size, theme }) => {
   const { gray50, gray90, black, white } = theme.colors.grayScale
   const isDark = colorType === 'dark'
   const smallPrimary = isDark ? white : gray90

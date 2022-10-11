@@ -3,12 +3,12 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
-  /** ChattingBubble 컴포넌트의 type을 정합니다.
+  /** ChattingBubble 컴포넌트의 수신자 또는 발신자에 대한 형태를 정합니다.
    * @type 'send' | 'receive'
    */
   type: 'send' | 'receive'
 
-  /** ChattingBubble 컴포넌트의 내용입니다.
+  /** ChattingBubble 컴포넌트의 메시지에 입력될 내용입니다.
    * @type string
    */
   children: string

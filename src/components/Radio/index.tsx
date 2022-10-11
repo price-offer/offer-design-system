@@ -8,12 +8,12 @@ export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
    */
   formName: string
 
-  /** Radio 컴포넌트의 들어갈 요소들을 정합니다
+  /** Radio 컴포넌트에 보여질 옵션들을 정합니다
    * @type { code: string, name: string } []
    */
   items: { code: string; name: string }[]
 
-  /** Radio 컴포넌트의 방향을 정합니다.
+  /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
   direction: 'horizontal' | 'vertical'

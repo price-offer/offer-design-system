@@ -8,12 +8,12 @@ export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
    */
   label?: string
 
-  /** TextArea 컴포넌트 하단의 guideMessage 정합니다.
+  /** TextArea 컴포넌트 하단의 안내 메시지를 정합니다.
    * @type string
    */
   guideMessage?: string
 
-  /** TextArea 컴포넌트의 type을 정합니다.
+  /** TextArea 컴포넌트의 보여질 형태를 정합니다.
    * @type 'filled' | 'ghost'
    */
   bgType?: 'filled' | 'ghost'

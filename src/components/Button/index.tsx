@@ -60,14 +60,13 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   border: none;
   cursor: pointer;
-  color: ${({ theme, styleType: styleType }): string =>
+  color: ${({ theme, styleType }): string =>
     applyButtonFontColor(theme, styleType)};
 
   ${({ theme }): string => theme.fonts.body02B}
-  ${({ theme, size, styleType: styleType }): string =>
+  ${({ theme, size, styleType }): string =>
     applyButtonSizeStyle(theme, styleType, size)}
-  ${({ theme, styleType: styleType }): string =>
-    applyButtonColor(theme, styleType)}
+  ${({ theme, styleType }): string => applyButtonColor(theme, styleType)}
 `
 const applyButtonSizeStyle: ApplyButtonSizeStyle = (theme, styleType, size) => {
   const { round100, round4 } = theme.radius
@@ -92,7 +91,7 @@ const applyButtonSizeStyle: ApplyButtonSizeStyle = (theme, styleType, size) => {
 
 const StyledIcon = styled(Icon)<StyledIconProps>`
   margin-right: 4px;
-  color: ${({ theme, styleType: styleType }): string =>
+  color: ${({ theme, styleType }): string =>
     applyButtonFontColor(theme, styleType)};
 `
 

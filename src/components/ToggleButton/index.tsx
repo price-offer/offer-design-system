@@ -46,7 +46,7 @@ export const ToggleButton = ({
 
   return (
     <IconButton
-      color={renderIcon.color}
+      colorType={renderIcon.color}
       icon={renderIcon.icon as IconType}
       onClick={handleClick}
       {...props}

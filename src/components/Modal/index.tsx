@@ -7,10 +7,34 @@ import type { StyledProps } from '@types'
 import { useClickAway } from '@hooks'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Modal 내부에 들어갈 내용을 정합니다.
+   * @type ReactElement
+   */
   children: ReactElement
+
+  /**
+   * Modal의 open/close 여부를 정합니다.
+   * @type boolean | undefined
+   */
   isOpen?: boolean
-  width?: number
+
+  /**
+   * Modal의 너비를 정합니다.
+   * @type number
+   */
+  width?: number | undefined
+
+  /**
+   * Modal의 높이를 정합니다.
+   * @type number | undefined
+   */
   height?: number
+
+  /**
+   * Modal이 close될 때 실행할 함수를 정합니다.
+   * @type (): void | undefined
+   */
   onClose?(): void
 }
 

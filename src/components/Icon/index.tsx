@@ -39,8 +39,22 @@ import type { StyledProps } from '@types'
 
 export type IconType = keyof typeof ICON_TYPES
 export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
+  /**
+   * Icon의 사이즈를 정합니다.
+   * @type number | undefined
+   */
   size?: number
+
+  /**
+   * Icon의 색상을 정합니다.
+   * @type string | undefined
+   */
   color?: string
+
+  /**
+   * Icon의 타입을 정합니다.
+   * @type IconType
+   */
   type: IconType
 }
 

@@ -8,9 +8,28 @@ import type { Theme } from '@emotion/react'
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'small' | 'medium' | 'large'
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  /**
+   * Button의 스타일을 정합니다.
+   * @type "ghost" | "outline" | "outlineDisabled" | "solidDisabled" | "solidPrimary" | "solidSub" | undefined
+   */
   styleType?: ButtonStyleType
+
+  /**
+   * Button의 사이즈 속성을 정합니다.
+   * @type 'small' | 'medium' | 'large' | undefined
+   */
   size?: ButtonSize
+
+  /**
+   * Button에 포함될 아이콘 타입을 정합니다.
+   * @type IconType | undefined
+   */
   icon?: IconType
+
+  /**
+   * Button 내부에 작성할 문자열을 정합니다.
+   * @type string
+   */
   children: string
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'styleType' | 'size'>

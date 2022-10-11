@@ -10,9 +10,28 @@ interface ImageInfo {
   id: string
 }
 export interface ImageModalProps extends HTMLAttributes<HTMLDivElement> {
-  isOpen?: boolean
+  /**
+   * ImageModal의 open/close 상태를 정합니다.
+   * @type boolean | undefined
+   */
+  isOpen?: boolean | undefined
+
+  /**
+   * ImageModal에 띄울 이미지들을 정합니다.
+   * @type IconType
+   */
   images: ImageInfo[]
+
+  /**
+   * ImageModal의 이름을 정합니다.
+   * @type string
+   */
   name: string
+
+  /**
+   * ImageModal이 close될 때 실행할 함수를 정합니다.
+   * @type (): void | undefined
+   */
   onClose?(): void
 }
 type ResizeImageInfo = ImageInfo & {

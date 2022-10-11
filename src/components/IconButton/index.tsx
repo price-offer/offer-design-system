@@ -17,10 +17,34 @@ type IconButtonSize = 'small' | 'medium' | 'large'
 type IconButtonShape = 'rounded' | 'square' | 'ghost'
 
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  /**
+   * IconButton으로 사용될 아이콘의 타입을 정합니다.
+   * @type IconType
+   */
   icon: IconType
+
+  /**
+   * IconButton의 사이즈를 정합니다.
+   * @type 'small' | 'medium' | 'large' | undefined
+   */
   size?: IconButtonSize
+
+  /**
+   * IconButton의 색상 타입을 정합니다.
+   * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
+   */
   colorType?: IconButtonColorType
+
+  /**
+   * IconButton가 그림자를 가질지 정합니다.
+   * @type boolean | undefined
+   */
   hasShadow?: boolean
+
+  /**
+   * IconButton의 모양을 지정합니다.
+   * @type 'rounded' | 'square' | 'ghost' | undefined
+   */
   shape?: IconButtonShape
 }
 

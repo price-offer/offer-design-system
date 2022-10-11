@@ -31,7 +31,7 @@ export const MobileUploader = ({
   return (
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <Icon colorType={colors.grayScale.gray30} size={40} type="picture" />
+        <Icon color={colors.grayScale.gray30} size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum}>{imgTotal}</StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}

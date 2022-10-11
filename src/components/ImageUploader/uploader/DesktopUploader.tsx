@@ -60,7 +60,7 @@ export const DesktopUploader = ({
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon colorType={colors.grayScale.white} size={16} type="close" />
+              <Icon color={colors.grayScale.white} size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

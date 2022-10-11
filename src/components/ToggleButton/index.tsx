@@ -16,10 +16,10 @@ interface FillToggleButton {
    * ToggleButton의 스타일 타입을 정합니다.
    * @type 'fill'
    */
-  type: 'fill'
+  styleType: 'fill'
 
   /**
-   * ToggleButton의 type이 'fill'인 경우 사용 가능한 아이콘 타입을 정합니다.
+   * ToggleButton의 styleType이 'fill'인 경우 사용 가능한 아이콘 타입을 정합니다.
    * @type "checkCircle" | "heart" | "meh" | "sad" | "smile" | undefined
    */
   icon: FillIconType
@@ -29,7 +29,7 @@ interface StrokeToggleButton {
    * ToggleButton으로 아이콘의 타입을 정합니다.
    * @type 'stroke'
    */
-  type: 'stroke'
+  styleType: 'stroke'
 
   /**
    * ToggleButton.
@@ -55,14 +55,14 @@ type ToggleButtonType = FillToggleButton | StrokeToggleButton
 
 export const ToggleButton = ({
   onClick,
-  type = 'stroke',
+  styleType = 'stroke',
   colorType = 'black',
   toggleColorType = colorType,
   icon,
   ...props
 }: ToggleButtonProps): ReactElement => {
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const isFillType = type === 'fill'
+  const isFillType = styleType === 'fill'
   const toggleIcon = isFillType ? `${icon}Fill` : icon
   const renderIcon = {
     color: isToggle ? toggleColorType : colorType,

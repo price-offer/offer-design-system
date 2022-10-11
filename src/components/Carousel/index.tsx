@@ -59,10 +59,6 @@ const NAV_TYPE = {
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
-/**
- * 어떤 역할을 하는 props인지 적기
- * @type 타입 적기
- */
 const Carousel = ({
   images,
   isArrow,

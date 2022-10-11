@@ -4,10 +4,6 @@ import type { ButtonProps } from './index'
 
 export default {
   argTypes: {
-    buttonStyle: {
-      control: { type: 'radio' },
-      options: Object.values(BUTTON_STYLE_KEYS)
-    },
     children: {
       control: { type: 'text' }
     },
@@ -17,6 +13,10 @@ export default {
     size: {
       control: { type: 'radio' },
       options: ['large', 'medium', 'small']
+    },
+    styleType: {
+      control: { type: 'radio' },
+      options: Object.values(BUTTON_STYLE_KEYS)
     }
   },
   component: Button,
@@ -27,8 +27,8 @@ const Template: Story<ButtonProps> = args => <Button {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  buttonStyle: 'ghost',
   children: 'CTA 버튼',
-  iconType: 'heart',
-  size: 'medium'
+  icon: 'heart',
+  size: 'medium',
+  styleType: 'ghost'
 }

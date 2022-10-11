@@ -44,9 +44,7 @@ export const MobileUploader = ({
       <StyledImageList ref={imageListRef}>
         {imageList?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
-            {isRepresent && (
-              <StyledBadge colorScheme="orange">대표 사진</StyledBadge>
-            )}
+            {isRepresent && <StyledBadge colorType="orange">대표 사진</StyledBadge>}
             <Image alt={`file-${index}`} boxSize="80px" src={url} />
             <StyledRemoveButtonWrapper
               onClick={(): void => {

@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
-export type IconButtonColor =
+export type IconButtonColorType =
   | 'white'
   | 'black'
   | 'gray30'
@@ -19,7 +19,7 @@ type IconButtonShape = 'rounded' | 'square' | 'ghost'
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   icon: IconType
   size?: IconButtonSize
-  colorType?: IconButtonColor
+  colorType?: IconButtonColorType
   hasShadow?: boolean
   shape?: IconButtonShape
 }
@@ -29,7 +29,7 @@ type StyledIconButtonProps = StyledProps<
   'size' | 'hasShadow' | 'shape' | 'colorType'
 >
 type StyledIconProps = StyledProps<StyledIconButtonProps, 'shape'> & {
-  colorType: IconButtonColor
+  colorType: IconButtonColorType
 }
 
 const ICON_BUTTON_SIZE = {
@@ -117,7 +117,7 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
 `
 
 const applyIconButtonColor = (
-  colorType: IconButtonColor,
+  colorType: IconButtonColorType,
   theme: Theme
 ): string => {
   const { brand, grayScale } = theme.colors

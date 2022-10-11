@@ -4,22 +4,22 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
-  textStyle: FontStyleKeys
+  styleType: FontStyleKeys
   tag?: 'p' | 'span'
   children: string
   color?: string
 }
 
-type StyledTextProps = StyledProps<TextProps, 'textStyle' | 'color'>
+type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
 
 export const Text = ({
   tag = 'span',
   children,
-  textStyle = 'body01M',
+  styleType: textStyle = 'body01M',
   color = 'black'
 }: TextProps): ReactElement => {
   return (
-    <StyledText as={tag} color={color} textStyle={textStyle}>
+    <StyledText as={tag} color={color} styleType={textStyle}>
       {children}
     </StyledText>
   )
@@ -28,5 +28,5 @@ export const Text = ({
 const StyledText = styled.span<StyledTextProps>`
   color: ${({ color }): string => color};
 
-  ${({ theme, textStyle }): string => theme.fonts[textStyle]};
+  ${({ theme, styleType }): string => theme.fonts[styleType]};
 `

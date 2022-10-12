@@ -267,8 +267,8 @@ const StyledImage = styled(ImageComponent)<StyledImageProps>`
 
 const StyledCloseIcon = styled(IconButton)`
   position: absolute;
-  top: 64px;
-  right: 64px;
+  top: 5%;
+  right: 6%;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -291,7 +291,7 @@ const StyledCloseIcon = styled(IconButton)`
 
 const StyledIndicatorBox = styled.div`
   position: absolute;
-  bottom: 172px;
+  bottom: 7%;
   left: 50vw;
   transform: translate(-50%, 0);
   z-index: ${({ theme }): string => theme.zIndex.modalIcon};

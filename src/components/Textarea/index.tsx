@@ -1,5 +1,6 @@
 import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
+import { Text } from '@components'
 import { useRef } from 'react'
 
 export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
@@ -35,7 +36,9 @@ export const TextArea = ({
 
   return (
     <>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledLabel>
+        {label && <Text styleType="body01M">{label}</Text>}
+      </StyledLabel>
       <StyledTextArea
         {...props}
         ref={textAreaRef}
@@ -44,7 +47,9 @@ export const TextArea = ({
         rows={1}
         onInput={handleResizeHeight}
       />
-      <StyledGuideMessage>{guideMessage}</StyledGuideMessage>
+      <StyledGuideMessage styleType="caption01M" tag="p">
+        {guideMessage}
+      </StyledGuideMessage>
     </>
   )
 }
@@ -52,7 +57,6 @@ export const TextArea = ({
 const StyledLabel = styled.label`
   display: block;
   color: ${({ theme }): string => theme.colors.grayScale.gray70};
-  ${({ theme }): string => theme.fonts.body01M};
   margin-bottom: 8px;
 `
 const StyledTextArea = styled.textarea<StyledTextAreaProps>`
@@ -83,9 +87,8 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   }
 `
 
-const StyledGuideMessage = styled.p`
+const StyledGuideMessage = styled(Text)`
   display: block;
   margin-top: 8px;
   color: ${({ theme }): string => theme.colors.grayScale.gray50};
-  ${({ theme }): string => theme.fonts.caption};
 `

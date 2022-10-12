@@ -1,13 +1,13 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import { Text } from '@components'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
   messageType: 'send' | 'receive'
   children: string
 }
 
-type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'messageType'> & {
+interface StyledBubbleProps {
   isSend: boolean
 }
 
@@ -24,13 +24,17 @@ export const ChattingBubble = ({
   const MAXIMUM_NUMBER_OF_CHATTINGBUBBLE = 100
 
   return (
-    <StyledBubble {...props} isSend={isSend} messageType={messageType}>
-      {noBlankChatLength <= MAXIMUM_NUMBER_OF_CHATTINGBUBBLE
-        ? children
-        : children?.substring(
-            0,
-            MAXIMUM_NUMBER_OF_CHATTINGBUBBLE + overChatLength
-          )}
+    <StyledBubble {...props} isSend={isSend}>
+      <StyledChattingText
+        isSend={isSend}
+        styleType={isSend ? 'body02M' : 'body02R'}>
+        {noBlankChatLength <= MAXIMUM_NUMBER_OF_CHATTINGBUBBLE
+          ? children
+          : children?.substring(
+              0,
+              MAXIMUM_NUMBER_OF_CHATTINGBUBBLE + overChatLength
+            )}
+      </StyledChattingText>
     </StyledBubble>
   )
 }
@@ -45,7 +49,6 @@ const StyledBubble = styled.p<StyledBubbleProps>`
   ${({ theme, isSend }): string => {
     if (isSend) {
       return `
-          color: ${theme.colors.grayScale.white};
           background-color: ${theme.colors.brand.primary};
           border-radius: 16px 0px 16px 16px;
           ${theme.fonts.body01M}
@@ -53,7 +56,6 @@ const StyledBubble = styled.p<StyledBubbleProps>`
     }
 
     return `
-       color: ${theme.colors.grayScale.gray90};
        background-color: ${theme.colors.grayScale.white};
        border-radius: 0px 16px 16px 16px;
        ${theme.fonts.body01R}
@@ -64,7 +66,10 @@ const StyledBubble = styled.p<StyledBubbleProps>`
     max-width: 230px;
     max-height: 136px;
     padding: 8px 12px;
-    ${({ theme, isSend }): string =>
-      isSend ? theme.fonts.body02M : theme.fonts.body02R}
   }
+`
+
+const StyledChattingText = styled(Text)<StyledBubbleProps>`
+  color: ${({ theme, isSend }): string =>
+    isSend ? theme.colors.grayScale.white : theme.colors.grayScale.gray90};
 `

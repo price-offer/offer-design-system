@@ -1,10 +1,12 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import type { Colors } from '@themes/colors'
 import styled from '@emotion/styled'
+import { Text } from '@components'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   colorType: BadgeColorType
+  children: string
 }
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>
@@ -17,7 +19,7 @@ export const Badge = ({
 }: BadgeProps): ReactElement => {
   return (
     <StyledBadge colorType={colorType} {...props}>
-      {children}
+      <Text styleType="caption01M">{children}</Text>
     </StyledBadge>
   )
 }
@@ -50,8 +52,7 @@ const StyledBadge = styled.div<StyledBadgeProps>`
   padding: 2px 6px;
   text-align: center;
   font-feature-settings: normal;
-  ${({ theme }): string => theme.fonts.caption01M}
-  font-weight: 500;
-  ${({ colorType: colorScheme, theme }): string =>
-    applyColorScheme(colorScheme, theme.colors)};
+
+  ${({ colorType, theme }): string =>
+    applyColorScheme(colorType, theme.colors)};
 `

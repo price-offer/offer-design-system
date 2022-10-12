@@ -1,4 +1,4 @@
-import { Badge, Button, Icon, Image } from '@components'
+import { Badge, Button, Icon, Image, Text } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
 import { colors } from '@themes'
 import styled from '@emotion/styled'
@@ -34,8 +34,10 @@ export const DesktopUploader = ({
         <StyledTrigger isShowListType={isShowListType}>
           <Icon color={colors.grayScale.gray30} size={40} type="picture" />
           <StyledDescription>
-            <p>상품 이미지 추가</p>
-            <StyledImageTotal isMaximum={isMaximum}>
+            <Text styleType="body01B" tag="p">
+              상품 이미지 추가
+            </Text>
+            <StyledImageTotal isMaximum={isMaximum} styleType="body02R">
               {imgTotal}
             </StyledImageTotal>
           </StyledDescription>
@@ -108,7 +110,7 @@ const StyledDescription = styled.div`
     line-height: 24px;
   }
 `
-const StyledImageTotal = styled.span<Pick<StyledProps, 'isMaximum'>>`
+const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
   ${({ theme, isMaximum }): string => `
     margin-top: 4px;
     font-size: 14px;

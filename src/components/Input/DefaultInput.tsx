@@ -3,6 +3,7 @@ import { convertToNumber, toLocaleCurrency } from '@utils/format'
 import type { MainInputProps as DefaultInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import { Text } from '@components'
 import { VALIDATE_MESSAGE } from '@constants'
 
 type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
@@ -33,19 +34,25 @@ export const DefaultInput = ({
   return (
     <StyledWrapper>
       <StyledLabel>
-        {label}
+        {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
           isPrice={isPrice}
           isSmall={isSmall}
           onChange={handleInputChange}
           {...args}
         />
-        <StyledPriceUnit isSmall={isSmall}>
-          {isPrice && VALIDATE_MESSAGE.PRICE_UNIT}
-        </StyledPriceUnit>
+        {isPrice && (
+          <StyledPriceUnit
+            isSmall={isSmall}
+            styleType={isSmall ? 'body02M' : 'subtitle01M'}>
+            {VALIDATE_MESSAGE.PRICE_UNIT}
+          </StyledPriceUnit>
+        )}
       </StyledLabel>
       {hasGuideMessage && (
-        <StyledStatus status={status}>{guideMessage}</StyledStatus>
+        <StyledStatus status={status} styleType="caption01M">
+          {guideMessage}
+        </StyledStatus>
       )}
     </StyledWrapper>
   )
@@ -63,7 +70,6 @@ const StyledLabel = styled.label`
 
   ${({ theme }): string => `
     color: ${theme.colors.grayScale.gray70};
-    ${theme.fonts.body01M}
   `}
 `
 const StyledInput = styled.input<StyledInputProps>`
@@ -102,17 +108,16 @@ const StyledInput = styled.input<StyledInputProps>`
   `}
 `
 
-const StyledPriceUnit = styled.span<StyledPriceUnitProps>`
+const StyledPriceUnit = styled(Text)<StyledPriceUnitProps>`
   position: absolute;
   right: 12px;
 
   ${({ isSmall, theme }): string => `
     color:${theme.colors.grayScale.gray90};
     bottom: ${isSmall ? '19px' : '25px'};
-    ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
   `}
 `
-const StyledStatus = styled.span<StyledStatusProps>`
+const StyledStatus = styled(Text)<StyledStatusProps>`
   color: ${({ theme, status }): string => {
     const isGray = status === 'error' || status === 'success'
 
@@ -122,6 +127,4 @@ const StyledStatus = styled.span<StyledStatusProps>`
 
     return theme.colors.action[status]
   }};
-
-  ${({ theme }): string => theme.fonts.caption01M}
 `

@@ -1,4 +1,4 @@
-import { Badge, Icon, Image } from '@components'
+import { Badge, Icon, Image, Text } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
 import { colors } from '@themes'
 import styled from '@emotion/styled'
@@ -32,7 +32,9 @@ export const MobileUploader = ({
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
         <Icon color={colors.grayScale.gray30} size={40} type="picture" />
-        <StyledImageTotal isMaximum={isMaximum}>{imgTotal}</StyledImageTotal>
+        <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
+          {imgTotal}
+        </StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}
           accept="image/*"
@@ -70,7 +72,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
     user-select: none;
   `}
 `
-const StyledImageTotal = styled.span<Pick<StyledProps, 'isMaximum'>>`
+const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
   ${({ theme, isMaximum }): string => `
     margin-top: 0;
     font-size: 12px;

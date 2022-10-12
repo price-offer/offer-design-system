@@ -1,6 +1,7 @@
 import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import { Text } from '@components'
 
 export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
   formName: string
@@ -26,7 +27,7 @@ export const Radio = ({
 
   const radioList = items?.map(({ code, name }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
-      {name}
+      <Text styleType="body01R">{name}</Text>
       <StyledInput
         id={code}
         name={formName}

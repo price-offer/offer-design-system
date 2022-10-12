@@ -16,17 +16,18 @@ export const Text = ({
   tag = 'span',
   children,
   styleType: textStyle = 'body01M',
-  color = 'black'
+  color = '',
+  ...props
 }: TextProps): ReactElement => {
   return (
-    <StyledText as={tag} color={color} styleType={textStyle}>
+    <StyledText as={tag} color={color} styleType={textStyle} {...props}>
       {children}
     </StyledText>
   )
 }
 
 const StyledText = styled.span<StyledTextProps>`
-  color: ${({ color }): string => color};
+  ${({ color }): string => (color ? `color: ${color}` : '')};
 
   ${({ theme, styleType }): string => theme.fonts[styleType]};
 `

@@ -8,13 +8,13 @@ export default {
     color: {
       control: { type: 'color' }
     },
+    styleType: {
+      control: { type: 'select' },
+      options: [...Object.keys(fonts)]
+    },
     tag: {
       control: { type: 'radio' },
       options: ['p', 'span']
-    },
-    textStyle: {
-      control: { type: 'select' },
-      options: [...Object.keys(fonts)]
     }
   },
   component: Text,
@@ -26,5 +26,5 @@ const Template: Story<TextProps> = args => <Text {...args} />
 export const Default = Template.bind({})
 Default.args = {
   children: 'hello',
-  textStyle: 'body01M'
+  styleType: 'body01M'
 }

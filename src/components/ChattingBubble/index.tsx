@@ -6,7 +6,7 @@ export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
   /** ChattingBubble 컴포넌트의 수신자 또는 발신자에 대한 형태를 정합니다.
    * @type 'send' | 'receive'
    */
-  type: 'send' | 'receive'
+  messageType: 'send' | 'receive'
 
   /** ChattingBubble 컴포넌트의 메시지에 입력될 내용입니다.
    * @type string
@@ -14,12 +14,12 @@ export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
   children: string
 }
 
-type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'type'> & {
+type StyledBubbleProps = StyledProps<ChattingBubbleProps, 'messageType'> & {
   isSend: boolean
 }
 
 export const ChattingBubble = ({
-  type,
+  messageType,
   children,
   ...props
 }: ChattingBubbleProps): ReactElement => {
@@ -27,11 +27,11 @@ export const ChattingBubble = ({
   const blankChatLength = children.length
   const noBlankChatLength = children.replace(newLineRegex, '').length
   const overChatLength = blankChatLength - noBlankChatLength
-  const isSend = type === 'send'
+  const isSend = messageType === 'send'
   const MAXIMUM_NUMBER_OF_CHATTINGBUBBLE = 100
 
   return (
-    <StyledBubble {...props} isSend={isSend} type={type}>
+    <StyledBubble {...props} isSend={isSend} messageType={messageType}>
       {noBlankChatLength <= MAXIMUM_NUMBER_OF_CHATTINGBUBBLE
         ? children
         : children?.substring(

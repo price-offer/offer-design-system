@@ -5,7 +5,7 @@ import type { SelectBoxProps } from './index'
 
 export default {
   argTypes: {
-    colorScheme: {
+    colorType: {
       control: 'radio',
       options: ['none', 'light', 'dark']
     },
@@ -21,11 +21,8 @@ export default {
 const Template: Story<SelectBoxProps> = args => <SelectBox {...args} />
 export const Default = Template.bind({})
 Default.args = {
-  colorScheme: 'light',
-  onChange: (options): void => {
-    action(JSON.stringify(options))
-  },
-  options: [
+  colorType: 'light',
+  items: [
     {
       text: '선택1',
       value: 'select1'
@@ -35,5 +32,8 @@ Default.args = {
       value: 'select2'
     }
   ],
+  onChange: (options): void => {
+    action(JSON.stringify(options))
+  },
   size: 'small'
 }

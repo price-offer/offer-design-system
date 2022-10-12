@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import type { Theme } from '@emotion/react'
 
-export type IconButtonColor =
+export type IconButtonColorType =
   | 'white'
   | 'black'
   | 'gray30'
@@ -19,17 +19,17 @@ type IconButtonShape = 'rounded' | 'square' | 'ghost'
 export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   icon: IconType
   size?: IconButtonSize
-  color?: IconButtonColor
+  colorType?: IconButtonColorType
   hasShadow?: boolean
   shape?: IconButtonShape
 }
 
 type StyledIconButtonProps = StyledProps<
   IconButtonProps,
-  'size' | 'hasShadow' | 'shape' | 'color'
+  'size' | 'hasShadow' | 'shape' | 'colorType'
 >
 type StyledIconProps = StyledProps<StyledIconButtonProps, 'shape'> & {
-  colorType: IconButtonColor
+  colorType: IconButtonColorType
 }
 
 const ICON_BUTTON_SIZE = {
@@ -48,7 +48,7 @@ const ICON_BUTTON_SIZE = {
 }
 
 export const IconButton = ({
-  color = 'black',
+  colorType = 'black',
   size = 'small',
   shape = 'ghost',
   hasShadow = false,
@@ -58,12 +58,12 @@ export const IconButton = ({
   return (
     <StyledIconButton
       {...props}
-      color={color}
+      colorType={colorType}
       hasShadow={hasShadow}
       shape={shape}
       size={size}>
       <StyledIcon
-        colorType={color}
+        colorType={colorType}
         shape={shape}
         size={ICON_BUTTON_SIZE[size].ICON}
         type={icon}
@@ -79,7 +79,7 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   border: none;
   cursor: pointer;
 
-  ${({ size, theme, shape, hasShadow, color }): string => {
+  ${({ size, theme, shape, hasShadow, colorType }): string => {
     const isGhost = shape === 'ghost'
     const isRounded = shape === 'rounded'
 
@@ -87,7 +87,7 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
       width: ${ICON_BUTTON_SIZE[size].BUTTON}px;
       height: ${ICON_BUTTON_SIZE[size].BUTTON}px;
       background-color: ${
-        isGhost ? 'transparent' : applyIconButtonColor(color, theme)
+        isGhost ? 'transparent' : applyIconButtonColor(colorType, theme)
       };
       border-radius: ${isRounded ? theme.radius.round100 : 'none'};
       box-shadow: ${
@@ -117,7 +117,7 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
 `
 
 const applyIconButtonColor = (
-  colorType: IconButtonColor,
+  colorType: IconButtonColorType,
   theme: Theme
 ): string => {
   const { brand, grayScale } = theme.colors

@@ -4,7 +4,7 @@ import type { DividerProps } from './index'
 
 export default {
   argTypes: {
-    orientation: {
+    direction: {
       control: { type: 'radio' },
       options: ['horizontal', 'vertical']
     },
@@ -20,6 +20,6 @@ export default {
 const Template: Story<DividerProps> = args => <Divider {...args} />
 export const Default = Template.bind({})
 Default.args = {
-  orientation: 'horizontal',
+  direction: 'horizontal',
   size: 'regular'
 }

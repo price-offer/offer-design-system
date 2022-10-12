@@ -4,10 +4,10 @@ import { DefaultInput } from './DefaultInput'
 import { EditInput } from './EditInput'
 import { SearchInput } from './SearchInput'
 
-type InputStyle = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
+type InputStyleType = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
 export type InputSize = 'large' | 'small'
 export interface InputProps extends HTMLAttributes<HTMLInputElement> {
-  inputStyle?: InputStyle
+  styleType?: InputStyleType
   inputSize?: InputSize
   label?: string
   status?: 'none' | 'success' | 'error' | 'default'
@@ -26,16 +26,16 @@ export const INPUT_STYLE_KEYS = {
 } as const
 
 export const Input = ({
-  inputStyle = 'default',
+  styleType = 'default',
   inputSize = 'small',
   ...props
 }: InputProps): ReactElement => {
-  const renderInput = (inputStyle: InputStyle): ReactElement => {
+  const renderInput = (styleType: InputStyleType): ReactElement => {
     const { EDIT, DEFAULT, CHATTING, SEARCH } = INPUT_STYLE_KEYS
     const isSmall = inputSize === 'small'
     const inputTypeProps = { isSmall, ...props }
 
-    switch (inputStyle) {
+    switch (styleType) {
       case DEFAULT:
         return <DefaultInput {...inputTypeProps} />
       case CHATTING:
@@ -49,5 +49,5 @@ export const Input = ({
     }
   }
 
-  return renderInput(inputStyle)
+  return renderInput(styleType)
 }

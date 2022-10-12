@@ -1,6 +1,7 @@
-import type { ImageInfo, ImageUploaderProps, UploaderProps } from './index'
+import type { ImageUploaderProps, UploaderProps } from './index'
 import { useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
+import type { ImageInfo } from '@types'
 import { NOTICE_MESSAGE } from '@constants'
 import { v4 as uuidV4 } from 'uuid'
 
@@ -10,15 +11,15 @@ const isValidImageUrl = (file: unknown): file is string =>
 const MAX_LIST_LENGTH = 10
 
 export const useImageUploader = ({
-  imageList: defaultImageList,
+  images: defaultImages,
   onChange
 }: ImageUploaderProps): UploaderProps => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
   const imageListRef = useRef<HTMLDivElement | null>(null)
-  const [imageList, setImageList] = useState<ImageInfo[]>(defaultImageList)
+  const [images, setImages] = useState<ImageInfo[]>(defaultImages)
 
   const openUploader = (): void => {
-    if (imageList.length === MAX_LIST_LENGTH) {
+    if (images.length === MAX_LIST_LENGTH) {
       alert(NOTICE_MESSAGE.IMAGE_UPLOAD)
       return
     }
@@ -31,16 +32,16 @@ export const useImageUploader = ({
       return
     }
 
-    const newFiles = [...imageList]
-    newFiles.splice(index, 1)
+    const newImages = [...images]
+    newImages.splice(index, 1)
 
-    const isRepresent = imageList[index].isRepresent && imageList.length > 1
+    const isRepresent = images[index].isRepresent && images.length > 1
     if (isRepresent) {
-      newFiles[0].isRepresent = true
+      newImages[0].isRepresent = true
     }
 
-    onChange({ eventType: 'remove', imageList: newFiles })
-    setImageList(newFiles)
+    onChange({ eventType: 'remove', images: newImages })
+    setImages(newImages)
   }
 
   const addImage: ChangeEventHandler<HTMLInputElement> = async e => {
@@ -51,7 +52,7 @@ export const useImageUploader = ({
     }
 
     const isOverListLength =
-      MAX_LIST_LENGTH - (imageList.length + files.length) < 0
+      MAX_LIST_LENGTH - (images.length + files.length) < 0
     if (isOverListLength) {
       alert(NOTICE_MESSAGE.IMAGE_UPLOAD)
       return
@@ -70,8 +71,8 @@ export const useImageUploader = ({
     })
 
     const imageFiles = await Promise.all(fulfilledImageFiles)
-    const newImageList = imageFiles.map((file, index) => {
-      const isRepresent = imageList.length === 0 && index === 0
+    const newImages = imageFiles.map((file, index) => {
+      const isRepresent = images.length === 0 && index === 0
       const imageUrl = isValidImageUrl(file) ? file : ''
 
       return {
@@ -81,15 +82,15 @@ export const useImageUploader = ({
       }
     })
 
-    setImageList(prevImageList => [...prevImageList, ...newImageList])
-    onChange({ eventType: 'upload', imageList })
+    setImages(prevImageList => [...prevImageList, ...newImages])
+    onChange({ eventType: 'upload', images })
     e.target.value = ''
   }
 
   return {
     addImage,
-    imageList,
     imageListRef,
+    images,
     openUploader,
     removeImage,
     uploaderRef

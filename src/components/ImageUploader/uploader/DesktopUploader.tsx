@@ -19,7 +19,7 @@ type DesktopUploaderProps = {
 export const DesktopUploader = ({
   imageListRef,
   uploaderRef,
-  imageList,
+  images,
   openUploader,
   addImage,
   removeImage,
@@ -50,10 +50,10 @@ export const DesktopUploader = ({
         </StyledTrigger>
       </StyledTriggerWrapper>
       <StyledImageList ref={imageListRef}>
-        {imageList?.map(({ id, isRepresent, url }, index) => (
+        {images?.map(({ id, isRepresent, url }, index) => (
           <StyledImageItem key={id}>
             {isRepresent && (
-              <StyledBadge colorScheme="orange">대표 사진</StyledBadge>
+              <StyledBadge colorType="orange">대표 사진</StyledBadge>
             )}
             <Image alt={`file-${index}`} boxSize="280px" src={url} />
             <StyledRemoveButtonWrapper

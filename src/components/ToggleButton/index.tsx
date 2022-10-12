@@ -1,4 +1,8 @@
-import type { IconButtonColor, IconButtonProps, IconType } from '@components'
+import type {
+  IconButtonColorType,
+  IconButtonProps,
+  IconType
+} from '@components'
 import type { MouseEventHandler, ReactElement } from 'react'
 import { IconButton } from '@components'
 import { useState } from 'react'
@@ -16,8 +20,8 @@ interface StrokeToggleButton {
   icon: IconType
 }
 export type ToggleButtonProps = IconButtonProps & {
-  color?: IconButtonColor
-  toggleColor?: IconButtonColor
+  colorType?: IconButtonColorType
+  toggleColorType?: IconButtonColorType
 } & ToggleButtonType
 
 type ToggleButtonType = FillToggleButton | StrokeToggleButton
@@ -25,8 +29,8 @@ type ToggleButtonType = FillToggleButton | StrokeToggleButton
 export const ToggleButton = ({
   onClick,
   type = 'stroke',
-  color = 'black',
-  toggleColor = color,
+  colorType = 'black',
+  toggleColorType = colorType,
   icon,
   ...props
 }: ToggleButtonProps): ReactElement => {
@@ -34,7 +38,7 @@ export const ToggleButton = ({
   const isFillType = type === 'fill'
   const toggleIcon = isFillType ? `${icon}Fill` : icon
   const renderIcon = {
-    color: isToggle ? toggleColor : color,
+    color: isToggle ? toggleColorType : colorType,
     icon: isToggle ? toggleIcon : icon
   }
 
@@ -46,7 +50,7 @@ export const ToggleButton = ({
 
   return (
     <IconButton
-      color={renderIcon.color}
+      colorType={renderIcon.color}
       icon={renderIcon.icon as IconType}
       onClick={handleClick}
       {...props}

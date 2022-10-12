@@ -24,7 +24,7 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   icon: IconType
 
   /**
-   * IconButton의 사이즈를 정합니다.
+   * IconButton의 크기를 정합니다.
    * @type 'small' | 'medium' | 'large' | undefined
    */
   size?: IconButtonSize
@@ -36,7 +36,7 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   colorType?: IconButtonColorType
 
   /**
-   * IconButton가 그림자를 가질지 정합니다.
+   * IconButton가 그림자 여부를 정합니다.
    * @type boolean | undefined
    */
   hasShadow?: boolean

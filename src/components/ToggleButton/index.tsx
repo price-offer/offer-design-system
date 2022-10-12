@@ -13,7 +13,7 @@ type FillIconType = Extract<
 >
 interface FillToggleButton {
   /**
-   * ToggleButton의 스타일 타입을 정합니다.
+   * ToggleButton의 보여질 형태를 정합니다.
    * @type 'fill'
    */
   styleType: 'fill'
@@ -26,13 +26,13 @@ interface FillToggleButton {
 }
 interface StrokeToggleButton {
   /**
-   * ToggleButton으로 아이콘의 타입을 정합니다.
+   * ToggleButton의 보여질 형태를 정합니다.
    * @type 'stroke'
    */
   styleType: 'stroke'
 
   /**
-   * ToggleButton.
+   * ToggleButton의 styleType이 'stoke'인 경우 사용 가능한 아이콘 타입을 정합니다.
    * @type IconType
    */
   icon: IconType

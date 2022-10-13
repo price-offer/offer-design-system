@@ -1,6 +1,6 @@
 {
   "name": "@offer-ui/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
   "exports": {
@@ -20,6 +20,13 @@
   "author": {
     "name": "offer-price"
   },
+  "keywords": [
+    "react",
+    "offer",
+    "offer-ui",
+    "offer-design-system",
+    "Team Price"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "tsc && vite build",
@@ -72,6 +79,5 @@
   "bugs": {
     "url": "https://github.com/price-offer/offer-design-system/issues"
   },
-  "readme": "ERROR: No README data found!",
   "homepage": "https://github.com/price-offer/offer-design-system#readme"
 }

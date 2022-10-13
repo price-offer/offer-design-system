@@ -1,10 +1,18 @@
 {
-  "name": "offer-design-system",
+  "name": "@offer-ui/react",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/price-offer/offer-design-system.git"
+    "url": "https://github.com/price-offer/offer-design-system.git"
   },
   "author": {
     "name": "Team Price"
@@ -20,13 +28,13 @@
     "chromatic": "npx chromatic --project-token=43263771fe52",
     "prepare": "husky install"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "uuid": "^9.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "uuid": "^9.0.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

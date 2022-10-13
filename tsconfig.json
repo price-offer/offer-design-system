@@ -17,7 +17,11 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "vite.config.ts", "src/types/declare.d.ts"],
+  "typeRoots": [
+    "node_modules/@types",
+    "node_modules/types",
+    "types"
+  ],
+  "include": ["src", "vite.config.ts", "*.d.ts"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
 }

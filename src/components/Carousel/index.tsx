@@ -16,7 +16,7 @@ export interface CarouselProps {
   isArrow: boolean
 
   /** Carousel 컴포넌트에 들어갈 이미지들의 크기를 정합니다.
-   * @type number
+   * @type number | undefined
    */
   size?: number
 

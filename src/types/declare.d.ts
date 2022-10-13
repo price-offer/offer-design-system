@@ -8,5 +8,3 @@ declare module '*.svg' {
 }
 
 declare module '*.png'
-
-declare module '@offer-ui/react'

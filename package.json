@@ -55,6 +55,7 @@
     "prettier": "^2.7.1",
     "typescript": "4.7.4",
     "vite": "^3.0.7",
+    "vite-plugin-dts": "^1.6.6",
     "vite-plugin-svgr": "^2.2.1",
     "vite-tsconfig-paths": "^3.5.0"
   },

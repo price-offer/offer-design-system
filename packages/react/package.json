@@ -34,8 +34,7 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint --ext .ts,.tsx src",
     "lint:fix": "tsc --noEmit && eslint --fix --ext .ts,.tsx src",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -p 6006"
   },
   "peerDependencies": {
     "@emotion/css": "^11.10.0",

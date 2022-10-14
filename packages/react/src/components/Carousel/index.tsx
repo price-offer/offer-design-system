@@ -44,7 +44,7 @@ const NAV_TYPE = {
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
-const Carousel = ({
+export const Carousel = ({
   images,
   isArrow,
   size = 687,
@@ -179,14 +179,12 @@ const Carousel = ({
   )
 }
 
-export default Carousel
-
-export const StyledCarouselWrapper = styled.div`
+const StyledCarouselWrapper = styled.div`
   touch-action: none;
   user-select: none;
   position: relative;
 `
-export const StyledSlider = styled.div<SliderProps>`
+const StyledSlider = styled.div<SliderProps>`
   position: relative;
   max-width: ${({ size }): string => `${size}px`};
   height: 400px;
@@ -205,7 +203,7 @@ export const StyledSlider = styled.div<SliderProps>`
   }
 `
 
-export const StyledImageBox = styled.div<ImageBoxProps>`
+const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   height: 440px;
   transition: 0.5s;
@@ -225,7 +223,7 @@ export const StyledImageBox = styled.div<ImageBoxProps>`
   }
 `
 
-export const StyledImage = styled.img<ImageProps>`
+const StyledImage = styled.img<ImageProps>`
   width: ${({ size }): string => `${size}px`};
   height: 440px;
   object-fit: cover;
@@ -254,7 +252,7 @@ export const StyledArrowBox = styled.div`
   }
 `
 
-export const StyledRightArrow = styled.button<ArrowProps>`
+const StyledRightArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
@@ -262,7 +260,7 @@ export const StyledRightArrow = styled.button<ArrowProps>`
   cursor: pointer;
 `
 
-export const StyledLeftArrow = styled.button<ArrowProps>`
+const StyledLeftArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
@@ -270,7 +268,7 @@ export const StyledLeftArrow = styled.button<ArrowProps>`
   cursor: pointer;
 `
 
-export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
+const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   display: flex;
   gap: 5px;
   position: absolute;
@@ -283,7 +281,7 @@ export const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   }
 `
 
-export const StyledIndicator = styled.div`
+const StyledIndicator = styled.div`
   width: 10px;
   height: 10px;
   background-color: ${({ theme }): string => theme.colors.grayScale.gray10};
@@ -299,7 +297,7 @@ export const StyledIndicator = styled.div`
   }
 `
 
-export const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
+const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   width: 10px;
   height: 10px;
   background-color: ${({ theme }): string => theme.colors.grayScale.gray90};

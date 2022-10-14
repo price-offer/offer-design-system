@@ -1,7 +1,0 @@
-export * from './border'
-export * from './colors'
-export * from './theme'
-export * from './radius'
-export * from './mediaQuery'
-export * from './zIndex'
-export * from './fonts'

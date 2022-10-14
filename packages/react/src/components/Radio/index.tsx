@@ -18,7 +18,7 @@ export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
    */
   direction: 'horizontal' | 'vertical'
 
-  /** Radio 컴포넌트의 onChange를 정의합니다.
+  /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
   onChange(e: ChangeEvent<HTMLFormElement>): void

@@ -1,0 +1,87 @@
+{
+  "name": "@offer-ui/react",
+  "version": "0.0.5",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/price-offer/offer-design-system/tree/develop/packages/react"
+  },
+  "author": {
+    "name": "offer-price"
+  },
+  "keywords": [
+    "react",
+    "offer",
+    "offer-ui",
+    "offer-design-system",
+    "Team Price"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "npx kill-port 6006 && yarn storybook",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit && eslint --ext .ts,.tsx src",
+    "lint:fix": "tsc --noEmit && eslint --fix --ext .ts,.tsx src",
+    "storybook": "start-storybook -p 6006"
+  },
+  "peerDependencies": {
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-vite": "^0.2.2",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "@vitejs/plugin-react": "^2.0.1",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.1",
+    "eslint-plugin-storybook": "^0.6.4",
+    "prettier": "^2.7.1",
+    "typescript": "4.7.4",
+    "vite": "^3.0.7",
+    "vite-plugin-dts": "^1.6.6",
+    "vite-plugin-svgr": "^2.2.1",
+    "vite-tsconfig-paths": "^3.5.0"
+  },
+  "bugs": {
+    "url": "https://github.com/price-offer/offer-design-system/issues"
+  },
+  "homepage": "https://github.com/price-offer/offer-design-system/tree/develop/packages/react#readme"
+}

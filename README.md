@@ -6,54 +6,21 @@
 
 <br/>
 
-[![](https://badgen.net/npm/v/@offer-ui/react?icon=npm)](https://www.npmjs.com/package/@offer-ui/react)
-[![NPM downloads](http://img.shields.io/npm/dm/@offer-ui/react.svg)](http://npmjs.com/@offer-ui/react)
 
-> Offer Design System UI for React components.
+<h1 align="center">Offer Design System</h1>
 
-## 🎉 Getting Started
+<p align="center"><strong>Offer Design System is an open-source design system built by <a href="https://github.com/price-offer">Team Price</a></strong></p>
 
-Run the following command using [npm](https://www.npmjs.com/):
+<p align="center">
+  <a href="https://github.com/price-offer/offer-design-system/blob/master/packages/react/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Offer Design System is released under the MIT license" />
+  </a>
+</p>
 
-```bash
-$ npm install @offer-ui/react
-```
+## 🎉 Getting started
 
-If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead:
+If you're looking for React components, take a look at [@offer-ui/react](./package/react).
 
-```bash
-$ yarn add @offer-ui/react
-```
-
-## 🚀 Usage
-
-To start using the components, please follow these steps:
-
-1. Wrap your application with the `OfferStyleProvider` provided by
-   **@offer-ui/react**.
-
-```jsx
-import { OfferStyleProvider } from "@offer-ui/react"
-
-// Do this at the root of your application
-function App({ children }) {
-  return <OfferStyleProvider>{children}</OfferStyleProvider>
-}
-```
-
-1. Now you can start using components like so!:
-
-```jsx
-import { Badge } from "@offer-ui/react"
-
-function Example() {
-  return <Badge colorType="orange">I just consumed some Offer!</Badge>
-}
-```
-
-More guides on how to get started are available
-[here](https://github.com/price-offer/offer-design-system/wiki/Components)
-
-## 📝 License
-
-@offer-ui/react is made available under the [MIT License](/LICENSE).
+| Package name                                      | Description                                 |
+| ------------------------------------------------- | ------------------------------------------- |
+| [`@offer-ui/react`](./packages/react)             | Caple Design System UI for React components |

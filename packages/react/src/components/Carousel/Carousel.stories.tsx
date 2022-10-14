@@ -1,7 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
-import Carousel from './index'
+import { Carousel } from './index'
 import type { CarouselProps } from './index'
-import { IMAGE } from '@constants'
 
 export default {
   argTypes: {},
@@ -9,9 +8,9 @@ export default {
   title: 'Components/Carousel'
 } as Meta<CarouselProps>
 const images = [
-  { id: 1, url: `${IMAGE.CATEGORY_CAR}` },
-  { id: 2, url: `${IMAGE.CATEGORY_APPLIANCE}` },
-  { id: 3, url: `${IMAGE.CATEGORY_APPLIANCE_PC}` }
+  { id: 1, url: 'https://picsum.photos/400' },
+  { id: 2, url: 'https://picsum.photos/400' },
+  { id: 3, url: 'https://picsum.photos/400' }
 ]
 
 const Template: Story<CarouselProps> = args => <Carousel {...args} />

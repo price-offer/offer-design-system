@@ -22,5 +22,5 @@ jobs:
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          projectToken: ${{ 9eaf870fbce3 }}
+          projectToken: 9eaf870fbce3
           workingDir: packages/chromatic

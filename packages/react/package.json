@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "npx kill-port 6006 && yarn storybook",
+    "start": "yarn storybook",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint --ext .ts,.tsx src",

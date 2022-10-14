@@ -19,7 +19,7 @@
 
 ## 🎉 Getting started
 
-If you're looking for React components, take a look at [@offer-ui/react](./package/react).
+If you're looking for React components, take a look at [@offer-ui/react](https://github.com/price-offer/offer-design-system/tree/develop/packages/react).
 
 | Package name                                      | Description                                 |
 | ------------------------------------------------- | ------------------------------------------- |

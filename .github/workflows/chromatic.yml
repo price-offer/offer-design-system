@@ -9,6 +9,9 @@ jobs:
   test:
     # Operating System
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/chromatic
     # Job steps
     steps:
       - uses: actions/checkout@v1

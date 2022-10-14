@@ -1,0 +1,12 @@
+.storybook
+.husky
+**/*.stories.tsx
+src/
+docs/
+node_modules
+tsconfig.json
+tsconfig.path.json
+vite.config.ts
+.eslintrc.json
+.nvmrc
+.prettierrc.json

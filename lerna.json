@@ -1,0 +1,14 @@
+{
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--pure-lockfile"
+  ],
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": ["*.md", ".spec.ts", ".stories.tsx"]
+    }
+  },
+  "packages": ["packages/*"],
+  "version": "independent"
+}

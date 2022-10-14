@@ -20,8 +20,6 @@
     "start": "lerna run start --parallel",
     "build": "lerna run build",
     "lint": "lerna run lint",
-    "build-storybook": "lerna run build-storybook",
-    "chromatic": "lerna run chromatic",
     "prepare": "husky install"
   },
   "devDependencies": {

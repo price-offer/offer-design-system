@@ -1,7 +1,10 @@
-import { Badge, Icon, Image } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
+import { Badge } from '@components/Badge'
 import { colors } from '@themes'
+import { Icon } from '@components/Icon'
+import { Image } from '@components/Image'
 import styled from '@emotion/styled'
+import { Text } from '@components/Text'
 import type { UploaderProps } from '../index'
 
 interface StyledProps {
@@ -32,7 +35,9 @@ export const MobileUploader = ({
     <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
         <Icon color={colors.grayScale.gray30} size={40} type="picture" />
-        <StyledImageTotal isMaximum={isMaximum}>{imgTotal}</StyledImageTotal>
+        <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
+          {imgTotal}
+        </StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}
           accept="image/*"
@@ -70,7 +75,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
     user-select: none;
   `}
 `
-const StyledImageTotal = styled.span<Pick<StyledProps, 'isMaximum'>>`
+const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
   ${({ theme, isMaximum }): string => `
     margin-top: 0;
     font-size: 12px;
@@ -99,7 +104,6 @@ const StyledImageList = styled.div`
   margin-left: 8px;
   overflow-x: scroll;
   overflow-y: hidden;
-
   ::-webkit-scrollbar {
     height: 5px;
   }
@@ -107,7 +111,6 @@ const StyledImageList = styled.div`
     border-radius: 4px;
     background-color: ${({ theme }): string => theme.colors.dim.opacity50};
   }
-
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
 `

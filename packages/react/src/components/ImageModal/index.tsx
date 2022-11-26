@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactElement, TouchEventHandler } from 'react'
-import { IconButton, Image as ImageComponent } from '@components'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { IconButton } from '@components/IconButton'
+import { Image as ImageComponent } from '@components/Image'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'

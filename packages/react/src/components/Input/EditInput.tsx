@@ -3,6 +3,7 @@ import { convertToNumber, toLocaleCurrency } from '@utils/format'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
+import { Text } from '@components/Text'
 import { VALIDATE_MESSAGE } from '@constants'
 
 type EditInputProps = Omit<MainInputProps, 'isPrice'>
@@ -32,14 +33,14 @@ export const EditInput = ({
   return (
     <StyledInputForm>
       <StyledInputLabel>
-        {label}
+        {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
-        <StyledPriceUnit isSmall={isSmall}>
+        <StyledPriceUnit isSmall={isSmall} styleType="subtitle01M">
           {VALIDATE_MESSAGE.PRICE_UNIT}
         </StyledPriceUnit>
       </StyledInputLabel>
       {hasGuideMessage && (
-        <StyledInputGuideMessage status={status}>
+        <StyledInputGuideMessage status={status} styleType="caption01M">
           {guideMessage}
         </StyledInputGuideMessage>
       )}
@@ -55,62 +56,45 @@ const StyledInputLabel = styled.label`
   position: relative;
   display: inline-flex;
   flex-direction: column;
-
-  ${({ theme }): string => `
-    color: ${theme.colors.grayScale.gray70};
-    ${theme.fonts.body01M}
-  `}
+  color: ${({ theme }): string => theme.colors.grayScale.gray70};
 `
+
 const StyledInput = styled.input<StyledInputProps>`
   padding: 8px 20px 8px 0;
   margin-bottom: 8px;
   border: none;
-
   ${({ isSmall, theme }): string => `
     border-bottom: 1px solid ${theme.colors.grayScale.black};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
-
     ::placeholder {
       color: ${theme.colors.grayScale.gray50};
     }
   `}
-
   ${({ isSmall }): string => {
-    if (isSmall) {
-      return `
+    return isSmall
+      ? `
         width: 360px;
         height: 32px;
       `
-    }
-
-    return `
+      : `
         width: 714px;
         height: 36px;
       `
   }}
 `
 
-const StyledPriceUnit = styled.span<StyledInputProps>`
+const StyledPriceUnit = styled(Text)<StyledInputProps>`
   position: absolute;
   right: 0;
-
   ${({ theme, isSmall }): string => `
     bottom: ${isSmall ? '14px' : '16px'};
     color: ${theme.colors.grayScale.gray90};
-    ${theme.fonts.subtitle01M}
   `}
 `
 
-const StyledInputGuideMessage = styled.span<StyledGuideMessageProps>`
+const StyledInputGuideMessage = styled(Text)<StyledGuideMessageProps>`
   color: ${({ theme, status }): string => {
-    const hasStatus = status === 'error' || status === 'success'
-
-    if (!hasStatus) {
-      return theme.colors.grayScale.gray50
-    }
-
-    return theme.colors.action[status]
+    const isGray = status === 'error' || status === 'success'
+    return isGray ? theme.colors.grayScale.gray50 : theme.colors.action[status]
   }};
-
-  ${({ theme }): string => theme.fonts.caption01M}
 `

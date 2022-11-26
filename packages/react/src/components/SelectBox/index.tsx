@@ -1,8 +1,9 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import type { SelectOnChangeHandler, StyledProps } from '@types'
 import { colors } from '@themes'
-import { Icon } from '@components'
+import { Icon } from '@components/Icon'
 import styled from '@emotion/styled'
+import { Text } from '@components/Text'
 import type { Theme } from '@emotion/react'
 import { useClose } from '@hooks'
 import { useState } from 'react'
@@ -92,7 +93,7 @@ export const SelectBox = ({
         isEmpty={isEmpty}
         size={size}
         onClick={handleOpenOptions}>
-        <span>{text}</span>
+        <Text styleType="body02M">{text}</Text>
         <StyledTriggerArrow
           color={getIconColor()}
           size={16}
@@ -109,7 +110,7 @@ export const SelectBox = ({
                 onClick={(): void => {
                   handleChangeValue(item)
                 }}>
-                <StyledOption>{item.text}</StyledOption>
+                <StyledOption styleType="caption01M">{item.text}</StyledOption>
               </StyledOptionsWrapper>
             ))}
           </StyledOptionList>
@@ -158,12 +159,10 @@ const StyledOptionList = styled.ul`
   ${({ theme }): string => `
     background-color: ${theme.colors.grayScale.white};
     border: 1px solid ${theme.colors.grayScale.gray10};
-
     ${theme.mediaQuery.desktop} {
       font-size: 12px;
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
     }
-
     ${theme.mediaQuery.tablet} {
       font-size: 14px;
       box-shadow: none;
@@ -178,11 +177,10 @@ const StyledOptionsWrapper = styled.li<Pick<StyledSelectProps, 'isSelected'>>`
       background-color: ${theme.colors.background.gray02};
       cursor: pointer;
     };
-
     background-color: ${isSelected ? theme.colors.background.gray02 : ''};
   `}
 `
-const StyledOption = styled.span`
+const StyledOption = styled(Text)`
   display: block;
   padding: 8px 4px;
   cursor: pointer;

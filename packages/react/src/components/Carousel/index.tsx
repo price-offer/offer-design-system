@@ -1,6 +1,6 @@
 import type { ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
-import { Icon } from '@components'
+import { Icon } from '@components/Icon'
 import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 

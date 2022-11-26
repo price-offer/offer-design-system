@@ -1,5 +1,5 @@
 import type { ChangeEventHandler, ReactElement } from 'react'
-import { IconButton } from '@components'
+import { IconButton } from '@components/IconButton'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'

@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 
+/** 클라이언트의 현재 View Port에따라 원하는 반응형 분기처리를 도와주는 hook입니다.
+ * @param { string } query 분기를 원하는 반응형 조건을 정합니다.
+ * @return { () => boolean } query 로 받은 반응형 조건에 현재 View Port가 부합하는지에 대한 여부를 return 합니다.
+ */
 export const useMediaQuery = (query: string): boolean => {
   const getMatches = (query: string): boolean => {
     // Prevents SSR issues

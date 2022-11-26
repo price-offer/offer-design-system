@@ -3,6 +3,10 @@ import type { RefObject } from 'react'
 
 const events = ['mousedown', 'touchstart']
 
+/** ref 외부 클릭 시, 특정 함수를 실행하는 hook입니다.
+ * @param { handler:(e?:Event) => void } ref 외부 클릭시 실행할 handler 함수를 받습니다.
+ * @return { ref: RefObject<T> } 클릭에서 제외할 ref를 반환합니다.
+ */
 export const useClickAway = <T extends HTMLElement>(
   handler: (e?: Event) => void
 ): RefObject<T> => {
@@ -32,7 +36,7 @@ export const useClickAway = <T extends HTMLElement>(
         document.removeEventListener(eventName, handleEvent)
       }
     }
-  }, [])
+  }, [ref.current])
 
   return ref
 }

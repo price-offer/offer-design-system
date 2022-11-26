@@ -1,6 +1,7 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
 import { Badge } from '@components/Badge'
 import { colors } from '@themes'
+import { forwardRef } from 'react'
 import { Icon } from '@components/Icon'
 import { Image } from '@components/Image'
 import styled from '@emotion/styled'
@@ -19,20 +20,23 @@ type MobileUploaderProps = {
 } & UploaderProps &
   HTMLAttributes<HTMLDivElement>
 
-export const MobileUploader = ({
-  imageListRef,
-  uploaderRef,
-  images,
-  openUploader,
-  addImage,
-  removeImage,
-  isShowListType,
-  isMaximum,
-  imgTotal,
-  ...props
-}: MobileUploaderProps): ReactElement => {
+export const MobileUploader = forwardRef(function MobileUploader(
+  {
+    imageListRef,
+    uploaderRef,
+    images,
+    openUploader,
+    addImage,
+    removeImage,
+    isShowListType,
+    isMaximum,
+    imgTotal,
+    ...props
+  }: MobileUploaderProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   return (
-    <StyledUploaderWrapper isShowListType={isShowListType} {...props}>
+    <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
         <Icon color={colors.grayScale.gray30} size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
@@ -64,7 +68,7 @@ export const MobileUploader = ({
       </StyledImageList>
     </StyledUploaderWrapper>
   )
-}
+})
 
 const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `

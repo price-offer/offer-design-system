@@ -1,7 +1,8 @@
 import { colors } from '@themes'
+import type { ForwardedRef } from 'react'
+import { forwardRef } from 'react'
 import { Icon } from '@components/Icon'
 import type { MainInputProps } from './index'
-import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
@@ -11,10 +12,10 @@ type SearchInputProps = Omit<
 >
 type StyledInputProps = StyledProps<SearchInputProps, 'isSmall'>
 
-export const SearchInput = ({
-  isSmall,
-  ...props
-}: SearchInputProps): ReactElement => {
+export const SearchInput = forwardRef(function SearchInput(
+  { isSmall, ...props }: SearchInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   return (
     <StyledInputForm>
       <StyledIcon
@@ -22,10 +23,10 @@ export const SearchInput = ({
         isSmall={isSmall}
         type="search"
       />
-      <StyledInput isSmall={isSmall} {...props} />
+      <StyledInput ref={ref} isSmall={isSmall} {...props} />
     </StyledInputForm>
   )
-}
+})
 
 const StyledInputForm = styled.form`
   display: inline-flex;

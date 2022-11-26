@@ -1,4 +1,5 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 
 export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
@@ -13,17 +14,16 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
 }
 type StyledDividerProps = Pick<DividerProps, 'direction'>
 
-export const Divider = ({
-  direction = 'horizontal',
-  size = 'regular',
-  ...props
-}: DividerProps): ReactElement => {
+export const Divider = forwardRef(function Divider(
+  { direction = 'horizontal', size = 'regular', ...props }: DividerProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   return (
-    <StyledDividerWrapper direction={direction} {...props}>
+    <StyledDividerWrapper ref={ref} direction={direction} {...props}>
       <StyledDivider direction={direction} size={size} />
     </StyledDividerWrapper>
   )
-}
+})
 
 const StyledDividerWrapper = styled.div<StyledDividerProps>`
   display: ${({ direction }): string =>

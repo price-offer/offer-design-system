@@ -1,5 +1,6 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
 import type { Colors } from '@themes/colors'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@components/Text'
 
@@ -19,17 +20,16 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>
 type ApplyColorScheme = (colorType: BadgeColorType, colors: Colors) => string
 
-export const Badge = ({
-  colorType,
-  children,
-  ...props
-}: BadgeProps): ReactElement => {
+export const Badge = forwardRef(function Badge(
+  { colorType, children, ...props }: BadgeProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   return (
-    <StyledBadge colorType={colorType} {...props}>
+    <StyledBadge ref={ref} colorType={colorType} {...props}>
       <Text styleType="caption01M">{children}</Text>
     </StyledBadge>
   )
-}
+})
 
 const applyColorScheme: ApplyColorScheme = (colorScheme, colors) => {
   switch (colorScheme) {

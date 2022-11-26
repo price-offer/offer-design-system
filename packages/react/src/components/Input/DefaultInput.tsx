@@ -1,6 +1,7 @@
-import type { ChangeEventHandler, ReactElement } from 'react'
+import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@utils/format'
 import type { MainInputProps as DefaultInputProps } from './index'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { Text } from '@components/Text'
@@ -11,15 +12,18 @@ type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
   StyledPriceUnitProps
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
 
-export const DefaultInput = ({
-  label,
-  status = 'default',
-  guideMessage = '',
-  isPrice = false,
-  isSmall,
-  onChange,
-  ...args
-}: DefaultInputProps): ReactElement => {
+export const DefaultInput = forwardRef(function DefaultInput(
+  {
+    label,
+    status = 'default',
+    guideMessage = '',
+    isPrice = false,
+    isSmall,
+    onChange,
+    ...args
+  }: DefaultInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const hasGuideMessage = status !== 'none'
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
     if (isPrice) {
@@ -36,6 +40,7 @@ export const DefaultInput = ({
       <StyledLabel>
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
+          ref={ref}
           isPrice={isPrice}
           isSmall={isSmall}
           onChange={handleInputChange}
@@ -56,7 +61,7 @@ export const DefaultInput = ({
       )}
     </StyledWrapper>
   )
-}
+})
 
 const StyledWrapper = styled.div`
   display: inline-flex;

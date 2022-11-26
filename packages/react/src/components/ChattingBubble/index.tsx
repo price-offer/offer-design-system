@@ -1,4 +1,5 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@components/Text'
 import { useMediaQuery } from '@hooks'
@@ -18,11 +19,10 @@ interface StyledBubbleProps {
   isSend: boolean
 }
 
-export const ChattingBubble = ({
-  messageType,
-  children,
-  ...props
-}: ChattingBubbleProps): ReactElement => {
+export const ChattingBubble = forwardRef(function ChattingBubble(
+  { messageType, children, ...props }: ChattingBubbleProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const newLineRegex = /\s/gi
   const blankChatLength = children.length
   const noBlankChatLength = children.replace(newLineRegex, '').length
@@ -34,7 +34,7 @@ export const ChattingBubble = ({
   const mobileTextStyleType = isSend ? 'body02M' : 'body02R'
 
   return (
-    <StyledBubble {...props} isSend={isSend}>
+    <StyledBubble ref={ref} {...props} isSend={isSend}>
       <StyledChattingMessage
         isSend={isSend}
         styleType={isDesktop ? desktopTextStyleType : mobileTextStyleType}>
@@ -47,7 +47,7 @@ export const ChattingBubble = ({
       </StyledChattingMessage>
     </StyledBubble>
   )
-}
+})
 
 const StyledBubble = styled.p<StyledBubbleProps>`
   display: inline-block;

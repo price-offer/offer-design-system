@@ -1,4 +1,5 @@
-import type { ButtonHTMLAttributes, ReactElement } from 'react'
+import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
+import { forwardRef } from 'react'
 import { Icon } from '@components/Icon'
 import type { IconType } from '@components/Icon'
 import styled from '@emotion/styled'
@@ -55,20 +56,23 @@ const FONT_COLOR = {
   solidSub: 'gray90'
 } as const
 
-export const Button = ({
-  size = 'medium',
-  styleType = 'solidPrimary',
-  icon,
-  children,
-  ...props
-}: ButtonProps): ReactElement => {
+export const Button = forwardRef(function Button(
+  {
+    size = 'medium',
+    styleType = 'solidPrimary',
+    icon,
+    children,
+    ...props
+  }: ButtonProps,
+  ref: ForwardedRef<HTMLButtonElement>
+) {
   return (
-    <StyledButton size={size} styleType={styleType} {...props}>
+    <StyledButton ref={ref} size={size} styleType={styleType} {...props}>
       {icon && <StyledIcon styleType={styleType} type={icon} />}
       {children}
     </StyledButton>
   )
-}
+})
 
 const StyledButton = styled.button<StyledButtonProps>`
   display: flex;

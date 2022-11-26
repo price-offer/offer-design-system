@@ -8,6 +8,11 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
    * @type 'gray' | 'orange' | 'purple'
    */
   colorType: BadgeColorType
+  /**
+   * Badge 내부에 들어갈 내용을 정합니다.
+   * @type string
+   */
+  children: string
 }
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>

@@ -33,12 +33,12 @@ import {
   Store,
   TriangleDown
 } from '@constants/icons'
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ReactElement, SVGAttributes } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export type IconType = keyof typeof ICON_TYPES
-export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
+export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {
   /**
    * Icon의 크기를 정합니다.
    * @type number | undefined

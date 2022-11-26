@@ -1,9 +1,10 @@
-import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEvent, ReactElement, TextareaHTMLAttributes } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@components/Text'
 import { useRef } from 'react'
 
-export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** TextArea 컴포넌트 상단의 label 정합니다.
    * @type string | undefined
    */

@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { InputHTMLAttributes, ReactElement } from 'react'
 import { ChattingInput } from './ChattingInput'
 import { DefaultInput } from './DefaultInput'
 import { EditInput } from './EditInput'
@@ -6,7 +6,7 @@ import { SearchInput } from './SearchInput'
 
 type InputStyleType = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
 export type InputSize = 'large' | 'small'
-export interface InputProps extends HTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
    * Input의 스타일 타입을 정합니다.
    * @type "chatting" | "default" | "edit" | "search" | undefined

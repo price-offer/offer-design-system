@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ButtonHTMLAttributes, ReactElement } from 'react'
 import { Icon } from '@components/Icon'
 import type { IconType } from '@components/Icon'
 import styled from '@emotion/styled'
@@ -7,7 +7,7 @@ import type { Theme } from '@emotion/react'
 
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'small' | 'medium' | 'large'
-export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Button의 보여질 형태를 정합니다.
    * @type "ghost" | "outline" | "outlineDisabled" | "solidDisabled" | "solidPrimary" | "solidSub" | undefined

@@ -1,11 +1,11 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ImgHTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { useImage } from '@hooks'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 
-export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
+export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   /** image의 alt 속성을 정합니다.
    * @type string
    */

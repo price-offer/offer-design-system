@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ButtonHTMLAttributes, ReactElement } from 'react'
 import { Icon } from '@components/Icon'
 import type { IconType } from '@components/Icon'
 import styled from '@emotion/styled'
@@ -16,7 +16,8 @@ export type IconButtonColorType =
 type IconButtonSize = 'small' | 'medium' | 'large'
 type IconButtonShape = 'rounded' | 'square' | 'ghost'
 
-export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * IconButton으로 사용될 아이콘의 타입을 정합니다.
    * @type IconType

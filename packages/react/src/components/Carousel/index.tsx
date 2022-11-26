@@ -1,10 +1,10 @@
-import type { ReactElement, TouchEventHandler } from 'react'
+import type { HTMLAttributes, ReactElement, TouchEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import { Icon } from '@components/Icon'
 import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
-export interface CarouselProps {
+export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
    * @type { url: string, id: number } []
    */
@@ -60,7 +60,8 @@ export const Carousel = ({
   images,
   isArrow,
   size = 687,
-  name
+  name,
+  ...props
 }: CarouselProps): ReactElement => {
   const isDesktop = useMediaQuery(`(min-width:1023px)`)
   const carouselWidthSize = isDesktop ? size : FULL_SCREEN_WIDTH
@@ -124,7 +125,7 @@ export const Carousel = ({
   }, [startClientX, endClientX])
 
   return (
-    <StyledCarouselWrapper>
+    <StyledCarouselWrapper {...props}>
       <StyledSlider
         cursorOn={cursorOn}
         size={carouselWidthSize}

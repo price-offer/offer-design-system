@@ -1,9 +1,9 @@
-import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEvent, FormHTMLAttributes, ReactElement } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { Text } from '@components/Text'
 
-export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
+export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
    */

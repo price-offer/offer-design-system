@@ -1,10 +1,10 @@
 import type { ForwardedRef, LegacyRef, MutableRefObject } from 'react'
 
-type MergeRefParams<T extends HTMLDivElement> =
+type MergeRefParams<T = HTMLDivElement> =
   | MutableRefObject<T | null>[]
   | ForwardedRef<T>[]
 
-export const mergeRefs = <T extends HTMLDivElement>(
+export const mergeRefs = <T = HTMLDivElement>(
   refs: MergeRefParams<T>
 ): LegacyRef<T> | undefined => {
   return elem => {

@@ -1,5 +1,5 @@
 import { colors } from '@themes'
-import { Icon } from '@components'
+import { Icon } from '@components/Icon'
 import type { MainInputProps } from './index'
 import type { ReactElement } from 'react'
 import styled from '@emotion/styled'

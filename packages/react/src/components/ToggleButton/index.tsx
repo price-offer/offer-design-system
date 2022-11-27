@@ -1,10 +1,10 @@
 import type {
   IconButtonColorType,
-  IconButtonProps,
-  IconType
-} from '@components'
+  IconButtonProps
+} from '@components/IconButton'
 import type { MouseEventHandler, ReactElement } from 'react'
-import { IconButton } from '@components'
+import { IconButton } from '@components/IconButton'
+import type { IconType } from '@components/Icon'
 import { useState } from 'react'
 
 type FillIconType = Extract<

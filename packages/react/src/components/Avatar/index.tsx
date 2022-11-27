@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactElement } from 'react'
-import { Icon, Image } from '@components'
 import { colors } from '@styles/themes'
+import { Icon } from '@components/Icon'
+import { Image } from '@components/Image'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 

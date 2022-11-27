@@ -1,7 +1,11 @@
-import { Badge, Button, Icon, Image } from '@components'
 import type { HTMLAttributes, ReactElement } from 'react'
+import { Badge } from '@components/Badge'
+import { Button } from '@components/Button'
 import { colors } from '@themes'
+import { Icon } from '@components/Icon'
+import { Image } from '@components/Image'
 import styled from '@emotion/styled'
+import { Text } from '@components/Text'
 import type { UploaderProps } from '../index'
 
 interface StyledProps {
@@ -34,8 +38,10 @@ export const DesktopUploader = ({
         <StyledTrigger isShowListType={isShowListType}>
           <Icon color={colors.grayScale.gray30} size={40} type="picture" />
           <StyledDescription>
-            <p>상품 이미지 추가</p>
-            <StyledImageTotal isMaximum={isMaximum}>
+            <Text styleType="body01B" tag="p">
+              상품 이미지 추가
+            </Text>
+            <StyledImageTotal isMaximum={isMaximum} styleType="body02R">
               {imgTotal}
             </StyledImageTotal>
           </StyledDescription>
@@ -103,12 +109,11 @@ const StyledDescription = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   p {
     line-height: 24px;
   }
 `
-const StyledImageTotal = styled.span<Pick<StyledProps, 'isMaximum'>>`
+const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
   ${({ theme, isMaximum }): string => `
     margin-top: 4px;
     font-size: 14px;
@@ -124,7 +129,6 @@ const StyledImageList = styled.div`
   margin-left: 8px;
   overflow-x: scroll;
   overflow-y: hidden;
-
   ::-webkit-scrollbar {
     height: 7px;
   }
@@ -132,7 +136,6 @@ const StyledImageList = styled.div`
     border-radius: 4px;
     background-color: ${({ theme }): string => theme.colors.dim.opacity50};
   }
-
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
 `

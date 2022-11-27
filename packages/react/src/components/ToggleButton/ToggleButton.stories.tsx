@@ -15,6 +15,6 @@ Default.args = {
   icon: 'heart',
   shape: 'rounded',
   size: 'medium',
-  toggleColorType: 'primary',
-  type: 'fill'
+  styleType: 'fill',
+  toggleColorType: 'primary'
 }

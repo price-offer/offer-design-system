@@ -20,7 +20,13 @@ export interface UploaderProps {
 
 /* ImageUploader Props */
 export type ImageUploaderProps = {
+  /** ImageUploader로 업로드된 이미지의 목록을 정합니다.
+   * @type ImageInfo[]
+   */
   images: ImageInfo[]
+  /** ImageUploader의 onChange 이벤트 시, 호출될 함수를 정합니다.
+   * @type UploaderOnChangeHandler
+   */
   onChange: UploaderOnChangeHandler
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 

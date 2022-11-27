@@ -6,13 +6,37 @@ import { useImage } from '@hooks'
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 
 export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
+  /** image의 alt 속성을 정합니다.
+   * @type string
+   */
   alt: string
+  /** image의 src 속성을 정합니다.
+   * @type string
+   */
   src: string
+  /** image의 너비를 정합니다.
+   * @type string | undefined
+   */
   width?: string
+  /** image의 높이를 정합니다.
+   * @type string | undefined
+   */
   height?: string
+  /** image의 너비와 높이를 동시에 정합니다.
+   * @type string | undefined
+   */
   boxSize?: string
+  /** image의 border-radius 속성을 정합니다.
+   * @type string | undefined
+   */
   radius?: string
+  /** image의 src에서 오류 발생 시, 대체할 src 속성을 정합니다.
+   * @type string | undefined
+   */
   fallbackSrc?: string
+  /** image의 object-fit 속성을 정합니다.
+   * @type "fill" | "contain" | "cover" | "none" | undefined
+   */
   objectFit?: ObjectFit
 }
 

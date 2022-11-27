@@ -5,8 +5,17 @@ import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
+  /** Avatar 컴포넌트 이미지의 alt 속성을 정합니다.
+   * @type string
+   */
   alt: string
+  /** Avatar 컴포넌트 이미지의 src 속성을 정합니다.
+   * @type string
+   */
   src: string
+  /** Avatar 컴포넌트 크기를 정합니다.
+   * @type "large" | "medium" | "small" | "xsmall" | undefined
+   */
   size?: keyof typeof AVATAR_WRAPPER_SIZE
 }
 

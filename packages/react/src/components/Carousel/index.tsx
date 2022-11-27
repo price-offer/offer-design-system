@@ -5,9 +5,21 @@ import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
 export interface CarouselProps {
+  /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
+   * @type { url: string, id: number } []
+   */
   images: { url: string; id: number }[]
+  /** Carousel 컴포넌트에 화살표의 유무를 정합니다.
+   * @type boolean
+   */
   isArrow: boolean
+  /** Carousel 컴포넌트에 들어갈 이미지들의 크기를 정합니다.
+   * @type number | undefined
+   */
   size?: number
+  /** Carousel 컴포넌트의 이름을 정합니다.(이미지들의 alt에도 사용 됩니다.)
+   * @type string
+   */
   name: string
 }
 

@@ -1,5 +1,6 @@
 import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
 import { forwardRef, useRef } from 'react'
+import { mergeRefs } from '@utils/mergeRefs'
 import styled from '@emotion/styled'
 import { Text } from '@components/Text'
 
@@ -58,15 +59,7 @@ export const TextArea = forwardRef(function TextArea(
       </StyledLabel>
       <StyledTextArea
         {...props}
-        ref={(elem): void => {
-          if (typeof ref === 'function') {
-            ref(elem)
-          } else if (ref != null) {
-            ref.current = elem
-          }
-
-          textAreaRef.current = elem
-        }}
+        ref={mergeRefs<HTMLTextAreaElement>([textAreaRef, ref])}
         isFilled={isFilled}
         placeholder={placeholder}
         rows={1}

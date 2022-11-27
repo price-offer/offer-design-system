@@ -1,6 +1,7 @@
-import type { HTMLAttributes, ReactElement } from 'react'
-import { useEffect, useMemo } from 'react'
+import type { ForwardedRef, HTMLAttributes, ReactElement } from 'react'
+import { forwardRef, useEffect, useMemo } from 'react'
 import { IconButton } from '@components/IconButton'
+import { mergeRefs } from '@utils/mergeRefs'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
@@ -37,14 +38,17 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
 type StyledModalProps = StyledProps<ModalProps, 'width' | 'height'>
 type StyledDIMProps = StyledProps<ModalProps, 'isOpen'>
 
-export const Modal = ({
-  children,
-  width = 400,
-  height = 0,
-  onClose,
-  isOpen = false,
-  ...props
-}: ModalProps): ReactElement => {
+export const Modal = forwardRef(function Modal(
+  {
+    children,
+    width = 400,
+    height = 0,
+    onClose,
+    isOpen = false,
+    ...props
+  }: ModalProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
   })
@@ -53,14 +57,18 @@ export const Modal = ({
   useEffect(() => {
     document.body.append(topElement)
 
-    return () => {
+    return (): void => {
       document.body.removeChild(topElement)
     }
   }, [])
 
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
-      <StyledModal {...props} ref={modalRef} height={height} width={width}>
+      <StyledModal
+        {...props}
+        ref={mergeRefs([modalRef, ref])}
+        height={height}
+        width={width}>
         <StyledCloseIcon
           colorType="gray30"
           icon="close"
@@ -72,7 +80,7 @@ export const Modal = ({
     </StyledDIM>,
     topElement
   )
-}
+})
 
 const StyledDIM = styled.div<StyledDIMProps>`
   position: absolute;

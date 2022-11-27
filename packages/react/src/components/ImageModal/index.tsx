@@ -1,5 +1,5 @@
-import type { HTMLAttributes, ReactElement, TouchEventHandler } from 'react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { IconButton } from '@components/IconButton'
 import { Image as ImageComponent } from '@components/Image'
 import ReactDOM from 'react-dom'
@@ -61,13 +61,10 @@ const VALUE_OF_TOUCH_NAV_TYPE = {
   right: 1
 } as const
 
-export const ImageModal = ({
-  onClose,
-  images,
-  isOpen = false,
-  name,
-  ...props
-}: ImageModalProps): ReactElement => {
+export const ImageModal = forwardRef(function ImageModal(
+  { onClose, images, isOpen = false, name, ...props }: ImageModalProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
   const initImageId = images[0].id
   const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
@@ -77,7 +74,7 @@ export const ImageModal = ({
   useEffect(() => {
     document.body.append(topElement)
 
-    return () => {
+    return (): void => {
       document.body.removeChild(topElement)
     }
   }, [])
@@ -189,6 +186,7 @@ export const ImageModal = ({
       />
       <StyledImageContainer
         {...props}
+        ref={ref}
         currentImageIndex={getCurrentImageIndex()}
         sumOfHandoverImageWidth={getSumOfHandoverImageWidth()}>
         {imagesInfo.current.map(({ src, id, width, height }) => (
@@ -218,7 +216,7 @@ export const ImageModal = ({
     </StyledDIM>,
     topElement
   )
-}
+})
 
 const StyledDIM = styled.div<StyledDIMProps>`
   position: absolute;

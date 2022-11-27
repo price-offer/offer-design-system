@@ -1,11 +1,12 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, ImgHTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { useImage } from '@hooks'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 
-export interface ImageProps extends HTMLAttributes<HTMLImageElement> {
+export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   /** image의 alt 속성을 정합니다.
    * @type string
    */
@@ -52,17 +53,20 @@ interface ApplyShapeParams {
 }
 type ApplyShape = (params: ApplyShapeParams) => string
 
-export const Image = ({
-  alt,
-  src,
-  fallbackSrc,
-  objectFit = 'cover',
-  width = '',
-  height = '',
-  boxSize = '276px',
-  radius = '0px',
-  ...props
-}: ImageProps): ReactElement => {
+export const Image = forwardRef(function Image(
+  {
+    alt,
+    src,
+    fallbackSrc,
+    objectFit = 'cover',
+    width = '',
+    height = '',
+    boxSize = '276px',
+    radius = '0px',
+    ...props
+  }: ImageProps,
+  ref: ForwardedRef<HTMLImageElement>
+) {
   const { onFallbackError, onLoadImage, status } = useImage({
     fallbackSrc,
     src
@@ -73,6 +77,7 @@ export const Image = ({
   if (isShowFallback) {
     return (
       <StyledImage
+        ref={ref}
         alt={alt}
         boxSize={boxSize}
         height={height}
@@ -90,6 +95,7 @@ export const Image = ({
     <>
       {!isLoaded && (
         <StyledPlaceholder
+          ref={ref as ForwardedRef<HTMLDivElement>}
           boxSize={boxSize}
           height={height}
           radius={radius}
@@ -99,6 +105,7 @@ export const Image = ({
       )}
       {isLoaded && (
         <StyledImage
+          ref={ref}
           alt={alt}
           boxSize={boxSize}
           height={height}
@@ -112,7 +119,7 @@ export const Image = ({
       )}
     </>
   )
-}
+})
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
   ${({ boxSize, radius, theme, width, height }): string => `

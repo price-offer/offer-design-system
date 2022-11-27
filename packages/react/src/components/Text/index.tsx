@@ -1,5 +1,6 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
 import type { FontStyleKeys } from '@themes'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
@@ -28,19 +29,27 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
 
 type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
 
-export const Text = ({
-  tag = 'span',
-  children,
-  styleType: textStyle = 'body01M',
-  color = '',
-  ...props
-}: TextProps): ReactElement => {
+export const Text = forwardRef(function Text(
+  {
+    tag = 'span',
+    children,
+    styleType: textStyle = 'body01M',
+    color = '',
+    ...props
+  }: TextProps,
+  ref: ForwardedRef<HTMLSpanElement>
+) {
   return (
-    <StyledText as={tag} color={color} styleType={textStyle} {...props}>
+    <StyledText
+      ref={ref}
+      as={tag}
+      color={color}
+      styleType={textStyle}
+      {...props}>
       {children}
     </StyledText>
   )
-}
+})
 
 const StyledText = styled.span<StyledTextProps>`
   ${({ color }): string => (color ? `color: ${color}` : '')};

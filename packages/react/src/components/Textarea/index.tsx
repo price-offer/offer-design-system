@@ -1,9 +1,11 @@
-import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
+import { forwardRef, useRef } from 'react'
+import { mergeRefs } from '@utils/mergeRefs'
 import styled from '@emotion/styled'
 import { Text } from '@components/Text'
-import { useRef } from 'react'
 
-export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** TextArea 컴포넌트 상단의 label 정합니다.
    * @type string | undefined
    */
@@ -25,14 +27,18 @@ export interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
 interface StyledTextAreaProps {
   isFilled: boolean
 }
-export const TextArea = ({
-  label = '',
-  placeholder = '내용을 입력하세요.',
-  guideMessage = '',
-  bgType = 'filled',
-  onInput,
-  ...props
-}: TextAreaProps): ReactElement => {
+
+export const TextArea = forwardRef(function TextArea(
+  {
+    label = '',
+    placeholder = '내용을 입력하세요.',
+    guideMessage = '',
+    bgType = 'filled',
+    onInput,
+    ...props
+  }: TextAreaProps,
+  ref: ForwardedRef<HTMLTextAreaElement>
+) {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const TEXT_AREA_DEFAULT_HEIGHT = '120px'
   const isFilled = bgType === 'filled'
@@ -53,7 +59,7 @@ export const TextArea = ({
       </StyledLabel>
       <StyledTextArea
         {...props}
-        ref={textAreaRef}
+        ref={mergeRefs<HTMLTextAreaElement>([textAreaRef, ref])}
         isFilled={isFilled}
         placeholder={placeholder}
         rows={1}
@@ -64,7 +70,7 @@ export const TextArea = ({
       </StyledGuideMessage>
     </>
   )
-}
+})
 
 const StyledLabel = styled.label`
   display: block;

@@ -1,11 +1,11 @@
+import type { ForwardedRef, MouseEventHandler } from 'react'
+import { forwardRef, useState } from 'react'
 import type {
   IconButtonColorType,
   IconButtonProps
 } from '@components/IconButton'
-import type { MouseEventHandler, ReactElement } from 'react'
 import { IconButton } from '@components/IconButton'
 import type { IconType } from '@components/Icon'
-import { useState } from 'react'
 
 type FillIconType = Extract<
   IconType,
@@ -50,14 +50,17 @@ export type ToggleButtonProps = IconButtonProps & {
 
 type ToggleButtonType = FillToggleButton | StrokeToggleButton
 
-export const ToggleButton = ({
-  onClick,
-  styleType = 'stroke',
-  colorType = 'black',
-  toggleColorType = colorType,
-  icon,
-  ...props
-}: ToggleButtonProps): ReactElement => {
+export const ToggleButton = forwardRef(function ToggleButton(
+  {
+    onClick,
+    styleType = 'stroke',
+    colorType = 'black',
+    toggleColorType = colorType,
+    icon,
+    ...props
+  }: ToggleButtonProps,
+  ref: ForwardedRef<HTMLButtonElement>
+) {
   const [isToggle, setIsToggle] = useState<boolean>(false)
   const isFillType = styleType === 'fill'
   const toggleIcon = isFillType ? `${icon}Fill` : icon
@@ -74,10 +77,11 @@ export const ToggleButton = ({
 
   return (
     <IconButton
+      ref={ref}
       colorType={renderIcon.color}
       icon={renderIcon.icon as IconType}
       onClick={handleClick}
       {...props}
     />
   )
-}
+})

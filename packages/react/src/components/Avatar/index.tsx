@@ -1,5 +1,6 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
 import { colors } from '@styles/themes'
+import { forwardRef } from 'react'
 import { Icon } from '@components/Icon'
 import { Image } from '@components/Image'
 import styled from '@emotion/styled'
@@ -36,18 +37,16 @@ const AVATAR_IMAGE_SIZE = {
   xsmall: 16
 } as const
 
-export const Avatar = ({
-  alt,
-  src,
-  size = 'small',
-  ...props
-}: AvatarProps): ReactElement => {
+export const Avatar = forwardRef(function Avatar(
+  { alt, src, size = 'small', ...props }: AvatarProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const isBlank = src === ''
 
   return (
     <>
       {!isBlank && (
-        <div {...props}>
+        <div ref={ref} {...props}>
           <Image
             alt={alt}
             boxSize={AVATAR_WRAPPER_SIZE[size]}
@@ -57,7 +56,7 @@ export const Avatar = ({
         </div>
       )}
       {isBlank && (
-        <StyledBlankAvatarWrapper size={size} {...props}>
+        <StyledBlankAvatarWrapper ref={ref} size={size} {...props}>
           <Icon
             color={colors.grayScale.gray20}
             size={AVATAR_IMAGE_SIZE[size]}
@@ -67,7 +66,7 @@ export const Avatar = ({
       )}
     </>
   )
-}
+})
 
 const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   display: flex;

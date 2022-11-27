@@ -1,10 +1,10 @@
-import type { ReactElement, TouchEventHandler } from 'react'
-import { useEffect, useState } from 'react'
+import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { Icon } from '@components/Icon'
 import styled from '@emotion/styled'
 import { useMediaQuery } from '@hooks'
 
-export interface CarouselProps {
+export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
    * @type { url: string, id: number } []
    */
@@ -56,12 +56,10 @@ const NAV_TYPE = {
 const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
-export const Carousel = ({
-  images,
-  isArrow,
-  size = 687,
-  name
-}: CarouselProps): ReactElement => {
+export const Carousel = forwardRef(function Carousel(
+  { images, isArrow, size = 687, name, ...props }: CarouselProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const isDesktop = useMediaQuery(`(min-width:1023px)`)
   const carouselWidthSize = isDesktop ? size : FULL_SCREEN_WIDTH
   const lastImageValue = carouselWidthSize * (images.length - 1)
@@ -124,7 +122,7 @@ export const Carousel = ({
   }, [startClientX, endClientX])
 
   return (
-    <StyledCarouselWrapper>
+    <StyledCarouselWrapper ref={ref} {...props}>
       <StyledSlider
         cursorOn={cursorOn}
         size={carouselWidthSize}
@@ -189,7 +187,7 @@ export const Carousel = ({
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )
-}
+})
 
 const StyledCarouselWrapper = styled.div`
   touch-action: none;

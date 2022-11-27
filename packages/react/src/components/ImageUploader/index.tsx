@@ -1,11 +1,12 @@
 import type {
   ChangeEventHandler,
+  ForwardedRef,
   HTMLAttributes,
-  MutableRefObject,
-  ReactElement
+  MutableRefObject
 } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
 import type { ImageInfo, UploaderOnChangeHandler } from '@types'
+import { forwardRef } from 'react'
 import { useImageUploader } from './useImageUploader'
 import { useMediaQuery } from '@hooks'
 
@@ -32,11 +33,10 @@ export type ImageUploaderProps = {
 
 const MAX_LIST_LENGTH = 10
 
-export const ImageUploader = ({
-  images: defaultImages,
-  onChange,
-  ...props
-}: ImageUploaderProps): ReactElement => {
+export const ImageUploader = forwardRef(function ImageUploader(
+  { images: defaultImages, onChange, ...props }: ImageUploaderProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   const {
     imageListRef,
     uploaderRef,
@@ -56,6 +56,7 @@ export const ImageUploader = ({
 
   return (
     <Uploader
+      ref={ref}
       addImage={addImage}
       imageListRef={imageListRef}
       images={images}
@@ -68,4 +69,4 @@ export const ImageUploader = ({
       {...props}
     />
   )
-}
+})

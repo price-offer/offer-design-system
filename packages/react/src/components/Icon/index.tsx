@@ -33,12 +33,13 @@ import {
   Store,
   TriangleDown
 } from '@constants/icons'
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, SVGAttributes } from 'react'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 
 export type IconType = keyof typeof ICON_TYPES
-export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
+export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {
   /**
    * Icon의 크기를 정합니다.
    * @type number | undefined
@@ -93,20 +94,18 @@ export const ICON_TYPES = {
   triangleDown: TriangleDown
 } as const
 
-export const Icon = ({
-  type,
-  size = 24,
-  color = 'black',
-  ...props
-}: IconProps): ReactElement => {
+export const Icon = forwardRef(function Icon(
+  { type, size = 24, color = 'black', ...props }: IconProps,
+  ref: ForwardedRef<SVGSVGElement>
+) {
   const IconSvg = ICON_TYPES[type]
 
   return (
     <StyledIconWrapper color={color}>
-      <IconSvg height={size} width={size} {...props} />
+      <IconSvg ref={ref} height={size} width={size} {...props} />
     </StyledIconWrapper>
   )
-}
+})
 
 const StyledIconWrapper = styled.i<StyledIconWrapperProps>`
   display: flex;

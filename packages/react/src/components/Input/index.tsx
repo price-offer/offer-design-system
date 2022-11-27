@@ -1,12 +1,13 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ForwardedRef, InputHTMLAttributes, ReactElement } from 'react'
 import { ChattingInput } from './ChattingInput'
 import { DefaultInput } from './DefaultInput'
 import { EditInput } from './EditInput'
+import { forwardRef } from 'react'
 import { SearchInput } from './SearchInput'
 
 type InputStyleType = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
 export type InputSize = 'large' | 'small'
-export interface InputProps extends HTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
    * Input의 스타일 타입을 정합니다.
    * @type "chatting" | "default" | "edit" | "search" | undefined
@@ -49,11 +50,10 @@ export const INPUT_STYLE_KEYS = {
   SEARCH: 'search'
 } as const
 
-export const Input = ({
-  styleType = 'default',
-  inputSize = 'small',
-  ...props
-}: InputProps): ReactElement => {
+export const Input = forwardRef(function Input(
+  { styleType = 'default', inputSize = 'small', ...props }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const renderInput = (styleType: InputStyleType): ReactElement => {
     const { EDIT, DEFAULT, CHATTING, SEARCH } = INPUT_STYLE_KEYS
     const isSmall = inputSize === 'small'
@@ -61,17 +61,17 @@ export const Input = ({
 
     switch (styleType) {
       case DEFAULT:
-        return <DefaultInput {...inputTypeProps} />
+        return <DefaultInput ref={ref} {...inputTypeProps} />
       case CHATTING:
-        return <ChattingInput {...inputTypeProps} />
+        return <ChattingInput ref={ref} {...inputTypeProps} />
       case SEARCH:
-        return <SearchInput {...inputTypeProps} />
+        return <SearchInput ref={ref} {...inputTypeProps} />
       case EDIT:
-        return <EditInput {...inputTypeProps} />
+        return <EditInput ref={ref} {...inputTypeProps} />
       default:
-        return <DefaultInput {...inputTypeProps} />
+        return <DefaultInput ref={ref} {...inputTypeProps} />
     }
   }
 
   return renderInput(styleType)
-}
+})

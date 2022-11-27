@@ -1,9 +1,9 @@
-import type { ChangeEventHandler, ReactElement } from 'react'
+import type { ChangeEventHandler, ForwardedRef } from 'react'
+import { forwardRef, useState } from 'react'
 import { IconButton } from '@components/IconButton'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
-import { useState } from 'react'
 
 type ChattingInputProps = Omit<
   MainInputProps,
@@ -15,11 +15,10 @@ type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
 
-export const ChattingInput = ({
-  isSmall,
-  onChange,
-  ...props
-}: ChattingInputProps): ReactElement => {
+export const ChattingInput = forwardRef(function ChattingInput(
+  { isSmall, onChange, ...props }: ChattingInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const [inputValue, setInputValue] = useState<string>('')
   const isDisabled = !inputValue
 
@@ -30,7 +29,12 @@ export const ChattingInput = ({
 
   return (
     <StyledInputForm>
-      <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
+      <StyledInput
+        ref={ref}
+        isSmall={isSmall}
+        onChange={handleChange}
+        {...props}
+      />
       <StyledIconButton
         colorType={isDisabled ? 'primaryWeak' : 'primary'}
         disabled={isDisabled}
@@ -41,7 +45,7 @@ export const ChattingInput = ({
       />
     </StyledInputForm>
   )
-}
+})
 
 const StyledInputForm = styled.form`
   display: inline-flex;

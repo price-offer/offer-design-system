@@ -1,9 +1,10 @@
-import type { ChangeEvent, HTMLAttributes, ReactElement } from 'react'
+import type { ChangeEvent, FormHTMLAttributes, ForwardedRef } from 'react'
+import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
 import { Text } from '@components/Text'
 
-export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
+export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
    */
@@ -24,13 +25,10 @@ export interface RadioProps extends HTMLAttributes<HTMLFormElement> {
 
 type StyledFormProps = StyledProps<RadioProps, 'direction'>
 
-export const Radio = ({
-  formName,
-  onChange,
-  items,
-  direction = 'horizontal',
-  ...props
-}: RadioProps): ReactElement => {
+export const Radio = forwardRef(function Radio(
+  { formName, onChange, items, direction = 'horizontal', ...props }: RadioProps,
+  ref: ForwardedRef<HTMLFormElement>
+) {
   const handleRadiobutton = (
     e: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLFormElement>
   ): void => {
@@ -52,11 +50,11 @@ export const Radio = ({
   ))
 
   return (
-    <StyledForm {...props} direction={direction}>
+    <StyledForm ref={ref} {...props} direction={direction}>
       {radioList}
     </StyledForm>
   )
-}
+})
 
 const StyledForm = styled.form<StyledFormProps>`
   display: ${({ direction }): string =>

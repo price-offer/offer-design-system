@@ -1,5 +1,6 @@
-import type { ChangeEventHandler, ReactElement } from 'react'
+import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@utils/format'
+import { forwardRef } from 'react'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@types'
@@ -13,14 +14,17 @@ interface StyledInputProps {
 }
 type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
 
-export const EditInput = ({
-  label = '',
-  guideMessage = '',
-  status = 'default',
-  isSmall,
-  onChange,
-  ...props
-}: EditInputProps): ReactElement => {
+export const EditInput = forwardRef(function EditInput(
+  {
+    label = '',
+    guideMessage = '',
+    status = 'default',
+    isSmall,
+    onChange,
+    ...props
+  }: EditInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const hasGuideMessage = status !== 'none'
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -34,7 +38,12 @@ export const EditInput = ({
     <StyledInputForm>
       <StyledInputLabel>
         {label && <Text styleType="body01M">{label}</Text>}
-        <StyledInput isSmall={isSmall} onChange={handleChange} {...props} />
+        <StyledInput
+          ref={ref}
+          isSmall={isSmall}
+          onChange={handleChange}
+          {...props}
+        />
         <StyledPriceUnit isSmall={isSmall} styleType="subtitle01M">
           {VALIDATE_MESSAGE.PRICE_UNIT}
         </StyledPriceUnit>
@@ -46,7 +55,7 @@ export const EditInput = ({
       )}
     </StyledInputForm>
   )
-}
+})
 
 const StyledInputForm = styled.form`
   display: inline-flex;

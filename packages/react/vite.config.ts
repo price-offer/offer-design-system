@@ -27,8 +27,7 @@ export default defineConfig({
     },
     rollupOptions: {
       external: makeExternalPredicate([
-        ...Object.keys(packageJson.dependencies),
-        ...Object.keys(packageJson.peerDependencies)
+        ...Object.keys(packageJson.dependencies)
       ])
     },
     sourcemap: 'inline'

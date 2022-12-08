@@ -6,17 +6,6 @@ import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-type MakeExternalPredicateReturns = (id: string) => boolean
-const makeExternalPredicate = (
-  externals: string[]
-): MakeExternalPredicateReturns => {
-  if (externals.length === 0) {
-    return (): boolean => false
-  }
-  const pattern = new RegExp(`^(${externals.join('|')})($|/)`)
-  return (id: string): boolean => pattern.test(id)
-}
-
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
@@ -26,13 +15,20 @@ export default defineConfig({
       formats: ['es', 'cjs']
     },
     rollupOptions: {
-      external: makeExternalPredicate([
-        ...Object.keys(packageJson.dependencies)
-      ])
+      external: [...Object.keys(packageJson.dependencies)]
     },
     sourcemap: 'inline'
   },
-  plugins: [dts(), react(), tsconfigPaths(), svgr()],
+  plugins: [
+    dts({ insertTypesEntry: true }),
+    react({
+      babel: {
+        plugins: ['@emotion/babel-plugin']
+      }
+    }),
+    tsconfigPaths(),
+    svgr()
+  ],
   publicDir: 'public',
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.d.ts']

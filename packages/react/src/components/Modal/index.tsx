@@ -62,10 +62,10 @@ export const Modal = forwardRef(function Modal(
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'scroll'
+    document.body.style.overflow = isOpen ? 'hidden' : 'visible'
 
     return (): void => {
-      document.body.style.overflow = 'scroll'
+      document.body.style.overflow = 'visible'
     }
   }, [isOpen])
 

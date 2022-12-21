@@ -1,6 +1,5 @@
 import type { ForwardedRef, HTMLAttributes, ReactElement } from 'react'
 import { forwardRef, useEffect, useMemo } from 'react'
-import { IconButton } from '@components/IconButton'
 import { mergeRefs } from '@utils/mergeRefs'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
@@ -49,10 +48,10 @@ export const Modal = forwardRef(function Modal(
   }: ModalProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
+  const topElement = useMemo(() => document.createElement('div'), [])
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
   })
-  const topElement = useMemo(() => document.createElement('div'), [])
 
   useEffect(() => {
     document.body.append(topElement)
@@ -62,6 +61,14 @@ export const Modal = forwardRef(function Modal(
     }
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'visible'
+
+    return (): void => {
+      document.body.style.overflow = 'visible'
+    }
+  }, [isOpen])
+
   return ReactDOM.createPortal(
     <StyledDIM isOpen={isOpen}>
       <StyledModal
@@ -69,12 +76,6 @@ export const Modal = forwardRef(function Modal(
         ref={mergeRefs([modalRef, ref])}
         height={height}
         width={width}>
-        <StyledCloseIcon
-          colorType="gray30"
-          icon="close"
-          shape="ghost"
-          onClick={onClose}
-        />
         {children}
       </StyledModal>
     </StyledDIM>,
@@ -83,7 +84,7 @@ export const Modal = forwardRef(function Modal(
 })
 
 const StyledDIM = styled.div<StyledDIMProps>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: ${({ isOpen }): string => (isOpen ? 'flex' : 'none')};
@@ -96,6 +97,7 @@ const StyledDIM = styled.div<StyledDIMProps>`
 `
 const StyledModal = styled.div<StyledModalProps>`
   position: relative;
+  overflow: scroll;
   width: ${({ width }): string => `${width}px`};
   height: ${({ height }): string => (height ? `${height}px` : 'auto')};
   min-height: 68px;
@@ -103,9 +105,4 @@ const StyledModal = styled.div<StyledModalProps>`
   background-color: ${({ theme }): string => theme.colors.grayScale.white};
   box-shadow: ${({ theme }): string =>
     `0px 3px 20px ${theme.colors.dim.opacity40}`};
-`
-const StyledCloseIcon = styled(IconButton)`
-  position: absolute;
-  top: 20px;
-  right: 20px;
 `

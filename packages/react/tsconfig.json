@@ -1,27 +1,23 @@
 {
-  "extends": "./tsconfig.path.json",
-  "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "typeRoots": [
-    "node_modules/@types",
-    "node_modules/types",
-    "types"
-  ],
+  "extends": "../../tsconfig.base.json",
   "include": ["src", "vite.config.ts", "*.d.ts"],
-  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@components": ["components"],
+      "@constants/*": ["constants/*"],
+      "@constants": ["constants"],
+      "@hooks/*": ["hooks/*"],
+      "@hooks": ["hooks"],
+      "@styles/*": ["styles/*"],
+      "@styles": ["styles"],
+      "@themes/*": ["styles/themes/*"],
+      "@themes": ["styles/themes"],
+      "@types/*": ["types/*"],
+      "@types": ["types"],
+      "@utils/*": ["utils/*"],
+      "@utils": ["utils"]
+    }
+  }
 }

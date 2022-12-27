@@ -1,5 +1,5 @@
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import { IconButton } from '@components/IconButton'
 import { Image as ImageComponent } from '@components/Image'
 import ReactDOM from 'react-dom'
@@ -69,13 +69,15 @@ export const ImageModal = forwardRef(function ImageModal(
   const initImageId = images[0].id
   const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
   const startClientX = useRef<number | null>(null)
-  const topElement = useMemo(() => document.createElement('div'), [])
+  const [topElement, setTopElement] = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    document.body.append(topElement)
+    const divElement = document.createElement('div')
+    setTopElement(divElement)
+    document.body.append(divElement)
 
     return (): void => {
-      document.body.removeChild(topElement)
+      topElement && document.body.removeChild(topElement)
     }
   }, [])
 
@@ -171,51 +173,53 @@ export const ImageModal = forwardRef(function ImageModal(
   const calculateSizeRate = (width: number, height: number): number =>
     width / height
 
-  return ReactDOM.createPortal(
-    <StyledDIM
-      isOpen={isOpen}
-      onTouchEnd={handleTouchEnd}
-      onTouchStart={handleTouchStart}>
-      <StyledGradient direction="top" />
-      <StyledGradient direction="bottom" />
-      <StyledCloseIcon
-        colorType="gray30"
-        icon="close"
-        size="medium"
-        onClick={onClose}
-      />
-      <StyledImageContainer
-        {...props}
-        ref={ref}
-        currentImageIndex={getCurrentImageIndex()}
-        sumOfHandoverImageWidth={getSumOfHandoverImageWidth()}>
-        {imagesInfo.current.map(({ src, id, width, height }) => (
-          <StyledImage
-            key={id}
-            alt={`${name}-${id}`}
-            height={`${height}px`}
-            isFixedHeight={calculateSizeRate(width, height) < 5 / 3}
-            src={src}
-            width={`${width}px`}
+  return topElement
+    ? ReactDOM.createPortal(
+        <StyledDIM
+          isOpen={isOpen}
+          onTouchEnd={handleTouchEnd}
+          onTouchStart={handleTouchStart}>
+          <StyledGradient direction="top" />
+          <StyledGradient direction="bottom" />
+          <StyledCloseIcon
+            colorType="gray30"
+            icon="close"
+            size="medium"
+            onClick={onClose}
           />
-        ))}
-      </StyledImageContainer>
-      {imagesInfo.current.length > 1 && (
-        <StyledIndicatorBox>
-          {imagesInfo.current.map(({ id }) => (
-            <StyledIndicator
-              key={id}
-              className={currentImageId === id ? 'selected' : ''}
-              onClick={(): void => {
-                handleClickIndicator(id)
-              }}
-            />
-          ))}
-        </StyledIndicatorBox>
-      )}
-    </StyledDIM>,
-    topElement
-  )
+          <StyledImageContainer
+            {...props}
+            ref={ref}
+            currentImageIndex={getCurrentImageIndex()}
+            sumOfHandoverImageWidth={getSumOfHandoverImageWidth()}>
+            {imagesInfo.current.map(({ src, id, width, height }) => (
+              <StyledImage
+                key={id}
+                alt={`${name}-${id}`}
+                height={`${height}px`}
+                isFixedHeight={calculateSizeRate(width, height) < 5 / 3}
+                src={src}
+                width={`${width}px`}
+              />
+            ))}
+          </StyledImageContainer>
+          {imagesInfo.current.length > 1 && (
+            <StyledIndicatorBox>
+              {imagesInfo.current.map(({ id }) => (
+                <StyledIndicator
+                  key={id}
+                  className={currentImageId === id ? 'selected' : ''}
+                  onClick={(): void => {
+                    handleClickIndicator(id)
+                  }}
+                />
+              ))}
+            </StyledIndicatorBox>
+          )}
+        </StyledDIM>,
+        topElement
+      )
+    : null
 })
 
 const StyledDIM = styled.div<StyledDIMProps>`

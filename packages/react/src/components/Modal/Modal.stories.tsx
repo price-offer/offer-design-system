@@ -33,7 +33,7 @@ const Template: Story<ModalProps> = args => {
 
 export const Default = Template.bind({})
 Default.args = {
-  children: <div>Hello World!</div>,
+  children: 'Hello World!',
   height: 300,
   isOpen: false
 }

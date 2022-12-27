@@ -1,5 +1,5 @@
-import type { ForwardedRef, HTMLAttributes, ReactElement } from 'react'
-import { forwardRef, useEffect, useMemo } from 'react'
+import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { mergeRefs } from '@utils/mergeRefs'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
@@ -9,9 +9,9 @@ import { useClickAway } from '@hooks'
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Modal 내부에 들어갈 내용을 정합니다.
-   * @type ReactElement
+   * @type ReactNode
    */
-  children: ReactElement
+  children: ReactNode
   /**
    * Modal의 open/close 여부를 정합니다.
    * @type boolean | undefined
@@ -48,16 +48,18 @@ export const Modal = forwardRef(function Modal(
   }: ModalProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const topElement = useMemo(() => document.createElement('div'), [])
+  const [topElement, setTopElement] = useState<HTMLDivElement | null>(null)
   const modalRef = useClickAway<HTMLDivElement>(() => {
     onClose?.()
   })
 
   useEffect(() => {
-    document.body.append(topElement)
+    const divElement = document.createElement('div')
+    setTopElement(divElement)
+    document.body.append(divElement)
 
     return (): void => {
-      document.body.removeChild(topElement)
+      topElement && document.body.removeChild(topElement)
     }
   }, [])
 
@@ -69,18 +71,20 @@ export const Modal = forwardRef(function Modal(
     }
   }, [isOpen])
 
-  return ReactDOM.createPortal(
-    <StyledDIM isOpen={isOpen}>
-      <StyledModal
-        {...props}
-        ref={mergeRefs([modalRef, ref])}
-        height={height}
-        width={width}>
-        {children}
-      </StyledModal>
-    </StyledDIM>,
-    topElement
-  )
+  return topElement
+    ? ReactDOM.createPortal(
+        <StyledDIM isOpen={isOpen}>
+          <StyledModal
+            {...props}
+            ref={mergeRefs([modalRef, ref])}
+            height={height}
+            width={width}>
+            {children}
+          </StyledModal>
+        </StyledDIM>,
+        topElement
+      )
+    : null
 })
 
 const StyledDIM = styled.div<StyledDIMProps>`
@@ -99,7 +103,7 @@ const StyledModal = styled.div<StyledModalProps>`
   position: relative;
   overflow: scroll;
   width: ${({ width }): string => `${width}px`};
-  height: ${({ height }): string => (height ? `${height}px` : 'auto')};
+  height: ${({ height }): string => (height ? `${height}px` : '100%')};
   min-height: 68px;
   padding: 20px;
   background-color: ${({ theme }): string => theme.colors.grayScale.white};

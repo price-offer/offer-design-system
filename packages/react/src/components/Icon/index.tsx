@@ -32,11 +32,11 @@ import {
   SmileFill,
   Store,
   TriangleDown
-} from '@constants/icons'
+} from '@offer-ui/constants/icons'
 import type { ForwardedRef, SVGAttributes } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 
 export type IconType = keyof typeof ICON_TYPES
 export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {

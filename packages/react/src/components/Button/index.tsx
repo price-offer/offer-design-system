@@ -1,9 +1,9 @@
 import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import { Icon } from '@components/Icon'
-import type { IconType } from '@components/Icon'
+import { Icon } from '@offer-ui/components/Icon'
+import type { IconType } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 import type { Theme } from '@emotion/react'
 
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]

@@ -5,10 +5,10 @@ import type {
   MutableRefObject
 } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
-import type { ImageInfo, UploaderOnChangeHandler } from '@types'
+import type { ImageInfo, UploaderOnChangeHandler } from '@offer-ui/types'
 import { forwardRef } from 'react'
 import { useImageUploader } from './useImageUploader'
-import { useMediaQuery } from '@hooks'
+import { useMediaQuery } from '@offer-ui/hooks'
 
 export interface UploaderProps {
   images: ImageInfo[]

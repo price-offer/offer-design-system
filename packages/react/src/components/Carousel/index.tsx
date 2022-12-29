@@ -1,8 +1,8 @@
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
-import { Icon } from '@components/Icon'
+import { Icon } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
-import { useMediaQuery } from '@hooks'
+import { useMediaQuery } from '@offer-ui/hooks'
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.

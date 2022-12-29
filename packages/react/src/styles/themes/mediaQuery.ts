@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 type MediaQueryKeys = keyof typeof mediaQuery
 type MediaQueryValues = typeof mediaQuery[MediaQueryKeys]

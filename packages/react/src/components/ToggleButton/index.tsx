@@ -3,9 +3,9 @@ import { forwardRef, useState } from 'react'
 import type {
   IconButtonColorType,
   IconButtonProps
-} from '@components/IconButton'
-import { IconButton } from '@components/IconButton'
-import type { IconType } from '@components/Icon'
+} from '@offer-ui/components/IconButton'
+import { IconButton } from '@offer-ui/components/IconButton'
+import type { IconType } from '@offer-ui/components/Icon'
 
 type FillIconType = Extract<
   IconType,

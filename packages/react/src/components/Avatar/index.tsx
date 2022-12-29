@@ -1,10 +1,10 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
-import { colors } from '@styles/themes'
+import { colors } from '@offer-ui/styles/themes'
 import { forwardRef } from 'react'
-import { Icon } from '@components/Icon'
-import { Image } from '@components/Image'
+import { Icon } from '@offer-ui/components/Icon'
+import { Image } from '@offer-ui/components/Image'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   /** Avatar 컴포넌트 이미지의 alt 속성을 정합니다.

@@ -19,14 +19,14 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen?: boolean
   /**
    * Modal의 너비를 정합니다.
-   * @type number
+   * @type string | undefined
    */
-  width?: number
+  width?: string
   /**
    * Modal의 높이를 정합니다.
-   * @type number | undefined
+   * @type string | undefined
    */
-  height?: number
+  height?: string
   /**
    * Modal이 close될 때 실행할 함수를 정합니다.
    * @type (): void | undefined
@@ -40,8 +40,8 @@ type StyledDIMProps = StyledProps<ModalProps, 'isOpen'>
 export const Modal = forwardRef(function Modal(
   {
     children,
-    width = 400,
-    height = 0,
+    width = '400px',
+    height = 'auto',
     onClose,
     isOpen = false,
     ...props
@@ -102,10 +102,11 @@ const StyledDIM = styled.div<StyledDIMProps>`
 const StyledModal = styled.div<StyledModalProps>`
   position: relative;
   overflow: scroll;
-  width: ${({ width }): string => `${width}px`};
-  height: ${({ height }): string => (height ? `${height}px` : '100%')};
+  width: ${({ width }): string => width};
+  height: ${({ height }): string => height};
   min-height: 68px;
   padding: 20px;
+  box-sizing: border-box;
   background-color: ${({ theme }): string => theme.colors.grayScale.white};
   box-shadow: ${({ theme }): string =>
     `0px 3px 20px ${theme.colors.dim.opacity40}`};

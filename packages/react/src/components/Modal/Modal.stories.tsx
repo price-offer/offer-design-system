@@ -34,6 +34,6 @@ const Template: Story<ModalProps> = args => {
 export const Default = Template.bind({})
 Default.args = {
   children: 'Hello World!',
-  height: 300,
+  height: '300px',
   isOpen: false
 }

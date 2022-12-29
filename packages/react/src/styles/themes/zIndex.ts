@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 type ZIndexKeys = keyof typeof zIndex
 type ZIndexValues = typeof zIndex[ZIndexKeys]

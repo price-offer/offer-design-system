@@ -1,9 +1,9 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { forwardRef, useState } from 'react'
-import { IconButton } from '@components/IconButton'
+import { IconButton } from '@offer-ui/components/IconButton'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 
 type ChattingInputProps = Omit<
   MainInputProps,

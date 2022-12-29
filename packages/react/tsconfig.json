@@ -1,23 +1,23 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "include": ["src", "vite.config.ts", "*.d.ts"],
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@components": ["components"],
-      "@constants/*": ["constants/*"],
-      "@constants": ["constants"],
-      "@hooks/*": ["hooks/*"],
-      "@hooks": ["hooks"],
-      "@styles/*": ["styles/*"],
-      "@styles": ["styles"],
-      "@themes/*": ["styles/themes/*"],
-      "@themes": ["styles/themes"],
-      "@types/*": ["types/*"],
-      "@types": ["types"],
-      "@utils/*": ["utils/*"],
-      "@utils": ["utils"]
+      "@offer-ui/components/*": ["components/*"],
+      "@offer-ui/components": ["components"],
+      "@offer-ui/constants/*": ["constants/*"],
+      "@offer-ui/constants": ["constants"],
+      "@offer-ui/hooks/*": ["hooks/*"],
+      "@offer-ui/hooks": ["hooks"],
+      "@offer-ui/styles/*": ["styles/*"],
+      "@offer-ui/styles": ["styles"],
+      "@offer-ui/themes/*": ["styles/themes/*"],
+      "@offer-ui/themes": ["styles/themes"],
+      "@offer-ui/types/*": ["types/*"],
+      "@offer-ui/types": ["types"],
+      "@offer-ui/utils/*": ["utils/*"],
+      "@offer-ui/utils": ["utils"]
     }
   }
 }

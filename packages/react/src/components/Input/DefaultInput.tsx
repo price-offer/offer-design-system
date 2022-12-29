@@ -1,11 +1,11 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
-import { convertToNumber, toLocaleCurrency } from '@utils/format'
+import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import type { MainInputProps as DefaultInputProps } from './index'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
-import { Text } from '@components/Text'
-import { VALIDATE_MESSAGE } from '@constants'
+import type { StyledProps } from '@offer-ui/types'
+import { Text } from '@offer-ui/components/Text'
+import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
 type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
 type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &

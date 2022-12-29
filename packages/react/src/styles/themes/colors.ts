@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 type BackgroundColorKeys = keyof typeof colors.background
 type BackgroundColorValues = typeof colors.background[BackgroundColorKeys]

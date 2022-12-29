@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { fonts } from '@themes'
+import { fonts } from '@offer-ui/themes'
 import { Text } from './index'
 import type { TextProps } from './index'
 

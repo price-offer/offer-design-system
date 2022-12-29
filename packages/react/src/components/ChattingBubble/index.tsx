@@ -1,8 +1,8 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import { Text } from '@components/Text'
-import { useMediaQuery } from '@hooks'
+import { Text } from '@offer-ui/components/Text'
+import { useMediaQuery } from '@offer-ui/hooks'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
   /** ChattingBubble 컴포넌트의 수신 또는 발신에 대한 형태를 정합니다.

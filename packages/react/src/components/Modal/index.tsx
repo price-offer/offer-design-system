@@ -1,10 +1,10 @@
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
-import { mergeRefs } from '@utils/mergeRefs'
+import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
-import { useClickAway } from '@hooks'
+import type { StyledProps } from '@offer-ui/types'
+import { useClickAway } from '@offer-ui/hooks'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   /**

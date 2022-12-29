@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 type BorderKeys = keyof typeof border
 type BorderValues = typeof border[BorderKeys]

@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 type RadiusKeys = keyof typeof radius
 type RadiusValues = typeof radius[RadiusKeys]

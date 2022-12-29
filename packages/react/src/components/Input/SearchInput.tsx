@@ -1,10 +1,10 @@
-import { colors } from '@themes'
+import { colors } from '@offer-ui/themes'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import { Icon } from '@components/Icon'
+import { Icon } from '@offer-ui/components/Icon'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 
 type SearchInputProps = Omit<
   MainInputProps,

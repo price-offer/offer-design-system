@@ -1,11 +1,11 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
-import { Badge } from '@components/Badge'
-import { colors } from '@themes'
+import { Badge } from '@offer-ui/components/Badge'
+import { colors } from '@offer-ui/themes'
 import { forwardRef } from 'react'
-import { Icon } from '@components/Icon'
-import { Image } from '@components/Image'
+import { Icon } from '@offer-ui/components/Icon'
+import { Image } from '@offer-ui/components/Image'
 import styled from '@emotion/styled'
-import { Text } from '@components/Text'
+import { Text } from '@offer-ui/components/Text'
 import type { UploaderProps } from '../index'
 
 interface StyledProps {

@@ -1,8 +1,8 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
-import type { FontStyleKeys } from '@themes'
+import type { FontStyleKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@types'
+import type { StyledProps } from '@offer-ui/types'
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   /**

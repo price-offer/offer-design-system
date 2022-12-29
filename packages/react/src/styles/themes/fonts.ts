@@ -1,4 +1,4 @@
-import type { ThemeOption } from '@types'
+import type { ThemeOption } from '@offer-ui/types'
 
 export type FontStyleKeys = keyof typeof fonts
 type FontStyleValues = typeof fonts[FontStyleKeys]

@@ -1,8 +1,8 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
-import type { Colors } from '@themes/colors'
+import type { Colors } from '@offer-ui/themes/colors'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import { Text } from '@components/Text'
+import { Text } from '@offer-ui/components/Text'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {

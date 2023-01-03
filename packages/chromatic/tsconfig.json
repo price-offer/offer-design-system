@@ -1,4 +1,3 @@
 {
   "extends": "../react/tsconfig.json",
-  "include": ["../react/src", "vite.config.ts", "*.d.ts"]
 }

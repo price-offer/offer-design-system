@@ -93,10 +93,10 @@ const applyButtonSizeStyle: ApplyButtonSizeStyle = (theme, styleType, size) => {
 
   switch (size) {
     case 'large':
-      return `width: 370px;
+      return `width: 100%;
               height: 64px;`
     case 'medium':
-      return `width: 370px;
+      return `width: 100%;
               height: 48px;
               border-radius: ${styleType.indexOf('outline') >= 0 && round100};`
     case 'small':

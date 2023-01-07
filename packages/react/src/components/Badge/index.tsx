@@ -1,4 +1,4 @@
-import type { ForwardedRef, HTMLAttributes } from 'react'
+import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import type { Colors } from '@offer-ui/themes/colors'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
@@ -12,9 +12,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   colorType: BadgeColorType
   /**
    * Badge 내부에 들어갈 내용을 정합니다.
-   * @type string
+   * @type ReactNode
    */
-  children: string
+  children: Exclude<ReactNode, 'undefined' | 'null'>
 }
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>

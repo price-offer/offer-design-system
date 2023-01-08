@@ -1,4 +1,4 @@
-import type { ForwardedRef, HTMLAttributes } from 'react'
+import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import type { FontStyleKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
@@ -19,7 +19,7 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
    * Text로 작성할 문자열을 정합니다.
    * @type string
    */
-  children: string
+  children: Exclude<ReactNode, 'undefined' | 'null'>
   /**
    * Text의 색상을 정합니다.
    * @type string | undefined

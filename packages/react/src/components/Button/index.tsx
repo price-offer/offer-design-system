@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
+import type { ButtonHTMLAttributes, ForwardedRef, ReactNode } from 'react'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
@@ -28,7 +28,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * Button 내부에 작성할 문자열을 정합니다.
    * @type string
    */
-  children: string
+  children: Exclude<ReactNode, 'undefined' | 'null'>
 }
 type StyledButtonProps = StyledProps<ButtonProps, 'styleType' | 'size'>
 type StyledIconProps = StyledProps<ButtonProps, 'styleType'>

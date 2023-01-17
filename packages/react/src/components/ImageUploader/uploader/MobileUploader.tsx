@@ -73,7 +73,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `
     display: ${isShowListType ? 'flex' : 'inline-flex'};
     padding: 0px;
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.gsWhite};
     justify-content: ${isShowListType ? 'flex-start' : 'center'};
     user-select: none;
   `}
@@ -83,12 +83,12 @@ const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
     margin-top: 0;
     font-size: 12px;
     line-height: 16px;
-    color: ${isMaximum ? theme.colors.primary : theme.colors.gray70};
+    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.gsGray70};
   `}
 `
 const StyledTrigger = styled.div`
   display: flex;
-  background-color: ${({ theme }): string => theme.colors.gray05};
+  background-color: ${({ theme }): string => theme.colors.gsGray05};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -110,10 +110,10 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.opacity50};
+    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
   }
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }): string => theme.colors.opacity50};
+  scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;
@@ -131,6 +131,6 @@ const StyledRemoveButtonWrapper = styled.div`
     cursor: pointer;
     display: inline-flex;
     position: absolute;
-    background-color: ${theme.colors.black};
+    background-color: ${theme.colors.gsBlack};
   `}
 `

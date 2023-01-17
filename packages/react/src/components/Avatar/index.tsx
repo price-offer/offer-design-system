@@ -71,6 +71,6 @@ const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   ${({ theme, size }): string => `
     width: ${AVATAR_WRAPPER_SIZE[size]};
     height: ${AVATAR_WRAPPER_SIZE[size]};
-    background-color: ${theme.colors.grayScale.gray05};
+    background-color: ${theme.colors.gsGray05};
   `}
 `

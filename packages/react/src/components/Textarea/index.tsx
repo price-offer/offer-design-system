@@ -74,7 +74,7 @@ export const TextArea = forwardRef(function TextArea(
 
 const StyledLabel = styled.label`
   display: block;
-  color: ${({ theme }): string => theme.colors.grayScale.gray70};
+  color: ${({ theme }): string => theme.colors.gsGray70};
   margin-bottom: 8px;
 `
 const StyledTextArea = styled.textarea<StyledTextAreaProps>`
@@ -86,26 +86,26 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   max-width: 100%;
   padding: 10px 12px;
   border: none;
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
+  color: ${({ theme }): string => theme.colors.gsGray90};
   background-color: ${({ isFilled, theme }): string =>
-    isFilled ? theme.colors.grayScale.gray05 : theme.colors.grayScale.white};
+    isFilled ? theme.colors.gsGray05 : theme.colors.gsWhite};
   ${({ theme }): string => theme.fonts.body02M};
   ::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale.gray50};
+    color: ${({ theme }): string => theme.colors.gsGray50};
     ${({ theme }): string => theme.fonts.body02M};
   }
   :hover {
     background-color: ${({ isFilled, theme }): string =>
-      isFilled ? theme.colors.background.gray04 : ''};
+      isFilled ? theme.colors.bgGray04 : ''};
   }
   :focus {
     background-color: ${({ isFilled, theme }): string =>
-      isFilled ? theme.colors.background.gray04 : ''};
+      isFilled ? theme.colors.bgGray04 : ''};
   }
 `
 
 const StyledGuideMessage = styled(Text)`
   display: block;
   margin-top: 8px;
-  color: ${({ theme }): string => theme.colors.grayScale.gray50};
+  color: ${({ theme }): string => theme.colors.gsGray50};
 `

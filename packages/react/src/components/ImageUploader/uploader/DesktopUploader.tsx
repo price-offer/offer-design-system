@@ -82,7 +82,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `
     display: flex;
     padding: 12px 12px 5px 12px;
-    background-color: ${theme.colors.grayScale.gray05};
+    background-color: ${theme.colors.gsGray05};
     justify-content: ${isShowListType ? 'flex-start' : 'center'};
     user-select: none;
   `}
@@ -121,9 +121,7 @@ const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
     margin-top: 4px;
     font-size: 14px;
     line-height: 20px;
-    color: ${
-      isMaximum ? theme.colors.brand.primary : theme.colors.grayScale.gray70
-    };
+    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.gsGray70};
   `}
 `
 const StyledImageList = styled.div`
@@ -137,10 +135,10 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.dim.opacity50};
+    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
   }
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
+  scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;
@@ -158,6 +156,6 @@ const StyledRemoveButtonWrapper = styled.div`
     cursor: pointer;
     display: inline-flex;
     position: absolute;
-    background-color: ${theme.colors.grayScale.black};
+    background-color: ${theme.colors.gsBlack};
   `}
 `

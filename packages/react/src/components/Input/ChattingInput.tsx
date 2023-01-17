@@ -36,7 +36,7 @@ export const ChattingInput = forwardRef(function ChattingInput(
         {...props}
       />
       <StyledIconButton
-        colorType={isDisabled ? 'primaryWeak' : 'primary'}
+        colorType={isDisabled ? 'brandPrimaryWeak' : 'brandPrimary'}
         disabled={isDisabled}
         icon="arrowUp"
         isSmall={isSmall}
@@ -56,20 +56,20 @@ const StyledInput = styled.input<StyledInputProps>`
   border: none;
 
   ${({ theme, isSmall }): string => `
-    background-color: ${theme.colors.background.gray02};
+    background-color: ${theme.colors.bgGray02};
     border-radius: ${theme.radius.round16};
      ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
     &::placeholder {
-      color: ${theme.colors.grayScale.gray50};
+      color: ${theme.colors.gsGray50};
     }
 
     &:hover {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
 
     &:focus {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
   `}
 

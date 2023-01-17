@@ -10,3 +10,7 @@ export const convertToNumber = (value: string): number => {
 
   return Number(numberValue)
 }
+
+export const convertFirstAlphabetToUppercase = (value: string): string => {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}

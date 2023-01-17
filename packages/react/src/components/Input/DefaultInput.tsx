@@ -1,5 +1,6 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
+import type { ColorKeys } from '@offer-ui/themes'
 import type { MainInputProps as DefaultInputProps } from './index'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
@@ -73,7 +74,7 @@ const StyledLabel = styled.label`
   flex-direction: column;
   position: relative;
   ${({ theme }): string => `
-    color: ${theme.colors.grayScale.gray70};
+    color: ${theme.colors.gsGray70};
   `}
 `
 const StyledInput = styled.input<StyledInputProps>`
@@ -93,16 +94,16 @@ const StyledInput = styled.input<StyledInputProps>`
     `
   }}
   ${({ theme, isSmall }): string => `
-    background-color: ${theme.colors.background.gray02};
+    background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
     ::placeholder {
-      color: ${theme.colors.grayScale.gray50};
+      color: ${theme.colors.gsGray50};
     }
     &:hover {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
     &:focus {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
   `}
 `
@@ -111,13 +112,22 @@ const StyledPriceUnit = styled(Text)<StyledPriceUnitProps>`
   position: absolute;
   right: 12px;
   ${({ isSmall, theme }): string => `
-    color:${theme.colors.grayScale.gray90};
+    color:${theme.colors.gsGray90};
     bottom: ${isSmall ? '19px' : '25px'};
   `}
 `
 const StyledStatus = styled(Text)<StyledStatusProps>`
-  color: ${({ theme, status }): string => {
-    const isGray = status === 'error' || status === 'success'
-    return isGray ? theme.colors.action[status] : theme.colors.grayScale.gray50
-  }};
+  color: ${({ theme, status }): string =>
+    theme.colors[applyGuideMessageColor({ status })]};
 `
+
+const applyGuideMessageColor = ({ status }: StyledStatusProps): ColorKeys => {
+  switch (status) {
+    case 'success':
+      return 'actSuccess'
+    case 'error':
+      return 'actError'
+    default:
+      return 'gsGray50'
+  }
+}

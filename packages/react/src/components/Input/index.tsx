@@ -49,6 +49,11 @@ export const INPUT_STYLE_KEYS = {
   EDIT: 'edit',
   SEARCH: 'search'
 } as const
+export const INPUT_GUIDE_MESSAGE_STYLE = {
+  DEFAULT: 'gsGray',
+  SUCCESS: 'actSuccess',
+  ERROR: 'actionError'
+} as const
 
 export const Input = forwardRef(function Input(
   { styleType = 'default', inputSize = 'small', ...props }: InputProps,

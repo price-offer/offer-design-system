@@ -31,19 +31,19 @@ const StyledInput = styled.input<StyledInputProps>`
   border: none;
 
   ${({ isSmall, theme }): string => `
-    background-color: ${theme.colors.gray02};
+    background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
     ::placeholder {
-        color: ${theme.colors.gray50};
+        color: ${theme.colors.gsGray50};
     }
 
     &:hover {
-      background-color: ${theme.colors.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
 
     &:focus {
-      background-color: ${theme.colors.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
   `}
 

@@ -11,10 +11,10 @@ const Template: Story<ToggleButtonProps> = args => <ToggleButton {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  colorType: 'gray30',
+  colorType: 'gsGray30',
   icon: 'heart',
   shape: 'rounded',
   size: 'medium',
   styleType: 'fill',
-  toggleColorType: 'primary'
+  toggleColorType: 'brandPrimary'
 }

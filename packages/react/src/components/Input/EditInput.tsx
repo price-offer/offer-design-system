@@ -1,5 +1,6 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
+import type { ColorKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
@@ -8,7 +9,6 @@ import { Text } from '@offer-ui/components'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
 type EditInputProps = Omit<MainInputProps, 'isPrice'>
-
 interface StyledInputProps {
   isSmall: boolean
 }
@@ -65,7 +65,7 @@ const StyledInputLabel = styled.label`
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  color: ${({ theme }): string => theme.colors.grayScale.gray70};
+  color: ${({ theme }): string => theme.colors.gsGray70};
 `
 
 const StyledInput = styled.input<StyledInputProps>`
@@ -73,10 +73,10 @@ const StyledInput = styled.input<StyledInputProps>`
   margin-bottom: 8px;
   border: none;
   ${({ isSmall, theme }): string => `
-    border-bottom: 1px solid ${theme.colors.grayScale.black};
+    border-bottom: 1px solid ${theme.colors.gsBlack};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
     ::placeholder {
-      color: ${theme.colors.grayScale.gray50};
+      color: ${theme.colors.gsGray50};
     }
   `}
   ${({ isSmall }): string => {
@@ -97,13 +97,25 @@ const StyledPriceUnit = styled(Text)<StyledInputProps>`
   right: 0;
   ${({ theme, isSmall }): string => `
     bottom: ${isSmall ? '14px' : '16px'};
-    color: ${theme.colors.grayScale.gray90};
+    color: ${theme.colors.gsGray90};
   `}
 `
 
 const StyledInputGuideMessage = styled(Text)<StyledGuideMessageProps>`
   color: ${({ theme, status }): string => {
-    const isGray = status === 'error' || status === 'success'
-    return isGray ? theme.colors.grayScale.gray50 : theme.colors.action[status]
+    return theme.colors[applyGuideMessageColor({ status })]
   }};
 `
+
+const applyGuideMessageColor = ({
+  status
+}: StyledGuideMessageProps): ColorKeys => {
+  switch (status) {
+    case 'success':
+      return 'actSuccess'
+    case 'error':
+      return 'actError'
+    default:
+      return 'gsGray50'
+  }
+}

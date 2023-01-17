@@ -96,8 +96,8 @@ const StyledDIM = styled.div<StyledDIMProps>`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: ${({ theme }): string => theme.zIndex.modal};
-  background-color: ${({ theme }): string => theme.colors.dim.opacity50};
+  z-index: ${({ theme }): number => theme.zIndex.modal};
+  background-color: ${({ theme }): string => theme.colors.dimOpacity50};
 `
 const StyledModal = styled.div<StyledModalProps>`
   position: relative;
@@ -107,7 +107,7 @@ const StyledModal = styled.div<StyledModalProps>`
   min-height: 68px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: ${({ theme }): string => theme.colors.grayScale.white};
+  background-color: ${({ theme }): string => theme.colors.gsWhite};
   box-shadow: ${({ theme }): string =>
-    `0px 3px 20px ${theme.colors.dim.opacity40}`};
+    `0px 3px 20px ${theme.colors.dimOpacity40}`};
 `

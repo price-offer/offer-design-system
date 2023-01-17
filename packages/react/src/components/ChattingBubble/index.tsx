@@ -57,12 +57,12 @@ const StyledBubble = styled.p<StyledBubbleProps>`
   ${({ theme, isSend }): string => {
     if (isSend) {
       return `
-          background-color: ${theme.colors.brand.primary};
+          background-color: ${theme.colors.brandPrimary};
           border-radius: 16px 0px 16px 16px;
           `
     }
     return `
-       background-color: ${theme.colors.grayScale.white};
+       background-color: ${theme.colors.gsWhite};
        border-radius: 0px 16px 16px 16px;
     `
   }}
@@ -74,5 +74,5 @@ const StyledBubble = styled.p<StyledBubbleProps>`
 
 const StyledChattingMessage = styled(Text)<StyledBubbleProps>`
   color: ${({ theme, isSend }): string =>
-    isSend ? theme.colors.grayScale.white : theme.colors.grayScale.gray90};
+    isSend ? theme.colors.gsWhite : theme.colors.gsGray90};
 `

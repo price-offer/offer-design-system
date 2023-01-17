@@ -266,7 +266,7 @@ const StyledRightArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
-  background-color: ${({ theme }): string => theme.colors.background.white};
+  background-color: ${({ theme }): string => theme.colors.gsWhite};
   cursor: pointer;
 `
 
@@ -274,7 +274,7 @@ const StyledLeftArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
-  background-color: ${({ theme }): string => theme.colors.background.white};
+  background-color: ${({ theme }): string => theme.colors.gsWhite};
   cursor: pointer;
 `
 
@@ -294,7 +294,7 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
 const StyledIndicator = styled.div`
   width: 10px;
   height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale.gray10};
+  background-color: ${({ theme }): string => theme.colors.gsGray10};
   border-radius: 100px;
   height: 10px;
   margin: 0 1px;
@@ -302,7 +302,7 @@ const StyledIndicator = styled.div`
   ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
-    background-color: ${({ theme }): string => theme.colors.background.white};
+    background-color: ${({ theme }): string => theme.colors.gsWhite};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   }
 `
@@ -310,7 +310,7 @@ const StyledIndicator = styled.div`
 const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   width: 10px;
   height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale.gray90};
+  background-color: ${({ theme }): string => theme.colors.gsGray90};
   position: absolute;
   left: 0;
   top: 50%;
@@ -323,7 +323,7 @@ const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
-    background-color: ${({ theme }): string => theme.colors.background.white};
+    background-color: ${({ theme }): string => theme.colors.gsWhite};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     transform: ${({ imageIndex }): string =>
       `translate(${imageIndex * 15}px,-50%)`};

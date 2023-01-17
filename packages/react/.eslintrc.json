@@ -26,7 +26,6 @@
     "func-style": ["error", "expression"],
     "no-console": "error",
     "no-empty": "error",
-    "sort-keys": ["error", "asc"],
     "no-redeclare": "off",
     "react/button-has-type": ["error"],
     "react/jsx-sort-props": [
@@ -38,7 +37,7 @@
     ],
     "react/jsx-pascal-case": ["error"],
     "react/react-in-jsx-scope": "off",
-    "react/prop-types":"off",
+    "react/prop-types": "off",
     "react/self-closing-comp": [
       "error",
       {

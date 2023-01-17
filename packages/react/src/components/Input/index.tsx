@@ -50,7 +50,7 @@ export const INPUT_STYLE_KEYS = {
   SEARCH: 'search'
 } as const
 export const INPUT_GUIDE_MESSAGE_STYLE = {
-  DEFAULT: 'gsGray',
+  DEFAULT: 'grayScale',
   SUCCESS: 'actSuccess',
   ERROR: 'actionError'
 } as const

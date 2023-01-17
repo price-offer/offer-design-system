@@ -71,7 +71,7 @@ const StyledInputWrapper = styled.label`
   margin-bottom: 8px;
   ${({ theme }): string => theme.fonts.body02R};
 
-  color: ${({ theme }): string => theme.colors.gsGray90};
+  color: ${({ theme }): string => theme.colors.grayScale90};
   &.vertical {
     margin-bottom: 20px;
   }
@@ -92,7 +92,7 @@ const StyledInputWrapper = styled.label`
     width: 10px;
     height: 10px;
     border-radius: 100px;
-    background: ${({ theme }): string => theme.colors.gsWhite};
+    background: ${({ theme }): string => theme.colors.white};
   }
 `
 
@@ -109,8 +109,8 @@ const StyledCheckMark = styled.span`
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: ${({ theme }): string => theme.colors.gsWhite};
-  border: solid ${({ theme }): string => theme.colors.gsGray10};
+  background-color: ${({ theme }): string => theme.colors.white};
+  border: solid ${({ theme }): string => theme.colors.grayScale10};
   border-radius: 50%;
   :after {
     content: '';

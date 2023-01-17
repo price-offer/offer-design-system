@@ -35,8 +35,8 @@ const applyColorScheme: ApplyColorScheme = (colorScheme, colors) => {
   switch (colorScheme) {
     case 'gray':
       return `
-        color: ${colors.gsGray50};
-        background: ${colors.gsGray10};
+        color: ${colors.grayScale50};
+        background: ${colors.grayScale10};
       `
     case 'orange':
       return `

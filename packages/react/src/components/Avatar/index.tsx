@@ -56,7 +56,11 @@ export const Avatar = forwardRef(function Avatar(
       )}
       {isBlank && (
         <StyledBlankAvatarWrapper ref={ref} size={size} {...props}>
-          <Icon color="gsGray20" size={AVATAR_IMAGE_SIZE[size]} type="avatar" />
+          <Icon
+            color="grayScale20"
+            size={AVATAR_IMAGE_SIZE[size]}
+            type="avatar"
+          />
         </StyledBlankAvatarWrapper>
       )}
     </>
@@ -71,6 +75,6 @@ const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   ${({ theme, size }): string => `
     width: ${AVATAR_WRAPPER_SIZE[size]};
     height: ${AVATAR_WRAPPER_SIZE[size]};
-    background-color: ${theme.colors.gsGray05};
+    background-color: ${theme.colors.grayScale05};
   `}
 `

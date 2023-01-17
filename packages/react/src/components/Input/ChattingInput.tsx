@@ -61,7 +61,7 @@ const StyledInput = styled.input<StyledInputProps>`
      ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
     &::placeholder {
-      color: ${theme.colors.gsGray50};
+      color: ${theme.colors.grayScale50};
     }
 
     &:hover {

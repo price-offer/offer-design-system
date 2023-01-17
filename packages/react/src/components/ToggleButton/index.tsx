@@ -54,7 +54,7 @@ export const ToggleButton = forwardRef(function ToggleButton(
   {
     onClick,
     styleType = 'stroke',
-    colorType = 'gsBlack',
+    colorType = 'black',
     toggleColorType = colorType,
     icon,
     ...props

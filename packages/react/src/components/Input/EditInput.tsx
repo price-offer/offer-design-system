@@ -65,7 +65,7 @@ const StyledInputLabel = styled.label`
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  color: ${({ theme }): string => theme.colors.gsGray70};
+  color: ${({ theme }): string => theme.colors.grayScale70};
 `
 
 const StyledInput = styled.input<StyledInputProps>`
@@ -73,10 +73,10 @@ const StyledInput = styled.input<StyledInputProps>`
   margin-bottom: 8px;
   border: none;
   ${({ isSmall, theme }): string => `
-    border-bottom: 1px solid ${theme.colors.gsBlack};
+    border-bottom: 1px solid ${theme.colors.black};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
     ::placeholder {
-      color: ${theme.colors.gsGray50};
+      color: ${theme.colors.grayScale50};
     }
   `}
   ${({ isSmall }): string => {
@@ -97,7 +97,7 @@ const StyledPriceUnit = styled(Text)<StyledInputProps>`
   right: 0;
   ${({ theme, isSmall }): string => `
     bottom: ${isSmall ? '14px' : '16px'};
-    color: ${theme.colors.gsGray90};
+    color: ${theme.colors.grayScale90};
   `}
 `
 
@@ -116,6 +116,6 @@ const applyGuideMessageColor = ({
     case 'error':
       return 'actError'
     default:
-      return 'gsGray50'
+      return 'grayScale50'
   }
 }

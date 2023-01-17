@@ -13,7 +13,6 @@ export const colors = {
   bgGray04: '#EDEEEF',
   bgPrimary: '#FF6E59',
   bgPrimaryWeak: '#FFF0EE',
-  bgWhite: '#FFFFFF',
 
   // brand
   brandPrimary: '#FF6E59',
@@ -28,13 +27,13 @@ export const colors = {
   dimOpacity70: '#000000B2',
 
   //grayScale
-  gsBlack: '#000000',
-  gsGray05: '#F6F6F7',
-  gsGray10: '#E8E8EA',
-  gsGray20: '#D1D3D6',
-  gsGray30: '#C6C8CC',
-  gsGray50: '#929399',
-  gsGray70: '#65646A',
-  gsGray90: '#2F2E36',
-  gsWhite: '#FFFFFF'
+  white: '#FFFFFF',
+  black: '#000000',
+  grayScale05: '#F6F6F7',
+  grayScale10: '#E8E8EA',
+  grayScale20: '#D1D3D6',
+  grayScale30: '#C6C8CC',
+  grayScale50: '#929399',
+  grayScale70: '#65646A',
+  grayScale90: '#2F2E36'
 } as const

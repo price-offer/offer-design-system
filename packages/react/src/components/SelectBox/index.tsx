@@ -82,7 +82,7 @@ export const SelectBox = ({
   const getIconColor = (): IconProps['color'] => {
     const isDark = colorType === 'dark'
 
-    return isDark ? 'gsWhite' : 'gsGray90'
+    return isDark ? 'white' : 'grayScale90'
   }
 
   return (
@@ -156,8 +156,8 @@ const StyledOptionList = styled.ul`
   min-width: 120px;
   border-radius: 4px;
   ${({ theme }): string => `
-    background-color: ${theme.colors.gsWhite};
-    border: 1px solid ${theme.colors.gsGray10};
+    background-color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.grayScale10};
     ${theme.mediaQuery.desktop} {
       font-size: 12px;
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
@@ -207,7 +207,7 @@ const applySize: ApplySize = (size, theme) => {
   }
 }
 const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
-  const { gsBlack, gsGray20, gsWhite } = theme.colors
+  const { black, grayScale20, white } = theme.colors
 
   switch (colorType) {
     case 'none':
@@ -217,26 +217,26 @@ const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
       `
     case 'light':
       return `
-        background-color: ${gsWhite};
-        border: 1px solid ${gsGray20};
+        background-color: ${white};
+        border: 1px solid ${grayScale20};
       `
     case 'dark':
       return `
-        background-color: ${gsBlack};
+        background-color: ${black};
         border: none;
       `
   }
 }
 const getFontColor: GetFontColor = ({ isEmpty, colorType, size, theme }) => {
-  const { gsGray50, gsGray90, gsBlack, gsWhite } = theme.colors
+  const { grayScale50, grayScale90, black, white } = theme.colors
   const isDark = colorType === 'dark'
-  const smallPrimary = isDark ? gsWhite : gsGray90
-  const mediumPrimary = isDark ? gsWhite : gsBlack
+  const smallPrimary = isDark ? white : grayScale90
+  const mediumPrimary = isDark ? white : black
 
   switch (size) {
     case 'small':
-      return `${isEmpty ? gsGray50 : smallPrimary}`
+      return `${isEmpty ? grayScale50 : smallPrimary}`
     case 'medium':
-      return `${isEmpty ? gsGray50 : mediumPrimary}`
+      return `${isEmpty ? grayScale50 : mediumPrimary}`
   }
 }

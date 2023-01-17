@@ -8,9 +8,9 @@ import type { StyledProps } from '@offer-ui/types'
 
 export type IconButtonColorType = Extract<
   ColorKeys,
-  | 'gsWhite'
-  | 'gsBlack'
-  | 'gsGray30'
+  | 'white'
+  | 'black'
+  | 'grayScale30'
   | 'brandPrimary'
   | 'brandPrimaryWeak'
   | 'brandSub'
@@ -73,7 +73,7 @@ const ICON_BUTTON_SIZE = {
 
 export const IconButton = forwardRef(function IconButton(
   {
-    colorType = 'gsBlack',
+    colorType = 'black',
     size = 'small',
     shape = 'ghost',
     hasShadow = false,
@@ -127,15 +127,15 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
 
 const StyledIcon = styled(Icon)<StyledIconProps>`
   color: ${({ theme, colorType, shape }): string => {
-    const isBlack = shape !== 'ghost' && colorType === 'gsWhite'
+    const isBlack = shape !== 'ghost' && colorType === 'white'
     const isGhost = shape !== 'ghost'
 
     if (isBlack) {
-      return theme.colors.gsBlack
+      return theme.colors.black
     }
 
     if (isGhost) {
-      return theme.colors.gsWhite
+      return theme.colors.white
     }
 
     return theme.colors[colorType]

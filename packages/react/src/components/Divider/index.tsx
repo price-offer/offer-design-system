@@ -40,9 +40,9 @@ const StyledDivider = styled.hr<DividerProps>`
 
     switch (size) {
       case 'bold':
-        return `${border.bold} solid ${colors.gsGray05}`
+        return `${border.bold} solid ${colors.grayScale05}`
       case 'regular':
-        return `${border.regular} solid ${colors.gsGray10}`
+        return `${border.regular} solid ${colors.grayScale10}`
       default:
         return 'none'
     }

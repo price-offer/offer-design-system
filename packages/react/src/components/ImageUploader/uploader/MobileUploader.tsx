@@ -37,7 +37,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
   return (
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <Icon color="gsGray30" size={40} type="picture" />
+        <Icon color="grayScale30" size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
           {imgTotal}
         </StyledImageTotal>
@@ -60,7 +60,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color="gsWhite" size={16} type="close" />
+              <Icon color="white" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}
@@ -73,7 +73,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `
     display: ${isShowListType ? 'flex' : 'inline-flex'};
     padding: 0px;
-    background-color: ${theme.colors.gsWhite};
+    background-color: ${theme.colors.white};
     justify-content: ${isShowListType ? 'flex-start' : 'center'};
     user-select: none;
   `}
@@ -83,12 +83,12 @@ const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
     margin-top: 0;
     font-size: 12px;
     line-height: 16px;
-    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.gsGray70};
+    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.grayScale70};
   `}
 `
 const StyledTrigger = styled.div`
   display: flex;
-  background-color: ${({ theme }): string => theme.colors.gsGray05};
+  background-color: ${({ theme }): string => theme.colors.grayScale05};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -131,6 +131,6 @@ const StyledRemoveButtonWrapper = styled.div`
     cursor: pointer;
     display: inline-flex;
     position: absolute;
-    background-color: ${theme.colors.gsBlack};
+    background-color: ${theme.colors.black};
   `}
 `

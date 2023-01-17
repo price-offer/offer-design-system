@@ -17,7 +17,7 @@ export const SearchInput = forwardRef(function SearchInput(
 ) {
   return (
     <StyledInputForm>
-      <StyledIcon color={'gsGray50'} isSmall={isSmall} type="search" />
+      <StyledIcon color={'grayScale50'} isSmall={isSmall} type="search" />
       <StyledInput ref={ref} isSmall={isSmall} {...props} />
     </StyledInputForm>
   )
@@ -35,7 +35,7 @@ const StyledInput = styled.input<StyledInputProps>`
     ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
     ::placeholder {
-        color: ${theme.colors.gsGray50};
+        color: ${theme.colors.grayScale50};
     }
 
     &:hover {

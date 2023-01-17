@@ -182,7 +182,7 @@ export const ImageModal = forwardRef(function ImageModal(
           <StyledGradient direction="top" />
           <StyledGradient direction="bottom" />
           <StyledCloseIcon
-            colorType="gsGray30"
+            colorType="grayScale30"
             icon="close"
             size="medium"
             onClick={onClose}
@@ -334,14 +334,14 @@ const StyledIndicator = styled.div`
   cursor: pointer;
 
   ${({ theme }): string => `
-      background-color: ${theme.colors.gsGray10};
+      background-color: ${theme.colors.grayScale10};
       border-radius: ${theme.radius.round100};
       box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
   `}
 
   &.selected {
     transition: 0.6s ease-out;
-    background-color: ${({ theme }): string => theme.colors.gsWhite};
+    background-color: ${({ theme }): string => theme.colors.white};
     opacity: 1;
   }
 `

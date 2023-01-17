@@ -11,7 +11,7 @@ const globalStyle = css`
   body {
     font-family: Pretendard;
     font-weight: normal;
-    color: ${colors.gsGray90};
+    color: ${colors.grayScale90};
   }
 `
 

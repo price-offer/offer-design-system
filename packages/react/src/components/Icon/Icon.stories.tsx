@@ -19,7 +19,7 @@ const Template: Story<IconProps> = args => <Icon {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  color: 'gsGray20',
+  color: 'grayScale20',
   size: 24,
   type: 'box'
 }

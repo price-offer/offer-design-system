@@ -74,7 +74,7 @@ const StyledLabel = styled.label`
   flex-direction: column;
   position: relative;
   ${({ theme }): string => `
-    color: ${theme.colors.gsGray70};
+    color: ${theme.colors.grayScale70};
   `}
 `
 const StyledInput = styled.input<StyledInputProps>`
@@ -97,7 +97,7 @@ const StyledInput = styled.input<StyledInputProps>`
     background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
     ::placeholder {
-      color: ${theme.colors.gsGray50};
+      color: ${theme.colors.grayScale50};
     }
     &:hover {
       background-color: ${theme.colors.bgGray04};
@@ -112,7 +112,7 @@ const StyledPriceUnit = styled(Text)<StyledPriceUnitProps>`
   position: absolute;
   right: 12px;
   ${({ isSmall, theme }): string => `
-    color:${theme.colors.gsGray90};
+    color:${theme.colors.grayScale90};
     bottom: ${isSmall ? '19px' : '25px'};
   `}
 `
@@ -128,6 +128,6 @@ const applyGuideMessageColor = ({ status }: StyledStatusProps): ColorKeys => {
     case 'error':
       return 'actError'
     default:
-      return 'gsGray50'
+      return 'grayScale50'
   }
 }

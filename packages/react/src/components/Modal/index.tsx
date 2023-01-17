@@ -107,7 +107,7 @@ const StyledModal = styled.div<StyledModalProps>`
   min-height: 68px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: ${({ theme }): string => theme.colors.gsWhite};
+  background-color: ${({ theme }): string => theme.colors.white};
   box-shadow: ${({ theme }): string =>
     `0px 3px 20px ${theme.colors.dimOpacity40}`};
 `

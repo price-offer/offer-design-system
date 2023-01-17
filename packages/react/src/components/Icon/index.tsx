@@ -96,7 +96,7 @@ export const ICON_TYPES = {
 } as const
 
 export const Icon = forwardRef(function Icon(
-  { type, size = 24, color = 'gsBlack', ...props }: IconProps,
+  { type, size = 24, color = 'black', ...props }: IconProps,
   ref: ForwardedRef<SVGSVGElement>
 ) {
   const IconSvg = ICON_TYPES[type]

@@ -62,7 +62,7 @@ const StyledBubble = styled.p<StyledBubbleProps>`
           `
     }
     return `
-       background-color: ${theme.colors.gsWhite};
+       background-color: ${theme.colors.white};
        border-radius: 0px 16px 16px 16px;
     `
   }}
@@ -74,5 +74,5 @@ const StyledBubble = styled.p<StyledBubbleProps>`
 
 const StyledChattingMessage = styled(Text)<StyledBubbleProps>`
   color: ${({ theme, isSend }): string =>
-    isSend ? theme.colors.gsWhite : theme.colors.gsGray90};
+    isSend ? theme.colors.white : theme.colors.grayScale90};
 `

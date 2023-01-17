@@ -1,9 +1,5 @@
-import type { ThemeOption } from '@offer-ui/types'
-
-export type FontStyleKeys = keyof typeof fonts
-type FontStyleValues = typeof fonts[FontStyleKeys]
-
-export type Fonts = ThemeOption<FontStyleKeys, FontStyleValues>
+export type Fonts = typeof fonts
+export type FontKeys = keyof typeof fonts
 
 export const fonts = {
   body01B:

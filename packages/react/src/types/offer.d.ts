@@ -20,5 +20,4 @@ export declare type UploaderOnChangeHandler = (
 ) => void
 
 /** Theme  */
-export declare type ThemeOption<T, K> = { [key in T]: K }
 export declare type StyledProps<T, K extends keyof T> = Required<Pick<T, K>>

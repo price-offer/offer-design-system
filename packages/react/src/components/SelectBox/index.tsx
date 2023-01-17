@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
-import { colors } from '@offer-ui/themes'
 import { Icon } from '@offer-ui/components/Icon'
+import type { IconProps } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
 import type { Theme } from '@emotion/react'
@@ -79,11 +79,10 @@ export const SelectBox = ({
     setIsOpen(false)
   }
 
-  const getIconColor = (): string => {
-    const { gray90, white } = colors.grayScale
+  const getIconColor = (): IconProps['color'] => {
     const isDark = colorType === 'dark'
 
-    return isDark ? white : gray90
+    return isDark ? 'white' : 'gray90'
   }
 
   return (

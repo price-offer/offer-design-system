@@ -1,7 +1,6 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { Badge } from '@offer-ui/components/Badge'
 import { Button } from '@offer-ui/components/Button'
-import { colors } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
@@ -40,7 +39,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
-          <Icon color={colors.grayScale.gray30} size={40} type="picture" />
+          <Icon color="gray30" size={40} type="picture" />
           <StyledDescription>
             <Text styleType="body01B" tag="p">
               상품 이미지 추가
@@ -70,7 +69,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color={colors.grayScale.white} size={16} type="close" />
+              <Icon color="white" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

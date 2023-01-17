@@ -34,6 +34,7 @@ import {
   TriangleDown
 } from '@offer-ui/constants/icons'
 import type { ForwardedRef, SVGAttributes } from 'react'
+import type { ColorKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
@@ -47,9 +48,9 @@ export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {
   size?: number
   /**
    * Icon의 색상을 정합니다.
-   * @type string | undefined
+   * @type ColorKeys | undefined
    */
-  color?: string
+  color?: ColorKeys
   /**
    * Icon의 타입을 정합니다.
    * @type IconType
@@ -109,5 +110,5 @@ export const Icon = forwardRef(function Icon(
 
 const StyledIconWrapper = styled.i<StyledIconWrapperProps>`
   display: flex;
-  color: ${({ color }): string => color};
+  color: ${({ theme, color }): string => theme.colors[color]};
 `

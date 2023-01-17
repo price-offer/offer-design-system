@@ -39,7 +39,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
-          <Icon color="gray30" size={40} type="picture" />
+          <Icon color="gsGray30" size={40} type="picture" />
           <StyledDescription>
             <Text styleType="body01B" tag="p">
               상품 이미지 추가
@@ -69,7 +69,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color="white" size={16} type="close" />
+              <Icon color="gsWhite" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

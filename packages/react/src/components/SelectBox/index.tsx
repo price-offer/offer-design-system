@@ -82,7 +82,7 @@ export const SelectBox = ({
   const getIconColor = (): IconProps['color'] => {
     const isDark = colorType === 'dark'
 
-    return isDark ? 'white' : 'gray90'
+    return isDark ? 'gsWhite' : 'gsGray90'
   }
 
   return (

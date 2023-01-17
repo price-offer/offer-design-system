@@ -17,7 +17,7 @@ export const SearchInput = forwardRef(function SearchInput(
 ) {
   return (
     <StyledInputForm>
-      <StyledIcon color={'gray50'} isSmall={isSmall} type="search" />
+      <StyledIcon color={'gsGray50'} isSmall={isSmall} type="search" />
       <StyledInput ref={ref} isSmall={isSmall} {...props} />
     </StyledInputForm>
   )

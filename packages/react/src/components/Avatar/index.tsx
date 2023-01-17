@@ -56,7 +56,7 @@ export const Avatar = forwardRef(function Avatar(
       )}
       {isBlank && (
         <StyledBlankAvatarWrapper ref={ref} size={size} {...props}>
-          <Icon color="gray20" size={AVATAR_IMAGE_SIZE[size]} type="avatar" />
+          <Icon color="gsGray20" size={AVATAR_IMAGE_SIZE[size]} type="avatar" />
         </StyledBlankAvatarWrapper>
       )}
     </>

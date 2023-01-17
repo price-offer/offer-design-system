@@ -37,7 +37,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
   return (
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <Icon color="gray30" size={40} type="picture" />
+        <Icon color="gsGray30" size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
           {imgTotal}
         </StyledImageTotal>
@@ -60,7 +60,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color="white" size={16} type="close" />
+              <Icon color="gsWhite" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}

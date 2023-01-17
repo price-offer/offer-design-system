@@ -11,40 +11,55 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
    * @type 'bold' | 'regular'
    */
   size?: 'bold' | 'regular'
+  /** Divider 컴포넌트의 띄울 값을 정합니다.
+   * @type 'number' | 'undefined'
+   */
+  gap?: number
+  /** Divider 컴포넌트의 길이를 정합니다.
+   * @type 'string' | 'undefined'
+   */
+  length?: string
 }
-type StyledDividerProps = Pick<DividerProps, 'direction'>
 
 export const Divider = forwardRef(function Divider(
-  { direction = 'horizontal', size = 'regular', ...props }: DividerProps,
+  {
+    direction = 'horizontal',
+    size = 'regular',
+    gap = 0,
+    length,
+    ...props
+  }: DividerProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   return (
-    <StyledDividerWrapper ref={ref} direction={direction} {...props}>
-      <StyledDivider direction={direction} size={size} />
-    </StyledDividerWrapper>
+    <StyledDivider
+      ref={ref}
+      direction={direction}
+      gap={gap}
+      length={length}
+      size={size}
+      {...props}
+    />
   )
 })
 
-const StyledDividerWrapper = styled.div<StyledDividerProps>`
-  display: ${({ direction }): string =>
-    direction === 'horizontal' ? 'block' : 'inline-block'};
-`
-const StyledDivider = styled.hr<DividerProps>`
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  display: ${({ direction }): string =>
-    direction === 'horizontal' ? 'block' : 'inline'};
-  border: ${({ theme, size }): string => {
-    const { border, colors } = theme
+const StyledDivider = styled.div<DividerProps>`
+  ${({ direction, size, theme, gap, length }): string =>
+    direction === 'vertical'
+      ? `
+        display: inline-block;
+        width: ${theme.border[size]};
+        height: ${length || '14px'};
+        margin: 0 ${gap}px;
+      `
+      : `
+        width: ${length || '100%'};
+        height: ${theme.border[size]};
+        margin: ${gap}px 0;
+      `}
 
-    switch (size) {
-      case 'bold':
-        return `${border.bold} solid ${colors.grayScale.gray05}`
-      case 'regular':
-        return `${border.regular} solid ${colors.grayScale.gray10}`
-      default:
-        return 'none'
-    }
-  }};
+  background-color:${({ size, theme }): string =>
+    size === 'bold'
+      ? theme.colors.grayScale.gray05
+      : theme.colors.grayScale.gray10}
 `

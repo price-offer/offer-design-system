@@ -1,14 +1,17 @@
 import { Icon, ICON_TYPES } from './index'
 import type { Meta, Story } from '@storybook/react'
+import { colors } from '@offer-ui/styles/themes'
 import type { IconProps } from './index'
-
-const typeKeys = Object.keys(ICON_TYPES)
 
 export default {
   argType: {
     type: {
       control: 'select',
-      option: [...typeKeys]
+      options: [...Object.keys(ICON_TYPES)]
+    },
+    color: {
+      control: 'select',
+      options: [...Object.keys(colors)]
     }
   },
   component: Icon,

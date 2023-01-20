@@ -36,12 +36,11 @@ export const ChattingInput = forwardRef(function ChattingInput(
         {...props}
       />
       <StyledIconButton
-        colorType={isDisabled ? 'brandPrimaryWeak' : 'brandPrimary'}
+        color="white"
         disabled={isDisabled}
         icon="arrowUp"
         isSmall={isSmall}
-        shape="rounded"
-        size="medium"
+        size={16}
       />
     </StyledInputForm>
   )
@@ -93,8 +92,17 @@ const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
   position: absolute;
   justify-content: center;
   align-items: center;
+  width: 32px;
+  height: 32px;
   border: none;
   cursor: pointer;
+
+  ${({ theme, disabled }): string => `
+    background-color: ${
+      disabled ? theme.colors.brandPrimaryWeak : theme.colors.brandPrimary
+    };
+    border-radius: ${theme.radius.round100};
+  `}
 
   ${({ isSmall }): string => {
     if (isSmall) {
@@ -110,9 +118,6 @@ const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
     `
   }}
 
-  ${({ theme }): string => `
-    border-radius: ${theme.radius.round100};
-  `}
 
   &:disabled {
     cursor: default;

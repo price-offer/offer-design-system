@@ -1,5 +1,5 @@
+import type { ColorKeys, FontKeys } from '@offer-ui/themes'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
-import type { FontKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
@@ -22,9 +22,9 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   children: Exclude<ReactNode, 'undefined' | 'null'>
   /**
    * Text의 색상을 정합니다.
-   * @type string | undefined
+   * @type ColorKeys | undefined
    */
-  color?: string
+  color?: ColorKeys
 }
 
 type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
@@ -34,7 +34,7 @@ export const Text = forwardRef(function Text(
     tag = 'span',
     children,
     styleType: textStyle = 'body01M',
-    color = '',
+    color = 'black',
     ...props
   }: TextProps,
   ref: ForwardedRef<HTMLSpanElement>
@@ -52,7 +52,7 @@ export const Text = forwardRef(function Text(
 })
 
 const StyledText = styled.span<StyledTextProps>`
-  ${({ color }): string => (color ? `color: ${color}` : '')};
+  color: ${({ color, theme }): string => theme.colors[color]};
 
   ${({ theme, styleType }): string => theme.fonts[styleType]};
 `

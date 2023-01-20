@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types/offer'
 
-export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
+export interface DividerProps extends HTMLAttributes<HTMLHRElement> {
   /** Divider 컴포넌트의 방향을 정합니다.
    * @type 'vertical' | 'horizontal' | undefined
    */
@@ -12,7 +12,7 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
    * @type 'bold' | 'regular'
    */
   size?: 'bold' | 'regular'
-  /** Divider 컴포넌트의 띄울 값을 정합니다.
+  /** Divider 컴포넌트의 간격을 정합니다.
    * @type 'number' | 'undefined'
    */
   gap?: number
@@ -34,7 +34,7 @@ export const Divider = forwardRef(function Divider(
     length = '',
     ...props
   }: DividerProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLHRElement>
 ) {
   return (
     <StyledDivider
@@ -48,7 +48,9 @@ export const Divider = forwardRef(function Divider(
   )
 })
 
-const StyledDivider = styled.div<StyledDividerProps>`
+const StyledDivider = styled.hr<StyledDividerProps>`
+  border: none;
+
   ${({ direction, size, theme, gap, length }): string =>
     direction === 'vertical'
       ? `

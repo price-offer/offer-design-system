@@ -182,9 +182,9 @@ export const ImageModal = forwardRef(function ImageModal(
           <StyledGradient direction="top" />
           <StyledGradient direction="bottom" />
           <StyledCloseIcon
-            colorType="grayScale30"
+            color="grayScale30"
             icon="close"
-            size="medium"
+            size={24}
             onClick={onClose}
           />
           <StyledImageContainer

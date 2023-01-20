@@ -1,10 +1,8 @@
 import type { ForwardedRef, MouseEventHandler } from 'react'
 import { forwardRef, useState } from 'react'
-import type {
-  IconButtonColorType,
-  IconButtonProps
-} from '@offer-ui/components/IconButton'
+import type { ColorKeys } from '@offer-ui/styles/themes'
 import { IconButton } from '@offer-ui/components/IconButton'
+import type { IconButtonProps } from '@offer-ui/components/IconButton'
 import type { IconType } from '@offer-ui/components/Icon'
 
 type FillIconType = Extract<
@@ -38,14 +36,14 @@ interface StrokeToggleButton {
 export type ToggleButtonProps = IconButtonProps & {
   /**
    * ToggleButton의 색상 타입을 정합니다.
-   * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
+   * @type ColorKeys | undefined
    */
-  colorType?: IconButtonColorType
+  color?: ColorKeys
   /**
    * ToggleButton이 toggle된 경우의 색상 타입을 정합니다.
    * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
    */
-  toggleColorType?: IconButtonColorType
+  toggleColor?: ColorKeys
 } & ToggleButtonType
 
 type ToggleButtonType = FillToggleButton | StrokeToggleButton
@@ -54,8 +52,8 @@ export const ToggleButton = forwardRef(function ToggleButton(
   {
     onClick,
     styleType = 'stroke',
-    colorType = 'black',
-    toggleColorType = colorType,
+    color = 'black',
+    toggleColor = color,
     icon,
     ...props
   }: ToggleButtonProps,
@@ -65,7 +63,7 @@ export const ToggleButton = forwardRef(function ToggleButton(
   const isFillType = styleType === 'fill'
   const toggleIcon = isFillType ? `${icon}Fill` : icon
   const renderIcon = {
-    color: isToggle ? toggleColorType : colorType,
+    color: isToggle ? toggleColor : color,
     icon: isToggle ? toggleIcon : icon
   }
 
@@ -78,7 +76,7 @@ export const ToggleButton = forwardRef(function ToggleButton(
   return (
     <IconButton
       ref={ref}
-      colorType={renderIcon.color}
+      color={renderIcon.color}
       icon={renderIcon.icon as IconType}
       onClick={handleClick}
       {...props}

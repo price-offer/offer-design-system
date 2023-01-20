@@ -1,7 +1,6 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { Badge } from '@offer-ui/components/Badge'
 import { Button } from '@offer-ui/components/Button'
-import { colors } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
@@ -40,7 +39,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTriggerWrapper onClick={openUploader}>
         <StyledTrigger isShowListType={isShowListType}>
-          <Icon color={colors.grayScale.gray30} size={40} type="picture" />
+          <Icon color="grayScale30" size={40} type="picture" />
           <StyledDescription>
             <Text styleType="body01B" tag="p">
               상품 이미지 추가
@@ -70,7 +69,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color={colors.grayScale.white} size={16} type="close" />
+              <Icon color="white" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}
@@ -83,7 +82,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `
     display: flex;
     padding: 12px 12px 5px 12px;
-    background-color: ${theme.colors.grayScale.gray05};
+    background-color: ${theme.colors.grayScale05};
     justify-content: ${isShowListType ? 'flex-start' : 'center'};
     user-select: none;
   `}
@@ -122,9 +121,7 @@ const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
     margin-top: 4px;
     font-size: 14px;
     line-height: 20px;
-    color: ${
-      isMaximum ? theme.colors.brand.primary : theme.colors.grayScale.gray70
-    };
+    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.grayScale70};
   `}
 `
 const StyledImageList = styled.div`
@@ -138,10 +135,10 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.dim.opacity50};
+    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
   }
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
+  scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;
@@ -159,6 +156,6 @@ const StyledRemoveButtonWrapper = styled.div`
     cursor: pointer;
     display: inline-flex;
     position: absolute;
-    background-color: ${theme.colors.grayScale.black};
+    background-color: ${theme.colors.black};
   `}
 `

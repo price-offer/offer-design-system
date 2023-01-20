@@ -1,6 +1,5 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { Badge } from '@offer-ui/components/Badge'
-import { colors } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
@@ -38,7 +37,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
   return (
     <StyledUploaderWrapper ref={ref} isShowListType={isShowListType} {...props}>
       <StyledTrigger onClick={openUploader}>
-        <Icon color={colors.grayScale.gray30} size={40} type="picture" />
+        <Icon color="grayScale30" size={40} type="picture" />
         <StyledImageTotal isMaximum={isMaximum} styleType="caption01M">
           {imgTotal}
         </StyledImageTotal>
@@ -61,7 +60,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
               onClick={(): void => {
                 removeImage(index)
               }}>
-              <Icon color={colors.grayScale.white} size={16} type="close" />
+              <Icon color="white" size={16} type="close" />
             </StyledRemoveButtonWrapper>
           </StyledImageItem>
         ))}
@@ -74,7 +73,7 @@ const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
   ${({ theme, isShowListType }): string => `
     display: ${isShowListType ? 'flex' : 'inline-flex'};
     padding: 0px;
-    background-color: ${theme.colors.background.white};
+    background-color: ${theme.colors.white};
     justify-content: ${isShowListType ? 'flex-start' : 'center'};
     user-select: none;
   `}
@@ -84,14 +83,12 @@ const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
     margin-top: 0;
     font-size: 12px;
     line-height: 16px;
-    color: ${
-      isMaximum ? theme.colors.brand.primary : theme.colors.grayScale.gray70
-    };
+    color: ${isMaximum ? theme.colors.brandPrimary : theme.colors.grayScale70};
   `}
 `
 const StyledTrigger = styled.div`
   display: flex;
-  background-color: ${({ theme }): string => theme.colors.grayScale.gray05};
+  background-color: ${({ theme }): string => theme.colors.grayScale05};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -113,10 +110,10 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.dim.opacity50};
+    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
   }
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }): string => theme.colors.dim.opacity50};
+  scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;
@@ -134,6 +131,6 @@ const StyledRemoveButtonWrapper = styled.div`
     cursor: pointer;
     display: inline-flex;
     position: absolute;
-    background-color: ${theme.colors.grayScale.black};
+    background-color: ${theme.colors.black};
   `}
 `

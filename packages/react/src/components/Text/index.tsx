@@ -1,5 +1,5 @@
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
-import type { FontStyleKeys } from '@offer-ui/themes'
+import type { FontKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
@@ -7,9 +7,9 @@ import type { StyledProps } from '@offer-ui/types'
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Text의 스타일을 정합니다.
-   * @type FontStyleKeys
+   * @type FontKeys
    */
-  styleType: FontStyleKeys
+  styleType: FontKeys
   /**
    * Text의 태그를 정합니다.
    * @type 'p' | 'span' | undefined

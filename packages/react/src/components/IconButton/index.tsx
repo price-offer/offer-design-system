@@ -1,19 +1,21 @@
 import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
+import type { ColorKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
-import type { Theme } from '@emotion/react'
 
-export type IconButtonColorType =
+export type IconButtonColorType = Extract<
+  ColorKeys,
   | 'white'
   | 'black'
-  | 'gray30'
-  | 'primary'
-  | 'primaryWeak'
-  | 'sub'
-  | 'subWeak'
+  | 'grayScale30'
+  | 'brandPrimary'
+  | 'brandPrimaryWeak'
+  | 'brandSub'
+  | 'brandSubWeak'
+>
 type IconButtonSize = 'small' | 'medium' | 'large'
 type IconButtonShape = 'rounded' | 'square' | 'ghost'
 
@@ -112,13 +114,11 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
     return `
       width: ${ICON_BUTTON_SIZE[size].BUTTON}px;
       height: ${ICON_BUTTON_SIZE[size].BUTTON}px;
-      background-color: ${
-        isGhost ? 'transparent' : applyIconButtonColor(colorType, theme)
-      };
+      background-color: ${isGhost ? 'transparent' : theme.colors[colorType]};
       border-radius: ${isRounded ? theme.radius.round100 : 'none'};
       box-shadow: ${
         hasShadow && !isGhost
-          ? `0px 2px 10px ${theme.colors.dim.opacity25}`
+          ? `0px 2px 10px ${theme.colors.dimOpacity25}`
           : 'none'
       };
     `
@@ -131,28 +131,13 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
     const isGhost = shape !== 'ghost'
 
     if (isBlack) {
-      return theme.colors.grayScale.black
+      return theme.colors.black
     }
 
     if (isGhost) {
-      return theme.colors.grayScale.white
+      return theme.colors.white
     }
 
-    return applyIconButtonColor(colorType, theme)
+    return theme.colors[colorType]
   }};
 `
-
-const applyIconButtonColor = (
-  colorType: IconButtonColorType,
-  theme: Theme
-): string => {
-  const { brand, grayScale } = theme.colors
-  const isGrayScale =
-    colorType === 'black' || colorType === 'white' || colorType === 'gray30'
-
-  if (isGrayScale) {
-    return grayScale[colorType]
-  }
-
-  return brand[colorType]
-}

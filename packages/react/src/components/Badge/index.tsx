@@ -35,18 +35,18 @@ const applyColorScheme: ApplyColorScheme = (colorScheme, colors) => {
   switch (colorScheme) {
     case 'gray':
       return `
-        color: ${colors.grayScale.gray50};
-        background: ${colors.grayScale.gray10};
+        color: ${colors.grayScale50};
+        background: ${colors.grayScale10};
       `
     case 'orange':
       return `
-          color: ${colors.brand.primary};
-          background: ${colors.brand.primaryWeak};
+          color: ${colors.brandPrimary};
+          background: ${colors.brandPrimaryWeak};
         `
     case 'purple':
       return `
-          color: ${colors.brand.sub};
-          background: ${colors.brand.subWeak};
+          color: ${colors.brandSub};
+          background: ${colors.brandSubWeak};
         `
     default:
       return ''

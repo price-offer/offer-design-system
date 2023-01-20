@@ -71,7 +71,7 @@ const StyledInputWrapper = styled.label`
   margin-bottom: 8px;
   ${({ theme }): string => theme.fonts.body02R};
 
-  color: ${({ theme }): string => theme.colors.grayScale.gray90};
+  color: ${({ theme }): string => theme.colors.grayScale90};
   &.vertical {
     margin-bottom: 20px;
   }
@@ -80,7 +80,7 @@ const StyledInputWrapper = styled.label`
   }
 
   input:checked ~ span {
-    background-color: ${({ theme }): string => theme.colors.brand.primary};
+    background-color: ${({ theme }): string => theme.colors.brandPrimary};
     border: none;
   }
   input:checked ~ span:after {
@@ -92,7 +92,7 @@ const StyledInputWrapper = styled.label`
     width: 10px;
     height: 10px;
     border-radius: 100px;
-    background: ${({ theme }): string => theme.colors.grayScale.white};
+    background: ${({ theme }): string => theme.colors.white};
   }
 `
 
@@ -109,8 +109,8 @@ const StyledCheckMark = styled.span`
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: ${({ theme }): string => theme.colors.grayScale.white};
-  border: solid ${({ theme }): string => theme.colors.grayScale.gray10};
+  background-color: ${({ theme }): string => theme.colors.white};
+  border: solid ${({ theme }): string => theme.colors.grayScale10};
   border-radius: 50%;
   :after {
     content: '';

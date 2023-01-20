@@ -11,7 +11,7 @@ const Template: Story<IconButtonProps> = args => <IconButton {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  colorType: 'primary',
+  colorType: 'brandPrimary',
   icon: 'arrowLeft',
   shape: 'rounded',
   size: 'small'

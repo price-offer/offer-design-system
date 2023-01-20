@@ -122,7 +122,7 @@ export const SelectBox = ({
             {items?.map(item => (
               <StyledOptionsWrapper
                 key={item.value}
-                isSelected={uncontrolledValue === item.value}
+                isSelected={value === item.value}
                 onClick={(): void => {
                   handleChangeValue(item)
                 }}>

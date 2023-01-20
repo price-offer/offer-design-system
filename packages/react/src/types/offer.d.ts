@@ -1,7 +1,7 @@
 /** SelectBox  */
 interface SelectItem {
   text: string
-  value: string | number
+  value: string
 }
 export declare type SelectOnChangeHandler = (item: SelectItem) => void
 

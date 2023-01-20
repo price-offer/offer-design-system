@@ -1,7 +1,7 @@
-import type { HTMLAttributes, ReactElement } from 'react'
 import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconProps } from '@offer-ui/components/Icon'
+import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
 import type { Theme } from '@emotion/react'
@@ -12,9 +12,9 @@ type SelectColorType = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
 interface Item {
   text: string
-  value: string | number
+  value: string
 }
-export type SelectBoxProps = {
+interface DefaultSelectBoxProps {
   /** SelectBox의 컬러 타입을 정합니다.
    * @type 'none' | 'light' | 'dark' | undefined
    */
@@ -27,19 +27,30 @@ export type SelectBoxProps = {
    * @type string | undefined
    */
   placeholder?: string
-  /** SelectBox의 value를 정합니다.
-   * @type string  | number
-   */
-  value: string | number
   /** SelectBox의 옵션들을 정합니다.
    * @type { text: string, value: string | number }[]
    */
   items: Item[]
+}
+
+interface UnControlledSelectBoxProps extends DefaultSelectBoxProps {
+  value?: never
+  onChange?: SelectOnChangeHandler
+}
+interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
+  /** SelectBox의 value를 정합니다.
+   * @type string  | number
+   */
+  value: string | number
   /** SelectBox의 onChange 이벤트 발생 시, 호출될 함수를 정합니다.
    * @type SelectOnChangeHandler
    */
   onChange: SelectOnChangeHandler
-} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
+}
+
+export type SelectBoxProps =
+  | UnControlledSelectBoxProps
+  | ControlledSelectBoxProps
 
 /** Styled Type */
 interface StyledSelectProps
@@ -58,13 +69,16 @@ export const SelectBox = ({
   colorType = 'light',
   size = 'small',
   placeholder = '값을 입력하세요.',
-  value: defaultValue = '',
+  value: controlledValue,
   items,
   onChange,
   ...props
 }: SelectBoxProps): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [value, setValue] = useState<number | string>(defaultValue)
+  const [uncontrolledValue, setUncontrolledValue] = useState<number | string>()
+  const isControlled = controlledValue !== undefined
+  const value = isControlled ? controlledValue : uncontrolledValue
+
   const ref = useClose<HTMLDivElement>({ onClose: setIsOpen })
   const text = items.find(option => option.value === value)?.text || placeholder
   const isEmpty = value === ''
@@ -74,8 +88,11 @@ export const SelectBox = ({
   }
 
   const handleChangeValue: SelectOnChangeHandler = item => {
-    onChange(item)
-    setValue(item.value)
+    if (!isControlled) {
+      setUncontrolledValue(item.value)
+    }
+
+    onChange?.(item)
     setIsOpen(false)
   }
 
@@ -105,7 +122,7 @@ export const SelectBox = ({
             {items?.map(item => (
               <StyledOptionsWrapper
                 key={item.value}
-                isSelected={value === item.value}
+                isSelected={uncontrolledValue === item.value}
                 onClick={(): void => {
                   handleChangeValue(item)
                 }}>
@@ -143,9 +160,12 @@ const StyledTriggerArrow = styled(Icon)`
 
 /** OptionList  */
 const StyledOptionListWrapper = styled.div<Pick<StyledSelectProps, 'size'>>`
-  position: absolute;
-  left: 0;
-  top: ${({ size }): string => `${size === 'small' ? '40px' : '48px'}`};
+  ${({ theme, size }): string => `
+    position: absolute;
+    left: 0;
+    top: ${size === 'small' ? '40px' : '48px'};
+    z-index: ${theme.zIndex.selectbox};
+  `}
 `
 const StyledOptionList = styled.ul`
   display: flex;

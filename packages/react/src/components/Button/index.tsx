@@ -48,12 +48,12 @@ export const BUTTON_STYLE_KEYS = {
   SOLID_SUB: 'solidSub'
 } as const
 const FONT_COLOR = {
-  ghost: 'gray50',
-  outline: 'gray90',
-  outlineDisabled: 'gray30',
+  ghost: 'grayScale50',
+  outline: 'grayScale90',
+  outlineDisabled: 'grayScale30',
   solidDisabled: 'white',
   solidPrimary: 'white',
-  solidSub: 'gray90'
+  solidSub: 'grayScale90'
 } as const
 
 export const Button = forwardRef(function Button(
@@ -116,7 +116,7 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
 `
 
 const applyButtonColor: ApplyButtonColor = (theme, styleType) => {
-  const { gray20, black, gray05, white } = theme.colors.grayScale
+  const { grayScale20, black, grayScale05, white } = theme.colors
   const {
     SOLID_DISABLED,
     SOLID_PRIMARY,
@@ -128,17 +128,17 @@ const applyButtonColor: ApplyButtonColor = (theme, styleType) => {
 
   switch (styleType) {
     case SOLID_DISABLED:
-      return `background-color: ${gray20};`
+      return `background-color: ${grayScale20};`
     case SOLID_PRIMARY:
       return `background-color: ${black};`
     case SOLID_SUB:
-      return `background-color: ${gray05};`
+      return `background-color: ${grayScale05};`
     case OUTLINE:
       return `background-color: ${white};
-              border: 1px solid ${gray20};`
+              border: 1px solid ${grayScale20};`
     case OUTLINE_DISABLED:
       return `background-color: ${white};
-              border: 1px solid ${gray20};`
+              border: 1px solid ${grayScale20};`
     case GHOST:
       return `background-color: transparent;`
     default:
@@ -147,4 +147,4 @@ const applyButtonColor: ApplyButtonColor = (theme, styleType) => {
 }
 
 const applyButtonFontColor: ApplyButtonColor = (theme, styleType) =>
-  theme.colors.grayScale[FONT_COLOR[styleType]]
+  theme.colors[FONT_COLOR[styleType]]

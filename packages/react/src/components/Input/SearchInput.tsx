@@ -1,4 +1,3 @@
-import { colors } from '@offer-ui/themes'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
@@ -18,11 +17,7 @@ export const SearchInput = forwardRef(function SearchInput(
 ) {
   return (
     <StyledInputForm>
-      <StyledIcon
-        color={colors.grayScale.gray50}
-        isSmall={isSmall}
-        type="search"
-      />
+      <StyledIcon color={'grayScale50'} isSmall={isSmall} type="search" />
       <StyledInput ref={ref} isSmall={isSmall} {...props} />
     </StyledInputForm>
   )
@@ -36,19 +31,19 @@ const StyledInput = styled.input<StyledInputProps>`
   border: none;
 
   ${({ isSmall, theme }): string => `
-    background-color: ${theme.colors.background.gray02};
+    background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 
     ::placeholder {
-        color: ${theme.colors.grayScale.gray50};
+        color: ${theme.colors.grayScale50};
     }
 
     &:hover {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
 
     &:focus {
-      background-color: ${theme.colors.background.gray04};
+      background-color: ${theme.colors.bgGray04};
     }
   `}
 

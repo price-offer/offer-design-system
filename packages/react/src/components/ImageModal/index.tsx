@@ -182,7 +182,7 @@ export const ImageModal = forwardRef(function ImageModal(
           <StyledGradient direction="top" />
           <StyledGradient direction="bottom" />
           <StyledCloseIcon
-            colorType="gray30"
+            colorType="grayScale30"
             icon="close"
             size="medium"
             onClick={onClose}
@@ -231,9 +231,9 @@ const StyledDIM = styled.div<StyledDIMProps>`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: ${({ theme }): string => theme.zIndex.modal};
+  z-index: ${({ theme }): number => theme.zIndex.modal};
   overflow: hidden;
-  background-color: ${({ theme }): string => theme.colors.dim.opacity70};
+  background-color: ${({ theme }): string => theme.colors.dimOpacity70};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     background: linear-gradient();
@@ -313,7 +313,7 @@ const StyledIndicatorBox = styled.div`
   bottom: 7%;
   left: 50vw;
   transform: translate(-50%, 0);
-  z-index: ${({ theme }): string => theme.zIndex.modalIcon};
+  z-index: ${({ theme }): number => theme.zIndex.modalIcon};
   display: flex;
   gap: 8px;
 
@@ -334,14 +334,14 @@ const StyledIndicator = styled.div`
   cursor: pointer;
 
   ${({ theme }): string => `
-      background-color: ${theme.colors.grayScale.gray10};
+      background-color: ${theme.colors.grayScale10};
       border-radius: ${theme.radius.round100};
-      box-shadow: 0px 0px 4px ${theme.colors.dim.opacity40};
+      box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
   `}
 
   &.selected {
     transition: 0.6s ease-out;
-    background-color: ${({ theme }): string => theme.colors.grayScale.white};
+    background-color: ${({ theme }): string => theme.colors.white};
     opacity: 1;
   }
 `
@@ -356,9 +356,9 @@ const StyledGradient = styled.div<StyledGradientProps>`
   ${({ direction, theme }): string =>
     direction === 'top'
       ? `top: 0;
-        background: linear-gradient(180deg, ${theme.colors.dim.opacity70} 0%, rgba(0,0,0,0) 100%);`
+        background: linear-gradient(180deg, ${theme.colors.dimOpacity70} 0%, rgba(0,0,0,0) 100%);`
       : `bottom: 0;
-        background: linear-gradient(180deg,  rgba(0,0,0,0) 0%, ${theme.colors.dim.opacity70} 100%);`}
+        background: linear-gradient(180deg,  rgba(0,0,0,0) 0%, ${theme.colors.dimOpacity70} 100%);`}
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     display: block;

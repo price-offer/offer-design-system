@@ -1,6 +1,7 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
+import type { StyledProps } from '@offer-ui/types/offer'
 
 export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
   /** Divider 컴포넌트의 방향을 정합니다.
@@ -20,13 +21,17 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
    */
   length?: string
 }
+type StyledDividerProps = StyledProps<
+  DividerProps,
+  'direction' | 'size' | 'length' | 'gap'
+>
 
 export const Divider = forwardRef(function Divider(
   {
     direction = 'horizontal',
     size = 'regular',
     gap = 0,
-    length,
+    length = '',
     ...props
   }: DividerProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -43,7 +48,7 @@ export const Divider = forwardRef(function Divider(
   )
 })
 
-const StyledDivider = styled.div<DividerProps>`
+const StyledDivider = styled.div<StyledDividerProps>`
   ${({ direction, size, theme, gap, length }): string =>
     direction === 'vertical'
       ? `
@@ -59,7 +64,5 @@ const StyledDivider = styled.div<DividerProps>`
       `}
 
   background-color:${({ size, theme }): string =>
-    size === 'bold'
-      ? theme.colors.grayScale.gray05
-      : theme.colors.grayScale.gray10}
+    size === 'bold' ? theme.colors.grayScale05 : theme.colors.grayScale10}
 `

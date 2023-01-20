@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
-import { colors } from '@offer-ui/themes'
 import { Icon } from '@offer-ui/components/Icon'
+import type { IconProps } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
 import type { Theme } from '@emotion/react'
@@ -79,11 +79,10 @@ export const SelectBox = ({
     setIsOpen(false)
   }
 
-  const getIconColor = (): string => {
-    const { gray90, white } = colors.grayScale
+  const getIconColor = (): IconProps['color'] => {
     const isDark = colorType === 'dark'
 
-    return isDark ? white : gray90
+    return isDark ? 'white' : 'grayScale90'
   }
 
   return (
@@ -157,8 +156,8 @@ const StyledOptionList = styled.ul`
   min-width: 120px;
   border-radius: 4px;
   ${({ theme }): string => `
-    background-color: ${theme.colors.grayScale.white};
-    border: 1px solid ${theme.colors.grayScale.gray10};
+    background-color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.grayScale10};
     ${theme.mediaQuery.desktop} {
       font-size: 12px;
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
@@ -174,10 +173,10 @@ const StyledOptionList = styled.ul`
 const StyledOptionsWrapper = styled.li<Pick<StyledSelectProps, 'isSelected'>>`
   ${({ theme, isSelected }): string => `
     :hover {
-      background-color: ${theme.colors.background.gray02};
+      background-color: ${theme.colors.bgGray02};
       cursor: pointer;
     };
-    background-color: ${isSelected ? theme.colors.background.gray02 : ''};
+    background-color: ${isSelected ? theme.colors.bgGray02 : ''};
   `}
 `
 const StyledOption = styled(Text)`
@@ -208,7 +207,7 @@ const applySize: ApplySize = (size, theme) => {
   }
 }
 const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
-  const { black, gray20, white } = theme.colors.grayScale
+  const { black, grayScale20, white } = theme.colors
 
   switch (colorType) {
     case 'none':
@@ -219,7 +218,7 @@ const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
     case 'light':
       return `
         background-color: ${white};
-        border: 1px solid ${gray20};
+        border: 1px solid ${grayScale20};
       `
     case 'dark':
       return `
@@ -229,15 +228,15 @@ const applyColorScheme: ApplyColorScheme = (colorType, theme) => {
   }
 }
 const getFontColor: GetFontColor = ({ isEmpty, colorType, size, theme }) => {
-  const { gray50, gray90, black, white } = theme.colors.grayScale
+  const { grayScale50, grayScale90, black, white } = theme.colors
   const isDark = colorType === 'dark'
-  const smallPrimary = isDark ? white : gray90
+  const smallPrimary = isDark ? white : grayScale90
   const mediumPrimary = isDark ? white : black
 
   switch (size) {
     case 'small':
-      return `${isEmpty ? gray50 : smallPrimary}`
+      return `${isEmpty ? grayScale50 : smallPrimary}`
     case 'medium':
-      return `${isEmpty ? gray50 : mediumPrimary}`
+      return `${isEmpty ? grayScale50 : mediumPrimary}`
   }
 }

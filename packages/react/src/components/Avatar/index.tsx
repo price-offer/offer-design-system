@@ -1,5 +1,4 @@
 import type { ForwardedRef, HTMLAttributes } from 'react'
-import { colors } from '@offer-ui/styles/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
@@ -58,7 +57,7 @@ export const Avatar = forwardRef(function Avatar(
       {isBlank && (
         <StyledBlankAvatarWrapper ref={ref} size={size} {...props}>
           <Icon
-            color={colors.grayScale.gray20}
+            color="grayScale20"
             size={AVATAR_IMAGE_SIZE[size]}
             type="avatar"
           />
@@ -76,6 +75,6 @@ const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   ${({ theme, size }): string => `
     width: ${AVATAR_WRAPPER_SIZE[size]};
     height: ${AVATAR_WRAPPER_SIZE[size]};
-    background-color: ${theme.colors.grayScale.gray05};
+    background-color: ${theme.colors.grayScale05};
   `}
 `

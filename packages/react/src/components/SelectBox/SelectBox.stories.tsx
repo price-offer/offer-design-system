@@ -1,7 +1,8 @@
 import type { Meta, Story } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { SelectBox } from './index'
 import type { SelectBoxProps } from './index'
+import type { SelectItem } from '@offer-ui/types/offer'
+import { useState } from 'react'
 
 export default {
   argTypes: {
@@ -18,7 +19,33 @@ export default {
   title: 'Components/SelectBox'
 } as Meta<SelectBoxProps>
 
-const Template: Story<SelectBoxProps> = args => <SelectBox {...args} />
+const Template: Story<SelectBoxProps> = args => {
+  const [value, setValue] = useState<string>('select1')
+
+  const handleChange = (item: SelectItem): void => {
+    setValue(item.value)
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={(): void => {
+          setValue('select1')
+        }}>
+        선택1
+      </button>
+      <button
+        type="button"
+        onClick={(): void => {
+          setValue('select2')
+        }}>
+        선택2
+      </button>
+      <SelectBox {...args} value={value} onChange={handleChange} />
+    </div>
+  )
+}
 export const Default = Template.bind({})
 Default.args = {
   colorType: 'light',
@@ -32,8 +59,5 @@ Default.args = {
       value: 'select2'
     }
   ],
-  onChange: (options): void => {
-    action(JSON.stringify(options))
-  },
   size: 'small'
 }

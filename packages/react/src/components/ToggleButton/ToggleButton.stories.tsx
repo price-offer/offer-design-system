@@ -14,5 +14,6 @@ Default.args = {
   color: 'grayScale30',
   icon: 'heart',
   size: 16,
-  toggleColor: 'brandPrimary'
+  toggleColor: 'brandPrimary',
+  toggleIcon: 'heartFill'
 }

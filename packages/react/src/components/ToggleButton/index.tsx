@@ -5,63 +5,31 @@ import { IconButton } from '@offer-ui/components/IconButton'
 import type { IconButtonProps } from '@offer-ui/components/IconButton'
 import type { IconType } from '@offer-ui/components/Icon'
 
-type FillIconType = Extract<
-  IconType,
-  'checkCircle' | 'heart' | 'meh' | 'sad' | 'smile'
->
-interface FillToggleButton {
+export interface ToggleButtonProps extends IconButtonProps {
   /**
-   * ToggleButton의 보여질 형태를 정합니다.
-   * @type 'fill'
+   * ToggleButton이 toggle된 경우의 아이콘 타입을 정합니다.
+   * @type IconType | undefined
    */
-  styleType: 'fill'
+  toggleIcon?: IconType
   /**
-   * ToggleButton의 styleType이 'fill'인 경우 사용 가능한 아이콘 타입을 정합니다.
-   * @type "checkCircle" | "heart" | "meh" | "sad" | "smile" | undefined
-   */
-  icon: FillIconType
-}
-interface StrokeToggleButton {
-  /**
-   * ToggleButton의 보여질 형태를 정합니다.
-   * @type 'stroke'
-   */
-  styleType: 'stroke'
-  /**
-   * ToggleButton의 styleType이 'stoke'인 경우 사용 가능한 아이콘 타입을 정합니다.
-   * @type IconType
-   */
-  icon: IconType
-}
-export type ToggleButtonProps = IconButtonProps & {
-  /**
-   * ToggleButton의 색상 타입을 정합니다.
+   * ToggleButton이 toggle된 경우의 색상을 정합니다.
    * @type ColorKeys | undefined
    */
-  color?: ColorKeys
-  /**
-   * ToggleButton이 toggle된 경우의 색상 타입을 정합니다.
-   * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
-   */
   toggleColor?: ColorKeys
-} & ToggleButtonType
-
-type ToggleButtonType = FillToggleButton | StrokeToggleButton
+}
 
 export const ToggleButton = forwardRef(function ToggleButton(
   {
     onClick,
-    styleType = 'stroke',
+    icon,
     color = 'black',
     toggleColor = color,
-    icon,
+    toggleIcon = icon,
     ...props
   }: ToggleButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const isFillType = styleType === 'fill'
-  const toggleIcon = isFillType ? `${icon}Fill` : icon
   const renderIcon = {
     color: isToggle ? toggleColor : color,
     icon: isToggle ? toggleIcon : icon
@@ -77,7 +45,7 @@ export const ToggleButton = forwardRef(function ToggleButton(
     <IconButton
       ref={ref}
       color={renderIcon.color}
-      icon={renderIcon.icon as IconType}
+      icon={renderIcon.icon}
       onClick={handleClick}
       {...props}
     />

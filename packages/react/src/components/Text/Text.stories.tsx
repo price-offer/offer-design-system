@@ -1,12 +1,12 @@
+import { colors, fonts } from '@offer-ui/themes'
 import type { Meta, Story } from '@storybook/react'
-import { fonts } from '@offer-ui/themes'
 import { Text } from './index'
 import type { TextProps } from './index'
 
 export default {
   argTypes: {
     color: {
-      control: { type: 'color' }
+      control: { type: 'select', options: [...Object.keys(colors)] }
     },
     styleType: {
       control: { type: 'select' },

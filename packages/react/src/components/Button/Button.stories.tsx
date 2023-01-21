@@ -33,5 +33,6 @@ Default.args = {
   children: 'CTA 버튼',
   icon: 'heart',
   size: 'medium',
-  styleType: 'solidPrimary'
+  styleType: 'solidPrimary',
+  width: '400px'
 }

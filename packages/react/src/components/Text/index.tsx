@@ -34,7 +34,7 @@ export const Text = forwardRef(function Text(
     tag = 'span',
     children,
     styleType: textStyle = 'body01M',
-    color = 'black',
+    color = 'grayScale90',
     ...props
   }: TextProps,
   ref: ForwardedRef<HTMLSpanElement>

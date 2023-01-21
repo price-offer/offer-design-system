@@ -19,7 +19,7 @@ Default.args = {
   items: [
     {
       code: 'option1',
-      name: '옵션dddd 1',
+      name: '옵션 1',
       checked: false,
       element: <div>.</div>
     },

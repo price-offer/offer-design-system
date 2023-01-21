@@ -36,7 +36,7 @@ Default.args = {
       element: <div>.</div>
     }
   ],
-  RadioType: 'checkbox',
+  componentType: 'checkbox',
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)

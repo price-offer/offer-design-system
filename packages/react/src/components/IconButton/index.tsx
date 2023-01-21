@@ -59,6 +59,8 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  margin: 0;
   border: none;
   cursor: pointer;
 

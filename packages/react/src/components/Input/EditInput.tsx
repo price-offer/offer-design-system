@@ -44,7 +44,10 @@ export const EditInput = forwardRef(function EditInput(
           onChange={handleChange}
           {...props}
         />
-        <StyledPriceUnit isSmall={isSmall} styleType="subtitle01M">
+        <StyledPriceUnit
+          color="grayScale90"
+          isSmall={isSmall}
+          styleType="subtitle01M">
           {VALIDATE_MESSAGE.PRICE_UNIT}
         </StyledPriceUnit>
       </StyledInputLabel>
@@ -95,9 +98,8 @@ const StyledInput = styled.input<StyledInputProps>`
 const StyledPriceUnit = styled(Text)<StyledInputProps>`
   position: absolute;
   right: 0;
-  ${({ theme, isSmall }): string => `
+  ${({ isSmall }): string => `
     bottom: ${isSmall ? '14px' : '16px'};
-    color: ${theme.colors.grayScale90};
   `}
 `
 

@@ -23,16 +23,17 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
     checked?: boolean
     element?: ReactNode
   }[]
+  /** Radio 컴포넌트 내부 input 타입을 정합니다.
+   * @type 'radio' | 'checkbox'
+   */
+  RadioType: 'radio' | 'checkbox'
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
-  RadioType: 'radio' | 'checkbox'
   direction: 'horizontal' | 'vertical'
   /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
-
-  children: ReactNode
   onChange(e: ChangeEvent<HTMLFormElement>): void
 }
 

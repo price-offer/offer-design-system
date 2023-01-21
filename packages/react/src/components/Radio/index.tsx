@@ -1,4 +1,9 @@
-import type { ChangeEvent, FormHTMLAttributes, ForwardedRef } from 'react'
+import type {
+  ChangeEvent,
+  FormHTMLAttributes,
+  ForwardedRef,
+  ReactNode
+} from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
@@ -12,7 +17,12 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트에 보여질 옵션들을 정합니다
    * @type { code: string, name: string } []
    */
-  items: { code: string; name: string }[]
+  items: {
+    code: string
+    name: string
+    checked?: boolean
+    element?: ReactNode
+  }[]
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
@@ -20,6 +30,8 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
+
+  children: ReactNode
   onChange(e: ChangeEvent<HTMLFormElement>): void
 }
 
@@ -35,16 +47,18 @@ export const Radio = forwardRef(function Radio(
     onChange(e)
   }
 
-  const radioList = items?.map(({ code, name }) => (
+  const radioList = items?.map(({ code, name, checked, element }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
       <Text styleType="body01R">{name}</Text>
       <StyledInput
+        checked={checked}
         id={code}
         name={formName}
         type="radio"
         value={code}
         onChange={handleRadiobutton}
       />
+      {element}
       <StyledCheckMark />
     </StyledInputWrapper>
   ))

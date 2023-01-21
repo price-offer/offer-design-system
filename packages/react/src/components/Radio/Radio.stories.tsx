@@ -9,7 +9,9 @@ export default {
   title: 'Components/Radio'
 } as Meta<RadioProps>
 
-const Template: Story<RadioProps> = args => <Radio {...args} />
+const Template: Story<RadioProps> = args => {
+  return <Radio {...args} />
+}
 
 export const Default = Template.bind({})
 Default.args = {
@@ -17,15 +19,21 @@ Default.args = {
   items: [
     {
       code: 'option1',
-      name: '옵션 1'
+      name: '옵션 1',
+      checked: true,
+      element: <div>.</div>
     },
     {
-      code: 'option1',
-      name: '옵션 2'
+      code: 'option2',
+      name: '옵션 2',
+      checked: true,
+      element: <div>.</div>
     },
     {
-      code: 'option1',
-      name: '옵션 3'
+      code: 'option3',
+      name: '옵션 3',
+      checked: true,
+      element: <div>.</div>
     }
   ],
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {

@@ -19,8 +19,8 @@ Default.args = {
   items: [
     {
       code: 'option1',
-      name: '옵션 1',
-      checked: true,
+      name: '옵션dddd 1',
+      checked: false,
       element: <div>.</div>
     },
     {
@@ -36,6 +36,7 @@ Default.args = {
       element: <div>.</div>
     }
   ],
+  RadioType: 'checkbox',
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)

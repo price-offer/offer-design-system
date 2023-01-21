@@ -26,6 +26,7 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
+  RadioType: 'radio' | 'checkbox'
   direction: 'horizontal' | 'vertical'
   /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
@@ -38,7 +39,14 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
 type StyledFormProps = StyledProps<RadioProps, 'direction'>
 
 export const Radio = forwardRef(function Radio(
-  { formName, onChange, items, direction = 'horizontal', ...props }: RadioProps,
+  {
+    formName,
+    onChange,
+    items,
+    direction = 'horizontal',
+    RadioType,
+    ...props
+  }: RadioProps,
   ref: ForwardedRef<HTMLFormElement>
 ) {
   const handleRadiobutton = (
@@ -54,7 +62,7 @@ export const Radio = forwardRef(function Radio(
         checked={checked}
         id={code}
         name={formName}
-        type="radio"
+        type={RadioType}
         value={code}
         onChange={handleRadiobutton}
       />

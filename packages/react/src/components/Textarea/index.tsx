@@ -65,7 +65,7 @@ export const TextArea = forwardRef(function TextArea(
         rows={1}
         onInput={handleResizeHeight}
       />
-      <StyledGuideMessage styleType="caption01M" tag="p">
+      <StyledGuideMessage color="grayScale50" styleType="caption01M" tag="p">
         {guideMessage}
       </StyledGuideMessage>
     </>
@@ -107,5 +107,4 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
 const StyledGuideMessage = styled(Text)`
   display: block;
   margin-top: 8px;
-  color: ${({ theme }): string => theme.colors.grayScale50};
 `

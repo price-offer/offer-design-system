@@ -1,71 +1,43 @@
 import type { ForwardedRef, MouseEventHandler } from 'react'
 import { forwardRef, useState } from 'react'
-import type {
-  IconButtonColorType,
-  IconButtonProps
-} from '@offer-ui/components/IconButton'
+import type { ColorKeys } from '@offer-ui/styles/themes'
 import { IconButton } from '@offer-ui/components/IconButton'
+import type { IconButtonProps } from '@offer-ui/components/IconButton'
 import type { IconType } from '@offer-ui/components/Icon'
 
-type FillIconType = Extract<
-  IconType,
-  'checkCircle' | 'heart' | 'meh' | 'sad' | 'smile'
->
-interface FillToggleButton {
+export interface ToggleButtonProps extends IconButtonProps {
   /**
-   * ToggleButton의 보여질 형태를 정합니다.
-   * @type 'fill'
+   * ToggleButton이 toggle된 경우의 아이콘 타입을 정합니다.
+   * @type IconType | undefined
    */
-  styleType: 'fill'
+  toggleIcon?: IconType
   /**
-   * ToggleButton의 styleType이 'fill'인 경우 사용 가능한 아이콘 타입을 정합니다.
-   * @type "checkCircle" | "heart" | "meh" | "sad" | "smile" | undefined
+   * ToggleButton이 toggle된 경우의 색상을 정합니다.
+   * @type ColorKeys | undefined
    */
-  icon: FillIconType
+  toggleColor?: ColorKeys
+  /**
+   * ToggleButton이 토글 기본 상태를 정합니다.
+   * @type boolean | undefined
+   */
+  isToggle?: boolean
 }
-interface StrokeToggleButton {
-  /**
-   * ToggleButton의 보여질 형태를 정합니다.
-   * @type 'stroke'
-   */
-  styleType: 'stroke'
-  /**
-   * ToggleButton의 styleType이 'stoke'인 경우 사용 가능한 아이콘 타입을 정합니다.
-   * @type IconType
-   */
-  icon: IconType
-}
-export type ToggleButtonProps = IconButtonProps & {
-  /**
-   * ToggleButton의 색상 타입을 정합니다.
-   * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
-   */
-  colorType?: IconButtonColorType
-  /**
-   * ToggleButton이 toggle된 경우의 색상 타입을 정합니다.
-   * @type 'white' | 'black' | 'gray30' | 'primary' | 'primaryWeak' | 'sub' | 'subWeak' | undefined
-   */
-  toggleColorType?: IconButtonColorType
-} & ToggleButtonType
-
-type ToggleButtonType = FillToggleButton | StrokeToggleButton
 
 export const ToggleButton = forwardRef(function ToggleButton(
   {
     onClick,
-    styleType = 'stroke',
-    colorType = 'black',
-    toggleColorType = colorType,
     icon,
+    color = 'black',
+    toggleColor = color,
+    toggleIcon = icon,
+    isToggle: defaultIsToggle = false,
     ...props
   }: ToggleButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
-  const [isToggle, setIsToggle] = useState<boolean>(false)
-  const isFillType = styleType === 'fill'
-  const toggleIcon = isFillType ? `${icon}Fill` : icon
+  const [isToggle, setIsToggle] = useState<boolean>(defaultIsToggle)
   const renderIcon = {
-    color: isToggle ? toggleColorType : colorType,
+    color: isToggle ? toggleColor : color,
     icon: isToggle ? toggleIcon : icon
   }
 
@@ -78,8 +50,8 @@ export const ToggleButton = forwardRef(function ToggleButton(
   return (
     <IconButton
       ref={ref}
-      colorType={renderIcon.color}
-      icon={renderIcon.icon as IconType}
+      color={renderIcon.color}
+      icon={renderIcon.icon}
       onClick={handleClick}
       {...props}
     />

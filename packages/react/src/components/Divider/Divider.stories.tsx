@@ -8,6 +8,12 @@ export default {
       control: { type: 'radio' },
       options: ['horizontal', 'vertical']
     },
+    gap: {
+      control: { type: 'number' }
+    },
+    length: {
+      control: { type: 'text' }
+    },
     size: {
       control: { type: 'radio' },
       options: ['regular', 'bold']

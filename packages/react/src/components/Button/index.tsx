@@ -15,6 +15,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    */
   styleType?: ButtonStyleType
   /**
+   * Button의 너비를 정합니다.
+   * @type string | undefined
+   */
+  width?: string
+  /**
    * Button의 크기를 정합니다.
    * @type 'small' | 'medium' | 'large' | undefined
    */
@@ -30,13 +35,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    */
   children: Exclude<ReactNode, 'undefined' | 'null'>
 }
-type StyledButtonProps = StyledProps<ButtonProps, 'styleType' | 'size'>
+type StyledButtonProps = StyledProps<
+  ButtonProps,
+  'styleType' | 'size' | 'width'
+>
 type StyledIconProps = StyledProps<ButtonProps, 'styleType'>
 type ApplyButtonColor = (theme: Theme, styleType: ButtonStyleType) => string
 type ApplyButtonSizeStyle = (
   theme: Theme,
   styleType: ButtonStyleType,
-  size: ButtonSize
+  size: ButtonSize,
+  width: string
 ) => string
 
 export const BUTTON_STYLE_KEYS = {
@@ -58,6 +67,7 @@ const FONT_COLOR = {
 
 export const Button = forwardRef(function Button(
   {
+    width = '100%',
     size = 'medium',
     styleType = 'solidPrimary',
     icon,
@@ -67,7 +77,12 @@ export const Button = forwardRef(function Button(
   ref: ForwardedRef<HTMLButtonElement>
 ) {
   return (
-    <StyledButton ref={ref} size={size} styleType={styleType} {...props}>
+    <StyledButton
+      ref={ref}
+      size={size}
+      styleType={styleType}
+      width={width}
+      {...props}>
       {icon && <StyledIcon styleType={styleType} type={icon} />}
       {children}
     </StyledButton>
@@ -84,19 +99,24 @@ const StyledButton = styled.button<StyledButtonProps>`
     applyButtonFontColor(theme, styleType)};
 
   ${({ theme }): string => theme.fonts.body02B}
-  ${({ theme, size, styleType }): string =>
-    applyButtonSizeStyle(theme, styleType, size)}
+  ${({ theme, size, styleType, width }): string =>
+    applyButtonSizeStyle(theme, styleType, size, width)}
   ${({ theme, styleType }): string => applyButtonColor(theme, styleType)}
 `
-const applyButtonSizeStyle: ApplyButtonSizeStyle = (theme, styleType, size) => {
+const applyButtonSizeStyle: ApplyButtonSizeStyle = (
+  theme,
+  styleType,
+  size,
+  width
+) => {
   const { round100, round4 } = theme.radius
 
   switch (size) {
     case 'large':
-      return `width: 100%;
+      return `width: ${width};
               height: 64px;`
     case 'medium':
-      return `width: 100%;
+      return `width: ${width};
               height: 48px;
               border-radius: ${styleType.indexOf('outline') >= 0 && round100};`
     case 'small':

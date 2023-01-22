@@ -13,7 +13,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
    * Badge 내부에 들어갈 내용을 정합니다.
    * @type ReactNode
    */
-  children: Exclude<ReactNode, 'undefined' | 'null'>
+  children: Exclude<ReactNode, undefined | null>
 }
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>

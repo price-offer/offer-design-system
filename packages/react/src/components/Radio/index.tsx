@@ -19,7 +19,7 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
    */
   items: {
     code: string
-    name: string
+    name?: string
     checked?: boolean
     element?: ReactNode
   }[]
@@ -35,6 +35,10 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
    * @type void
    */
   onChange(e: ChangeEvent<HTMLFormElement>): void
+  /** Radio 컴포넌트를 checkbox로 쓸경우에 쓰는 props이며 체크되는 함수를 전달합니다..
+   * @type void
+   */
+  onCheck(code: string): void | undefined
 }
 
 type StyledFormProps = StyledProps<RadioProps, 'direction'>
@@ -46,6 +50,7 @@ export const Radio = forwardRef(function Radio(
     items,
     direction = 'horizontal',
     componentType,
+    onCheck,
     ...props
   }: RadioProps,
   ref: ForwardedRef<HTMLFormElement>
@@ -58,14 +63,23 @@ export const Radio = forwardRef(function Radio(
 
   const radioList = items?.map(({ code, name, checked, element }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
-      <Text styleType="body01R">{name}</Text>
+      {componentType === 'radio' ? (
+        <Text styleType="body01R">{name}</Text>
+      ) : null}
       <StyledInput
-        checked={checked}
+        checked={componentType === 'radio' ? true : checked}
         id={code}
         name={formName}
         type={componentType}
         value={code}
         onChange={handleRadiobutton}
+        onClick={
+          componentType === 'checkbox'
+            ? (): void => {
+                onCheck(code)
+              }
+            : undefined
+        }
       />
       {element}
       <StyledCheckMark />

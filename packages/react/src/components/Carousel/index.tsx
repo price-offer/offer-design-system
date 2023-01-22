@@ -2,7 +2,6 @@ import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
-import { useMediaQuery } from '@offer-ui/hooks'
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
@@ -53,21 +52,18 @@ const NAV_TYPE = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 } as const
-const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
 export const Carousel = forwardRef(function Carousel(
   { images, isArrow, size = 687, name, ...props }: CarouselProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const isDesktop = useMediaQuery(`(min-width:1023px)`)
-  const carouselWidthSize = isDesktop ? size : FULL_SCREEN_WIDTH
+  const carouselWidthSize = size
   const lastImageValue = carouselWidthSize * (images.length - 1)
   const [currentImageValue, setCurrentImageValue] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
-
   const isFirstImage = currentImageValue === 0
   const isLastImage = currentImageValue === lastImageValue
 
@@ -193,6 +189,15 @@ const StyledCarouselWrapper = styled.div`
   touch-action: none;
   user-select: none;
   position: relative;
+  height: 430px;
+  ${({ theme }): string => theme.mediaQuery.tablet} {
+    max-width: 100vw;
+    height: 400px;
+  }
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    max-width: 100vw;
+    height: 360px;
+  }
 `
 const StyledSlider = styled.div<SliderProps>`
   position: relative;
@@ -204,11 +209,11 @@ const StyledSlider = styled.div<SliderProps>`
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
-    max-width: ${({ size }): string => `${size}vw`};
+    max-width: 100vw;
     height: 400px;
   }
   ${({ theme }): string => theme.mediaQuery.mobile} {
-    max-width: ${({ size }): string => `${size}vw`};
+    max-width: 100vw;
     height: 360px;
   }
 `
@@ -240,11 +245,11 @@ const StyledImage = styled.img<ImageProps>`
   object-position: center;
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
-    width: ${({ size }): string => `${size}vw`};
+    width: 100vw;
     height: 400px;
   }
   ${({ theme }): string => theme.mediaQuery.mobile} {
-    width: ${({ size }): string => `${size}vw`};
+    width: 100vw;
     height: 360px;
   }
 `
@@ -282,12 +287,17 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   display: flex;
   gap: 5px;
   position: absolute;
-  bottom: -20px;
+  margin-top: 20px;
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
   ${({ theme }): string => theme.mediaQuery.tablet} {
     bottom: 27px;
+    margin-top: 0px;
+  }
+  ${({ theme }): string => theme.mediaQuery.mobile} {
+    bottom: 27px;
+    margin-top: 0px;
   }
 `
 

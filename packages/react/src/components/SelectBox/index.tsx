@@ -1,4 +1,8 @@
-import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
+import type {
+  SelectItem,
+  SelectOnChangeHandler,
+  StyledProps
+} from '@offer-ui/types'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconProps } from '@offer-ui/components/Icon'
 import type { ReactElement } from 'react'
@@ -10,10 +14,6 @@ import { useState } from 'react'
 
 type SelectColorType = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
-interface Item {
-  text: string
-  value: string
-}
 interface DefaultSelectBoxProps {
   /** SelectBox의 컬러 타입을 정합니다.
    * @type 'none' | 'light' | 'dark' | undefined
@@ -30,14 +30,14 @@ interface DefaultSelectBoxProps {
   /** SelectBox의 옵션들을 정합니다.
    * @type { text: string, value: string | number }[]
    */
-  items: Item[]
+  items: SelectItem[]
 }
 
-interface UnControlledSelectBoxProps extends DefaultSelectBoxProps {
+interface UnControlledSelectBoxProps<T> extends DefaultSelectBoxProps {
   value?: never
-  onChange?: SelectOnChangeHandler
+  onChange?: SelectOnChangeHandler<T>
 }
-interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
+interface ControlledSelectBoxProps<T> extends DefaultSelectBoxProps {
   /** SelectBox의 value를 정합니다.
    * @type string  | number
    */
@@ -45,12 +45,12 @@ interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
   /** SelectBox의 onChange 이벤트 발생 시, 호출될 함수를 정합니다.
    * @type SelectOnChangeHandler
    */
-  onChange: SelectOnChangeHandler
+  onChange: SelectOnChangeHandler<T>
 }
 
 export type SelectBoxProps =
-  | UnControlledSelectBoxProps
-  | ControlledSelectBoxProps
+  | UnControlledSelectBoxProps<SelectItem>
+  | ControlledSelectBoxProps<SelectItem>
 
 /** Styled Type */
 interface StyledSelectProps
@@ -80,7 +80,7 @@ export const SelectBox = ({
   const value = isControlled ? controlledValue : uncontrolledValue
 
   const ref = useClose<HTMLDivElement>({ onClose: setIsOpen })
-  const text = items.find(option => option.value === value)?.text || placeholder
+  const text = items.find(option => option.code === value)?.name || placeholder
   const isEmpty = value === ''
 
   const handleOpenOptions = (): void => {
@@ -89,7 +89,7 @@ export const SelectBox = ({
 
   const handleChangeValue: SelectOnChangeHandler = item => {
     if (!isControlled) {
-      setUncontrolledValue(item.value)
+      setUncontrolledValue(item.code)
     }
 
     onChange?.(item)
@@ -121,12 +121,12 @@ export const SelectBox = ({
           <StyledOptionList>
             {items?.map(item => (
               <StyledOptionsWrapper
-                key={item.value}
-                isSelected={value === item.value}
+                key={item.code}
+                isSelected={value === item.code}
                 onClick={(): void => {
                   handleChangeValue(item)
                 }}>
-                <StyledOption styleType="caption01M">{item.text}</StyledOption>
+                <StyledOption styleType="caption01M">{item.name}</StyledOption>
               </StyledOptionsWrapper>
             ))}
           </StyledOptionList>

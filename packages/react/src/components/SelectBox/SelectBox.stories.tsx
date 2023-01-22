@@ -23,7 +23,7 @@ const Template: Story<SelectBoxProps> = args => {
   const [value, setValue] = useState<string>('select1')
 
   const handleChange = (item: SelectItem): void => {
-    setValue(item.value)
+    setValue(item.code)
   }
 
   return (
@@ -51,12 +51,12 @@ Default.args = {
   colorType: 'light',
   items: [
     {
-      text: '선택1',
-      value: 'select1'
+      code: 'select1',
+      name: '선택1'
     },
     {
-      text: '선택2',
-      value: 'select2'
+      code: 'select2',
+      name: '선택2'
     }
   ],
   size: 'small'

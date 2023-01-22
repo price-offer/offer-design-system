@@ -22,7 +22,9 @@ export default {
 const Template: Story<SelectBoxProps> = args => {
   const [value, setValue] = useState<string>('select1')
 
-  const handleChange: SelectOnChangeHandler<string> = (item): void => {
+  const handleChange: SelectOnChangeHandler<{ code: string; name: string }> = (
+    item
+  ): void => {
     setValue(item.code)
   }
 

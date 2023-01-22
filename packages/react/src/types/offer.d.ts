@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /** SelectBox  */
-export interface SelectItem<T = string> {
-  code: T
-  name: string
+export interface SelectItem {
+  code: any
+  name: any
 }
-export declare type SelectOnChangeHandler<T = string> = (
-  item: SelectItem<T>
-) => void
+export declare type SelectOnChangeHandler<T = any> = (item: T) => void
 
 /**  ImageUploader */
 export interface ImageInfo {

@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react'
 import { SelectBox } from './index'
 import type { SelectBoxProps } from './index'
-import type { SelectItem } from '@offer-ui/types/offer'
+import type { SelectOnChangeHandler } from '@offer-ui/types/offer'
 import { useState } from 'react'
 
 export default {
@@ -22,7 +22,7 @@ export default {
 const Template: Story<SelectBoxProps> = args => {
   const [value, setValue] = useState<string>('select1')
 
-  const handleChange = (item: SelectItem): void => {
+  const handleChange: SelectOnChangeHandler<string> = (item): void => {
     setValue(item.code)
   }
 

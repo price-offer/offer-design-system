@@ -1,10 +1,10 @@
 /** SelectBox  */
-export interface SelectItem {
-  code: string
+export interface SelectItem<T = string> {
+  code: T
   name: string
 }
-export declare type SelectOnChangeHandler<T = SelectItem> = (
-  item: SelectItem | T
+export declare type SelectOnChangeHandler<T = string> = (
+  item: SelectItem<T>
 ) => void
 
 /**  ImageUploader */

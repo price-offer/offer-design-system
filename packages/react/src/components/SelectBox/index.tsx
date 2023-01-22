@@ -33,11 +33,11 @@ interface DefaultSelectBoxProps {
   items: SelectItem[]
 }
 
-interface UnControlledSelectBoxProps<T> extends DefaultSelectBoxProps {
+interface UnControlledSelectBoxProps extends DefaultSelectBoxProps {
   value?: never
-  onChange?: SelectOnChangeHandler<T>
+  onChange?: SelectOnChangeHandler
 }
-interface ControlledSelectBoxProps<T> extends DefaultSelectBoxProps {
+interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
   /** SelectBox의 value를 정합니다.
    * @type string  | number
    */
@@ -45,12 +45,12 @@ interface ControlledSelectBoxProps<T> extends DefaultSelectBoxProps {
   /** SelectBox의 onChange 이벤트 발생 시, 호출될 함수를 정합니다.
    * @type SelectOnChangeHandler
    */
-  onChange: SelectOnChangeHandler<T>
+  onChange: SelectOnChangeHandler
 }
 
 export type SelectBoxProps =
-  | UnControlledSelectBoxProps<SelectItem>
-  | ControlledSelectBoxProps<SelectItem>
+  | UnControlledSelectBoxProps
+  | ControlledSelectBoxProps
 
 /** Styled Type */
 interface StyledSelectProps

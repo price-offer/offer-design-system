@@ -24,7 +24,7 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
    * Text의 색상을 정합니다.
    * @type ColorKeys | undefined
    */
-  color?: ColorKeys
+  color?: ColorKeys | ''
 }
 
 type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
@@ -34,7 +34,7 @@ export const Text = forwardRef(function Text(
     tag = 'span',
     children,
     styleType: textStyle = 'body01M',
-    color = 'grayScale90',
+    color = '',
     ...props
   }: TextProps,
   ref: ForwardedRef<HTMLSpanElement>
@@ -52,7 +52,7 @@ export const Text = forwardRef(function Text(
 })
 
 const StyledText = styled.span<StyledTextProps>`
-  color: ${({ color, theme }): string => theme.colors[color]};
+  color: ${({ color, theme }): string => color && theme.colors[color]};
 
   ${({ theme, styleType }): string => theme.fonts[styleType]};
 `

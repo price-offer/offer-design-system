@@ -6,46 +6,47 @@ import type {
 } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
-import { Text } from '@offer-ui/components/Text'
 
-export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
-  /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
+export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
+  /** CheckBox 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
    */
   formName: string
-  /** Radio 컴포넌트에 보여질 옵션들을 정합니다
-   * @type { code: string, name: string } []
+  /** CheckBox 컴포넌트에 사용될 key 값인 code를 정합니다
+   * @type string
    */
-  items: {
-    code: string
-    name: string
-  }[]
-  /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
-   * @type 'horizontal' | 'vertical'
+  code: string
+  /** CheckBox 컴포넌트에 사용될 checked 유무를 확인할 checked를 정합니다.
+   * @type string
    */
-  direction: 'horizontal' | 'vertical'
-  /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
+  checked: boolean
+  /** CheckBox 컴포넌트에 사용될 element를 정합니다.
+   * @type string
+   */
+  element: ReactNode
+  /** CheckBox 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
   onChange(e: ChangeEvent<HTMLFormElement>): void
-  /** Radio 컴포넌트에 들어갈 element들을 render시켜줄 함수를 전달합니다.
+  /** CheckBox 컴포넌트를 눌렀을때 실행할 함수를 정합니다.
    * @type void
    */
-  render?(name: string): ReactNode
+  onCheck(code: string): void | undefined
+  /** CheckBox 컴포넌트에 추가로 render시킬 함수를 정합니다.
+   * @type void
+   */
 }
 
-type StyledFormProps = StyledProps<RadioProps, 'direction'>
-
-export const Radio = forwardRef(function Radio(
+export const CheckBox = forwardRef(function Radio(
   {
     formName,
     onChange,
-    items,
-    direction = 'horizontal',
-    render,
+    code,
+    checked,
+    element,
+    onCheck,
     ...props
-  }: RadioProps,
+  }: CheckBoxProps,
   ref: ForwardedRef<HTMLFormElement>
 ) {
   const handleRadiobutton = (
@@ -54,30 +55,28 @@ export const Radio = forwardRef(function Radio(
     onChange(e)
   }
 
-  const radioList = items?.map(({ code, name }) => (
-    <StyledInputWrapper key={code} className={`${direction}`}>
-      <StyledInput
-        id={code}
-        name={formName}
-        type="radio"
-        value={code}
-        onChange={handleRadiobutton}
-      />
-      {render ? render(name) : <Text styleType="body01R">{name}</Text>}
-      <StyledCheckMark />
-    </StyledInputWrapper>
-  ))
-
   return (
-    <StyledForm ref={ref} {...props} direction={direction}>
-      {radioList}
+    <StyledForm ref={ref} {...props}>
+      <StyledInputWrapper key={code}>
+        <StyledInput
+          checked={checked}
+          id={code}
+          name={formName}
+          type="checkbox"
+          value={code}
+          onChange={handleRadiobutton}
+          onClick={(): void => {
+            onCheck(code)
+          }}
+        />
+        {element}
+        <StyledCheckMark />
+      </StyledInputWrapper>
     </StyledForm>
   )
 })
 
-const StyledForm = styled.form<StyledFormProps>`
-  display: ${({ direction }): string =>
-    direction === 'vertical' ? 'block' : 'flex'};
+const StyledForm = styled.form`
   gap: 10px;
 `
 const StyledInputWrapper = styled.label`

@@ -12,6 +12,7 @@ type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
 type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
   StyledPriceUnitProps
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
+type StyledWrapperProps = StyledProps<DefaultInputProps, 'width'>
 
 export const DefaultInput = forwardRef(function DefaultInput(
   {
@@ -20,6 +21,7 @@ export const DefaultInput = forwardRef(function DefaultInput(
     guideMessage = '',
     isPrice = false,
     isSmall,
+    width = '100%',
     onChange,
     ...args
   }: DefaultInputProps,
@@ -37,7 +39,7 @@ export const DefaultInput = forwardRef(function DefaultInput(
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper width={width}>
       <StyledLabel>
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
@@ -64,9 +66,10 @@ export const DefaultInput = forwardRef(function DefaultInput(
   )
 })
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<StyledWrapperProps>`
   display: inline-flex;
   flex-direction: column;
+  width: ${({ width }): string => width};
 `
 
 const StyledLabel = styled.label`
@@ -79,7 +82,6 @@ const StyledLabel = styled.label`
 `
 const StyledInput = styled.input<StyledInputProps>`
   margin: 8px 0;
-  width: 328px;
   border: none;
   ${({ isSmall, isPrice }): string => {
     if (isSmall) {

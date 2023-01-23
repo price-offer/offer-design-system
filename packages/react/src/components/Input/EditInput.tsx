@@ -13,6 +13,7 @@ interface StyledInputProps {
   isSmall: boolean
 }
 type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
+type StyledInputFormProps = StyledProps<EditInputProps, 'width'>
 
 export const EditInput = forwardRef(function EditInput(
   {
@@ -20,6 +21,7 @@ export const EditInput = forwardRef(function EditInput(
     guideMessage = '',
     status = 'default',
     isSmall,
+    width = '100%',
     onChange,
     ...props
   }: EditInputProps,
@@ -35,7 +37,7 @@ export const EditInput = forwardRef(function EditInput(
   }
 
   return (
-    <StyledInputForm>
+    <StyledInputForm width={width}>
       <StyledInputLabel>
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
@@ -60,9 +62,10 @@ export const EditInput = forwardRef(function EditInput(
   )
 })
 
-const StyledInputForm = styled.form`
+const StyledInputForm = styled.form<StyledInputFormProps>`
   display: inline-flex;
   flex-direction: column;
+  width: ${({ width }): string => width};
 `
 const StyledInputLabel = styled.label`
   position: relative;
@@ -76,23 +79,13 @@ const StyledInput = styled.input<StyledInputProps>`
   margin-bottom: 8px;
   border: none;
   ${({ isSmall, theme }): string => `
+    height:${isSmall ? 'height: 32px' : 'height: 36px'};
     border-bottom: 1px solid ${theme.colors.black};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
     ::placeholder {
       color: ${theme.colors.grayScale50};
     }
   `}
-  ${({ isSmall }): string => {
-    return isSmall
-      ? `
-        width: 360px;
-        height: 32px;
-      `
-      : `
-        width: 714px;
-        height: 36px;
-      `
-  }}
 `
 
 const StyledPriceUnit = styled(Text)<StyledInputProps>`

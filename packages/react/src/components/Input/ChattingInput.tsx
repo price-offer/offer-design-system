@@ -14,9 +14,10 @@ type StyledInputProps = StyledProps<ChattingInputProps, 'isSmall'>
 type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
+type StyledInputFormProps = StyledProps<ChattingInputProps, 'width'>
 
 export const ChattingInput = forwardRef(function ChattingInput(
-  { isSmall, onChange, ...props }: ChattingInputProps,
+  { isSmall, onChange, width = '100%', ...props }: ChattingInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const [inputValue, setInputValue] = useState<string>('')
@@ -28,7 +29,7 @@ export const ChattingInput = forwardRef(function ChattingInput(
   }
 
   return (
-    <StyledInputForm>
+    <StyledInputForm width={width}>
       <StyledInput
         ref={ref}
         isSmall={isSmall}
@@ -46,12 +47,14 @@ export const ChattingInput = forwardRef(function ChattingInput(
   )
 })
 
-const StyledInputForm = styled.form`
+const StyledInputForm = styled.form<StyledInputFormProps>`
   display: inline-flex;
   position: relative;
+  width: ${({ width }): string => width};
 `
 
 const StyledInput = styled.input<StyledInputProps>`
+  width: 100%;
   border: none;
 
   ${({ theme, isSmall }): string => `
@@ -75,13 +78,11 @@ const StyledInput = styled.input<StyledInputProps>`
   ${({ isSmall }): string => {
     if (isSmall) {
       return `
-        width: 328px;
         height: 40px;
         padding: 10px 52px 10px 12px;
       `
     }
     return `
-      width: 639px;
       height: 48px;
       padding: 12px 60px 12px 20px;
     `

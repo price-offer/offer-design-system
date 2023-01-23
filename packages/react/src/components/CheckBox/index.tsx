@@ -13,20 +13,20 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
    * @type string
    */
   formName: string
-  /** CheckBox 컴포넌트에 보여질 옵션들을 정합니다
-   * @type { code: string, name: string } []
+  /** CheckBox 컴포넌트에 사용될 key 값인 code를 정합니다
+   * @type string
    */
-  items: {
-    code: string
-    checked: boolean
-    element: ReactNode
-  }[]
+  code: string
+  /** CheckBox 컴포넌트에 사용될 checked 유무를 확인할 checked를 정합니다.
+   * @type string
+   */
+  checked: boolean
+  /** CheckBox 컴포넌트에 사용될 element를 정합니다.
+   * @type string
+   */
+  element: ReactNode
   /** CheckBox 컴포넌트 내부 input 타입을 정합니다.
    * @type 'radio' | 'checkbox'
-   */
-  componentType: 'radio' | 'checkbox'
-  /** CheckBox 컴포넌트 내부 옵션의 방향을 정합니다.
-   * @type 'horizontal' | 'vertical'
    */
   direction: 'horizontal' | 'vertical'
   /** CheckBox 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
@@ -44,13 +44,14 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
 
 type StyledFormProps = StyledProps<CheckBoxProps, 'direction'>
 
-export const Radio = forwardRef(function Radio(
+export const CheckBox = forwardRef(function Radio(
   {
     formName,
     onChange,
-    items,
+    code,
+    checked,
     direction = 'horizontal',
-    componentType,
+    element,
     onCheck,
     ...props
   }: CheckBoxProps,
@@ -62,27 +63,23 @@ export const Radio = forwardRef(function Radio(
     onChange(e)
   }
 
-  const checkBoxList = items?.map(({ code, checked, element }) => (
-    <StyledInputWrapper key={code} className={`${direction}`}>
-      <StyledInput
-        checked={checked}
-        id={code}
-        name={formName}
-        type={componentType}
-        value={code}
-        onChange={handleRadiobutton}
-        onClick={(): void => {
-          onCheck(code)
-        }}
-      />
-      {element}
-      <StyledCheckMark />
-    </StyledInputWrapper>
-  ))
-
   return (
     <StyledForm ref={ref} {...props} direction={direction}>
-      {checkBoxList}
+      <StyledInputWrapper key={code} className={`${direction}`}>
+        <StyledInput
+          checked={checked}
+          id={code}
+          name={formName}
+          type="checkbox"
+          value={code}
+          onChange={handleRadiobutton}
+          onClick={(): void => {
+            onCheck(code)
+          }}
+        />
+        {element}
+        <StyledCheckMark />
+      </StyledInputWrapper>
     </StyledForm>
   )
 })

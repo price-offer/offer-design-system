@@ -2,6 +2,7 @@ import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
+import { useMedia } from '@offer-ui/hooks/useMedia'
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
@@ -52,13 +53,15 @@ const NAV_TYPE = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 } as const
+const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
 export const Carousel = forwardRef(function Carousel(
   { images, isArrow, size = 687, name, ...props }: CarouselProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const carouselWidthSize = size
+  const { desktop } = useMedia()
+  const carouselWidthSize = desktop ? size : FULL_SCREEN_WIDTH
   const lastImageValue = carouselWidthSize * (images.length - 1)
   const [currentImageValue, setCurrentImageValue] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)

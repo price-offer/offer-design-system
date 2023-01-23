@@ -6,7 +6,6 @@ import type {
 } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
 
 export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
   /** CheckBox 컴포넌트의 이름을 정합니다.(input name에 사용)
@@ -25,10 +24,6 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
    * @type string
    */
   element: ReactNode
-  /** CheckBox 컴포넌트 내부 input 타입을 정합니다.
-   * @type 'radio' | 'checkbox'
-   */
-  direction: 'horizontal' | 'vertical'
   /** CheckBox 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
@@ -42,15 +37,12 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
    */
 }
 
-type StyledFormProps = StyledProps<CheckBoxProps, 'direction'>
-
 export const CheckBox = forwardRef(function Radio(
   {
     formName,
     onChange,
     code,
     checked,
-    direction = 'horizontal',
     element,
     onCheck,
     ...props
@@ -64,8 +56,8 @@ export const CheckBox = forwardRef(function Radio(
   }
 
   return (
-    <StyledForm ref={ref} {...props} direction={direction}>
-      <StyledInputWrapper key={code} className={`${direction}`}>
+    <StyledForm ref={ref} {...props}>
+      <StyledInputWrapper key={code}>
         <StyledInput
           checked={checked}
           id={code}
@@ -84,9 +76,7 @@ export const CheckBox = forwardRef(function Radio(
   )
 })
 
-const StyledForm = styled.form<StyledFormProps>`
-  display: ${({ direction }): string =>
-    direction === 'vertical' ? 'block' : 'flex'};
+const StyledForm = styled.form`
   gap: 10px;
 `
 const StyledInputWrapper = styled.label`

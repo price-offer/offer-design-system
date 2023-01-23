@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions'
 import type { ChangeEvent } from 'react'
 import { CheckBox } from './index'
 import type { CheckBoxProps } from './index'
-import useCheckList from '@offer-ui/hooks/useCheckList'
+import useCheckList from './hooks'
 
 export default {
   component: CheckBox,
@@ -15,20 +15,30 @@ const Template: Story<CheckBoxProps> = args => {
     {
       code: 'option1',
       checked: true,
-      element: <div>옵션1입니다</div>
+      element: <div>옵션1입니다.</div>
+    },
+    {
+      code: 'option2',
+      checked: false,
+      element: <div>옵션2입니다.</div>
     }
   ]
   const { onCheckItem, checkList } = useCheckList(checkItems)
 
   return (
     <>
-      <CheckBox
-        {...args}
-        checked={checkList[0]?.checked}
-        code={checkList[0]?.code}
-        element={checkList[0]?.element}
-        onCheck={onCheckItem}
-      />
+      {checkList.map(checkItem => {
+        return (
+          <CheckBox
+            key={checkItem.code}
+            {...args}
+            checked={checkItem.checked}
+            code={checkItem.code}
+            element={checkItem.element}
+            onCheck={onCheckItem}
+          />
+        )
+      })}
     </>
   )
 }
@@ -37,7 +47,6 @@ export const Default = Template.bind({})
 
 Default.args = {
   formName: 'checkTest',
-  direction: 'horizontal',
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)

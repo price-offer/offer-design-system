@@ -21,10 +21,6 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
     code: string
     name: string
   }[]
-  /** Radio 컴포넌트 내부 input 타입을 정합니다.
-   * @type 'radio' | 'checkbox'
-   */
-  componentType: 'radio' | 'checkbox'
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
@@ -47,7 +43,6 @@ export const Radio = forwardRef(function Radio(
     onChange,
     items,
     direction = 'horizontal',
-    componentType,
     render,
     ...props
   }: RadioProps,
@@ -61,17 +56,14 @@ export const Radio = forwardRef(function Radio(
 
   const radioList = items?.map(({ code, name }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
-      {componentType === 'radio' ? (
-        <Text styleType="body01R">{name}</Text>
-      ) : null}
       <StyledInput
         id={code}
         name={formName}
-        type={componentType}
+        type="radio"
         value={code}
         onChange={handleRadiobutton}
       />
-      {render ? render(name) : null}
+      {render ? render(name) : <Text styleType="body01R">{name}</Text>}
       <StyledCheckMark />
     </StyledInputWrapper>
   ))

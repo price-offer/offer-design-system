@@ -10,11 +10,7 @@ export default {
 } as Meta<RadioProps>
 
 const Template: Story<RadioProps> = args => {
-  return (
-    <>
-      <Radio {...args} />
-    </>
-  )
+  return <Radio {...args} />
 }
 export const Default = Template.bind({})
 Default.args = {
@@ -33,7 +29,6 @@ Default.args = {
       name: '옵션3'
     }
   ],
-  componentType: 'radio',
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)

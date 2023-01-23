@@ -10,24 +10,27 @@ type SearchInputProps = Omit<
   'label' | 'status' | 'message' | 'isPrice'
 >
 type StyledInputProps = StyledProps<SearchInputProps, 'isSmall'>
+type StyledInputFormProps = StyledProps<SearchInputProps, 'width'>
 
 export const SearchInput = forwardRef(function SearchInput(
-  { isSmall, ...props }: SearchInputProps,
+  { isSmall, width = '100%', ...props }: SearchInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   return (
-    <StyledInputForm>
+    <StyledInputForm width={width}>
       <StyledIcon color={'grayScale50'} isSmall={isSmall} type="search" />
       <StyledInput ref={ref} isSmall={isSmall} {...props} />
     </StyledInputForm>
   )
 })
 
-const StyledInputForm = styled.form`
+const StyledInputForm = styled.form<StyledInputFormProps>`
   display: inline-flex;
   position: relative;
+  width: ${({ width }): string => width};
 `
 const StyledInput = styled.input<StyledInputProps>`
+  width: 100%;
   border: none;
 
   ${({ isSmall, theme }): string => `
@@ -51,13 +54,11 @@ const StyledInput = styled.input<StyledInputProps>`
     if (isSmall) {
       return `
       padding: 10px 12px 10px 43px;
-      width: 328px;
       height: 40px;
     `
     }
     return `
       padding: 18px 12px 18px 43px;
-      width: 360px;
       height: 56px;
     `
   }}

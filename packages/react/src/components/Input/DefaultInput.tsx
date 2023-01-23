@@ -8,18 +8,26 @@ import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components/Text'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
-type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'>
-type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice'> &
-  StyledPriceUnitProps
+type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'> & {
+  hasGuideMessage: boolean
+}
+type StyledInputProps = StyledProps<
+  DefaultInputProps,
+  'isPrice' | 'isSmall' | 'label'
+> & {
+  hasGuideMessage: boolean
+}
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
+type StyledWrapperProps = StyledProps<DefaultInputProps, 'width'>
 
 export const DefaultInput = forwardRef(function DefaultInput(
   {
-    label,
+    label = '',
     status = 'default',
     guideMessage = '',
     isPrice = false,
     isSmall,
+    width = '100%',
     onChange,
     ...args
   }: DefaultInputProps,
@@ -37,18 +45,21 @@ export const DefaultInput = forwardRef(function DefaultInput(
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper width={width}>
       <StyledLabel>
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
           ref={ref}
+          hasGuideMessage={hasGuideMessage}
           isPrice={isPrice}
           isSmall={isSmall}
+          label={label}
           onChange={handleInputChange}
           {...args}
         />
         {isPrice && (
           <StyledPriceUnit
+            hasGuideMessage={hasGuideMessage}
             isSmall={isSmall}
             styleType={isSmall ? 'body02M' : 'subtitle01M'}>
             {VALIDATE_MESSAGE.PRICE_UNIT}
@@ -64,9 +75,10 @@ export const DefaultInput = forwardRef(function DefaultInput(
   )
 })
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<StyledWrapperProps>`
   display: inline-flex;
   flex-direction: column;
+  width: ${({ width }): string => width};
 `
 
 const StyledLabel = styled.label`
@@ -78,8 +90,8 @@ const StyledLabel = styled.label`
   `}
 `
 const StyledInput = styled.input<StyledInputProps>`
-  margin: 8px 0;
-  width: 328px;
+  margin: ${({ label, hasGuideMessage }): string =>
+    `${label ? '8px' : '0'} 0 ${hasGuideMessage ? '8px' : '0'}`};
   border: none;
   ${({ isSmall, isPrice }): string => {
     if (isSmall) {
@@ -111,9 +123,9 @@ const StyledInput = styled.input<StyledInputProps>`
 const StyledPriceUnit = styled(Text)<StyledPriceUnitProps>`
   position: absolute;
   right: 12px;
-  ${({ isSmall, theme }): string => `
+  ${({ isSmall, theme, hasGuideMessage }): string => `
     color:${theme.colors.grayScale90};
-    bottom: ${isSmall ? '19px' : '25px'};
+    bottom: ${(isSmall ? 19 : 25) - (hasGuideMessage ? 0 : 8)}px;
   `}
 `
 const StyledStatus = styled(Text)<StyledStatusProps>`

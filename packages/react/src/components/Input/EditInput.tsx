@@ -1,14 +1,13 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import type { ColorKeys } from '@offer-ui/themes'
+import type { MainInputProps as EditInputProps } from './index'
 import { forwardRef } from 'react'
-import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
-type EditInputProps = Omit<MainInputProps, 'isPrice'>
 interface StyledInputProps {
   isSmall: boolean
 }
@@ -23,6 +22,7 @@ export const EditInput = forwardRef(function EditInput(
     isSmall,
     width = '100%',
     onChange,
+    isPrice,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -30,6 +30,10 @@ export const EditInput = forwardRef(function EditInput(
   const hasGuideMessage = status !== 'none'
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    if (!isPrice) {
+      return onChange?.(e)
+    }
+
     const numberValue = convertToNumber(e.target.value)
     e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
 
@@ -46,12 +50,14 @@ export const EditInput = forwardRef(function EditInput(
           onChange={handleChange}
           {...props}
         />
-        <StyledPriceUnit
-          color="grayScale90"
-          isSmall={isSmall}
-          styleType="subtitle01M">
-          {VALIDATE_MESSAGE.PRICE_UNIT}
-        </StyledPriceUnit>
+        {isPrice && (
+          <StyledPriceUnit
+            color="grayScale90"
+            isSmall={isSmall}
+            styleType="subtitle01M">
+            {VALIDATE_MESSAGE.PRICE_UNIT}
+          </StyledPriceUnit>
+        )}
       </StyledInputLabel>
       {hasGuideMessage && (
         <StyledInputGuideMessage status={status} styleType="caption01M">

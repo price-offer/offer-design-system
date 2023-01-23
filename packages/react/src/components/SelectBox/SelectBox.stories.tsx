@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react'
 import { SelectBox } from './index'
 import type { SelectBoxProps } from './index'
-import type { SelectItem } from '@offer-ui/types/offer'
+import type { SelectOnChangeHandler } from '@offer-ui/types/offer'
 import { useState } from 'react'
 
 export default {
@@ -22,8 +22,10 @@ export default {
 const Template: Story<SelectBoxProps> = args => {
   const [value, setValue] = useState<string>('select1')
 
-  const handleChange = (item: SelectItem): void => {
-    setValue(item.value)
+  const handleChange: SelectOnChangeHandler<{ code: string; name: string }> = (
+    item
+  ): void => {
+    setValue(item.code)
   }
 
   return (
@@ -51,12 +53,12 @@ Default.args = {
   colorType: 'light',
   items: [
     {
-      text: '선택1',
-      value: 'select1'
+      code: 'select1',
+      name: '선택1'
     },
     {
-      text: '선택2',
-      value: 'select2'
+      code: 'select2',
+      name: '선택2'
     }
   ],
   size: 'small'

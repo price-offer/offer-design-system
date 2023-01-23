@@ -1,5 +1,4 @@
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
-import type { Colors } from '@offer-ui/themes/colors'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
@@ -14,11 +13,25 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
    * Badge 내부에 들어갈 내용을 정합니다.
    * @type ReactNode
    */
-  children: Exclude<ReactNode, 'undefined' | 'null'>
+  children: Exclude<ReactNode, undefined | null>
 }
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>
-type ApplyColorScheme = (colorType: BadgeColorType, colors: Colors) => string
+
+const BADGE_COLORS = {
+  orange: {
+    background: 'brandPrimaryWeak',
+    text: 'brandPrimary'
+  },
+  gray: {
+    background: 'grayScale10',
+    text: 'grayScale50'
+  },
+  purple: {
+    background: 'brandSubWeak',
+    text: 'brandSub'
+  }
+} as const
 
 export const Badge = forwardRef(function Badge(
   { colorType, children, ...props }: BadgeProps,
@@ -26,32 +39,12 @@ export const Badge = forwardRef(function Badge(
 ) {
   return (
     <StyledBadge ref={ref} colorType={colorType} {...props}>
-      <Text styleType="caption01M">{children}</Text>
+      <Text color={BADGE_COLORS[colorType].text} styleType="caption01M">
+        {children}
+      </Text>
     </StyledBadge>
   )
 })
-
-const applyColorScheme: ApplyColorScheme = (colorScheme, colors) => {
-  switch (colorScheme) {
-    case 'gray':
-      return `
-        color: ${colors.grayScale50};
-        background: ${colors.grayScale10};
-      `
-    case 'orange':
-      return `
-          color: ${colors.brandPrimary};
-          background: ${colors.brandPrimaryWeak};
-        `
-    case 'purple':
-      return `
-          color: ${colors.brandSub};
-          background: ${colors.brandSubWeak};
-        `
-    default:
-      return ''
-  }
-}
 
 const StyledBadge = styled.div<StyledBadgeProps>`
   display: inline-block;
@@ -59,6 +52,6 @@ const StyledBadge = styled.div<StyledBadgeProps>`
   padding: 2px 6px;
   text-align: center;
   font-feature-settings: normal;
-  ${({ colorType, theme }): string =>
-    applyColorScheme(colorType, theme.colors)};
+  background-color: ${({ colorType, theme }): string =>
+    theme.colors[BADGE_COLORS[colorType].background]};
 `

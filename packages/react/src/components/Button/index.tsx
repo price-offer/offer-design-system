@@ -33,7 +33,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * Button 내부에 작성할 문자열을 정합니다.
    * @type string
    */
-  children: Exclude<ReactNode, 'undefined' | 'null'>
+  children: Exclude<ReactNode, undefined | null>
 }
 type StyledButtonProps = StyledProps<
   ButtonProps,

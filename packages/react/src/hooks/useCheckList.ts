@@ -4,9 +4,8 @@ import { useState } from 'react'
 
 interface CheckItemType {
   code: string
-  name?: string
-  checked?: boolean
-  element?: ReactNode
+  checked: boolean
+  element: ReactNode
 }
 
 interface ReturnType {

@@ -1,39 +1,48 @@
-import type { ChangeEvent, FormHTMLAttributes, ForwardedRef } from 'react'
+import type {
+  ChangeEvent,
+  FormHTMLAttributes,
+  ForwardedRef,
+  ReactNode
+} from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
-import { Text } from '@offer-ui/components/Text'
 
-export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
-  /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
+export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
+  /** CheckBox 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
    */
   formName: string
-  /** Radio 컴포넌트에 보여질 옵션들을 정합니다
+  /** CheckBox 컴포넌트에 보여질 옵션들을 정합니다
    * @type { code: string, name: string } []
    */
   items: {
     code: string
-    name?: string
+    checked: boolean
+    element: ReactNode
   }[]
-  /** Radio 컴포넌트 내부 input 타입을 정합니다.
+  /** CheckBox 컴포넌트 내부 input 타입을 정합니다.
    * @type 'radio' | 'checkbox'
    */
   componentType: 'radio' | 'checkbox'
-  /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
+  /** CheckBox 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
   direction: 'horizontal' | 'vertical'
-  /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
+  /** CheckBox 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
   onChange(e: ChangeEvent<HTMLFormElement>): void
-  /** Radio 컴포넌트를 checkbox로 쓸경우에 쓰는 props이며 체크되는 함수를 전달합니다..
+  /** CheckBox 컴포넌트를 눌렀을때 실행할 함수를 정합니다.
+   * @type void
+   */
+  onCheck(code: string): void | undefined
+  /** CheckBox 컴포넌트에 추가로 render시킬 함수를 정합니다.
    * @type void
    */
 }
 
-type StyledFormProps = StyledProps<RadioProps, 'direction'>
+type StyledFormProps = StyledProps<CheckBoxProps, 'direction'>
 
 export const Radio = forwardRef(function Radio(
   {
@@ -42,8 +51,9 @@ export const Radio = forwardRef(function Radio(
     items,
     direction = 'horizontal',
     componentType,
+    onCheck,
     ...props
-  }: RadioProps,
+  }: CheckBoxProps,
   ref: ForwardedRef<HTMLFormElement>
 ) {
   const handleRadiobutton = (
@@ -52,25 +62,27 @@ export const Radio = forwardRef(function Radio(
     onChange(e)
   }
 
-  const radioList = items?.map(({ code, name }) => (
+  const checkBoxList = items?.map(({ code, checked, element }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
-      {componentType === 'radio' ? (
-        <Text styleType="body01R">{name}</Text>
-      ) : null}
       <StyledInput
+        checked={componentType === 'radio' ? true : checked}
         id={code}
         name={formName}
         type={componentType}
         value={code}
         onChange={handleRadiobutton}
+        onClick={(): void => {
+          onCheck(code)
+        }}
       />
+      {element}
       <StyledCheckMark />
     </StyledInputWrapper>
   ))
 
   return (
     <StyledForm ref={ref} {...props} direction={direction}>
-      {radioList}
+      {checkBoxList}
     </StyledForm>
   )
 })

@@ -65,7 +65,7 @@ export const Radio = forwardRef(function Radio(
   const checkBoxList = items?.map(({ code, checked, element }) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
       <StyledInput
-        checked={componentType === 'radio' ? true : checked}
+        checked={checked}
         id={code}
         name={formName}
         type={componentType}

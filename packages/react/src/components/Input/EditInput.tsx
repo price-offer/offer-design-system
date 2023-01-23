@@ -10,6 +10,7 @@ import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
 interface StyledInputProps {
   isSmall: boolean
+  hasGuideMessage: boolean
 }
 type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
 type StyledInputFormProps = StyledProps<EditInputProps, 'width'>
@@ -46,6 +47,7 @@ export const EditInput = forwardRef(function EditInput(
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
           ref={ref}
+          hasGuideMessage={hasGuideMessage}
           isSmall={isSmall}
           onChange={handleChange}
           {...props}
@@ -53,6 +55,7 @@ export const EditInput = forwardRef(function EditInput(
         {isPrice && (
           <StyledPriceUnit
             color="grayScale90"
+            hasGuideMessage={hasGuideMessage}
             isSmall={isSmall}
             styleType="subtitle01M">
             {VALIDATE_MESSAGE.PRICE_UNIT}
@@ -82,9 +85,9 @@ const StyledInputLabel = styled.label`
 
 const StyledInput = styled.input<StyledInputProps>`
   padding: 8px 20px 8px 0;
-  margin-bottom: 8px;
   border: none;
-  ${({ isSmall, theme }): string => `
+  ${({ isSmall, theme, hasGuideMessage }): string => `
+    margin-bottom: ${hasGuideMessage ? '8px' : '0'};
     height:${isSmall ? 'height: 32px' : 'height: 36px'};
     border-bottom: 1px solid ${theme.colors.black};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
@@ -97,8 +100,8 @@ const StyledInput = styled.input<StyledInputProps>`
 const StyledPriceUnit = styled(Text)<StyledInputProps>`
   position: absolute;
   right: 0;
-  ${({ isSmall }): string => `
-    bottom: ${isSmall ? '14px' : '16px'};
+  ${({ isSmall, hasGuideMessage }): string => `
+    bottom:  ${(isSmall ? 14 : 16) - (hasGuideMessage ? 0 : 8)}px;
   `}
 `
 

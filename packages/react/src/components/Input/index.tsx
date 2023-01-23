@@ -38,6 +38,11 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    * @type boolean | undefined
    */
   isPrice?: boolean
+  /**
+   * Input 너비를 정합니다.
+   * @type string | undefined
+   */
+  width?: string | undefined
 }
 export type MainInputProps = Omit<InputProps, 'inputSize'> & {
   isSmall: boolean
@@ -62,19 +67,19 @@ export const Input = forwardRef(function Input(
   const renderInput = (styleType: InputStyleType): ReactElement => {
     const { EDIT, DEFAULT, CHATTING, SEARCH } = INPUT_STYLE_KEYS
     const isSmall = inputSize === 'small'
-    const inputTypeProps = { isSmall, ...props }
+    const inputTypeProps = { isSmall, ref, ...props }
 
     switch (styleType) {
       case DEFAULT:
-        return <DefaultInput ref={ref} {...inputTypeProps} />
+        return <DefaultInput {...inputTypeProps} />
       case CHATTING:
-        return <ChattingInput ref={ref} {...inputTypeProps} />
+        return <ChattingInput {...inputTypeProps} />
       case SEARCH:
-        return <SearchInput ref={ref} {...inputTypeProps} />
+        return <SearchInput {...inputTypeProps} />
       case EDIT:
-        return <EditInput ref={ref} {...inputTypeProps} />
+        return <EditInput {...inputTypeProps} />
       default:
-        return <DefaultInput ref={ref} {...inputTypeProps} />
+        return <DefaultInput {...inputTypeProps} />
     }
   }
 

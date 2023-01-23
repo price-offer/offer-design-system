@@ -19,7 +19,7 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
    * Text로 작성할 문자열을 정합니다.
    * @type string
    */
-  children: Exclude<ReactNode, 'undefined' | 'null'>
+  children: Exclude<ReactNode, undefined | null>
   /**
    * Text의 색상을 정합니다.
    * @type ColorKeys | undefined

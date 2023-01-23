@@ -1,6 +1,6 @@
+import type { ChangeEvent, ReactNode } from 'react'
 import type { Meta, Story } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import type { ChangeEvent } from 'react'
 import { Radio } from './index'
 import type { RadioProps } from './index'
 
@@ -9,27 +9,31 @@ export default {
   title: 'Components/Radio'
 } as Meta<RadioProps>
 
-const Template: Story<RadioProps> = args => <Radio {...args} />
-
+const Template: Story<RadioProps> = args => {
+  return <Radio {...args} />
+}
 export const Default = Template.bind({})
 Default.args = {
   formName: 'radiotest',
   items: [
     {
       code: 'option1',
-      name: '옵션 1'
+      name: '옵션1'
     },
     {
-      code: 'option1',
-      name: '옵션 2'
+      code: 'option2',
+      name: '옵션2'
     },
     {
-      code: 'option1',
-      name: '옵션 3'
+      code: 'option3',
+      name: '옵션3'
     }
   ],
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
     action('onChange')(name, value)
+  },
+  render: (name: string): ReactNode => {
+    return <div>name:{name}</div>
   }
 }

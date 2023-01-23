@@ -1,18 +1,19 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import type { ColorKeys } from '@offer-ui/themes'
+import type { MainInputProps as EditInputProps } from './index'
 import { forwardRef } from 'react'
-import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
-type EditInputProps = Omit<MainInputProps, 'isPrice'>
 interface StyledInputProps {
   isSmall: boolean
+  hasGuideMessage: boolean
 }
 type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
+type StyledInputFormProps = StyledProps<EditInputProps, 'width'>
 
 export const EditInput = forwardRef(function EditInput(
   {
@@ -20,7 +21,9 @@ export const EditInput = forwardRef(function EditInput(
     guideMessage = '',
     status = 'default',
     isSmall,
+    width = '100%',
     onChange,
+    isPrice,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -28,6 +31,10 @@ export const EditInput = forwardRef(function EditInput(
   const hasGuideMessage = status !== 'none'
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    if (!isPrice) {
+      return onChange?.(e)
+    }
+
     const numberValue = convertToNumber(e.target.value)
     e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
 
@@ -35,21 +42,25 @@ export const EditInput = forwardRef(function EditInput(
   }
 
   return (
-    <StyledInputForm>
+    <StyledInputForm width={width}>
       <StyledInputLabel>
         {label && <Text styleType="body01M">{label}</Text>}
         <StyledInput
           ref={ref}
+          hasGuideMessage={hasGuideMessage}
           isSmall={isSmall}
           onChange={handleChange}
           {...props}
         />
-        <StyledPriceUnit
-          color="grayScale90"
-          isSmall={isSmall}
-          styleType="subtitle01M">
-          {VALIDATE_MESSAGE.PRICE_UNIT}
-        </StyledPriceUnit>
+        {isPrice && (
+          <StyledPriceUnit
+            color="grayScale90"
+            hasGuideMessage={hasGuideMessage}
+            isSmall={isSmall}
+            styleType="subtitle01M">
+            {VALIDATE_MESSAGE.PRICE_UNIT}
+          </StyledPriceUnit>
+        )}
       </StyledInputLabel>
       {hasGuideMessage && (
         <StyledInputGuideMessage status={status} styleType="caption01M">
@@ -60,9 +71,10 @@ export const EditInput = forwardRef(function EditInput(
   )
 })
 
-const StyledInputForm = styled.form`
+const StyledInputForm = styled.form<StyledInputFormProps>`
   display: inline-flex;
   flex-direction: column;
+  width: ${({ width }): string => width};
 `
 const StyledInputLabel = styled.label`
   position: relative;
@@ -73,33 +85,23 @@ const StyledInputLabel = styled.label`
 
 const StyledInput = styled.input<StyledInputProps>`
   padding: 8px 20px 8px 0;
-  margin-bottom: 8px;
   border: none;
-  ${({ isSmall, theme }): string => `
+  ${({ isSmall, theme, hasGuideMessage }): string => `
+    margin-bottom: ${hasGuideMessage ? '8px' : '0'};
+    height:${isSmall ? 'height: 32px' : 'height: 36px'};
     border-bottom: 1px solid ${theme.colors.black};
     ${theme.fonts[isSmall ? 'body01R' : 'display02M']}}
     ::placeholder {
       color: ${theme.colors.grayScale50};
     }
   `}
-  ${({ isSmall }): string => {
-    return isSmall
-      ? `
-        width: 360px;
-        height: 32px;
-      `
-      : `
-        width: 714px;
-        height: 36px;
-      `
-  }}
 `
 
 const StyledPriceUnit = styled(Text)<StyledInputProps>`
   position: absolute;
   right: 0;
-  ${({ isSmall }): string => `
-    bottom: ${isSmall ? '14px' : '16px'};
+  ${({ isSmall, hasGuideMessage }): string => `
+    bottom:  ${(isSmall ? 14 : 16) - (hasGuideMessage ? 0 : 8)}px;
   `}
 `
 

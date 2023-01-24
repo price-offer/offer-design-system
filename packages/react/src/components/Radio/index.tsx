@@ -15,12 +15,9 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
    */
   formName: string
   /** Radio 컴포넌트에 보여질 옵션들을 정합니다
-   * @type { code: string, name: string } []
+   * @type any
    */
-  items: {
-    code: string
-    name: string
-  }[]
+  items: any
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
@@ -54,7 +51,7 @@ export const Radio = forwardRef(function Radio(
     onChange(e)
   }
 
-  const radioList = items?.map(({ code, name }) => (
+  const radioList = items?.map(({ code, name }: any) => (
     <StyledInputWrapper key={code} className={`${direction}`}>
       <StyledInput
         id={code}

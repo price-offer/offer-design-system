@@ -3,14 +3,14 @@ import type { ReactNode } from 'react'
 import { useState } from 'react'
 
 interface CheckItemType {
-  code: string
+  code: any
   checked: boolean
-  element: ReactNode
+  element: Exclude<ReactNode, undefined | null>
 }
 
 interface ReturnType {
   checkList: CheckItemType[]
-  onCheckItem(code: string): void
+  onCheckItem(code: any): void
 }
 
 const useCheckList = (checkList: CheckItemType[]): ReturnType => {

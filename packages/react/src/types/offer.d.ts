@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/** SelectBox  */
-export interface SelectItem {
+export interface Option {
   code: any
   name: any
 }

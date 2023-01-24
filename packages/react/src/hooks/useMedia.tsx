@@ -17,7 +17,7 @@ const useMedia = (): UseMediaType => {
   )
 
   useLayoutEffect(() => {
-    if (typeof window === undefined) {
+    if (isClient) {
       return
     }
     const onResize = (): void => {

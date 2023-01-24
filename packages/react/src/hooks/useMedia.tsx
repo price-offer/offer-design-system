@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 interface UseMediaType {
   mobile: boolean
@@ -16,7 +16,10 @@ const useMedia = (): UseMediaType => {
     isClient && window.matchMedia('screen and (max-width: 699px').matches
   )
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (typeof window === undefined) {
+      return
+    }
     const onResize = (): void => {
       setIsTablet(
         isClient && window.matchMedia('screen and (max-width: 1023px)').matches

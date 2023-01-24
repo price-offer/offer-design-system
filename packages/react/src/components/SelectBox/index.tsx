@@ -1,8 +1,4 @@
-import type {
-  SelectItem,
-  SelectOnChangeHandler,
-  StyledProps
-} from '@offer-ui/types'
+import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconProps } from '@offer-ui/components/Icon'
 import type { ReactElement } from 'react'
@@ -28,9 +24,9 @@ interface DefaultSelectBoxProps {
    */
   placeholder?: string
   /** SelectBox의 옵션들을 정합니다.
-   * @type { text: string, value: string | number }[]
+   * @type any
    */
-  items: SelectItem[]
+  items: any
 }
 
 interface UnControlledSelectBoxProps extends DefaultSelectBoxProps {
@@ -80,7 +76,8 @@ export const SelectBox = ({
   const value = isControlled ? controlledValue : uncontrolledValue
 
   const ref = useClose<HTMLDivElement>({ onClose: setIsOpen })
-  const text = items.find(option => option.code === value)?.name || placeholder
+  const text =
+    items.find((option: any) => option.code === value)?.name || placeholder
   const isEmpty = value === ''
 
   const handleOpenOptions = (): void => {
@@ -119,7 +116,7 @@ export const SelectBox = ({
       {isOpen && (
         <StyledOptionListWrapper size={size}>
           <StyledOptionList>
-            {items?.map(item => (
+            {items?.map((item: any) => (
               <StyledOptionsWrapper
                 key={item.code}
                 isSelected={value === item.code}

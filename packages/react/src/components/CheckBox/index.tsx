@@ -15,7 +15,7 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
   /** CheckBox 컴포넌트에 사용될 key 값인 code를 정합니다
    * @type string
    */
-  code: string
+  code: any
   /** CheckBox 컴포넌트에 사용될 checked 유무를 확인할 checked를 정합니다.
    * @type string
    */
@@ -31,7 +31,7 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
   /** CheckBox 컴포넌트를 눌렀을때 실행할 함수를 정합니다.
    * @type void
    */
-  onCheck(code: string): void | undefined
+  onCheck(code: any): void | undefined
   /** CheckBox 컴포넌트에 추가로 render시킬 함수를 정합니다.
    * @type void
    */

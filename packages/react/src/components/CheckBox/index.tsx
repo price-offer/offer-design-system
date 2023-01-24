@@ -37,7 +37,7 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
    */
 }
 
-export const CheckBox = forwardRef(function Radio(
+export const CheckBox = forwardRef(function CheckBox(
   {
     formName,
     onChange,

@@ -29,7 +29,7 @@ export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트에 들어갈 element들을 render시켜줄 함수를 전달합니다.
    * @type void
    */
-  render?(name: string): ReactNode
+  render?(name: any): ReactNode
 }
 
 type StyledFormProps = StyledProps<RadioProps, 'direction'>
@@ -60,7 +60,13 @@ export const Radio = forwardRef(function Radio(
         value={code}
         onChange={handleRadiobutton}
       />
-      {render ? render(name) : <Text styleType="body01R">{name}</Text>}
+      {render ? (
+        render(name)
+      ) : (
+        <Text style={{ backgroundColor: 'white' }} styleType="body01R">
+          {name}
+        </Text>
+      )}
       <StyledCheckMark />
     </StyledInputWrapper>
   ))
@@ -84,12 +90,10 @@ const StyledInputWrapper = styled.label`
   align-items: center;
   flex-direction: row;
   padding-left: 25px;
-  margin-bottom: 8px;
   ${({ theme }): string => theme.fonts.body02R};
 
   color: ${({ theme }): string => theme.colors.grayScale90};
   &.vertical {
-    margin-bottom: 20px;
   }
   &.horizontal {
     margin-right: 30px;

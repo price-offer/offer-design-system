@@ -4,7 +4,7 @@ import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
-export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
+export type BadgeProps = {
   /** Badge 컴포넌트의 색상 타입을 정합니다.
    * @type 'gray' | 'orange' | 'purple'
    */
@@ -14,7 +14,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
    * @type ReactNode
    */
   children: Exclude<ReactNode, undefined | null>
-}
+} & HTMLAttributes<HTMLDivElement>
 
 type StyledBadgeProps = Pick<BadgeProps, 'colorType'>
 

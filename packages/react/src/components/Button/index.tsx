@@ -8,7 +8,7 @@ import { forwardRef } from 'react'
 
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'small' | 'medium' | 'large'
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = {
   /**
    * Button의 보여질 형태를 정합니다.
    * @type "ghost" | "outline" | "outlineDisabled" | "solidDisabled" | "solidPrimary" | "solidSub" | undefined
@@ -34,7 +34,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * @type string
    */
   children: Exclude<ReactNode, undefined | null>
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 type StyledButtonProps = StyledProps<
   ButtonProps,
   'styleType' | 'size' | 'width'

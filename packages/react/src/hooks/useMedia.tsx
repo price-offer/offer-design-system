@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react'
 
-interface UseMediaType {
+type UseMediaType = {
   mobile: boolean
   tablet: boolean
   desktop: boolean

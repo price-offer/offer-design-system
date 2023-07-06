@@ -8,8 +8,7 @@ import { forwardRef } from 'react'
 
 export type IconButtonColorType = ColorKeys
 
-export interface IconButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type IconButtonProps = {
   /**
    * IconButton으로 사용될 아이콘의 타입을 정합니다.
    * @type IconType
@@ -34,7 +33,7 @@ export interface IconButtonProps
    * IconButton의 모양을 지정합니다.
    * @type 'rounded' | 'square' | 'ghost' | undefined
    */
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
 type StyledIconButtonProps = StyledProps<IconButtonProps, 'hasShadow'>
 

@@ -6,11 +6,11 @@ import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
-interface ImageInfo {
+type ImageInfo = {
   src: string
   id: string
 }
-export interface ImageModalProps extends HTMLAttributes<HTMLDivElement> {
+export type ImageModalProps = {
   /**
    * ImageModal의 open/close 상태를 정합니다.
    * @type boolean | undefined
@@ -31,18 +31,18 @@ export interface ImageModalProps extends HTMLAttributes<HTMLDivElement> {
    * @type (): void | undefined
    */
   onClose?(): void
-}
+} & HTMLAttributes<HTMLDivElement>
 type ResizeImageInfo = ImageInfo & {
   width: number
   height: number
 }
 
 type StyledDIMProps = StyledProps<ImageModalProps, 'isOpen'>
-interface StyledImageModalProps {
+type StyledImageModalProps = {
   isFixedHeight: boolean
   direction: 'top' | 'bottom'
 }
-interface StyledImageContainerProps {
+type StyledImageContainerProps = {
   currentImageIndex: number
   sumOfHandoverImageWidth: number
 }

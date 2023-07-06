@@ -3,7 +3,7 @@ import type { StyledProps } from '@offer-ui/types/offer'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 
-export interface DividerProps extends HTMLAttributes<HTMLHRElement> {
+export type DividerProps = {
   /** Divider 컴포넌트의 방향을 정합니다.
    * @type 'vertical' | 'horizontal' | undefined
    */
@@ -20,7 +20,7 @@ export interface DividerProps extends HTMLAttributes<HTMLHRElement> {
    * @type 'string' | 'undefined'
    */
   length?: string
-}
+} & HTMLAttributes<HTMLHRElement>
 type StyledDividerProps = StyledProps<
   DividerProps,
   'direction' | 'size' | 'length' | 'gap'

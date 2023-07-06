@@ -4,7 +4,7 @@ import { useMediaQuery } from '@offer-ui/hooks'
 import { forwardRef } from 'react'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 
-export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
+export type ChattingBubbleProps = {
   /** ChattingBubble 컴포넌트의 수신 또는 발신에 대한 형태를 정합니다.
    * @type 'send' | 'receive'
    */
@@ -13,9 +13,9 @@ export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
    * @type string
    */
   children: string
-}
+} & HTMLAttributes<HTMLDivElement>
 
-interface StyledBubbleProps {
+type StyledBubbleProps = {
   isSend: boolean
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 type NativeImageProps = React.ImgHTMLAttributes<HTMLImageElement>
 type ImageEvent = React.SyntheticEvent<HTMLImageElement, Event>
-interface UseImageProps {
+type UseImageProps = {
   src: string
   fallbackSrc?: string
   onLoad?: NativeImageProps['onLoad']
@@ -11,7 +11,7 @@ interface UseImageProps {
 
 type Status = 'loading' | 'failed' | 'pending' | 'loaded' | 'failedFallback'
 
-interface UseImageReturn {
+type UseImageReturn = {
   status: Status
   onFallbackError(): void
   onLoadImage(): void

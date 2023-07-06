@@ -8,7 +8,7 @@ import { forwardRef } from 'react'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import type { UploaderProps } from '../index'
 
-interface StyledProps {
+type StyledProps = {
   isMaximum: boolean
   isShowListType: boolean
 }

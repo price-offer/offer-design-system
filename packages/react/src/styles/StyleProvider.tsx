@@ -4,17 +4,17 @@ import type { ReactElement } from 'react'
 import { GlobalStyle } from './global'
 import { theme as offerTheme } from './themes'
 
-interface DefaultProps extends Omit<ThemeProviderProps, 'theme'> {
+type DefaultProps = {
   theme?: Partial<Theme> | ((outerTheme: Theme) => Theme)
-}
-interface UseSSRProps extends DefaultProps {
+} & Omit<ThemeProviderProps, 'theme'>
+type UseSSRProps = {
   isSSR: true
   cache: EmotionCache
-}
-interface UseCSRProps extends DefaultProps {
+} & DefaultProps
+type UseCSRProps = {
   isSSR?: false
   cache?: never
-}
+} & DefaultProps
 
 type OfferStyleProviderProps = UseSSRProps | UseCSRProps
 

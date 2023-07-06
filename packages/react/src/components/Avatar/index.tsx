@@ -5,7 +5,7 @@ import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 
-export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
+export type AvatarProps = {
   /** Avatar 컴포넌트 이미지의 alt 속성을 정합니다.
    * @type string
    */
@@ -18,7 +18,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    * @type "large" | "medium" | "small" | "xsmall" | undefined
    */
   size?: keyof typeof AVATAR_WRAPPER_SIZE
-}
+} & HTMLAttributes<HTMLDivElement>
 
 type StyledBlankAvatarWrapperProps = StyledProps<AvatarProps, 'size'>
 

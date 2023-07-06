@@ -10,7 +10,7 @@ import { forwardRef } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
 import { useImageUploader } from './useImageUploader'
 
-export interface UploaderProps {
+export type UploaderProps = {
   images: ImageInfo[]
   uploaderRef: MutableRefObject<HTMLInputElement | null>
   imageListRef: MutableRefObject<HTMLDivElement | null>

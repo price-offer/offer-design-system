@@ -6,7 +6,7 @@ import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export type ModalProps = {
   /**
    * Modal 내부에 들어갈 내용을 정합니다.
    * @type ReactNode
@@ -32,7 +32,7 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
    * @type (): void | undefined
    */
   onClose?(): void
-}
+} & HTMLAttributes<HTMLDivElement>
 
 type StyledModalProps = StyledProps<ModalProps, 'width' | 'height'>
 type StyledDIMProps = StyledProps<ModalProps, 'isOpen'>

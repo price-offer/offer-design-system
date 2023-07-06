@@ -5,7 +5,7 @@ import type { ColorKeys } from '@offer-ui/styles/themes'
 import type { ForwardedRef, MouseEventHandler } from 'react'
 import { forwardRef, useState } from 'react'
 
-export interface ToggleButtonProps extends IconButtonProps {
+export type ToggleButtonProps = {
   /**
    * ToggleButton이 toggle된 경우의 아이콘 타입을 정합니다.
    * @type IconType | undefined
@@ -21,7 +21,7 @@ export interface ToggleButtonProps extends IconButtonProps {
    * @type boolean | undefined
    */
   isToggle?: boolean
-}
+} & IconButtonProps
 
 export const ToggleButton = forwardRef(function ToggleButton(
   {

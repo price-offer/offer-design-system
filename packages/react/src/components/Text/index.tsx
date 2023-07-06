@@ -4,7 +4,7 @@ import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
 
-export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
+export type TextProps = {
   /**
    * Text의 스타일을 정합니다.
    * @type FontKeys
@@ -25,7 +25,7 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
    * @type ColorKeys | undefined
    */
   color?: ColorKeys | ''
-}
+} & HTMLAttributes<HTMLSpanElement>
 
 type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
 

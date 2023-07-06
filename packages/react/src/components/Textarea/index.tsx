@@ -4,8 +4,7 @@ import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
 import { forwardRef, useRef } from 'react'
 
-export interface TextAreaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export type TextAreaProps = {
   /** TextArea 컴포넌트 상단의 label 정합니다.
    * @type string | undefined
    */
@@ -22,9 +21,9 @@ export interface TextAreaProps
    * @type void | undefined
    */
   onInput?(e: ChangeEvent<HTMLTextAreaElement>): void
-}
+} & TextareaHTMLAttributes<HTMLTextAreaElement>
 
-interface StyledTextAreaProps {
+type StyledTextAreaProps = {
   isFilled: boolean
 }
 

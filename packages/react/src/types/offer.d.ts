@@ -1,16 +1,16 @@
-export interface Option {
+export type Option = {
   code: any
   name: any
 }
 export declare type SelectOnChangeHandler<T = any> = (item: T) => void
 
 /**  ImageUploader */
-export interface ImageInfo {
+export type ImageInfo = {
   isRepresent: boolean
   id: string
   url: string
 }
-interface ImageUploaderParams {
+type ImageUploaderParams = {
   eventType: 'upload' | 'remove'
   images: ImageInfo[]
 }

@@ -6,7 +6,7 @@ import { forwardRef } from 'react'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 
-export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+export type ImageProps = {
   /** image의 alt 속성을 정합니다.
    * @type string
    */
@@ -39,13 +39,13 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
    * @type "fill" | "contain" | "cover" | "none" | undefined
    */
   objectFit?: ObjectFit
-}
+} & ImgHTMLAttributes<HTMLImageElement>
 
 type StyledImgProps = StyledProps<
   ImageProps,
   'boxSize' | 'radius' | 'objectFit' | 'width' | 'height'
 >
-interface ApplyShapeParams {
+type ApplyShapeParams = {
   boxSize: string
   radius: string
   width: string

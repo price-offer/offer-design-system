@@ -8,7 +8,7 @@ import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import type { MainInputProps as EditInputProps } from './index'
 
-interface StyledInputProps {
+type StyledInputProps = {
   isSmall: boolean
   hasGuideMessage: boolean
 }

@@ -1,8 +1,8 @@
 import type { ForwardedRef, InputHTMLAttributes, ReactElement } from 'react'
+import { forwardRef } from 'react'
 import { ChattingInput } from './ChattingInput'
 import { DefaultInput } from './DefaultInput'
 import { EditInput } from './EditInput'
-import { forwardRef } from 'react'
 import { SearchInput } from './SearchInput'
 
 type InputStyleType = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]

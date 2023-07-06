@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react'
+import { useState } from 'react'
 import { Modal } from './index'
 import type { ModalProps } from './index'
-import { useState } from 'react'
 
 export default {
   component: Modal,

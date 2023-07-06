@@ -1,8 +1,8 @@
-import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
-import { forwardRef, useRef } from 'react'
-import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { mergeRefs } from '@offer-ui/utils/mergeRefs'
+import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
+import { forwardRef, useRef } from 'react'
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {

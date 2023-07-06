@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import {
   ArrowLeft,
   ArrowUp,
@@ -33,11 +34,10 @@ import {
   Store,
   TriangleDown
 } from '@offer-ui/constants/icons'
-import type { ForwardedRef, SVGAttributes } from 'react'
 import type { ColorKeys } from '@offer-ui/themes'
-import { forwardRef } from 'react'
-import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import type { ForwardedRef, SVGAttributes } from 'react'
+import { forwardRef } from 'react'
 
 export type IconType = keyof typeof ICON_TYPES
 export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {

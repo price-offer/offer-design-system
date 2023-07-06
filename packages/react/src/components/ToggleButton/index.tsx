@@ -1,9 +1,9 @@
-import type { ForwardedRef, MouseEventHandler } from 'react'
-import { forwardRef, useState } from 'react'
-import type { ColorKeys } from '@offer-ui/styles/themes'
+import type { IconType } from '@offer-ui/components/Icon'
 import { IconButton } from '@offer-ui/components/IconButton'
 import type { IconButtonProps } from '@offer-ui/components/IconButton'
-import type { IconType } from '@offer-ui/components/Icon'
+import type { ColorKeys } from '@offer-ui/styles/themes'
+import type { ForwardedRef, MouseEventHandler } from 'react'
+import { forwardRef, useState } from 'react'
 
 export interface ToggleButtonProps extends IconButtonProps {
   /**

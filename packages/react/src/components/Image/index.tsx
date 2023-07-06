@@ -1,8 +1,8 @@
+import styled from '@emotion/styled'
+import { useImage } from '@offer-ui/hooks'
+import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, ImgHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
-import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
-import { useImage } from '@offer-ui/hooks'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 

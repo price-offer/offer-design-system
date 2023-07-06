@@ -1,12 +1,12 @@
-import type { ChangeEventHandler, ForwardedRef } from 'react'
-import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
-import type { ColorKeys } from '@offer-ui/themes'
-import type { MainInputProps as DefaultInputProps } from './index'
-import { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components/Text'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
+import type { ColorKeys } from '@offer-ui/themes'
+import type { StyledProps } from '@offer-ui/types'
+import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
+import { forwardRef } from 'react'
+import type { ChangeEventHandler, ForwardedRef } from 'react'
+import type { MainInputProps as DefaultInputProps } from './index'
 
 type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'> & {
   hasGuideMessage: boolean

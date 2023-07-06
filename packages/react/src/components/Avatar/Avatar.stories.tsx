@@ -1,5 +1,5 @@
-import { Avatar, AVATAR_WRAPPER_SIZE } from './index'
 import type { Meta, Story } from '@storybook/react'
+import { Avatar, AVATAR_WRAPPER_SIZE } from './index'
 import type { AvatarProps } from './index'
 
 export default {

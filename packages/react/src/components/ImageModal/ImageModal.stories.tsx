@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react'
+import { useState } from 'react'
 import { ImageModal } from './index'
 import type { ImageModalProps } from './index'
-import { useState } from 'react'
 
 export default {
   component: ImageModal,

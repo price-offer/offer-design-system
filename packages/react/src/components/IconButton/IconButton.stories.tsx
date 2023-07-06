@@ -1,5 +1,5 @@
-import type { Meta, Story } from '@storybook/react'
 import { colors } from '@offer-ui/styles/themes'
+import type { Meta, Story } from '@storybook/react'
 import { ICON_TYPES } from '../Icon'
 import { IconButton } from './index'
 import type { IconButtonProps } from './index'

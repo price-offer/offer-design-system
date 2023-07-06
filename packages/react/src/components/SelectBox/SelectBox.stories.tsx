@@ -1,8 +1,8 @@
+import type { SelectOnChangeHandler } from '@offer-ui/types/offer'
 import type { Meta, Story } from '@storybook/react'
+import { useState } from 'react'
 import { SelectBox } from './index'
 import type { SelectBoxProps } from './index'
-import type { SelectOnChangeHandler } from '@offer-ui/types/offer'
-import { useState } from 'react'
 
 export default {
   argTypes: {

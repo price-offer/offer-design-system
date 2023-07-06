@@ -1,5 +1,5 @@
-import { Input, INPUT_STYLE_KEYS } from './index'
 import type { Meta, Story } from '@storybook/react'
+import { Input, INPUT_STYLE_KEYS } from './index'
 import type { InputProps } from './index'
 
 export default {

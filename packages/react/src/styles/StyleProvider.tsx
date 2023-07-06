@@ -1,8 +1,8 @@
 import { CacheProvider, ThemeProvider } from '@emotion/react'
 import type { EmotionCache, Theme, ThemeProviderProps } from '@emotion/react'
+import type { ReactElement } from 'react'
 import { GlobalStyle } from './global'
 import { theme as offerTheme } from './themes'
-import type { ReactElement } from 'react'
 
 interface DefaultProps extends Omit<ThemeProviderProps, 'theme'> {
   theme?: Partial<Theme> | ((outerTheme: Theme) => Theme)

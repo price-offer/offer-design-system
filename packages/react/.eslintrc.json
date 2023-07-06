@@ -14,6 +14,7 @@
       }
     }
   ],
+  "plugins": ["eslint-plugin-import"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -21,7 +22,33 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "sort-imports": ["error", { "ignoreCase": true }],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", ["parent", "sibling"], "index"],
+        "pathGroups": [
+          {
+            "pattern": "next",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "default-case-last": "error",
     "func-style": ["error", "expression"],
     "no-console": "error",

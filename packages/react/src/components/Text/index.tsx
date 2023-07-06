@@ -1,8 +1,8 @@
+import styled from '@emotion/styled'
 import type { ColorKeys, FontKeys } from '@offer-ui/themes'
+import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
-import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   /**

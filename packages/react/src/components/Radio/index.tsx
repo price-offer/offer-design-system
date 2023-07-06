@@ -1,3 +1,6 @@
+import styled from '@emotion/styled'
+import { Text } from '@offer-ui/components/Text'
+import type { StyledProps } from '@offer-ui/types'
 import type {
   ChangeEvent,
   FormHTMLAttributes,
@@ -5,9 +8,6 @@ import type {
   ReactNode
 } from 'react'
 import { forwardRef } from 'react'
-import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
-import { Text } from '@offer-ui/components/Text'
 
 export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)

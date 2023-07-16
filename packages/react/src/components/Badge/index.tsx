@@ -2,6 +2,7 @@ import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/themes'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
@@ -52,6 +53,6 @@ const StyledBadge = styled.div<StyledBadgeProps>`
   padding: 2px 6px;
   text-align: center;
   font-feature-settings: normal;
-  background-color: ${({ colorType, theme }): string =>
+  background-color: ${({ colorType }): string =>
     theme.colors[BADGE_COLORS[colorType].background]};
 `

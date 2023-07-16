@@ -1,4 +1,5 @@
 export type Radius = typeof radius
+export type RadiusKeys = keyof Radius
 
 export const radius = {
   round100: '100px',

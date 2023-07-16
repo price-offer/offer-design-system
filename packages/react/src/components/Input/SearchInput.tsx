@@ -4,6 +4,7 @@ import { Icon } from '@offer-ui/components/Icon'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
 
 type SearchInputProps = Omit<
   MainInputProps,
@@ -33,7 +34,7 @@ const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
   border: none;
 
-  ${({ isSmall, theme }): string => `
+  ${({ isSmall }): string => `
     background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
 

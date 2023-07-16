@@ -8,6 +8,7 @@ import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/styles/themes'
 
 export interface RadioProps extends FormHTMLAttributes<HTMLFormElement> {
   /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
@@ -90,9 +91,9 @@ const StyledInputWrapper = styled.label`
   align-items: center;
   flex-direction: row;
   padding-left: 25px;
-  ${({ theme }): string => theme.fonts.body02R};
+  ${theme.fonts.body02R};
 
-  color: ${({ theme }): string => theme.colors.grayScale90};
+  color: ${theme.colors.grayScale90};
   &.vertical {
   }
   &.horizontal {
@@ -100,7 +101,7 @@ const StyledInputWrapper = styled.label`
   }
 
   input:checked ~ span {
-    background-color: ${({ theme }): string => theme.colors.brandPrimary};
+    background-color: ${theme.colors.brandPrimary};
     border: none;
   }
   input:checked ~ span:after {
@@ -112,7 +113,7 @@ const StyledInputWrapper = styled.label`
     width: 10px;
     height: 10px;
     border-radius: 100px;
-    background: ${({ theme }): string => theme.colors.white};
+    background: ${theme.colors.white};
   }
 `
 
@@ -129,8 +130,8 @@ const StyledCheckMark = styled.span`
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: ${({ theme }): string => theme.colors.white};
-  border: solid ${({ theme }): string => theme.colors.grayScale10};
+  background-color: ${theme.colors.white};
+  border: solid ${theme.colors.grayScale10};
   border-radius: 50%;
   :after {
     content: '';

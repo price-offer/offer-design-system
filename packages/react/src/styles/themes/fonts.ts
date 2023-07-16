@@ -1,5 +1,5 @@
 export type Fonts = typeof fonts
-export type FontKeys = keyof typeof fonts
+export type FontKeys = keyof Fonts
 
 export const fonts = {
   body01B:

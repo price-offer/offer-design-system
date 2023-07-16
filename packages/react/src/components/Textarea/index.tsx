@@ -3,6 +3,7 @@ import { forwardRef, useRef } from 'react'
 import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/themes'
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -74,7 +75,7 @@ export const TextArea = forwardRef(function TextArea(
 
 const StyledLabel = styled.label`
   display: block;
-  color: ${({ theme }): string => theme.colors.grayScale70};
+  color: ${theme.colors.grayScale70};
   margin-bottom: 8px;
 `
 const StyledTextArea = styled.textarea<StyledTextAreaProps>`
@@ -86,20 +87,20 @@ const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   max-width: 100%;
   padding: 10px 12px;
   border: none;
-  color: ${({ theme }): string => theme.colors.grayScale90};
-  background-color: ${({ isFilled, theme }): string =>
+  color: ${theme.colors.grayScale90};
+  background-color: ${({ isFilled }): string =>
     isFilled ? theme.colors.grayScale05 : theme.colors.white};
-  ${({ theme }): string => theme.fonts.body02M};
+  ${theme.fonts.body02M};
   ::placeholder {
-    color: ${({ theme }): string => theme.colors.grayScale50};
-    ${({ theme }): string => theme.fonts.body02M};
+    color: ${theme.colors.grayScale50};
+    ${theme.fonts.body02M};
   }
   :hover {
-    background-color: ${({ isFilled, theme }): string =>
+    background-color: ${({ isFilled }): string =>
       isFilled ? theme.colors.bgGray04 : ''};
   }
   :focus {
-    background-color: ${({ isFilled, theme }): string =>
+    background-color: ${({ isFilled }): string =>
       isFilled ? theme.colors.bgGray04 : ''};
   }
 `

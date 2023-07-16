@@ -5,6 +5,7 @@ import { Image as ImageComponent } from '@offer-ui/components/Image'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
 
 interface ImageInfo {
   src: string
@@ -231,11 +232,11 @@ const StyledDIM = styled.div<StyledDIMProps>`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: ${({ theme }): number => theme.zIndex.modal};
+  z-index: ${theme.zIndex.modal};
   overflow: hidden;
-  background-color: ${({ theme }): string => theme.colors.dimOpacity70};
+  background-color: ${theme.colors.dimOpacity70};
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     background: linear-gradient();
   }
 `
@@ -245,14 +246,14 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   gap: 12px;
   transition: 0.6s ease-in-out;
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     transform: translate((0, 0));
     gap: 0;
     transform: ${({ currentImageIndex }): string =>
       `translate(-${currentImageIndex * 100}vw, 0);`};
   }
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     transform: translate((0, 0));
     gap: 0;
     transform: ${({ currentImageIndex }): string =>
@@ -266,7 +267,7 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
 const StyledImage = styled(ImageComponent)<StyledImageProps>`
   height: ${DEFAULT_RESIZE_HEIGHT}px;
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     width: 100vw;
     height: auto;
     object-fit: contain;
@@ -275,7 +276,7 @@ const StyledImage = styled(ImageComponent)<StyledImageProps>`
       isFixedHeight ? `height: 100vh; width:100vw;` : ''}
   }
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     width: 100vw;
     height: 100vw;
 
@@ -293,16 +294,16 @@ const StyledCloseIcon = styled(IconButton)`
   background-color: transparent;
   cursor: pointer;
 
-  ${({ theme }): string => `
+  ${`
     z-index: ${theme.zIndex.modalIcon};
   `}
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     top: 54px;
     right: 22px;
   }
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     top: 35px;
     right: 16px;
   }
@@ -313,15 +314,15 @@ const StyledIndicatorBox = styled.div`
   bottom: 7%;
   left: 50vw;
   transform: translate(-50%, 0);
-  z-index: ${({ theme }): number => theme.zIndex.modalIcon};
+  z-index: ${theme.zIndex.modalIcon};
   display: flex;
   gap: 8px;
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     bottom: 53px;
   }
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     bottom: 52px;
   }
 `
@@ -333,7 +334,7 @@ const StyledIndicator = styled.div`
   font-size: 20px;
   cursor: pointer;
 
-  ${({ theme }): string => `
+  ${`
       background-color: ${theme.colors.grayScale10};
       border-radius: ${theme.radius.round100};
       box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
@@ -341,7 +342,7 @@ const StyledIndicator = styled.div`
 
   &.selected {
     transition: 0.6s ease-out;
-    background-color: ${({ theme }): string => theme.colors.white};
+    background-color: ${theme.colors.white};
     opacity: 1;
   }
 `
@@ -353,18 +354,18 @@ const StyledGradient = styled.div<StyledGradientProps>`
   width: 100vw;
   height: 120px;
 
-  ${({ direction, theme }): string =>
+  ${({ direction }): string =>
     direction === 'top'
       ? `top: 0;
         background: linear-gradient(180deg, ${theme.colors.dimOpacity70} 0%, rgba(0,0,0,0) 100%);`
       : `bottom: 0;
         background: linear-gradient(180deg,  rgba(0,0,0,0) 0%, ${theme.colors.dimOpacity70} 100%);`}
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     display: block;
   }
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     display: block;
   }
 `

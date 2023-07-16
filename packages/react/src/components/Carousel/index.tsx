@@ -2,6 +2,7 @@ import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
+import { theme } from '@offer-ui/themes'
 import { useMedia } from '@offer-ui/hooks/useMedia'
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
@@ -193,11 +194,11 @@ const StyledCarouselWrapper = styled.div`
   user-select: none;
   position: relative;
   height: 430px;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     max-width: 100vw;
     height: 400px;
   }
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     max-width: 100vw;
     height: 360px;
   }
@@ -211,11 +212,11 @@ const StyledSlider = styled.div<SliderProps>`
   margin: 0 auto;
   cursor: ${({ cursorOn }): string | boolean => cursorOn && 'pointer'};
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     max-width: 100vw;
     height: 400px;
   }
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     max-width: 100vw;
     height: 360px;
   }
@@ -228,13 +229,13 @@ const StyledImageBox = styled.div<ImageBoxProps>`
   transform: ${({ currentImageValue }): string =>
     `translateX(-${currentImageValue}px)`};
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     height: 400px;
     transform: ${({ currentImageValue }): string =>
       `translateX(-${currentImageValue}vw)`};
   }
 
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     height: 400px;
     transform: ${({ currentImageValue }): string =>
       `translateX(-${currentImageValue}vw)`};
@@ -247,11 +248,11 @@ const StyledImage = styled.img<ImageProps>`
   object-fit: cover;
   object-position: center;
 
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     width: 100vw;
     height: 400px;
   }
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     width: 100vw;
     height: 360px;
   }
@@ -265,7 +266,7 @@ export const StyledArrowBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     display: none;
   }
 `
@@ -274,7 +275,7 @@ const StyledRightArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
-  background-color: ${({ theme }): string => theme.colors.white};
+  background-color: ${theme.colors.white};
   cursor: pointer;
 `
 
@@ -282,7 +283,7 @@ const StyledLeftArrow = styled.button<ArrowProps>`
   width: 40px;
   height: 60px;
   border: none;
-  background-color: ${({ theme }): string => theme.colors.white};
+  background-color: ${theme.colors.white};
   cursor: pointer;
 `
 
@@ -294,11 +295,11 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     bottom: 27px;
     margin-top: 0px;
   }
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     bottom: 27px;
     margin-top: 0px;
   }
@@ -307,15 +308,15 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
 const StyledIndicator = styled.div`
   width: 10px;
   height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale10};
+  background-color: ${theme.colors.grayScale10};
   border-radius: 100px;
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
-    background-color: ${({ theme }): string => theme.colors.white};
+    background-color: ${theme.colors.white};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
   }
 `
@@ -323,7 +324,7 @@ const StyledIndicator = styled.div`
 const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   width: 10px;
   height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale90};
+  background-color: ${theme.colors.grayScale90};
   position: absolute;
   left: 0;
   top: 50%;
@@ -333,10 +334,10 @@ const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
   transform: ${({ imageIndex }): string =>
     `translate(${imageIndex * 17}px,-50%)`};
   transition: transform 0.2s;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
+  ${theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
-    background-color: ${({ theme }): string => theme.colors.white};
+    background-color: ${theme.colors.white};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     transform: ${({ imageIndex }): string =>
       `translate(${imageIndex * 15}px,-50%)`};

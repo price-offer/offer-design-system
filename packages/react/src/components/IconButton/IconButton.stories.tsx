@@ -1,8 +1,8 @@
 import type { Meta, Story } from '@storybook/react'
-import { colors } from '@offer-ui/styles/themes'
 import { ICON_TYPES } from '../Icon'
 import { IconButton } from './index'
 import type { IconButtonProps } from './index'
+import { theme } from '@offer-ui/themes'
 
 export default {
   argTypes: {
@@ -15,7 +15,7 @@ export default {
     },
     color: {
       control: 'select',
-      options: [...Object.keys(colors)]
+      options: [...Object.keys(theme.colors)]
     }
   },
   component: IconButton,

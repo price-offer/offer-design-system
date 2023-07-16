@@ -4,7 +4,8 @@ import type { IconProps } from '@offer-ui/components/Icon'
 import type { ReactElement } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
-import type { Theme } from '@emotion/react'
+import { theme } from '@offer-ui/themes'
+import type { Theme } from '@offer-ui/themes'
 import { useClose } from '@offer-ui/hooks'
 import { useState } from 'react'
 
@@ -139,7 +140,7 @@ const StyledSelectBoxWrapper = styled.div`
 
 /** Trigger */
 const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
-  ${({ colorType, isEmpty, theme, size }): string => `
+  ${({ colorType, isEmpty, size }): string => `
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
@@ -157,7 +158,7 @@ const StyledTriggerArrow = styled(Icon)`
 
 /** OptionList  */
 const StyledOptionListWrapper = styled.div<Pick<StyledSelectProps, 'size'>>`
-  ${({ theme, size }): string => `
+  ${({ size }): string => `
     position: absolute;
     left: 0;
     top: ${size === 'small' ? '40px' : '48px'};
@@ -172,7 +173,7 @@ const StyledOptionList = styled.ul`
   user-select: none;
   min-width: 120px;
   border-radius: 4px;
-  ${({ theme }): string => `
+  ${`
     background-color: ${theme.colors.white};
     border: 1px solid ${theme.colors.grayScale10};
     ${theme.mediaQuery.desktop} {
@@ -188,7 +189,7 @@ const StyledOptionList = styled.ul`
 
 /** Options */
 const StyledOptionsWrapper = styled.li<Pick<StyledSelectProps, 'isSelected'>>`
-  ${({ theme, isSelected }): string => `
+  ${({ isSelected }): string => `
     :hover {
       background-color: ${theme.colors.bgGray02};
       cursor: pointer;

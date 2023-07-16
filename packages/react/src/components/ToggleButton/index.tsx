@@ -1,9 +1,9 @@
 import type { ForwardedRef, MouseEventHandler } from 'react'
 import { forwardRef, useState } from 'react'
-import type { ColorKeys } from '@offer-ui/styles/themes'
 import { IconButton } from '@offer-ui/components/IconButton'
 import type { IconButtonProps } from '@offer-ui/components/IconButton'
 import type { IconType } from '@offer-ui/components/Icon'
+import type { ThemeKeys } from '@offer-ui/styles/themes'
 
 export interface ToggleButtonProps extends IconButtonProps {
   /**
@@ -15,7 +15,7 @@ export interface ToggleButtonProps extends IconButtonProps {
    * ToggleButton이 toggle된 경우의 색상을 정합니다.
    * @type ColorKeys | undefined
    */
-  toggleColor?: ColorKeys
+  toggleColor?: ThemeKeys['color']
   /**
    * ToggleButton이 토글 기본 상태를 정합니다.
    * @type boolean | undefined

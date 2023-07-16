@@ -1,12 +1,13 @@
 import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
-import type { ColorKeys } from '@offer-ui/themes'
 import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
+import type { ThemeKeys } from '@offer-ui/themes'
 
-export type IconButtonColorType = ColorKeys
+export type IconButtonColorType = ThemeKeys['color']
 
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -24,7 +25,7 @@ export interface IconButtonProps
    * IconButton의 색상 타입을 정합니다.
    * @type ColorKeys | undefined
    */
-  color?: ColorKeys
+  color?: ThemeKeys['color']
   /**
    * IconButton가 그림자 여부를 정합니다.
    * @type boolean | undefined
@@ -64,7 +65,7 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   border: none;
   cursor: pointer;
 
-  ${({ theme, hasShadow }): string => {
+  ${({ hasShadow }): string => {
     return `
   
       background-color: transparent;

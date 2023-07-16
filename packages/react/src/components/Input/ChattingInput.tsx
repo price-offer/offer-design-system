@@ -4,6 +4,7 @@ import { IconButton } from '@offer-ui/components/IconButton'
 import type { MainInputProps } from './index'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
 
 type ChattingInputProps = Omit<
   MainInputProps,
@@ -57,7 +58,7 @@ const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
   border: none;
 
-  ${({ theme, isSmall }): string => `
+  ${({ isSmall }): string => `
     background-color: ${theme.colors.bgGray02};
     border-radius: ${theme.radius.round16};
      ${theme.fonts[isSmall ? 'body02R' : 'body01R']}
@@ -98,7 +99,7 @@ const StyledIconButton = styled(IconButton)<StyledIconButtonProps>`
   border: none;
   cursor: pointer;
 
-  ${({ theme, disabled }): string => `
+  ${({ disabled }): string => `
     background-color: ${
       disabled ? theme.colors.brandPrimaryWeak : theme.colors.brandPrimary
     };

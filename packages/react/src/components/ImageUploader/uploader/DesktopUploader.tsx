@@ -6,6 +6,7 @@ import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/themes'
 import type { UploaderProps } from '../index'
 
 interface StyledProps {
@@ -79,7 +80,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
 })
 
 const StyledUploaderWrapper = styled.div<Pick<StyledProps, 'isShowListType'>>`
-  ${({ theme, isShowListType }): string => `
+  ${({ isShowListType }): string => `
     display: flex;
     padding: 12px 12px 5px 12px;
     background-color: ${theme.colors.grayScale05};
@@ -117,7 +118,7 @@ const StyledDescription = styled.div`
   }
 `
 const StyledImageTotal = styled(Text)<Pick<StyledProps, 'isMaximum'>>`
-  ${({ theme, isMaximum }): string => `
+  ${({ isMaximum }): string => `
     margin-top: 4px;
     font-size: 14px;
     line-height: 20px;
@@ -135,10 +136,10 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
+    background-color: ${theme.colors.dimOpacity50};
   }
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};
+  scrollbar-color: ${theme.colors.dimOpacity50};
 `
 const StyledImageItem = styled.div`
   position: relative;
@@ -149,7 +150,7 @@ const StyledBadge = styled(Badge)`
   position: absolute;
 `
 const StyledRemoveButtonWrapper = styled.div`
-  ${({ theme }): string => `
+  ${`
     top: 4px;
     right: 4px;
     padding: 4px;

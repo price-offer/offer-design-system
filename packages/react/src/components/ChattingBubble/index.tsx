@@ -2,6 +2,7 @@ import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/themes'
 import { useMediaQuery } from '@offer-ui/hooks'
 
 export interface ChattingBubbleProps extends HTMLAttributes<HTMLDivElement> {
@@ -54,7 +55,7 @@ const StyledBubble = styled.p<StyledBubbleProps>`
   word-break: break-all;
   max-width: 332px;
   padding: 12px 16px;
-  ${({ theme, isSend }): string => {
+  ${({ isSend }): string => {
     if (isSend) {
       return `
           background-color: ${theme.colors.brandPrimary};
@@ -66,13 +67,13 @@ const StyledBubble = styled.p<StyledBubbleProps>`
        border-radius: 0px 16px 16px 16px;
     `
   }}
-  ${({ theme }): string => theme.mediaQuery.mobile} {
+  ${theme.mediaQuery.mobile} {
     max-width: 230px;
     padding: 8px 12px;
   }
 `
 
 const StyledChattingMessage = styled(Text)<StyledBubbleProps>`
-  color: ${({ theme, isSend }): string =>
+  color: ${({ isSend }): string =>
     isSend ? theme.colors.white : theme.colors.grayScale90};
 `

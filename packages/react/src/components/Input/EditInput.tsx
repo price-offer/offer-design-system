@@ -1,13 +1,13 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
-import type { ColorKeys } from '@offer-ui/themes'
 import type { MainInputProps as EditInputProps } from './index'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components'
+import { theme } from '@offer-ui/themes'
+import type { ThemeKeys } from '@offer-ui/themes'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
-
 interface StyledInputProps {
   isSmall: boolean
   hasGuideMessage: boolean
@@ -80,13 +80,13 @@ const StyledInputLabel = styled.label`
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  color: ${({ theme }): string => theme.colors.grayScale70};
+  color: ${theme.colors.grayScale70};
 `
 
 const StyledInput = styled.input<StyledInputProps>`
   padding: 8px 20px 8px 0;
   border: none;
-  ${({ isSmall, theme, hasGuideMessage }): string => `
+  ${({ isSmall, hasGuideMessage }): string => `
     margin-bottom: ${hasGuideMessage ? '8px' : '0'};
     height:${isSmall ? 'height: 32px' : 'height: 36px'};
     border-bottom: 1px solid ${theme.colors.black};
@@ -106,14 +106,14 @@ const StyledPriceUnit = styled(Text)<StyledInputProps>`
 `
 
 const StyledInputGuideMessage = styled(Text)<StyledGuideMessageProps>`
-  color: ${({ theme, status }): string => {
+  color: ${({ status }): string => {
     return theme.colors[applyGuideMessageColor({ status })]
   }};
 `
 
 const applyGuideMessageColor = ({
   status
-}: StyledGuideMessageProps): ColorKeys => {
+}: StyledGuideMessageProps): ThemeKeys['color'] => {
   switch (status) {
     case 'success':
       return 'actSuccess'

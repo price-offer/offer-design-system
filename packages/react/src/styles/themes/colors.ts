@@ -1,5 +1,5 @@
 export type Colors = typeof colors
-export type ColorKeys = keyof typeof colors
+export type ColorKeys = keyof Colors
 
 export const colors = {
   // action

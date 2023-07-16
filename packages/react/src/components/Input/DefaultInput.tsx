@@ -1,11 +1,12 @@
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
-import type { ColorKeys } from '@offer-ui/themes'
 import type { MainInputProps as DefaultInputProps } from './index'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
 import { Text } from '@offer-ui/components/Text'
+import { theme } from '@offer-ui/themes'
+import type { ThemeKeys } from '@offer-ui/themes'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 
 type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'> & {
@@ -85,9 +86,7 @@ const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
   position: relative;
-  ${({ theme }): string => `
-    color: ${theme.colors.grayScale70};
-  `}
+  color: ${theme.colors.grayScale70};
 `
 const StyledInput = styled.input<StyledInputProps>`
   margin: ${({ label, hasGuideMessage }): string =>
@@ -105,7 +104,7 @@ const StyledInput = styled.input<StyledInputProps>`
       height: 54px;
     `
   }}
-  ${({ theme, isSmall }): string => `
+  ${({ isSmall }): string => `
     background-color: ${theme.colors.bgGray02};
     ${theme.fonts[isSmall ? 'body02M' : 'subtitle01M']}
     ::placeholder {
@@ -123,17 +122,19 @@ const StyledInput = styled.input<StyledInputProps>`
 const StyledPriceUnit = styled(Text)<StyledPriceUnitProps>`
   position: absolute;
   right: 12px;
-  ${({ isSmall, theme, hasGuideMessage }): string => `
+  ${({ isSmall, hasGuideMessage }): string => `
     color:${theme.colors.grayScale90};
     bottom: ${(isSmall ? 19 : 25) - (hasGuideMessage ? 0 : 8)}px;
   `}
 `
 const StyledStatus = styled(Text)<StyledStatusProps>`
-  color: ${({ theme, status }): string =>
+  color: ${({ status }): string =>
     theme.colors[applyGuideMessageColor({ status })]};
 `
 
-const applyGuideMessageColor = ({ status }: StyledStatusProps): ColorKeys => {
+const applyGuideMessageColor = ({
+  status
+}: StyledStatusProps): ThemeKeys['color'] => {
   switch (status) {
     case 'success':
       return 'actSuccess'

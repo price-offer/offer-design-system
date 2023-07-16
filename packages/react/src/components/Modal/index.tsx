@@ -4,6 +4,7 @@ import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import ReactDOM from 'react-dom'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
 import { useClickAway } from '@offer-ui/hooks'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
@@ -96,8 +97,8 @@ const StyledDIM = styled.div<StyledDIMProps>`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: ${({ theme }): number => theme.zIndex.modal};
-  background-color: ${({ theme }): string => theme.colors.dimOpacity50};
+  z-index: ${theme.zIndex.modal};
+  background-color: ${theme.colors.dimOpacity50};
 `
 const StyledModal = styled.div<StyledModalProps>`
   position: relative;
@@ -107,7 +108,6 @@ const StyledModal = styled.div<StyledModalProps>`
   min-height: 68px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: ${({ theme }): string => theme.colors.white};
-  box-shadow: ${({ theme }): string =>
-    `0px 3px 20px ${theme.colors.dimOpacity40}`};
+  background-color: ${theme.colors.white};
+  box-shadow: ${`0px 3px 20px ${theme.colors.dimOpacity40}`};
 `

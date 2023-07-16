@@ -4,6 +4,7 @@ import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/styles/themes'
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   /** Avatar 컴포넌트 이미지의 alt 속성을 정합니다.
@@ -72,7 +73,7 @@ const StyledBlankAvatarWrapper = styled.div<StyledBlankAvatarWrapperProps>`
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  ${({ theme, size }): string => `
+  ${({ size }): string => `
     width: ${AVATAR_WRAPPER_SIZE[size]};
     height: ${AVATAR_WRAPPER_SIZE[size]};
     background-color: ${theme.colors.grayScale05};

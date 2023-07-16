@@ -1,15 +1,16 @@
-import type { ColorKeys, FontKeys } from '@offer-ui/themes'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
+import type { ThemeKeys } from '@offer-ui/themes'
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Text의 스타일을 정합니다.
    * @type FontKeys
    */
-  styleType: FontKeys
+  styleType: ThemeKeys['fonts']
   /**
    * Text의 태그를 정합니다.
    * @type 'p' | 'span' | undefined
@@ -24,7 +25,7 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
    * Text의 색상을 정합니다.
    * @type ColorKeys | undefined
    */
-  color?: ColorKeys | ''
+  color?: ThemeKeys['color'] | ''
 }
 
 type StyledTextProps = StyledProps<TextProps, 'styleType' | 'color'>
@@ -52,7 +53,7 @@ export const Text = forwardRef(function Text(
 })
 
 const StyledText = styled.span<StyledTextProps>`
-  color: ${({ color, theme }): string => color && theme.colors[color]};
+  color: ${({ color }): string => color && theme.colors[color]};
 
-  ${({ theme, styleType }): string => theme.fonts[styleType]};
+  ${({ styleType }): string => theme.fonts[styleType]};
 `

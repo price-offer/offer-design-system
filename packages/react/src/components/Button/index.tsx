@@ -4,7 +4,8 @@ import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
-import type { Theme } from '@emotion/react'
+import type { Theme } from '@offer-ui/themes'
+import { theme } from '@offer-ui/themes'
 
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'small' | 'medium' | 'large'
@@ -95,13 +96,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   border: none;
   cursor: pointer;
-  color: ${({ theme, styleType }): string =>
-    applyButtonFontColor(theme, styleType)};
+  color: ${({ styleType }): string => applyButtonFontColor(theme, styleType)};
 
-  ${({ theme }): string => theme.fonts.body02B}
-  ${({ theme, size, styleType, width }): string =>
+  ${theme.fonts.body02B}
+  ${({ size, styleType, width }): string =>
     applyButtonSizeStyle(theme, styleType, size, width)}
-  ${({ theme, styleType }): string => applyButtonColor(theme, styleType)}
+  ${({ styleType }): string => applyButtonColor(theme, styleType)}
 `
 const applyButtonSizeStyle: ApplyButtonSizeStyle = (
   theme,
@@ -131,8 +131,7 @@ const applyButtonSizeStyle: ApplyButtonSizeStyle = (
 
 const StyledIcon = styled(Icon)<StyledIconProps>`
   margin-right: 4px;
-  color: ${({ theme, styleType }): string =>
-    applyButtonFontColor(theme, styleType)};
+  color: ${({ styleType }): string => applyButtonFontColor(theme, styleType)};
 `
 
 const applyButtonColor: ApplyButtonColor = (theme, styleType) => {

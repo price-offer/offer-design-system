@@ -1,7 +1,7 @@
 import { css, Global } from '@emotion/react'
 import { FontCSS, ResetCSS } from '@offer-ui/styles'
-import { colors } from '@offer-ui/themes'
 import type { ReactElement } from 'react'
+import { theme } from '@offer-ui/themes'
 
 const globalStyle = css`
   * {
@@ -11,7 +11,7 @@ const globalStyle = css`
   body {
     font-family: Pretendard;
     font-weight: normal;
-    color: ${colors.grayScale90};
+    color: ${theme.colors.grayScale90};
   }
 `
 

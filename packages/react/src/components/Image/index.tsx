@@ -2,6 +2,7 @@ import type { ForwardedRef, ImgHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import { theme } from '@offer-ui/themes'
 import { useImage } from '@offer-ui/hooks'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
@@ -122,7 +123,7 @@ export const Image = forwardRef(function Image(
 })
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
-  ${({ boxSize, radius, theme, width, height }): string => `
+  ${({ boxSize, radius, width, height }): string => `
     ${applyShape({ boxSize, height, radius, width })}
     background-color: ${theme.colors.grayScale10};
   `}

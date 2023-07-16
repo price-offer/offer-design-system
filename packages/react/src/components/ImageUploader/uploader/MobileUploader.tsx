@@ -110,7 +110,7 @@ const StyledImageList = styled.div`
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: ${({ theme }): string => theme.colors.dimOpacity50};
+    background-color: ${({ theme }): string => theme.colors.actSuccess};
   }
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }): string => theme.colors.dimOpacity50};

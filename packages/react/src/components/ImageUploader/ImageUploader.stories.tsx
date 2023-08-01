@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import type { Meta, Story } from '@storybook/react'
+import { v4 as uuidV4 } from 'uuid'
 import { ImageUploader } from './index'
 import type { ImageUploaderProps } from './index'
-import { v4 as uuidV4 } from 'uuid'
 
 export default {
   component: ImageUploader,

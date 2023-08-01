@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import {
   ArrowLeft,
   ArrowUp,
@@ -33,14 +34,13 @@ import {
   Store,
   TriangleDown
 } from '@offer-ui/constants/icons'
-import type { ForwardedRef, SVGAttributes } from 'react'
 import type { ColorKeys } from '@offer-ui/themes'
-import { forwardRef } from 'react'
-import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
+import type { ForwardedRef, SVGAttributes } from 'react'
+import { forwardRef } from 'react'
 
 export type IconType = keyof typeof ICON_TYPES
-export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {
+export type IconProps = {
   /**
    * Icon의 크기를 정합니다.
    * @type number | undefined
@@ -56,7 +56,7 @@ export interface IconProps extends SVGAttributes<HTMLOrSVGElement> {
    * @type IconType
    */
   type: IconType
-}
+} & SVGAttributes<HTMLOrSVGElement>
 
 type StyledIconWrapperProps = StyledProps<IconProps, 'color'>
 export const ICON_TYPES = {

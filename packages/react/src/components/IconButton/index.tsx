@@ -1,15 +1,14 @@
-import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
-import type { ColorKeys } from '@offer-ui/themes'
-import { forwardRef } from 'react'
+import styled from '@emotion/styled'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
-import styled from '@emotion/styled'
+import type { ColorKeys } from '@offer-ui/themes'
 import type { StyledProps } from '@offer-ui/types'
+import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
+import { forwardRef } from 'react'
 
 export type IconButtonColorType = ColorKeys
 
-export interface IconButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type IconButtonProps = {
   /**
    * IconButton으로 사용될 아이콘의 타입을 정합니다.
    * @type IconType
@@ -34,7 +33,7 @@ export interface IconButtonProps
    * IconButton의 모양을 지정합니다.
    * @type 'rounded' | 'square' | 'ghost' | undefined
    */
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
 type StyledIconButtonProps = StyledProps<IconButtonProps, 'hasShadow'>
 

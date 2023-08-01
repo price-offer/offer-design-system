@@ -1,16 +1,16 @@
-import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
+import type { Theme } from '@emotion/react'
+import styled from '@emotion/styled'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconProps } from '@offer-ui/components/Icon'
-import type { ReactElement } from 'react'
-import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
-import type { Theme } from '@emotion/react'
 import { useClose } from '@offer-ui/hooks'
+import type { SelectOnChangeHandler, StyledProps } from '@offer-ui/types'
+import type { ReactElement } from 'react'
 import { useState } from 'react'
 
 type SelectColorType = 'none' | 'light' | 'dark'
 type Size = 'small' | 'medium'
-interface DefaultSelectBoxProps {
+type DefaultSelectBoxProps = {
   /** SelectBox의 컬러 타입을 정합니다.
    * @type 'none' | 'light' | 'dark' | undefined
    */
@@ -29,11 +29,11 @@ interface DefaultSelectBoxProps {
   items: any
 }
 
-interface UnControlledSelectBoxProps extends DefaultSelectBoxProps {
+type UnControlledSelectBoxProps = {
   value?: never
   onChange?: SelectOnChangeHandler
-}
-interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
+} & DefaultSelectBoxProps
+type ControlledSelectBoxProps = {
   /** SelectBox의 value를 정합니다.
    * @type string  | number
    */
@@ -42,18 +42,17 @@ interface ControlledSelectBoxProps extends DefaultSelectBoxProps {
    * @type SelectOnChangeHandler
    */
   onChange: SelectOnChangeHandler
-}
+} & DefaultSelectBoxProps
 
 export type SelectBoxProps =
   | UnControlledSelectBoxProps
   | ControlledSelectBoxProps
 
 /** Styled Type */
-interface StyledSelectProps
-  extends StyledProps<SelectBoxProps, 'colorType' | 'size'> {
+type StyledSelectProps = {
   isEmpty: boolean
   isSelected: boolean
-}
+} & StyledProps<SelectBoxProps, 'colorType' | 'size'>
 type GetFontColorParams = Omit<StyledSelectProps, 'isSelected'> & {
   theme: Theme
 }

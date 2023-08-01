@@ -1,10 +1,10 @@
+import styled from '@emotion/styled'
+import { Icon } from '@offer-ui/components/Icon'
+import { useMedia } from '@offer-ui/hooks/useMedia'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
-import { Icon } from '@offer-ui/components/Icon'
-import styled from '@emotion/styled'
-import { useMedia } from '@offer-ui/hooks/useMedia'
 
-export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
+export type CarouselProps = {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
    * @type { url: string, id: number } []
    */
@@ -21,30 +21,30 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * @type string
    */
   name: string
-}
+} & HTMLAttributes<HTMLDivElement>
 
-interface SliderProps {
+type SliderProps = {
   cursorOn: boolean
   size: number
 }
 
-interface CurrentIndicatorProps {
+type CurrentIndicatorProps = {
   imageIndex: number
 }
 
-interface ImageBoxProps {
+type ImageBoxProps = {
   currentImageValue: number
 }
 
-interface ImageProps {
+type ImageProps = {
   size: number
 }
 
-interface ArrowProps {
+type ArrowProps = {
   currentImageValue: number
 }
 
-interface IndicatorBoxProps {
+type IndicatorBoxProps = {
   isArrow: boolean
 }
 

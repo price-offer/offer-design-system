@@ -1,13 +1,13 @@
 import type { ForwardedRef, InputHTMLAttributes, ReactElement } from 'react'
+import { forwardRef } from 'react'
 import { ChattingInput } from './ChattingInput'
 import { DefaultInput } from './DefaultInput'
 import { EditInput } from './EditInput'
-import { forwardRef } from 'react'
 import { SearchInput } from './SearchInput'
 
 type InputStyleType = typeof INPUT_STYLE_KEYS[keyof typeof INPUT_STYLE_KEYS]
 export type InputSize = 'large' | 'small'
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export type InputProps = {
   /**
    * Input의 스타일 타입을 정합니다.
    * @type "chatting" | "default" | "edit" | "search" | undefined
@@ -43,7 +43,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    * @type string | undefined
    */
   width?: string | undefined
-}
+} & InputHTMLAttributes<HTMLInputElement>
 export type MainInputProps = Omit<InputProps, 'inputSize'> & {
   isSmall: boolean
 }

@@ -1,12 +1,12 @@
+import styled from '@emotion/styled'
+import { useClickAway } from '@offer-ui/hooks'
+import type { StyledProps } from '@offer-ui/types'
+import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
-import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import ReactDOM from 'react-dom'
-import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
-import { useClickAway } from '@offer-ui/hooks'
 
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export type ModalProps = {
   /**
    * Modal 내부에 들어갈 내용을 정합니다.
    * @type ReactNode
@@ -32,7 +32,7 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
    * @type (): void | undefined
    */
   onClose?(): void
-}
+} & HTMLAttributes<HTMLDivElement>
 
 type StyledModalProps = StyledProps<ModalProps, 'width' | 'height'>
 type StyledDIMProps = StyledProps<ModalProps, 'isOpen'>

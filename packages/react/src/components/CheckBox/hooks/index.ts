@@ -2,13 +2,13 @@ import type { ReactNode } from 'react'
 
 import { useState } from 'react'
 
-interface CheckItemType {
+type CheckItemType = {
   code: any
   checked: boolean
   element: Exclude<ReactNode, undefined | null>
 }
 
-interface ReturnType {
+type ReturnType = {
   checkList: CheckItemType[]
   onCheckItem(code: any): void
 }

@@ -1,6 +1,6 @@
-import { Icon, ICON_TYPES } from './index'
-import type { Meta, Story } from '@storybook/react'
 import { colors } from '@offer-ui/styles/themes'
+import type { Meta, Story } from '@storybook/react'
+import { Icon, ICON_TYPES } from './index'
 import type { IconProps } from './index'
 
 export default {

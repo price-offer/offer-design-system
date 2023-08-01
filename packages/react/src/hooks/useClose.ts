@@ -1,7 +1,7 @@
 import type { Dispatch, MutableRefObject, SetStateAction } from 'react'
 import { useEffect, useRef } from 'react'
 
-interface Params {
+type Params = {
   onClose: Dispatch<SetStateAction<boolean>>
 }
 

@@ -1,14 +1,14 @@
-import type { ButtonHTMLAttributes, ForwardedRef, ReactNode } from 'react'
-import { forwardRef } from 'react'
+import type { Theme } from '@emotion/react'
+import styled from '@emotion/styled'
 import { Icon } from '@offer-ui/components/Icon'
 import type { IconType } from '@offer-ui/components/Icon'
-import styled from '@emotion/styled'
 import type { StyledProps } from '@offer-ui/types'
-import type { Theme } from '@emotion/react'
+import type { ButtonHTMLAttributes, ForwardedRef, ReactNode } from 'react'
+import { forwardRef } from 'react'
 
 type ButtonStyleType = typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
 type ButtonSize = 'small' | 'medium' | 'large'
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = {
   /**
    * Button의 보여질 형태를 정합니다.
    * @type "ghost" | "outline" | "outlineDisabled" | "solidDisabled" | "solidPrimary" | "solidSub" | undefined
@@ -34,7 +34,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * @type string
    */
   children: Exclude<ReactNode, undefined | null>
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 type StyledButtonProps = StyledProps<
   ButtonProps,
   'styleType' | 'size' | 'width'

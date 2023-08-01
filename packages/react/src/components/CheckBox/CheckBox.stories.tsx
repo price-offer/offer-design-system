@@ -1,9 +1,9 @@
-import type { Meta, Story } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import type { Meta, Story } from '@storybook/react'
 import type { ChangeEvent } from 'react'
+import useCheckList from './hooks'
 import { CheckBox } from './index'
 import type { CheckBoxProps } from './index'
-import useCheckList from './hooks'
 
 export default {
   component: CheckBox,

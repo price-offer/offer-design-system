@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import type {
   ChangeEvent,
   FormHTMLAttributes,
@@ -5,9 +6,8 @@ import type {
   ReactNode
 } from 'react'
 import { forwardRef } from 'react'
-import styled from '@emotion/styled'
 
-export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
+export type CheckBoxProps = {
   /** CheckBox 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
    */
@@ -35,7 +35,7 @@ export interface CheckBoxProps extends FormHTMLAttributes<HTMLFormElement> {
   /** CheckBox 컴포넌트에 추가로 render시킬 함수를 정합니다.
    * @type void
    */
-}
+} & FormHTMLAttributes<HTMLFormElement>
 
 export const CheckBox = forwardRef(function CheckBox(
   {

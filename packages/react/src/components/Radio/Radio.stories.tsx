@@ -1,6 +1,6 @@
-import type { ChangeEvent, ReactNode } from 'react'
-import type { Meta, Story } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import type { Meta, Story } from '@storybook/react'
+import type { ChangeEvent, ReactNode } from 'react'
 import { Radio } from './index'
 import type { RadioProps } from './index'
 

@@ -1,14 +1,14 @@
-import type { ForwardedRef, HTMLAttributes } from 'react'
+import styled from '@emotion/styled'
 import { Badge } from '@offer-ui/components/Badge'
 import { Button } from '@offer-ui/components/Button'
-import { forwardRef } from 'react'
 import { Icon } from '@offer-ui/components/Icon'
 import { Image } from '@offer-ui/components/Image'
-import styled from '@emotion/styled'
 import { Text } from '@offer-ui/components/Text'
+import { forwardRef } from 'react'
+import type { ForwardedRef, HTMLAttributes } from 'react'
 import type { UploaderProps } from '../index'
 
-interface StyledProps {
+type StyledProps = {
   isMaximum: boolean
   isShowListType: boolean
 }

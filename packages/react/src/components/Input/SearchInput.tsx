@@ -1,9 +1,9 @@
+import styled from '@emotion/styled'
+import { Icon } from '@offer-ui/components/Icon'
+import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import { Icon } from '@offer-ui/components/Icon'
 import type { MainInputProps } from './index'
-import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types'
 
 type SearchInputProps = Omit<
   MainInputProps,

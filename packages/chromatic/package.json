@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "export NODE_OPTIONS=--openssl-legacy-provider; build-storybook",
     "chromatic": "npx chromatic --project-token=9eaf870fbce3"
   },
   "peerDependencies": {

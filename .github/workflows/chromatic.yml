@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     # Job steps
     steps:
+      - uses: actions/checkout@v1
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - uses: actions/checkout@v1
       - name: Install dependencies
         run: yarn
         # 👇 Adds Chromatic as a step in the workflow

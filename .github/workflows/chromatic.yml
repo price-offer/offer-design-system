@@ -14,9 +14,9 @@ jobs:
     # Job steps
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
+      - name: Set the correct Node version using nvm
+        shell: bash -l {0}
+        run: nvm install
       - name: Install dependencies
         run: yarn
         # 👇 Adds Chromatic as a step in the workflow

@@ -1,39 +1,55 @@
+import type { IconType } from '@offer-ui/components'
+import { Icon } from '@offer-ui/components'
 import { action } from '@storybook/addon-actions'
 import type { Meta, Story } from '@storybook/react'
-import type { ChangeEvent, ReactNode } from 'react'
+import type { ChangeEvent } from 'react'
+import type { RadioProps } from './types'
 import { Radio } from './index'
-import type { RadioProps } from './index'
 
 export default {
   component: Radio,
   title: 'Components/Radio'
 } as Meta<RadioProps>
 
-const Template: Story<RadioProps> = args => {
+const moodList: IconType[] = ['sad', 'meh', 'smile']
+
+const DefaultTemplate: Story<RadioProps> = args => {
   return <Radio {...args} />
 }
-export const Default = Template.bind({})
+
+export const Default = DefaultTemplate.bind({})
 Default.args = {
-  formName: 'radiotest',
-  items: [
-    {
-      code: 'option1',
-      name: '옵션1'
-    },
-    {
-      code: 'option2',
-      name: '옵션2'
-    },
-    {
-      code: 'option3',
-      name: '옵션3'
-    }
-  ],
+  formName: 'mood',
+  items: moodList.map(mood => ({
+    code: mood,
+    name: mood
+  })),
   onChange: (e: ChangeEvent<HTMLFormElement>): void => {
     const { name, value } = e.target
+
     action('onChange')(name, value)
-  },
-  render: (name: string): ReactNode => {
-    return <div>name:{name}</div>
+  }
+}
+
+const ChildrenTemplate: Story<RadioProps> = args => {
+  return (
+    <Radio {...args}>
+      {moodList.map(mood => (
+        <Radio.Label key={mood}>
+          <Radio.Input formName={args.formName} value={mood} />
+          <Icon type={mood} />
+        </Radio.Label>
+      ))}
+    </Radio>
+  )
+}
+
+export const Children = ChildrenTemplate.bind({})
+Children.args = {
+  formName: 'mood',
+  onChange: (e: ChangeEvent<HTMLFormElement>): void => {
+    const { name, value } = e.target
+
+    action('onChange')(name, value)
   }
 }

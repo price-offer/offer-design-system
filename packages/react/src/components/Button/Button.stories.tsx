@@ -1,14 +1,14 @@
 import type { Meta, Story } from '@storybook/react'
+import type { ButtonProps } from './types'
+import { BUTTON_STYLE_KEYS } from './types'
 import { ICON_TYPES } from '../Icon'
-import { Button, BUTTON_STYLE_KEYS } from './index'
-import type { ButtonProps } from './index'
+import { Button } from './index'
 
 export default {
   argTypes: {
     children: {
       control: { type: 'text' }
     },
-
     icon: {
       control: { type: 'select' },
       options: Object.keys(ICON_TYPES)
@@ -20,6 +20,11 @@ export default {
     styleType: {
       control: { type: 'radio' },
       options: Object.values(BUTTON_STYLE_KEYS)
+    },
+    disabled: {
+      control: {
+        type: 'boolean'
+      }
     }
   },
   component: Button,

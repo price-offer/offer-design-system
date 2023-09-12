@@ -18,6 +18,9 @@ export default {
     styleType: {
       control: 'radio',
       options: Object.values(INPUT_STYLE_KEYS)
+    },
+    disabled: {
+      control: 'boolean'
     }
   },
   components: Input,

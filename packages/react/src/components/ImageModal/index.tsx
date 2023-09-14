@@ -4,7 +4,7 @@ import { Image as ImageComponent } from '@offer-ui/components/Image'
 import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 
 type ImageInfo = {
   src: string
@@ -49,7 +49,11 @@ type StyledImageContainerProps = {
 type StyledImageProps = Pick<StyledImageModalProps, 'isFixedHeight'>
 type StyledGradientProps = Pick<StyledImageModalProps, 'direction'>
 
-const DEFAULT_RESIZE_HEIGHT = 640
+const DEFAULT_RESIZE_IMAGE = {
+  HEIGHT: 640,
+  WIDTH: 500
+}
+const IMAGE_MAX_RATE = 5 / 3
 const IMAGE_GAP_HALF = 6
 const TOUCH_START_END_DIFFERENCE = 30
 const TOUCH_NAV_TYPE = {
@@ -59,7 +63,10 @@ const TOUCH_NAV_TYPE = {
 const VALUE_OF_TOUCH_NAV_TYPE = {
   left: -1,
   right: 1
-} as const
+}
+
+const calculateSizeRate = (width: number, height: number): number =>
+  width / height
 
 export const ImageModal = forwardRef(function ImageModal(
   { onClose, images, isOpen = false, name, ...props }: ImageModalProps,
@@ -69,15 +76,16 @@ export const ImageModal = forwardRef(function ImageModal(
   const initImageId = images[0].id
   const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
   const startClientX = useRef<number | null>(null)
-  const [topElement, setTopElement] = useState<HTMLDivElement | null>(null)
+  const topElement = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const divElement = document.createElement('div')
-    setTopElement(divElement)
+
+    topElement.current = divElement
     document.body.append(divElement)
 
     return (): void => {
-      topElement && document.body.removeChild(topElement)
+      topElement.current && document.body.removeChild(topElement.current)
     }
   }, [])
 
@@ -100,16 +108,16 @@ export const ImageModal = forwardRef(function ImageModal(
             height: image.height,
             id,
             src,
-            width: (image.width * DEFAULT_RESIZE_HEIGHT) / image.height
+            width: (image.width * DEFAULT_RESIZE_IMAGE.HEIGHT) / image.height
           })
         }
 
         image.onerror = (): void => {
           resolve({
-            height: DEFAULT_RESIZE_HEIGHT,
+            height: DEFAULT_RESIZE_IMAGE.HEIGHT,
             id,
             src: null,
-            width: 500
+            width: DEFAULT_RESIZE_IMAGE.WIDTH
           })
         }
       })
@@ -120,24 +128,27 @@ export const ImageModal = forwardRef(function ImageModal(
     )) as ResizeImageInfo[]
   }
 
-  const getSumOfHandoverImageWidth = (): number =>
-    [...imagesInfo.current].reduce(
-      (sumImageWidth, currentImage, index, images) => {
-        const { id, width } = currentImage
+  const getSumOfHandoverImageWidth = (): number => {
+    let sumImageWidth = 0
+    const imageCount = imagesInfo.current.length
 
-        if (currentImageId === id) {
-          images.splice(1)
-          return sumImageWidth + width / 2 + IMAGE_GAP_HALF
-        }
+    for (let i = 0; i < imageCount; i++) {
+      const { id, width } = imagesInfo.current[i]
 
-        return sumImageWidth + width + IMAGE_GAP_HALF
-      },
-      0
-    )
+      if (currentImageId === id) {
+        sumImageWidth += width / 2 + IMAGE_GAP_HALF
 
-  const getCurrentImageIndex = (): number => {
-    return imagesInfo.current.findIndex(({ id }) => currentImageId === id)
+        return sumImageWidth
+      }
+
+      sumImageWidth += width + IMAGE_GAP_HALF
+    }
+
+    return sumImageWidth
   }
+
+  const getCurrentImageIndex = (): number =>
+    imagesInfo.current.findIndex(({ id }) => currentImageId === id)
 
   const handleClickIndicator = (id: string): void => {
     setCurrentImageId(id)
@@ -170,11 +181,8 @@ export const ImageModal = forwardRef(function ImageModal(
     setCurrentImageId(newCurrentImageId)
   }
 
-  const calculateSizeRate = (width: number, height: number): number =>
-    width / height
-
-  return topElement
-    ? ReactDOM.createPortal(
+  return topElement.current
+    ? createPortal(
         <StyledDIM
           isOpen={isOpen}
           onTouchEnd={handleTouchEnd}
@@ -197,7 +205,9 @@ export const ImageModal = forwardRef(function ImageModal(
                 key={id}
                 alt={`${name}-${id}`}
                 height={`${height}px`}
-                isFixedHeight={calculateSizeRate(width, height) < 5 / 3}
+                isFixedHeight={
+                  calculateSizeRate(width, height) < IMAGE_MAX_RATE
+                }
                 src={src}
                 width={`${width}px`}
               />
@@ -217,7 +227,7 @@ export const ImageModal = forwardRef(function ImageModal(
             </StyledIndicatorBox>
           )}
         </StyledDIM>,
-        topElement
+        topElement.current
       )
     : null
 })
@@ -264,7 +274,7 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
 `
 
 const StyledImage = styled(ImageComponent)<StyledImageProps>`
-  height: ${DEFAULT_RESIZE_HEIGHT}px;
+  height: ${DEFAULT_RESIZE_IMAGE.HEIGHT}px;
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 100vw;

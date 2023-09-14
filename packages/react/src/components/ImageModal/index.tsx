@@ -1,3 +1,5 @@
+import type { SerializedStyles } from '@emotion/react'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { IconButton } from '@offer-ui/components/IconButton'
 import { Image as ImageComponent } from '@offer-ui/components/Image'
@@ -258,19 +260,19 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   ${({ theme }): string => theme.mediaQuery.mobile} {
     transform: translate((0, 0));
     gap: 0;
-    transform: ${({ currentImageIndex }): string =>
-      `translate(-${currentImageIndex * 100}vw, 0);`};
+    transform: ${({ currentImageIndex }): SerializedStyles =>
+      css`translate(-${currentImageIndex * 100}vw, 0);`};
   }
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     transform: translate((0, 0));
     gap: 0;
-    transform: ${({ currentImageIndex }): string =>
-      `translate(-${currentImageIndex * 100}vw, 0);`};
+    transform: ${({ currentImageIndex }): SerializedStyles =>
+      css`translate(-${currentImageIndex * 100}vw, 0);`};
   }
 
-  transform: ${({ sumOfHandoverImageWidth }): string =>
-    `translate(calc(50vw - ${sumOfHandoverImageWidth}px), 0)}, 0)`};
+  transform: ${({ sumOfHandoverImageWidth }): SerializedStyles =>
+    css`translate(calc(50vw - ${sumOfHandoverImageWidth}px), 0)}, 0)`};
 `
 
 const StyledImage = styled(ImageComponent)<StyledImageProps>`
@@ -281,16 +283,26 @@ const StyledImage = styled(ImageComponent)<StyledImageProps>`
     height: auto;
     object-fit: contain;
 
-    ${({ isFixedHeight }): string =>
-      isFixedHeight ? `height: 100vh; width:100vw;` : ''}
+    ${({ isFixedHeight }): SerializedStyles =>
+      isFixedHeight
+        ? css`
+            height: 100vh;
+            width: 100vw;
+          `
+        : css``}
   }
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
     width: 100vw;
     height: 100vw;
 
-    ${({ isFixedHeight }): string =>
-      isFixedHeight ? `height: 100vh; width:100vw;` : ''}
+    ${({ isFixedHeight }): SerializedStyles =>
+      isFixedHeight
+        ? css`
+            height: 100vh;
+            width: 100vw;
+          `
+        : css``}
   }
 `
 
@@ -343,10 +355,10 @@ const StyledIndicator = styled.div`
   font-size: 20px;
   cursor: pointer;
 
-  ${({ theme }): string => `
-      background-color: ${theme.colors.grayScale10};
-      border-radius: ${theme.radius.round100};
-      box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
+  ${({ theme }): SerializedStyles => css`
+    background-color: ${theme.colors.grayScale10};
+    border-radius: ${theme.radius.round100};
+    box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
   `}
 
   &.selected {
@@ -363,12 +375,24 @@ const StyledGradient = styled.div<StyledGradientProps>`
   width: 100vw;
   height: 120px;
 
-  ${({ direction, theme }): string =>
+  ${({ direction, theme }): SerializedStyles =>
     direction === 'top'
-      ? `top: 0;
-        background: linear-gradient(180deg, ${theme.colors.dimOpacity70} 0%, rgba(0,0,0,0) 100%);`
-      : `bottom: 0;
-        background: linear-gradient(180deg,  rgba(0,0,0,0) 0%, ${theme.colors.dimOpacity70} 100%);`}
+      ? css`
+          top: 0;
+          background: linear-gradient(
+            180deg,
+            ${theme.colors.dimOpacity70} 0%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        `
+      : css`
+          bottom: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            ${theme.colors.dimOpacity70} 100%
+          );
+        `}
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     display: block;

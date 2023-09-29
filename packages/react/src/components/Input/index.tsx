@@ -42,7 +42,7 @@ export type InputProps = {
    * Input 너비를 정합니다.
    * @type string | undefined
    */
-  width?: string | undefined
+  width?: string
 } & InputHTMLAttributes<HTMLInputElement>
 export type MainInputProps = Omit<InputProps, 'inputSize'> & {
   isSmall: boolean

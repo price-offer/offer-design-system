@@ -1,8 +1,7 @@
 import type { Meta, Story } from '@storybook/react'
-import type { ButtonProps } from './types'
-import { BUTTON_STYLE_KEYS } from './types'
 import { ICON_TYPES } from '../Icon'
-import { Button } from './index'
+import type { ButtonProps } from './index'
+import { Button, BUTTON_STYLE_KEYS } from './index'
 
 export default {
   argTypes: {

@@ -1,8 +1,9 @@
-import { Default } from './Default'
+export type { RadioProps } from './Default'
+
+import { Default, Label } from './Default'
 import { Input } from './Input'
-import { Styled } from './styled'
 
 export const Radio = Object.assign(Default, {
   Input,
-  Label: Styled.Label
+  Label
 })

@@ -3,7 +3,7 @@ import { Icon } from '@offer-ui/components'
 import { action } from '@storybook/addon-actions'
 import type { Meta, Story } from '@storybook/react'
 import type { ChangeEvent } from 'react'
-import type { RadioProps } from './types'
+import type { RadioProps } from './index'
 import { Radio } from './index'
 
 export default {

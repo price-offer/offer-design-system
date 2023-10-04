@@ -144,6 +144,7 @@ const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
     justify-content: space-between;
     align-items: center;
     position: relative;
+    width: 100%;
     cursor: pointer;
     ${applyColorScheme(colorType, theme)}
     ${applySize(size, theme)}

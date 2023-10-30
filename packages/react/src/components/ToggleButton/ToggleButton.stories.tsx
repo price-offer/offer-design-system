@@ -1,19 +1,22 @@
-import type { Meta, Story } from '@storybook/react'
-import { ToggleButton } from './index'
-import type { ToggleButtonProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { ToggleButton as ToggleButtonComponent } from './index'
 
-export default {
-  component: ToggleButton,
+type ToggleButton = typeof ToggleButtonComponent
+
+const meta: Meta<ToggleButton> = {
+  component: ToggleButtonComponent,
   title: 'Components/ToggleButton'
-} as Meta<ToggleButtonProps>
+}
 
-const Template: Story<ToggleButtonProps> = args => <ToggleButton {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  color: 'grayScale30',
-  icon: 'heart',
-  size: 16,
-  toggleColor: 'brandPrimary',
-  toggleIcon: 'heartFill'
+export const Default: StoryObj<ToggleButton> = {
+  args: {
+    color: 'grayScale30',
+    icon: 'heart',
+    size: 16,
+    toggleColor: 'brandPrimary',
+    toggleIcon: 'heartFill'
+  },
+  render: args => <ToggleButtonComponent {...args} />
 }

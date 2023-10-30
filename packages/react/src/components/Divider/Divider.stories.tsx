@@ -1,8 +1,9 @@
-import type { Meta, Story } from '@storybook/react'
-import { Divider } from './index'
-import type { DividerProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Divider as DividerComponent } from './index'
 
-export default {
+type Divider = typeof DividerComponent
+
+const meta: Meta<Divider> = {
   argTypes: {
     direction: {
       control: { type: 'radio' },
@@ -19,13 +20,16 @@ export default {
       options: ['regular', 'bold']
     }
   },
-  component: Divider,
+  component: DividerComponent,
   title: 'Components/Divider'
-} as Meta
+}
 
-const Template: Story<DividerProps> = args => <Divider {...args} />
-export const Default = Template.bind({})
-Default.args = {
-  direction: 'horizontal',
-  size: 'regular'
+export default meta
+
+export const Default: StoryObj<Divider> = {
+  args: {
+    direction: 'horizontal',
+    size: 'regular'
+  },
+  render: args => <DividerComponent {...args} />
 }

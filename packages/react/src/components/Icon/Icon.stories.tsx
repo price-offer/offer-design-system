@@ -1,10 +1,11 @@
 import { colors } from '@offer-ui/styles/themes'
-import type { Meta, Story } from '@storybook/react'
-import { Icon, ICON_TYPES } from './index'
-import type { IconProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Icon as IconComponent, ICON_TYPES } from './index'
 
-export default {
-  argType: {
+type Icon = typeof IconComponent
+
+const meta: Meta<Icon> = {
+  argTypes: {
     type: {
       control: 'select',
       options: [...Object.keys(ICON_TYPES)]
@@ -14,15 +15,17 @@ export default {
       options: [...Object.keys(colors)]
     }
   },
-  component: Icon,
+  component: IconComponent,
   title: 'Components/Icon'
-} as Meta<IconProps>
+}
 
-const Template: Story<IconProps> = args => <Icon {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  color: 'grayScale20',
-  size: 24,
-  type: 'box'
+export const Default: StoryObj<Icon> = {
+  args: {
+    color: 'grayScale20',
+    size: 24,
+    type: 'box'
+  },
+  render: args => <IconComponent {...args} />
 }

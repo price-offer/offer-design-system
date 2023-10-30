@@ -1,10 +1,10 @@
+import path from 'path'
+import react from '@vitejs/plugin-react'
 import type { AliasOptions } from 'vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import packageJson from './package.json'
-import path from 'path'
-import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
+import packageJson from './package.json'
 import tsconfigJson from './tsconfig.json'
 
 const getTsAlias = (): AliasOptions => {

@@ -12,12 +12,14 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "apps/*"
     ],
     "nohoist": []
   },
   "scripts": {
-    "start": "lerna run start --parallel",
+    "start:storybook": "lerna run start --parallel",
+    "start:playground":"lerna run dev --parallel",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "build-storybook": "lerna run build-storybook",

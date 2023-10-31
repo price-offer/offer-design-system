@@ -1,3 +1,5 @@
+import type { SerializedStyles } from '@emotion/react'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useImage } from '@offer-ui/hooks'
 import type { StyledProps } from '@offer-ui/types'
@@ -51,7 +53,7 @@ type ApplyShapeParams = {
   width: string
   height: string
 }
-type ApplyShape = (params: ApplyShapeParams) => string
+type ApplyShape = (params: ApplyShapeParams) => SerializedStyles
 
 export const Image = forwardRef(function Image(
   {
@@ -135,9 +137,13 @@ const StyledImage = styled.img<StyledImgProps>`
 `
 
 const applyShape: ApplyShape = ({ radius, boxSize, width, height }) => {
-  return `
+  return css`
     width: ${width || boxSize};
     height: ${height || boxSize};
+    min-width: ${width || boxSize};
+    min-height: ${height || boxSize};
+    max-width: ${width || boxSize};
+    max-height: ${height || boxSize};
     border-radius: ${radius};
   `
 }

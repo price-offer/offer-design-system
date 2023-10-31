@@ -3,12 +3,19 @@ import { Icon } from '@offer-ui/components'
 import { action } from '@storybook/addon-actions'
 import type { Meta, Story } from '@storybook/react'
 import type { ChangeEvent } from 'react'
+import { DIRECTION } from './Default'
 import type { RadioProps } from './index'
 import { Radio } from './index'
 
 export default {
   component: Radio,
-  title: 'Components/Radio'
+  title: 'Components/Radio',
+  argTypes: {
+    direction: {
+      control: 'radio',
+      options: Object.values(DIRECTION)
+    }
+  }
 } as Meta<RadioProps>
 
 const moodList: IconType[] = ['sad', 'meh', 'smile']

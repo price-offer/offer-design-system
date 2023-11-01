@@ -1,25 +1,33 @@
+import { dirname, join } from "path";
 const path = require('path')
 const tsconfigPaths = require("vite-tsconfig-paths");
 const svgrPlugin = require("vite-plugin-svgr");
 
 module.exports = {
-  stories: ["../../react/src/components/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: [ "../../react/src/components/**/*.stories.@(js|jsx|ts|tsx)" ],
+
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
   ],
-  framework: "@storybook/react",
-  core: {
-    builder: "@storybook/builder-vite",
+
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
   },
+
   features: {
-    storyStoreV7: true,
+    storyStoreV7: false,
   },
+
   staticDirs: ["../../react/public"],
-  async viteFinal(config) {
-    return {
-      ...config,
+
+  viteFinal: async (config)  => ({
+    ...config,
+    define: {
+      'process.env': {}
+    },
+    public: '../../react/public',
       plugins: [...config.plugins, tsconfigPaths.default(), svgrPlugin()],
       resolve: {
         alias: {
@@ -39,6 +47,13 @@ module.exports = {
           "@offer-ui/utils": path.resolve(__dirname, "../../react/src/utils")
         }
       }
-    }
-  },
+  }),
+
+  docs: {
+    autodocs: true
+  }
 };
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
+}

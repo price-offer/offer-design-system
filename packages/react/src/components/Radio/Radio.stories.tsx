@@ -3,13 +3,20 @@ import { Icon } from '@offer-ui/components'
 import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 import type { ChangeEvent } from 'react'
+import { DIRECTION } from './Default'
 import { Radio as RadioComponent } from './index'
 
 type Radio = typeof RadioComponent
 
 const meta: Meta<Radio> = {
   component: RadioComponent,
-  title: 'Components/Radio'
+  title: 'Components/Radio',
+  argTypes: {
+    direction: {
+      control: 'radio',
+      options: Object.values(DIRECTION)
+    }
+  }
 }
 
 export default meta

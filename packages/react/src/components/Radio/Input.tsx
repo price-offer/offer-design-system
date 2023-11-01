@@ -38,6 +38,10 @@ const CheckMark = styled.span`
   position: relative;
   height: 20px;
   width: 20px;
+  min-height: 20px;
+  min-width: 20px;
+  max-height: 20px;
+  max-width: 20px;
   background-color: ${({ theme }): string => theme.colors.white};
   border: solid ${({ theme }): string => theme.colors.grayScale10};
   border-radius: ${({ theme }): string => theme.radius.round100};

@@ -5,6 +5,11 @@ import { forwardRef } from 'react'
 import type { ForwardedRef, ChangeEvent, ReactNode } from 'react'
 import { Input } from './Input'
 
+export const DIRECTION = {
+  VERTICAL: 'vertical',
+  HORIZONTAL: 'horizontal'
+} as const
+
 type CommonProps = {
   /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
    * @type string
@@ -13,7 +18,7 @@ type CommonProps = {
   /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    * @type 'horizontal' | 'vertical'
    */
-  direction: 'horizontal' | 'vertical'
+  direction: typeof DIRECTION[keyof typeof DIRECTION]
   /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    * @type void
    */
@@ -42,7 +47,7 @@ export const Default = forwardRef(function Radio(
     formName,
     onChange,
     items,
-    direction = 'horizontal',
+    direction = DIRECTION.HORIZONTAL,
     children,
     ...props
   }: RadioProps,
@@ -65,8 +70,10 @@ export const Default = forwardRef(function Radio(
 })
 
 const Form = styled.form<StyledFormProps>`
-  display: ${({ direction }): string =>
-    direction === 'vertical' ? 'block' : 'flex'};
+  display: flex;
+
+  flex-direction: ${({ direction }): string =>
+    direction === DIRECTION.VERTICAL ? 'column' : 'row'};
   gap: 10px;
 `
 export const Label = styled.label`

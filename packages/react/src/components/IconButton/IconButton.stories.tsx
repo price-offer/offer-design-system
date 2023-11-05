@@ -1,10 +1,11 @@
 import { colors } from '@offer-ui/styles/themes'
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ICON_TYPES } from '../Icon'
-import { IconButton } from './index'
-import type { IconButtonProps } from './index'
+import { IconButton as IconButtonComponent } from './index'
 
-export default {
+type IconButton = typeof IconButtonComponent
+
+const meta: Meta<IconButton> = {
   argTypes: {
     hasShadow: {
       control: 'boolean'
@@ -18,15 +19,17 @@ export default {
       options: [...Object.keys(colors)]
     }
   },
-  component: IconButton,
+  component: IconButtonComponent,
   title: 'Components/IconButton'
-} as Meta<IconButtonProps>
+}
 
-const Template: Story<IconButtonProps> = args => <IconButton {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  color: 'brandPrimary',
-  icon: 'arrowLeft',
-  size: 24
+export const Default: StoryObj<IconButton> = {
+  args: {
+    color: 'brandPrimary',
+    icon: 'arrowLeft',
+    size: 24
+  },
+  render: args => <IconButtonComponent {...args} />
 }

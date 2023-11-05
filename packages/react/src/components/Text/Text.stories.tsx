@@ -1,9 +1,10 @@
 import { colors, fonts } from '@offer-ui/themes'
-import type { Meta, Story } from '@storybook/react'
-import { Text } from './index'
-import type { TextProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Text as TextComponent } from './index'
 
-export default {
+type Text = typeof TextComponent
+
+const meta: Meta<Text> = {
   argTypes: {
     color: {
       control: { type: 'select', options: [...Object.keys(colors)] }
@@ -17,14 +18,16 @@ export default {
       options: ['p', 'span']
     }
   },
-  component: Text,
+  component: TextComponent,
   title: 'Components/Text'
-} as Meta<TextProps>
+}
 
-const Template: Story<TextProps> = args => <Text {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  children: 'hello',
-  styleType: 'body01M'
+export const Default: StoryObj<Text> = {
+  args: {
+    children: 'hello',
+    styleType: 'body01M'
+  },
+  render: args => <TextComponent {...args} />
 }

@@ -1,24 +1,28 @@
-import type { Meta, Story } from '@storybook/react'
-import { Image } from './index'
-import type { ImageProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Image as ImageComponent } from './index'
 
-export default {
+type Image = typeof ImageComponent
+
+const meta: Meta<Image> = {
   argTypes: {
     objectFit: {
       control: { type: 'radio' },
       options: ['fill', 'contain', 'cover', 'none']
     }
   },
-  component: Image,
+  component: ImageComponent,
   title: 'Components/Image'
-} as Meta<ImageProps>
+}
 
-const Template: Story<ImageProps> = args => <Image {...args} />
-export const Default = Template.bind({})
-Default.args = {
-  alt: 'Image',
-  boxSize: '276px',
-  fallbackSrc: 'https://via.placeholder.com/200',
-  objectFit: 'cover',
-  src: 'https://via.placeholder.com/150'
+export default meta
+
+export const Default: StoryObj<Image> = {
+  args: {
+    alt: 'Image',
+    boxSize: '276px',
+    fallbackSrc: 'https://via.placeholder.com/200',
+    objectFit: 'cover',
+    src: 'https://via.placeholder.com/150'
+  },
+  render: args => <ImageComponent {...args} />
 }

@@ -1,5 +1,5 @@
 import { addons } from '@storybook/addons';
-import theme from '../../react/src/styles/themes';
+import theme from './theme';
 
 addons.setConfig({
   theme

@@ -1,19 +1,21 @@
-import type { Meta, Story } from '@storybook/react'
-import { TextArea } from './index'
-import type { TextAreaProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { TextArea as TextAreaComponent } from './index'
 
-export default {
-  component: TextArea,
+type TextArea = typeof TextAreaComponent
+
+const meta: Meta<TextArea> = {
+  component: TextAreaComponent,
   title: 'Components/TextArea'
-} as Meta<TextAreaProps>
+}
 
-const Template: Story<TextAreaProps> = args => <TextArea {...args} />
+export default meta
 
-export const Default = Template.bind({})
-
-Default.args = {
-  bgType: 'filled',
-  guideMessage: '안내 메세지',
-  label: '라벨',
-  placeholder: 'plaecholder'
+export const Default: StoryObj<TextArea> = {
+  args: {
+    bgType: 'filled',
+    guideMessage: '안내 메세지',
+    label: '라벨',
+    placeholder: 'plaecholder'
+  },
+  render: args => <TextAreaComponent {...args} />
 }

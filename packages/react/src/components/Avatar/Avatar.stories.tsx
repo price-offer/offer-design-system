@@ -1,22 +1,25 @@
-import type { Meta, Story } from '@storybook/react'
-import { Avatar, AVATAR_WRAPPER_SIZE } from './index'
-import type { AvatarProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Avatar as AvatarComponent, AVATAR_WRAPPER_SIZE } from './index'
 
-export default {
+type Avatar = typeof AvatarComponent
+const meta: Meta<Avatar> = {
   argTypes: {
     size: {
       control: 'radio',
       options: Object.keys(AVATAR_WRAPPER_SIZE)
     }
   },
-  component: Avatar,
+  component: AvatarComponent,
   title: 'Components/Avatar'
-} as Meta<AvatarProps>
+}
 
-const Template: Story<AvatarProps> = args => <Avatar {...args} />
-export const Default = Template.bind({})
-Default.args = {
-  alt: 'avatar',
-  size: 'medium',
-  src: 'https://picsum.photos/100'
+export default meta
+
+export const Default: StoryObj<Avatar> = {
+  args: {
+    alt: 'avatar',
+    size: 'medium',
+    src: 'https://picsum.photos/100'
+  },
+  render: args => <AvatarComponent {...args} />
 }

@@ -1,8 +1,9 @@
-import type { Meta, Story } from '@storybook/react'
-import { Input, INPUT_STYLE_KEYS } from './index'
-import type { InputProps } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Input as InputComponent, INPUT_STYLE_KEYS } from './index'
 
-export default {
+type Input = typeof InputComponent
+
+const meta: Meta<Input> = {
   argTypes: {
     inputSize: {
       control: 'radio',
@@ -23,19 +24,21 @@ export default {
       control: 'boolean'
     }
   },
-  components: Input,
+  component: InputComponent,
   title: 'Components/Input'
-} as Meta<InputProps>
+}
 
-const Template: Story<InputProps> = args => <Input {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  guideMessage: '안내 메세지',
-  inputSize: 'large',
-  isPrice: true,
-  label: '라벨',
-  placeholder: '내용을 입력하세요',
-  status: 'success',
-  styleType: 'default'
+export const Default: StoryObj<Input> = {
+  args: {
+    guideMessage: '안내 메세지',
+    inputSize: 'large',
+    isPrice: true,
+    label: '라벨',
+    placeholder: '내용을 입력하세요',
+    status: 'success',
+    styleType: 'default'
+  },
+  render: args => <InputComponent {...args} />
 }

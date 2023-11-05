@@ -1,9 +1,10 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ICON_TYPES } from '../Icon'
-import type { ButtonProps } from './index'
-import { Button, BUTTON_STYLE_KEYS } from './index'
+import { Button as ButtonComponent, BUTTON_STYLE_KEYS } from './index'
 
-export default {
+type Button = typeof ButtonComponent
+
+const meta: Meta<Button> = {
   argTypes: {
     children: {
       control: { type: 'text' }
@@ -26,17 +27,19 @@ export default {
       }
     }
   },
-  component: Button,
+  component: ButtonComponent,
   title: 'Components/Button'
-} as Meta<ButtonProps>
+}
 
-const Template: Story<ButtonProps> = args => <Button {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  children: 'CTA 버튼',
-  icon: 'heart',
-  size: 'medium',
-  styleType: 'solidPrimary',
-  width: '400px'
+export const Default: StoryObj<Button> = {
+  args: {
+    children: 'CTA 버튼',
+    icon: 'heart',
+    size: 'medium',
+    styleType: 'solidPrimary',
+    width: '400px'
+  },
+  render: args => <ButtonComponent {...args} />
 }

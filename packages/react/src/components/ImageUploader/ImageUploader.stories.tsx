@@ -1,74 +1,78 @@
 import { action } from '@storybook/addon-actions'
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { v4 as uuidV4 } from 'uuid'
-import { ImageUploader } from './index'
-import type { ImageUploaderProps } from './index'
+import { ImageUploader as ImageUploaderComponent } from './index'
 
-export default {
-  component: ImageUploader,
+type ImageUploader = typeof ImageUploaderComponent
+
+const meta: Meta<ImageUploader> = {
+  component: ImageUploaderComponent,
   title: 'Components/ImageUploader'
-} as Meta<ImageUploaderProps>
+}
 
-const Template: Story<ImageUploaderProps> = args => (
-  <div style={{ maxHeight: '304px', maxWidth: '1200px' }}>
-    <ImageUploader {...args} />
-  </div>
-)
-export const Default = Template.bind({})
-Default.args = {
-  images: [
-    {
-      id: uuidV4(),
-      isRepresent: true,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      id: uuidV4(),
-      isRepresent: false,
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+export default meta
+
+export const Default: StoryObj<ImageUploader> = {
+  args: {
+    images: [
+      {
+        id: uuidV4(),
+        isRepresent: true,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      },
+      {
+        id: uuidV4(),
+        isRepresent: false,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      }
+    ],
+    onChange: (params): void => {
+      action(JSON.stringify(params))
     }
-  ],
-  onChange: (params): void => {
-    action(JSON.stringify(params))
-  }
+  },
+  render: args => (
+    <div style={{ maxHeight: '304px', maxWidth: '1200px' }}>
+      <ImageUploaderComponent {...args} />
+    </div>
+  )
 }

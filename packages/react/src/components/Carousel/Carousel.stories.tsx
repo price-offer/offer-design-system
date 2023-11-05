@@ -1,24 +1,26 @@
-import type { Meta, Story } from '@storybook/react'
-import { Carousel } from './index'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Carousel as CarouselComponent } from './index'
 import type { CarouselProps } from './index'
 
-export default {
-  argTypes: {},
-  component: Carousel,
+type Carousel = typeof CarouselComponent
+
+const meta: Meta<Carousel> = {
+  component: CarouselComponent,
   title: 'Components/Carousel'
-} as Meta<CarouselProps>
-const images = [
-  { id: 1, url: 'https://picsum.photos/400' },
-  { id: 2, url: 'https://picsum.photos/400' },
-  { id: 3, url: 'https://picsum.photos/400' }
-]
+}
 
-const Template: Story<CarouselProps> = args => <Carousel {...args} />
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  images,
-  isArrow: true,
-  name: 'products',
-  size: 687
+export const Default: StoryObj<CarouselProps> = {
+  args: {
+    images: [
+      { id: 1, url: 'https://picsum.photos/400' },
+      { id: 2, url: 'https://picsum.photos/400' },
+      { id: 3, url: 'https://picsum.photos/400' }
+    ],
+    isArrow: true,
+    name: 'products',
+    size: 687
+  },
+  render: args => <CarouselComponent {...args} />
 }

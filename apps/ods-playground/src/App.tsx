@@ -1,10 +1,6 @@
-import { Avatar } from '@offer-ui/react'
-
-function App() {
+export const App = () => {
 
   return (
-    <Avatar alt="avatar" src="https://picsum.photos/100"/>
+    <div>Try it out!</div>
   )
 }
-
-export default App

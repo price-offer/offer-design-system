@@ -19,11 +19,14 @@
   },
   "scripts": {
     "start:storybook": "lerna run start --parallel",
-    "start:playground":"lerna run dev --parallel",
+    "start:playground": "lerna run dev --parallel",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "build-storybook": "lerna run build-storybook",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "changeset:version": "changeset version && changeset tag",
+    "changeset:publish": "lerna run build && changeset publish"
   },
   "devDependencies": {
     "husky": "^8.0.0",
@@ -32,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/price-offer/offer-design-system/issues"
   },
-  "homepage": "https://github.com/price-offer/offer-design-system#readme"
+  "homepage": "https://github.com/price-offer/offer-design-system#readme",
+  "dependencies": {
+    "@changesets/cli": "^2.26.2"
+  }
 }

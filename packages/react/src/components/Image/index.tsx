@@ -124,13 +124,13 @@ export const Image = forwardRef(function Image(
 })
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
-  ${({ boxSize, radius, theme, width, height }): string => `
+  ${({ boxSize, radius, theme, width, height }): SerializedStyles => css`
     ${applyShape({ boxSize, height, radius, width })}
     background-color: ${theme.colors.grayScale10};
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`
-  ${({ boxSize, radius, objectFit, width, height }): string => `
+  ${({ boxSize, radius, objectFit, width, height }): SerializedStyles => css`
     ${applyShape({ boxSize, height, radius, width })}
     object-fit: ${objectFit};
   `}

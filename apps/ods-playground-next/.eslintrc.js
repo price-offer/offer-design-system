@@ -6,6 +6,6 @@ module.exports = {
     'eslint:recommended',
     'next',
     'next/core-web-vitals',
+    'plugin:prettier/recommended'
   ]
 }
-

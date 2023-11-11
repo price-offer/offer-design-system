@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@offer-ui/react": "file:../../packages/react",
     "react": "^18",
     "react-dom": "^18",
     "next": "14.0.2"

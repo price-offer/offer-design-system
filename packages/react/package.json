@@ -34,6 +34,7 @@
   "scripts": {
     "start": "yarn storybook",
     "build": "tsc && vite build",
+    "build:watch": "tsc && vite build --watch",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint --ext .ts,.tsx src",
     "lint:fix": "tsc --noEmit && eslint --fix --ext .ts,.tsx src",

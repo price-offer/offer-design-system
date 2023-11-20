@@ -9,6 +9,6 @@
       "ignoreChanges": ["*.md", ".spec.ts", ".stories.tsx"]
     }
   },
-  "packages": ["packages/*"],
+  "packages": ["packages/*", "apps/*"],
   "version": "independent"
 }

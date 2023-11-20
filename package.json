@@ -19,8 +19,10 @@
   },
   "scripts": {
     "start:storybook": "lerna run start --parallel",
-    "start:playground": "lerna run dev --parallel",
+    "start:playground-react": "lerna run dev --scope=ods-playground-react",
+    "start:playground-next": "lerna run dev --scope=ods-playground-next",
     "build": "lerna run build",
+    "build:watch": "lerna run build:watch",
     "lint": "lerna run lint",
     "build-storybook": "lerna run build-storybook",
     "prepare": "husky install",

@@ -1,5 +1,3 @@
-import type { SerializedStyles } from '@emotion/react'
-import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useImage } from '@offer-ui/hooks'
 import type { StyledProps } from '@offer-ui/types'
@@ -53,7 +51,7 @@ type ApplyShapeParams = {
   width: string
   height: string
 }
-type ApplyShape = (params: ApplyShapeParams) => SerializedStyles
+type ApplyShape = (params: ApplyShapeParams) => string
 
 export const Image = forwardRef(function Image(
   {
@@ -63,7 +61,7 @@ export const Image = forwardRef(function Image(
     objectFit = 'cover',
     width = '',
     height = '',
-    boxSize = '276px',
+    boxSize = 'auto',
     radius = '0px',
     ...props
   }: ImageProps,
@@ -124,20 +122,20 @@ export const Image = forwardRef(function Image(
 })
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
-  ${({ boxSize, radius, theme, width, height }): SerializedStyles => css`
+  ${({ boxSize, radius, theme, width, height }): string => `
     ${applyShape({ boxSize, height, radius, width })}
     background-color: ${theme.colors.grayScale10};
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`
-  ${({ boxSize, radius, objectFit, width, height }): SerializedStyles => css`
+  ${({ boxSize, radius, objectFit, width, height }): string => `
     ${applyShape({ boxSize, height, radius, width })}
     object-fit: ${objectFit};
   `}
 `
 
 const applyShape: ApplyShape = ({ radius, boxSize, width, height }) => {
-  return css`
+  return `
     width: ${width || boxSize};
     height: ${height || boxSize};
     min-width: ${width || boxSize};

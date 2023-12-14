@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.4
+
+### Patch Changes
+
+- 8de7dbb: fix the hydration error on ImageUploader Component and fix some issues
+
 ## 0.2.3
 
 ### Patch Changes

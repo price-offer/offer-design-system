@@ -22,8 +22,24 @@ export type ImageProps = {
   /** image의 높이를 정합니다.
    * @type string | undefined
    */
+  minWidth?: string
+  /** image의 최소 넓이를 정합니다.
+   * @type string | undefined
+   */
+  maxWidth?: string
+  /** image의 최대 넓이를 정합니다.
+   * @type string | undefined
+   */
   height?: string
   /** image의 너비와 높이를 동시에 정합니다.
+   * @type string | undefined
+   */
+  minHeight?: string
+  /** image의 최소 높이를 정합니다.
+   * @type string | undefined
+   */
+  maxHeight?: string
+  /** image의 최대 높이를 정합니다.
    * @type string | undefined
    */
   boxSize?: string
@@ -43,13 +59,25 @@ export type ImageProps = {
 
 type StyledImgProps = StyledProps<
   ImageProps,
-  'boxSize' | 'radius' | 'objectFit' | 'width' | 'height'
+  | 'boxSize'
+  | 'radius'
+  | 'objectFit'
+  | 'width'
+  | 'height'
+  | 'maxHeight'
+  | 'maxWidth'
+  | 'minWidth'
+  | 'minHeight'
 >
 type ApplyShapeParams = {
   boxSize: string
   radius: string
   width: string
+  minWidth: string
+  maxWidth: string
   height: string
+  minHeight: string
+  maxHeight: string
 }
 type ApplyShape = (params: ApplyShapeParams) => string
 
@@ -61,7 +89,11 @@ export const Image = forwardRef(function Image(
     objectFit = 'cover',
     width = '',
     height = '',
-    boxSize = 'auto',
+    maxWidth = '',
+    maxHeight = '',
+    minWidth = '',
+    minHeight = '',
+    boxSize = '276px',
     radius = '0px',
     ...props
   }: ImageProps,
@@ -81,6 +113,10 @@ export const Image = forwardRef(function Image(
         alt={alt}
         boxSize={boxSize}
         height={height}
+        maxHeight={maxHeight}
+        maxWidth={maxWidth}
+        minHeight={minHeight}
+        minWidth={minWidth}
         objectFit={objectFit}
         radius={radius}
         src={fallbackSrc}
@@ -98,6 +134,10 @@ export const Image = forwardRef(function Image(
           ref={ref as ForwardedRef<HTMLDivElement>}
           boxSize={boxSize}
           height={height}
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          minHeight={minHeight}
+          minWidth={minWidth}
           radius={radius}
           width={width}
           {...props}
@@ -109,6 +149,10 @@ export const Image = forwardRef(function Image(
           alt={alt}
           boxSize={boxSize}
           height={height}
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          minHeight={minHeight}
+          minWidth={minWidth}
           objectFit={objectFit}
           radius={radius}
           src={src}
@@ -122,26 +166,35 @@ export const Image = forwardRef(function Image(
 })
 
 const StyledPlaceholder = styled.div<Omit<StyledImgProps, 'objectFit'>>`
-  ${({ boxSize, radius, theme, width, height }): string => `
-    ${applyShape({ boxSize, height, radius, width })}
+  ${({ theme, ...props }): string => `
+    ${applyShape(props)}
     background-color: ${theme.colors.grayScale10};
   `}
 `
 const StyledImage = styled.img<StyledImgProps>`
-  ${({ boxSize, radius, objectFit, width, height }): string => `
-    ${applyShape({ boxSize, height, radius, width })}
+  ${({ objectFit, ...props }): string => `
+    ${applyShape(props)}
     object-fit: ${objectFit};
   `}
 `
 
-const applyShape: ApplyShape = ({ radius, boxSize, width, height }) => {
+const applyShape: ApplyShape = ({
+  radius,
+  boxSize,
+  width,
+  height,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight
+}) => {
   return `
     width: ${width || boxSize};
+    min-width: ${minWidth};
+    max-width: ${maxWidth};
     height: ${height || boxSize};
-    min-width: ${width || boxSize};
-    min-height: ${height || boxSize};
-    max-width: ${width || boxSize};
-    max-height: ${height || boxSize};
+    min-height: ${minHeight};
+    max-height: ${maxHeight};
     border-radius: ${radius};
   `
 }

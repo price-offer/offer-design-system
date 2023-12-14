@@ -1,12 +1,13 @@
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
-type UseMediaType = {
+export type UseMediaType = {
   mobile: boolean
   tablet: boolean
   desktop: boolean
 }
 
-const useMedia = (): UseMediaType => {
+export const useMedia = (): UseMediaType => {
   const isClient = typeof window !== 'undefined'
 
   const [isTablet, setIsTablet] = useState(
@@ -16,7 +17,7 @@ const useMedia = (): UseMediaType => {
     isClient && window.matchMedia('screen and (max-width: 699px').matches
   )
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isClient) {
       return
     }
@@ -41,5 +42,3 @@ const useMedia = (): UseMediaType => {
     desktop: !isTablet
   }
 }
-
-export { useMedia }

@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.3
+
+### Patch Changes
+
+- 28903ed: fix the image component min-height and min-width
+
 ## 0.2.2
 
 ### Patch Changes

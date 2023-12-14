@@ -11,7 +11,10 @@
   "dependencies": {
     "@offer-ui/react": "file:../../packages/react",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

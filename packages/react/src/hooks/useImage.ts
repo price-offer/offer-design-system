@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
 type NativeImageProps = React.ImgHTMLAttributes<HTMLImageElement>
 type ImageEvent = React.SyntheticEvent<HTMLImageElement, Event>
@@ -35,7 +36,7 @@ export const useImage = ({
   const [status, setStatus] = useState<Status>('pending')
   const imageRef = useRef<HTMLImageElement | null>()
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (typeof window === undefined) {
       return
     }

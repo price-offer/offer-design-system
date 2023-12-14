@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
-type UseMediaType = {
+export type UseMediaType = {
   mobile: boolean
   tablet: boolean
   desktop: boolean
 }
 
-const useMedia = (): UseMediaType => {
+export const useMedia = (): UseMediaType => {
   const isClient = typeof window !== 'undefined'
 
   const [isTablet, setIsTablet] = useState(
@@ -42,5 +42,3 @@ const useMedia = (): UseMediaType => {
     desktop: !isTablet
   }
 }
-
-export { useMedia }

@@ -4,12 +4,18 @@ import type { RadioProps } from './Default'
 
 export type InputProps = Pick<RadioProps, 'formName'> & {
   value: string
+  checked?: boolean
 }
 
-export const Input = ({ value, formName }: InputProps): ReactElement => {
+export const Input = ({
+  value,
+  formName,
+  checked
+}: InputProps): ReactElement => {
   return (
     <>
       <InputComponent
+        checked={checked}
         id={`${formName}-${value}`}
         name={formName}
         type="radio"

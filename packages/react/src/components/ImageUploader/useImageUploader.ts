@@ -81,9 +81,10 @@ export const useImageUploader = ({
         url: imageUrl
       }
     })
+    const nextImages = [...images, ...newImages]
 
-    setImages(prevImageList => [...prevImageList, ...newImages])
-    onChange({ eventType: 'upload', images })
+    setImages(nextImages)
+    onChange({ eventType: 'upload', images: nextImages })
     e.target.value = ''
   }
 

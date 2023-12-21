@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
 /** 클라이언트의 현재 View Port에따라 원하는 반응형 분기처리를 도와주는 hook입니다.
  * @param { string } query 분기를 원하는 반응형 조건을 정합니다.
@@ -13,13 +14,13 @@ export const useMediaQuery = (query: string): boolean => {
     return false
   }
 
-  const [matches, setMatches] = useState<boolean>(getMatches(query))
+  const [matches, setMatches] = useState<boolean>(false)
 
   const handleChange = (): void => {
     setMatches(getMatches(query))
   }
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const matchMedia = window.matchMedia(query)
 
     // Triggered at the first client-side load and if query changes

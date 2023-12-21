@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.5
+
+### Patch Changes
+
+- 249ca8e: - ImageUploader 이슈 수정 \* Radio 선택 값 받을 수 있도록 수정
+
 ## 0.2.4
 
 ### Patch Changes

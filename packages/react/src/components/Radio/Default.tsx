@@ -11,29 +11,39 @@ export const DIRECTION = {
 } as const
 
 type CommonProps = {
-  /** Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
+  /**
    * @type string
+   * @description Radio 컴포넌트의 이름을 정합니다.(input name에 사용)
    */
   formName: string
-  /** Radio 컴포넌트 내부 옵션의 방향을 정합니다.
+  /**
    * @type 'horizontal' | 'vertical'
+   * @description Radio 컴포넌트 내부 옵션의 방향을 정합니다.
    */
   direction: typeof DIRECTION[keyof typeof DIRECTION]
-  /** Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
+  /**
+   * @type string | undefined
+   * @description Radio에서 선택된 값을 지정합니다.
+   */
+  selectedValue?: string
+  /**
    * @type void
+   * @description Radio 컴포넌트의 값이 변경되는 경우 실행할 함수를 정합니다.
    */
   onChange(e: ChangeEvent<HTMLFormElement>): void
 }
 type DefaultProps = CommonProps & {
-  /** Radio 컴포넌트에 보여질 옵션들을 정합니다
+  /**
    * @type any
+   * @description Radio 컴포넌트에 보여질 옵션들을 정합니다
    */
   items: any
   children?: never
 }
 type ChildrenProps = CommonProps & {
-  /** Radio 컴포넌트의 아이템 리스트를 자유로운 방식으로 구현합니다.
+  /**
    * @type ReactNode
+   * @description Radio 컴포넌트의 아이템 리스트를 자유로운 방식으로 구현합니다.
    */
   children: ReactNode
   items?: never
@@ -49,13 +59,18 @@ export const Default = forwardRef(function Radio(
     items,
     direction = DIRECTION.HORIZONTAL,
     children,
+    selectedValue,
     ...props
   }: RadioProps,
   ref: ForwardedRef<HTMLFormElement>
 ) {
   const radioList = items?.map((item: any) => (
     <Label key={item.code} className={`${direction}`}>
-      <Input formName={formName} value={item.code} />
+      <Input
+        formName={formName}
+        value={item.code}
+        {...(selectedValue && { checked: selectedValue === item.code })}
+      />
       <Text style={{ backgroundColor: 'white' }} styleType="body01R">
         {item.name}
       </Text>

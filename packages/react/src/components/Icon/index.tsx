@@ -33,7 +33,7 @@ import {
   SmileFill,
   Store,
   TriangleDown
-} from '@offer-ui/constants/icons'
+} from '@offer-ui/constants'
 import type { ColorKeys } from '@offer-ui/themes'
 import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, SVGAttributes } from 'react'

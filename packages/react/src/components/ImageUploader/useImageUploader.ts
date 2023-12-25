@@ -58,29 +58,38 @@ export const useImageUploader = ({
       return
     }
 
-    const fulfilledImageFiles = (
+    const fulfilledImageFiles: Promise<{
       file: File
-    ): Promise<string | ArrayBuffer | null> => {
+      url: string | ArrayBuffer | null
+    }>[] = Array.from(files).map(file => {
       const reader = new FileReader()
 
       return new Promise(resolve => {
         reader.onload = (): void => {
-          resolve(reader.result)
+          resolve({
+            file,
+            url: reader.result
+          })
         }
 
         reader.readAsDataURL(file)
       })
-    }
+    })
 
-    const newImages = await Promise.all(
-      Array.from(files).map(async (file, index) => {
-        const isRepresent = images.length === 0 && index === 0
-        const dataURL = await fulfilledImageFiles(file)
-        const url = isValidImageUrl(dataURL) ? dataURL : ''
-
-        return { id: uuidV4(), isRepresent, file, url }
-      })
+    const imageFiles = await Promise.all<typeof fulfilledImageFiles>(
+      fulfilledImageFiles
     )
+    const newImages = imageFiles.map(({ url, file }, index) => {
+      const isRepresent = images.length === 0 && index === 0
+      const imageUrl = isValidImageUrl(url) ? url : ''
+
+      return {
+        id: uuidV4(),
+        isRepresent,
+        url: imageUrl,
+        file
+      }
+    })
 
     const nextImages = [...images, ...newImages]
 

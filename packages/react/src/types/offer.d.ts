@@ -6,8 +6,9 @@ export declare type SelectOnChangeHandler<T = any> = (item: T) => void
 
 /**  ImageUploader */
 export type ImageInfo = {
-  isRepresent: boolean
   id: string
+  file?: File
+  isRepresent?: boolean
   url: string
 }
 type ImageUploaderParams = {

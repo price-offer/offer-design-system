@@ -34,8 +34,8 @@ export const useImageUploader = ({
 
     const newImages = [...images]
     newImages.splice(index, 1)
-
     const isRepresent = images[index].isRepresent && images.length > 1
+
     if (isRepresent) {
       newImages[0].isRepresent = true
     }
@@ -58,7 +58,9 @@ export const useImageUploader = ({
       return
     }
 
-    const fulfilledImageFiles = Array.from(files).map(file => {
+    const fulfilledImageFiles = (
+      file: File
+    ): Promise<string | ArrayBuffer | null> => {
       const reader = new FileReader()
 
       return new Promise(resolve => {
@@ -68,19 +70,18 @@ export const useImageUploader = ({
 
         reader.readAsDataURL(file)
       })
-    })
+    }
 
-    const imageFiles = await Promise.all(fulfilledImageFiles)
-    const newImages = imageFiles.map((file, index) => {
-      const isRepresent = images.length === 0 && index === 0
-      const imageUrl = isValidImageUrl(file) ? file : ''
+    const newImages = await Promise.all(
+      Array.from(files).map(async (file, index) => {
+        const isRepresent = images.length === 0 && index === 0
+        const dataURL = await fulfilledImageFiles(file)
+        const url = isValidImageUrl(dataURL) ? dataURL : ''
 
-      return {
-        id: uuidV4(),
-        isRepresent,
-        url: imageUrl
-      }
-    })
+        return { id: uuidV4(), isRepresent, file, url }
+      })
+    )
+
     const nextImages = [...images, ...newImages]
 
     setImages(nextImages)

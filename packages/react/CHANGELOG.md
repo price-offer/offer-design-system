@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.6
+
+### Patch Changes
+
+- 7bdfc35: - ImageUploader 파일 데이터 추가
+
 ## 0.2.5
 
 ### Patch Changes

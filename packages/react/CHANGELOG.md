@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.7
+
+### Patch Changes
+
+- 50dcfa3: design: selectbox darkmode 스타일 이슈 수정
+
 ## 0.2.6
 
 ### Patch Changes

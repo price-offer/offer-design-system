@@ -105,7 +105,7 @@ export const SelectBox = ({
         isEmpty={isEmpty}
         size={size}
         onClick={handleOpenOptions}>
-        <Text styleType="body02M">{text}</Text>
+        <span>{text}</span>
         <StyledTriggerArrow
           color={getIconColor()}
           size={16}
@@ -146,6 +146,7 @@ const StyledTriggerWrapper = styled.div<Omit<StyledSelectProps, 'isSelected'>>`
     position: relative;
     width: 100%;
     cursor: pointer;
+    ${theme.fonts.body02M}
     ${applyColorScheme(colorType, theme)}
     ${applySize(size, theme)}
     color:${getFontColor({ colorType, isEmpty, size, theme })};
@@ -177,7 +178,7 @@ const StyledOptionList = styled.ul`
     border: 1px solid ${theme.colors.grayScale10};
     ${theme.mediaQuery.desktop} {
       font-size: 12px;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0px 2px 6px rgba(108, 63, 63, 0.15);
     }
     ${theme.mediaQuery.tablet} {
       font-size: 14px;

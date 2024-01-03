@@ -1,6 +1,6 @@
 import { NOTICE_MESSAGE } from '@offer-ui/constants'
 import type { ImageInfo } from '@offer-ui/types'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
 import { v4 as uuidV4 } from 'uuid'
 import type { ImageUploaderProps, UploaderProps } from './index'
@@ -97,6 +97,12 @@ export const useImageUploader = ({
     onChange({ eventType: 'upload', images: nextImages })
     e.target.value = ''
   }
+
+  useEffect(() => {
+    if (defaultImages) {
+      setImages(defaultImages)
+    }
+  }, [defaultImages])
 
   return {
     addImage,

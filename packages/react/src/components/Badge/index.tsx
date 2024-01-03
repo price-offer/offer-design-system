@@ -48,6 +48,7 @@ export const Badge = forwardRef(function Badge(
 
 const StyledBadge = styled.div<StyledBadgeProps>`
   display: inline-block;
+  height: fit-content;
   min-height: 20px;
   padding: 2px 6px;
   text-align: center;

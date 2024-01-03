@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.2.8
+
+### Patch Changes
+
+- 95b9c3a: 뱃지 높이 틀어지는 이슈 수정, 이미지 업로더 상위 상태와 싱크업하도록
+
 ## 0.2.7
 
 ### Patch Changes

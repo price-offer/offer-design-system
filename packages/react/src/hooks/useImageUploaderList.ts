@@ -13,7 +13,7 @@ const isValidImageUrl = (file: unknown): file is string =>
 
 const MAX_LIST_LENGTH = 10
 
-export const useImageUploader = ({
+export const useImageUploaderList = ({
   images: defaultImages,
   onChange
 }: ImageUploaderProps): UploaderProps => {

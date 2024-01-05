@@ -43,7 +43,7 @@ export const MobileUploader = forwardRef(function MobileUploader(
         </StyledImageTotal>
         <StyledUploaderInput
           ref={uploaderRef}
-          accept="image/*"
+          accept="image/jpeg, image/png"
           multiple
           type="file"
           onChange={addImage}

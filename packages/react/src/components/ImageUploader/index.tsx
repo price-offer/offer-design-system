@@ -1,4 +1,4 @@
-import { useMediaQuery } from '@offer-ui/hooks'
+import { useMediaQuery, useImageUploader } from '@offer-ui/hooks'
 import type { ImageInfo, UploaderOnChangeHandler } from '@offer-ui/types'
 import type {
   ChangeEventHandler,
@@ -8,7 +8,6 @@ import type {
 } from 'react'
 import { forwardRef } from 'react'
 import { DesktopUploader, MobileUploader } from './uploader'
-import { useImageUploader } from './useImageUploader'
 
 export type UploaderProps = {
   images: ImageInfo[]

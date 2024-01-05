@@ -1,9 +1,12 @@
+import type {
+  ImageUploaderProps,
+  UploaderProps
+} from '@offer-ui/components/ImageUploader'
 import { NOTICE_MESSAGE } from '@offer-ui/constants'
 import type { ImageInfo } from '@offer-ui/types'
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
 import { v4 as uuidV4 } from 'uuid'
-import type { ImageUploaderProps, UploaderProps } from './index'
 
 const isValidImageUrl = (file: unknown): file is string =>
   typeof file === 'string'

@@ -6,15 +6,15 @@ import { v4 as uuidV4 } from 'uuid'
 const isValidImageUrl = (file: unknown): file is string =>
   typeof file === 'string'
 
-type Image = Omit<ImageInfo, 'isRepresent'>
-type UseImageUploaderProps = Partial<{
-  defaultImage: Image
-  onChange(image: Image): void
+export type UploaderImage = Omit<ImageInfo, 'isRepresent'>
+export type UseImageUploaderProps = Partial<{
+  defaultImage: UploaderImage
+  onChange(image: UploaderImage): void
 }>
-type UseImageUploaderReturns = {
+export type UseImageUploaderReturns = {
   changeImage: ChangeEventHandler<HTMLInputElement>
   uploaderRef: MutableRefObject<HTMLInputElement | null>
-  image: Image
+  image: UploaderImage
   openUploader(): void
 }
 
@@ -23,7 +23,7 @@ export const useImageUploader = ({
   onChange
 }: UseImageUploaderProps): UseImageUploaderReturns => {
   const uploaderRef = useRef<HTMLInputElement | null>(null)
-  const [image, setImage] = useState<Image>(
+  const [image, setImage] = useState<UploaderImage>(
     defaultImage || { id: 'defaultImage', url: '' }
   )
 

@@ -51,7 +51,7 @@ export const DesktopUploader = forwardRef(function DesktopUploader(
           <Button size="small">사진 업로드</Button>
           <StyledUploaderInput
             ref={uploaderRef}
-            accept="image/*"
+            accept="image/jpeg, image/png"
             multiple
             type="file"
             onChange={addImage}

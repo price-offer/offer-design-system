@@ -3,3 +3,6 @@ export const isNumber = (value: string): boolean => {
 
   return numberReg.test(value)
 }
+
+export const isValidImageUrl = (file: unknown): file is string =>
+  typeof file === 'string'

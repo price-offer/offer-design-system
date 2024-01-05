@@ -1,16 +1,17 @@
+import type {
+  ImageUploaderProps,
+  UploaderProps
+} from '@offer-ui/components/ImageUploader'
 import { NOTICE_MESSAGE } from '@offer-ui/constants'
 import type { ImageInfo } from '@offer-ui/types'
+import { isValidImageUrl } from '@offer-ui/utils/validation'
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEventHandler } from 'react'
 import { v4 as uuidV4 } from 'uuid'
-import type { ImageUploaderProps, UploaderProps } from './index'
-
-const isValidImageUrl = (file: unknown): file is string =>
-  typeof file === 'string'
 
 const MAX_LIST_LENGTH = 10
 
-export const useImageUploader = ({
+export const useImageListUploader = ({
   images: defaultImages,
   onChange
 }: ImageUploaderProps): UploaderProps => {

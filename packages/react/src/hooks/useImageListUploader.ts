@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from 'uuid'
 
 const MAX_LIST_LENGTH = 10
 
-export const useImageUploaderList = ({
+export const useImageListUploader = ({
   images: defaultImages,
   onChange
 }: ImageUploaderProps): UploaderProps => {

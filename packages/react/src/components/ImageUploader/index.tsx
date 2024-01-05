@@ -1,4 +1,4 @@
-import { useMediaQuery, useImageUploaderList } from '@offer-ui/hooks'
+import { useMediaQuery, useImageListUploader } from '@offer-ui/hooks'
 import type { ImageInfo, UploaderOnChangeHandler } from '@offer-ui/types'
 import type {
   ChangeEventHandler,
@@ -43,7 +43,7 @@ export const ImageUploader = forwardRef(function ImageUploader(
     openUploader,
     addImage,
     removeImage
-  } = useImageUploaderList({
+  } = useImageListUploader({
     images: defaultImages,
     onChange
   })

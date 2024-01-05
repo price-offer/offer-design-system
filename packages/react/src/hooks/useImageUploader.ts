@@ -1,10 +1,8 @@
 import type { ImageInfo } from '@offer-ui/types'
+import { isValidImageUrl } from '@offer-ui/utils/validation'
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEventHandler, MutableRefObject, ChangeEvent } from 'react'
 import { v4 as uuidV4 } from 'uuid'
-
-const isValidImageUrl = (file: unknown): file is string =>
-  typeof file === 'string'
 
 export type UploaderImage = Omit<ImageInfo, 'isRepresent'>
 export type UseImageUploaderProps = Partial<{

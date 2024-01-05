@@ -1,5 +1,15 @@
 # @offer-ui/react
 
+## 0.3.0
+
+### Minor Changes
+
+- fbcf16c: - feat: implement the useImageUploader hook
+  - refactor: force an ImageUploader component accept image to jpeg and png
+  - refactor: rename useImageUploader to useImageListUploader
+- 1bebf12: implement the useImageUploader hook
+- 33b6d53: implement the useImageUploader hook
+
 ## 0.2.8
 
 ### Patch Changes

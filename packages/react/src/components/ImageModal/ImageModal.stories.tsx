@@ -15,15 +15,15 @@ export const Default: StoryObj<ImageModal> = {
   args: {
     images: [
       {
-        id: '1',
+        id: 1,
         src: 'errorImage'
       },
       {
-        id: '2',
+        id: 2,
         src: 'http://placekitten.com/500/600'
       },
       {
-        id: '3',
+        id: 3,
         src: 'http://placekitten.com/400/800'
       }
     ],

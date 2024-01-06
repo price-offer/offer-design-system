@@ -14,9 +14,9 @@ export default meta
 export const Default: StoryObj<CarouselProps> = {
   args: {
     images: [
-      { id: 1, url: 'https://picsum.photos/400' },
-      { id: 2, url: 'https://picsum.photos/400' },
-      { id: 3, url: 'https://picsum.photos/400' }
+      { id: 1, src: 'https://picsum.photos/400' },
+      { id: 2, src: 'https://picsum.photos/400' },
+      { id: 3, src: 'https://picsum.photos/400' }
     ],
     isArrow: true,
     name: 'products',

@@ -6,9 +6,9 @@ import { forwardRef, useEffect, useState } from 'react'
 
 export type CarouselProps = {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
-   * @type { url: string, id: number } []
+   * @type { src: string, id: number } []
    */
-  images: { url: string; id: number }[]
+  images: { src: string; id: number }[]
   /** Carousel 컴포넌트에 화살표의 유무를 정합니다.
    * @type boolean
    */
@@ -134,7 +134,7 @@ export const Carousel = forwardRef(function Carousel(
                 key={image.id}
                 alt={`${name}- ${image.id}`}
                 size={carouselWidthSize}
-                src={image.url}
+                src={image.src}
               />
             )
           })}

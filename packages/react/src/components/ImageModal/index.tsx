@@ -9,8 +9,8 @@ import { forwardRef, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type ImageInfo = {
+  id: number
   src: string
-  id: string
 }
 export type ImageModalProps = {
   /**
@@ -76,7 +76,7 @@ export const ImageModal = forwardRef(function ImageModal(
 ) {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
   const initImageId = images[0].id
-  const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
+  const [currentImageId, setCurrentImageId] = useState<number>(initImageId)
   const startClientX = useRef<number | null>(null)
   const topElement = useRef<HTMLDivElement | null>(null)
 
@@ -152,7 +152,7 @@ export const ImageModal = forwardRef(function ImageModal(
   const getCurrentImageIndex = (): number =>
     imagesInfo.current.findIndex(({ id }) => currentImageId === id)
 
-  const handleClickIndicator = (id: string): void => {
+  const handleClickIndicator = (id: number): void => {
     setCurrentImageId(id)
   }
 

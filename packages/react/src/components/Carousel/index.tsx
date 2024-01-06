@@ -63,13 +63,14 @@ export const Carousel = forwardRef(function Carousel(
 ) {
   const { desktop } = useMedia()
   const carouselWidthSize = desktop ? size : FULL_SCREEN_WIDTH
-  const lastImageValue = carouselWidthSize * (images?.length - 1)
+  const lastImageValue = carouselWidthSize * (images.length - 1)
   const [currentImageValue, setCurrentImageValue] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
   const isFirstImage = currentImageValue === 0
   const isLastImage = currentImageValue === lastImageValue
+  const hasImages = images.length > 0
 
   const VALUE_OF_NAV_TYPE = {
     LEFT: -carouselWidthSize,
@@ -123,15 +124,13 @@ export const Carousel = forwardRef(function Carousel(
 
   return (
     <StyledCarouselWrapper ref={ref} {...props}>
-      {/* {images ? ( */}
-      {/* <> */}
       <StyledSlider
         cursorOn={cursorOn}
         size={carouselWidthSize}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
         <StyledImageBox currentImageValue={currentImageValue}>
-          {images?.map(image => {
+          {images.map(image => {
             return (
               <StyledImage
                 key={image.id}
@@ -142,7 +141,7 @@ export const Carousel = forwardRef(function Carousel(
             )
           })}
         </StyledImageBox>
-        {isArrow && (
+        {isArrow && hasImages && (
           <StyledArrowBox>
             {isFirstImage ? (
               <div />
@@ -183,9 +182,11 @@ export const Carousel = forwardRef(function Carousel(
             />
           )
         })}
-        <StyledCurrentIndicator
-          imageIndex={currentImageValue / carouselWidthSize}
-        />
+        {hasImages && (
+          <StyledCurrentIndicator
+            imageIndex={currentImageValue / carouselWidthSize}
+          />
+        )}
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )

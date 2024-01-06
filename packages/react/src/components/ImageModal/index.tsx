@@ -9,8 +9,8 @@ import { forwardRef, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type ImageInfo = {
+  id: number
   src: string
-  id: string
 }
 export type ImageModalProps = {
   /**
@@ -71,14 +71,15 @@ const calculateSizeRate = (width: number, height: number): number =>
   width / height
 
 export const ImageModal = forwardRef(function ImageModal(
-  { onClose, images, isOpen = false, name, ...props }: ImageModalProps,
+  { onClose, images = [], isOpen = false, name, ...props }: ImageModalProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
-  const initImageId = images[0].id
-  const [currentImageId, setCurrentImageId] = useState<string>(initImageId)
+  const initImageId = images[0]?.id
+  const [currentImageId, setCurrentImageId] = useState<number>(initImageId)
   const startClientX = useRef<number | null>(null)
   const topElement = useRef<HTMLDivElement | null>(null)
+  const hasImages = images.length > 0
 
   useEffect(() => {
     const divElement = document.createElement('div')
@@ -92,7 +93,9 @@ export const ImageModal = forwardRef(function ImageModal(
   }, [])
 
   useEffect(() => {
-    getImagesInfo()
+    if (hasImages) {
+      getImagesInfo()
+    }
   }, [images])
 
   useEffect(() => {
@@ -150,9 +153,9 @@ export const ImageModal = forwardRef(function ImageModal(
   }
 
   const getCurrentImageIndex = (): number =>
-    imagesInfo.current.findIndex(({ id }) => currentImageId === id)
+    imagesInfo.current?.findIndex(({ id }) => currentImageId === id) || 0
 
-  const handleClickIndicator = (id: string): void => {
+  const handleClickIndicator = (id: number): void => {
     setCurrentImageId(id)
   }
 
@@ -183,7 +186,7 @@ export const ImageModal = forwardRef(function ImageModal(
     setCurrentImageId(newCurrentImageId)
   }
 
-  return topElement.current
+  return topElement.current && hasImages
     ? createPortal(
         <StyledDIM
           isOpen={isOpen}

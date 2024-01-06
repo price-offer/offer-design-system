@@ -1,14 +1,15 @@
 import styled from '@emotion/styled'
 import { Icon } from '@offer-ui/components/Icon'
+import { Image } from '@offer-ui/components/Image'
 import { useMedia } from '@offer-ui/hooks/useMedia'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 
 export type CarouselProps = {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
-   * @type { url: string, id: number } []
+   * @type { src: string, id: number } []
    */
-  images: { url: string; id: number }[]
+  images: { src: string; id: number }[]
   /** Carousel 컴포넌트에 화살표의 유무를 정합니다.
    * @type boolean
    */
@@ -57,7 +58,7 @@ const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
 export const Carousel = forwardRef(function Carousel(
-  { images, isArrow, size = 687, name, ...props }: CarouselProps,
+  { images = [], isArrow, size = 687, name, ...props }: CarouselProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { desktop } = useMedia()
@@ -69,6 +70,7 @@ export const Carousel = forwardRef(function Carousel(
   const [cursorOn, setCursorOn] = useState<boolean>(false)
   const isFirstImage = currentImageValue === 0
   const isLastImage = currentImageValue === lastImageValue
+  const hasImages = images.length > 0
 
   const VALUE_OF_NAV_TYPE = {
     LEFT: -carouselWidthSize,
@@ -134,12 +136,12 @@ export const Carousel = forwardRef(function Carousel(
                 key={image.id}
                 alt={`${name}- ${image.id}`}
                 size={carouselWidthSize}
-                src={image.url}
+                src={image.src}
               />
             )
           })}
         </StyledImageBox>
-        {isArrow && (
+        {isArrow && hasImages && (
           <StyledArrowBox>
             {isFirstImage ? (
               <div />
@@ -180,9 +182,11 @@ export const Carousel = forwardRef(function Carousel(
             />
           )
         })}
-        <StyledCurrentIndicator
-          imageIndex={currentImageValue / carouselWidthSize}
-        />
+        {hasImages && (
+          <StyledCurrentIndicator
+            imageIndex={currentImageValue / carouselWidthSize}
+          />
+        )}
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )
@@ -193,6 +197,8 @@ const StyledCarouselWrapper = styled.div`
   user-select: none;
   position: relative;
   height: 430px;
+  background-color: ${({ theme }): string => theme.colors.grayScale10};
+
   ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: 100vw;
     height: 400px;
@@ -202,6 +208,7 @@ const StyledCarouselWrapper = styled.div`
     height: 360px;
   }
 `
+
 const StyledSlider = styled.div<SliderProps>`
   position: relative;
   max-width: ${({ size }): string => `${size}px`};
@@ -241,7 +248,7 @@ const StyledImageBox = styled.div<ImageBoxProps>`
   }
 `
 
-const StyledImage = styled.img<ImageProps>`
+const StyledImage = styled(Image)<ImageProps>`
   width: ${({ size }): string => `${size}px`};
   height: 440px;
   object-fit: cover;

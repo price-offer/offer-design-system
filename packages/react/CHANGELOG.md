@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.3.1
+
+### Patch Changes
+
+- cd4b4bb: Carousel, ImageModal 컴포넌트 개선
+
 ## 0.3.0
 
 ### Minor Changes

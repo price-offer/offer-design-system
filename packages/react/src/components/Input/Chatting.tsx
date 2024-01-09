@@ -5,19 +5,20 @@ import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { forwardRef, useState } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
-type ChattingProps = Omit<
-  InputProps,
-  'label' | 'status' | 'message' | 'isPrice'
->
-
+export type ChattingInputProps = InputProps
 type StyledInputProps = { isSmall: boolean }
 type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
-type StyledInputFormProps = StyledProps<ChattingProps, 'width'>
+type StyledInputFormProps = StyledProps<ChattingInputProps, 'width'>
 
 export const Chatting = forwardRef(function Chatting(
-  { onChange, width = '100%', inputSize = 'small', ...props }: ChattingProps,
+  {
+    onChange,
+    width = '100%',
+    inputSize = 'small',
+    ...props
+  }: ChattingInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const [inputValue, setInputValue] = useState<string>('')

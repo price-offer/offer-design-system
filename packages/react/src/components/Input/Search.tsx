@@ -5,14 +5,14 @@ import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
-type SearchProps = Omit<InputProps, 'label' | 'status' | 'message' | 'isPrice'>
+export type SearchInputProps = InputProps
 type StyledInputProps = {
   isSmall: boolean
 }
-type StyledInputFormProps = StyledProps<SearchProps, 'width'>
+type StyledInputFormProps = StyledProps<SearchInputProps, 'width'>
 
 export const Search = forwardRef(function Search(
-  { inputSize = 'small', width = '100%', ...props }: SearchProps,
+  { inputSize = 'small', width = '100%', ...props }: SearchInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const isSmall = isSmallSize(inputSize)

@@ -7,30 +7,10 @@ import { Search } from './Search'
 export type InputSize = 'large' | 'small'
 export type InputProps = {
   /**
-   * Input의 스타일 타입을 정합니다.
-   * @type "chatting" | "default" | "edit" | "search" | undefined
+   * Input의 사이즈를 정합니다.
+   * @type 'large' | 'small' | undefined
    */
   inputSize?: InputSize
-  /**
-   * Input의 label 메세지를 정합니다.
-   * @type string | undefined
-   */
-  label?: string
-  /**
-   * Input의 추가 설명 메세지의 상태를 정합니다.
-   * @type 'none' | 'success' | 'error' | 'default' | undefined
-   */
-  status?: 'none' | 'success' | 'error' | 'default'
-  /**
-   * Input의 설명 메세지를 정합니다.
-   * @type string | undefined
-   */
-  guideMessage?: string
-  /**
-   * Input 값으로 가격을 받는지 여부를 정합니다.
-   * @type boolean | undefined
-   */
-  isPrice?: boolean
   /**
    * Input 너비를 정합니다.
    * @type string | undefined

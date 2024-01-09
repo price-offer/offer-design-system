@@ -1,5 +1,12 @@
 # @offer-ui/react
 
+## 0.3.2
+
+### Patch Changes
+
+- 894b47d: - Input 컴포넌트 개선
+  - Carousel과 ImageModal 디자인 이슈 수정
+
 ## 0.3.1
 
 ### Patch Changes

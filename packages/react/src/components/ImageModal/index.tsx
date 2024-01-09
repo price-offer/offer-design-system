@@ -238,7 +238,7 @@ export const ImageModal = forwardRef(function ImageModal(
 })
 
 const StyledDIM = styled.div<StyledDIMProps>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: ${({ isOpen }): string => (isOpen ? 'flex' : 'none')};

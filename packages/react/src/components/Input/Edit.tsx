@@ -1,13 +1,30 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components'
+import { Text, isSmallSize } from '@offer-ui/components'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 import type { ColorKeys } from '@offer-ui/themes'
 import type { StyledProps } from '@offer-ui/types'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
-import type { MainInputProps as EditInputProps } from './index'
+import type { InputProps } from './index'
 
+export type EditInputProps = InputProps & {
+  /**
+   * Input의 label 메세지를 정합니다.
+   * @type string | undefined
+   */
+  label?: string
+  /**
+   * Input의 추가 설명 메세지의 상태를 정합니다.
+   * @type 'none' | 'success' | 'error' | 'default' | undefined
+   */
+  status?: 'none' | 'success' | 'error' | 'default'
+  /**
+   * Input의 설명 메세지를 정합니다.
+   * @type string | undefined
+   */
+  guideMessage?: string
+}
 type StyledInputProps = {
   isSmall: boolean
   hasGuideMessage: boolean
@@ -15,26 +32,22 @@ type StyledInputProps = {
 type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
 type StyledInputFormProps = StyledProps<EditInputProps, 'width'>
 
-export const EditInput = forwardRef(function EditInput(
+export const Edit = forwardRef(function Edit(
   {
     label = '',
     guideMessage = '',
     status = 'default',
-    isSmall,
+    inputSize = 'small',
     width = '100%',
     onChange,
-    isPrice,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const hasGuideMessage = status !== 'none'
+  const isSmall = isSmallSize(inputSize)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    if (!isPrice) {
-      return onChange?.(e)
-    }
-
     const numberValue = convertToNumber(e.target.value)
     e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
 
@@ -52,15 +65,13 @@ export const EditInput = forwardRef(function EditInput(
           onChange={handleChange}
           {...props}
         />
-        {isPrice && (
-          <StyledPriceUnit
-            color="grayScale90"
-            hasGuideMessage={hasGuideMessage}
-            isSmall={isSmall}
-            styleType="subtitle01M">
-            {VALIDATE_MESSAGE.PRICE_UNIT}
-          </StyledPriceUnit>
-        )}
+        <StyledPriceUnit
+          color="grayScale90"
+          hasGuideMessage={hasGuideMessage}
+          isSmall={isSmall}
+          styleType="subtitle01M">
+          {VALIDATE_MESSAGE.PRICE_UNIT}
+        </StyledPriceUnit>
       </StyledInputLabel>
       {hasGuideMessage && (
         <StyledInputGuideMessage status={status} styleType="caption01M">

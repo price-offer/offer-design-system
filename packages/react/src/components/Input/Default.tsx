@@ -6,34 +6,54 @@ import type { StyledProps } from '@offer-ui/types'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
-import type { MainInputProps as DefaultInputProps } from './index'
+import { isSmallSize, type InputProps } from './index'
 
-type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'> & {
-  hasGuideMessage: boolean
+export type DefaultProps = InputProps & {
+  /**
+   * Input의 label 메세지를 정합니다.
+   * @type string | undefined
+   */
+  label?: string
+  /**
+   * Input의 추가 설명 메세지의 상태를 정합니다.
+   * @type 'none' | 'success' | 'error' | 'default' | undefined
+   */
+  status?: 'none' | 'success' | 'error' | 'default'
+  /**
+   * Input의 설명 메세지를 정합니다.
+   * @type string | undefined
+   */
+  guideMessage?: string
+  /**
+   * Input 값으로 가격을 받는지 여부를 정합니다.
+   * @type boolean | undefined
+   */
+  isPrice?: boolean
 }
-type StyledInputProps = StyledProps<
-  DefaultInputProps,
-  'isPrice' | 'isSmall' | 'label'
-> & {
+type StyledPriceUnitProps = {
   hasGuideMessage: boolean
+  isSmall: boolean
 }
-type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
-type StyledWrapperProps = StyledProps<DefaultInputProps, 'width'>
+type StyledInputProps = StyledProps<DefaultProps, 'isPrice' | 'label'> &
+  StyledPriceUnitProps
+type StyledStatusProps = StyledProps<DefaultProps, 'status'>
+type StyledWrapperProps = StyledProps<DefaultProps, 'width'>
 
-export const DefaultInput = forwardRef(function DefaultInput(
+export const Default = forwardRef(function Default(
   {
     label = '',
     status = 'default',
     guideMessage = '',
     isPrice = false,
-    isSmall,
+    inputSize = 'small',
     width = '100%',
     onChange,
     ...args
-  }: DefaultInputProps,
+  }: DefaultProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const hasGuideMessage = status !== 'none'
+  const isSmall = isSmallSize(inputSize)
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
     if (isPrice) {
       const numberValue = convertToNumber(e.target.value)

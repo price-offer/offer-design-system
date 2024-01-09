@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Input as InputComponent, INPUT_STYLE_KEYS } from './index'
+import { Input as InputComponent } from './index'
 
 type Input = typeof InputComponent
 
@@ -15,10 +15,6 @@ const meta: Meta<Input> = {
     status: {
       control: 'radio',
       options: ['error', 'success', 'default', 'none']
-    },
-    styleType: {
-      control: 'radio',
-      options: Object.values(INPUT_STYLE_KEYS)
     },
     disabled: {
       control: 'boolean'
@@ -37,8 +33,43 @@ export const Default: StoryObj<Input> = {
     isPrice: true,
     label: '라벨',
     placeholder: '내용을 입력하세요',
-    status: 'success',
-    styleType: 'default'
+    status: 'success'
   },
   render: args => <InputComponent {...args} />
+}
+
+export const Chatting: StoryObj<Input> = {
+  args: {
+    guideMessage: '안내 메세지',
+    inputSize: 'large',
+    isPrice: true,
+    label: '라벨',
+    placeholder: '내용을 입력하세요',
+    status: 'success'
+  },
+  render: args => <InputComponent.Chatting {...args} />
+}
+
+export const Edit: StoryObj<Input> = {
+  args: {
+    guideMessage: '안내 메세지',
+    inputSize: 'large',
+    isPrice: true,
+    label: '라벨',
+    placeholder: '내용을 입력하세요',
+    status: 'success'
+  },
+  render: args => <InputComponent.Edit {...args} />
+}
+
+export const Search: StoryObj<Input> = {
+  args: {
+    guideMessage: '안내 메세지',
+    inputSize: 'large',
+    isPrice: true,
+    label: '라벨',
+    placeholder: '내용을 입력하세요',
+    status: 'success'
+  },
+  render: args => <InputComponent.Search {...args} />
 }

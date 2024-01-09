@@ -1,35 +1,50 @@
 import styled from '@emotion/styled'
 import { IconButton } from '@offer-ui/components/IconButton'
 import type { StyledProps } from '@offer-ui/types'
-import type { ChangeEventHandler, ForwardedRef } from 'react'
+import type { ChangeEventHandler, FormEventHandler, ForwardedRef } from 'react'
 import { forwardRef, useState } from 'react'
-import type { MainInputProps } from './index'
+import { isSmallSize, type InputProps } from './index'
 
-type ChattingInputProps = Omit<
-  MainInputProps,
-  'label' | 'status' | 'message' | 'isPrice'
->
-
-type StyledInputProps = StyledProps<ChattingInputProps, 'isSmall'>
+export type ChattingInputProps = InputProps & {
+  /**
+   * @description Input의 submit시 실행할 함수를 정합니다.
+   * @type (value?: string): void
+   */
+  onSubmitValue?(value: string): void
+}
+type StyledInputProps = { isSmall: boolean }
 type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
 type StyledInputFormProps = StyledProps<ChattingInputProps, 'width'>
 
-export const ChattingInput = forwardRef(function ChattingInput(
-  { isSmall, onChange, width = '100%', ...props }: ChattingInputProps,
+export const Chatting = forwardRef(function Chatting(
+  {
+    onChange,
+    width = '100%',
+    inputSize = 'small',
+    onSubmitValue,
+    ...props
+  }: ChattingInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const [inputValue, setInputValue] = useState<string>('')
   const isDisabled = !inputValue
+  const isSmall = isSmallSize(inputSize)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     onChange?.(e)
     setInputValue(e.currentTarget.value)
   }
 
+  const handleSubmitForm: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+
+    onSubmitValue?.(inputValue)
+  }
+
   return (
-    <StyledInputForm width={width}>
+    <StyledInputForm width={width} onSubmit={handleSubmitForm}>
       <StyledInput
         ref={ref}
         isSmall={isSmall}

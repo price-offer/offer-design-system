@@ -1,11 +1,13 @@
 import styled from '@emotion/styled'
 import { IconButton } from '@offer-ui/components/IconButton'
 import type { StyledProps } from '@offer-ui/types'
-import type { ChangeEventHandler, ForwardedRef } from 'react'
+import type { ChangeEventHandler, FormEventHandler, ForwardedRef } from 'react'
 import { forwardRef, useState } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
-export type ChattingInputProps = InputProps
+export type ChattingInputProps = InputProps & {
+  onSubmitValue?(value: string): void
+}
 type StyledInputProps = { isSmall: boolean }
 type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
@@ -17,6 +19,7 @@ export const Chatting = forwardRef(function Chatting(
     onChange,
     width = '100%',
     inputSize = 'small',
+    onSubmitValue,
     ...props
   }: ChattingInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -30,8 +33,14 @@ export const Chatting = forwardRef(function Chatting(
     setInputValue(e.currentTarget.value)
   }
 
+  const handleSubmitForm: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+
+    onSubmitValue?.(inputValue)
+  }
+
   return (
-    <StyledInputForm width={width}>
+    <StyledInputForm width={width} onSubmit={handleSubmitForm}>
       <StyledInput
         ref={ref}
         isSmall={isSmall}

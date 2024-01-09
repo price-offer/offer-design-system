@@ -1,26 +1,45 @@
 import styled from '@emotion/styled'
 import { Icon } from '@offer-ui/components/Icon'
 import type { StyledProps } from '@offer-ui/types'
-import type { ForwardedRef } from 'react'
-import { forwardRef } from 'react'
+import { mergeRefs } from '@offer-ui/utils/mergeRefs'
+import type { FormEventHandler, ForwardedRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
-export type SearchInputProps = InputProps
+export type SearchInputProps = InputProps & {
+  onSubmitValue?(value?: string): void
+}
 type StyledInputProps = {
   isSmall: boolean
 }
 type StyledInputFormProps = StyledProps<SearchInputProps, 'width'>
 
 export const Search = forwardRef(function Search(
-  { inputSize = 'small', width = '100%', ...props }: SearchInputProps,
+  {
+    inputSize = 'small',
+    width = '100%',
+    onSubmitValue,
+    ...props
+  }: SearchInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const isSmall = isSmallSize(inputSize)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  const handleSubmitSearch: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+
+    onSubmitValue?.(inputRef.current?.value)
+  }
 
   return (
-    <StyledInputForm width={width}>
+    <StyledInputForm width={width} onSubmit={handleSubmitSearch}>
       <StyledIcon color={'grayScale50'} isSmall={isSmall} type="search" />
-      <StyledInput ref={ref} isSmall={isSmall} {...props} />
+      <StyledInput
+        ref={mergeRefs([ref, inputRef])}
+        isSmall={isSmall}
+        {...props}
+      />
     </StyledInputForm>
   )
 })

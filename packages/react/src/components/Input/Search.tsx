@@ -7,6 +7,10 @@ import { forwardRef, useRef } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
 export type SearchInputProps = InputProps & {
+  /**
+   * @description Input의 submit시 실행할 함수를 정합니다.
+   * @type (value?: string): void
+   */
   onSubmitValue?(value?: string): void
 }
 type StyledInputProps = {

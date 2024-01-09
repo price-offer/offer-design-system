@@ -6,6 +6,10 @@ import { forwardRef, useState } from 'react'
 import { isSmallSize, type InputProps } from './index'
 
 export type ChattingInputProps = InputProps & {
+  /**
+   * @description Input의 submit시 실행할 함수를 정합니다.
+   * @type (value?: string): void
+   */
   onSubmitValue?(value: string): void
 }
 type StyledInputProps = { isSmall: boolean }

@@ -18,12 +18,6 @@ export type InputProps = {
   width?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
-export const INPUT_GUIDE_MESSAGE_STYLE = {
-  DEFAULT: 'grayScale',
-  SUCCESS: 'actSuccess',
-  ERROR: 'actionError'
-} as const
-
 export const isSmallSize = (size: InputSize): boolean => size === 'small'
 
 export const Input = Object.assign(Default, {

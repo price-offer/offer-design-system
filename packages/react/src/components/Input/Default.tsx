@@ -6,27 +6,24 @@ import type { StyledProps } from '@offer-ui/types'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
-import type { MainInputProps as DefaultInputProps } from './index'
+import { isSmallSize, type InputProps as DefaultInputProps } from './index'
 
-type StyledPriceUnitProps = StyledProps<DefaultInputProps, 'isSmall'> & {
+type StyledPriceUnitProps = {
   hasGuideMessage: boolean
+  isSmall: boolean
 }
-type StyledInputProps = StyledProps<
-  DefaultInputProps,
-  'isPrice' | 'isSmall' | 'label'
-> & {
-  hasGuideMessage: boolean
-}
+type StyledInputProps = StyledProps<DefaultInputProps, 'isPrice' | 'label'> &
+  StyledPriceUnitProps
 type StyledStatusProps = StyledProps<DefaultInputProps, 'status'>
 type StyledWrapperProps = StyledProps<DefaultInputProps, 'width'>
 
-export const DefaultInput = forwardRef(function DefaultInput(
+export const Default = forwardRef(function Default(
   {
     label = '',
     status = 'default',
     guideMessage = '',
     isPrice = false,
-    isSmall,
+    inputSize = 'small',
     width = '100%',
     onChange,
     ...args
@@ -34,6 +31,7 @@ export const DefaultInput = forwardRef(function DefaultInput(
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const hasGuideMessage = status !== 'none'
+  const isSmall = isSmallSize(inputSize)
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
     if (isPrice) {
       const numberValue = convertToNumber(e.target.value)

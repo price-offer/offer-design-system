@@ -1,34 +1,35 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components'
+import { Text, isSmallSize } from '@offer-ui/components'
 import { VALIDATE_MESSAGE } from '@offer-ui/constants'
 import type { ColorKeys } from '@offer-ui/themes'
 import type { StyledProps } from '@offer-ui/types'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
-import type { MainInputProps as EditInputProps } from './index'
+import type { InputProps as EditProps } from './index'
 
 type StyledInputProps = {
   isSmall: boolean
   hasGuideMessage: boolean
 }
-type StyledGuideMessageProps = StyledProps<EditInputProps, 'status'>
-type StyledInputFormProps = StyledProps<EditInputProps, 'width'>
+type StyledGuideMessageProps = StyledProps<EditProps, 'status'>
+type StyledInputFormProps = StyledProps<EditProps, 'width'>
 
-export const EditInput = forwardRef(function EditInput(
+export const Edit = forwardRef(function Edit(
   {
     label = '',
     guideMessage = '',
     status = 'default',
-    isSmall,
+    inputSize = 'small',
     width = '100%',
     onChange,
     isPrice,
     ...props
-  }: EditInputProps,
+  }: EditProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const hasGuideMessage = status !== 'none'
+  const isSmall = isSmallSize(inputSize)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     if (!isPrice) {

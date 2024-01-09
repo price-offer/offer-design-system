@@ -3,25 +3,26 @@ import { IconButton } from '@offer-ui/components/IconButton'
 import type { StyledProps } from '@offer-ui/types'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
 import { forwardRef, useState } from 'react'
-import type { MainInputProps } from './index'
+import { isSmallSize, type InputProps } from './index'
 
-type ChattingInputProps = Omit<
-  MainInputProps,
+type ChattingProps = Omit<
+  InputProps,
   'label' | 'status' | 'message' | 'isPrice'
 >
 
-type StyledInputProps = StyledProps<ChattingInputProps, 'isSmall'>
+type StyledInputProps = { isSmall: boolean }
 type StyledIconButtonProps = StyledInputProps & {
   disabled: boolean
 }
-type StyledInputFormProps = StyledProps<ChattingInputProps, 'width'>
+type StyledInputFormProps = StyledProps<ChattingProps, 'width'>
 
-export const ChattingInput = forwardRef(function ChattingInput(
-  { isSmall, onChange, width = '100%', ...props }: ChattingInputProps,
+export const Chatting = forwardRef(function Chatting(
+  { onChange, width = '100%', inputSize = 'small', ...props }: ChattingProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const [inputValue, setInputValue] = useState<string>('')
   const isDisabled = !inputValue
+  const isSmall = isSmallSize(inputSize)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     onChange?.(e)

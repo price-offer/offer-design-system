@@ -3,19 +3,20 @@ import { Icon } from '@offer-ui/components/Icon'
 import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { MainInputProps } from './index'
+import { isSmallSize, type InputProps } from './index'
 
-type SearchInputProps = Omit<
-  MainInputProps,
-  'label' | 'status' | 'message' | 'isPrice'
->
-type StyledInputProps = StyledProps<SearchInputProps, 'isSmall'>
-type StyledInputFormProps = StyledProps<SearchInputProps, 'width'>
+type SearchProps = Omit<InputProps, 'label' | 'status' | 'message' | 'isPrice'>
+type StyledInputProps = {
+  isSmall: boolean
+}
+type StyledInputFormProps = StyledProps<SearchProps, 'width'>
 
-export const SearchInput = forwardRef(function SearchInput(
-  { isSmall, width = '100%', ...props }: SearchInputProps,
+export const Search = forwardRef(function Search(
+  { inputSize = 'small', width = '100%', ...props }: SearchProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
+  const isSmall = isSmallSize(inputSize)
+
   return (
     <StyledInputForm width={width}>
       <StyledIcon color={'grayScale50'} isSmall={isSmall} type="search" />

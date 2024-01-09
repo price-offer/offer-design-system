@@ -123,7 +123,7 @@ export const Carousel = forwardRef(function Carousel(
   }, [startClientX, endClientX])
 
   return (
-    <StyledCarouselWrapper ref={ref} {...props}>
+    <StyledCarouselWrapper ref={ref} hasImages={hasImages} {...props}>
       <StyledSlider
         cursorOn={cursorOn}
         size={carouselWidthSize}
@@ -192,12 +192,13 @@ export const Carousel = forwardRef(function Carousel(
   )
 })
 
-const StyledCarouselWrapper = styled.div`
+const StyledCarouselWrapper = styled.div<{ hasImages: boolean }>`
   touch-action: none;
   user-select: none;
   position: relative;
   height: 430px;
-  background-color: ${({ theme }): string => theme.colors.grayScale10};
+  background-color: ${({ hasImages, theme }): string =>
+    hasImages ? 'transparent' : theme.colors.grayScale10};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     max-width: 100vw;

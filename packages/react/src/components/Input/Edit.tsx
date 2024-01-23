@@ -24,6 +24,11 @@ export type EditInputProps = InputProps & {
    * @type string | undefined
    */
   guideMessage?: string
+  /**
+   * Input 값으로 가격을 받는지 여부를 정합니다.
+   * @type boolean | undefined
+   */
+  isPrice?: boolean
 }
 type StyledInputProps = {
   isSmall: boolean
@@ -40,6 +45,7 @@ export const Edit = forwardRef(function Edit(
     inputSize = 'small',
     width = '100%',
     onChange,
+    isPrice,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -48,8 +54,11 @@ export const Edit = forwardRef(function Edit(
   const isSmall = isSmallSize(inputSize)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    const numberValue = convertToNumber(e.target.value)
-    e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
+    if (isPrice) {
+      const numberValue = convertToNumber(e.target.value)
+
+      e.target.value = numberValue > 0 ? toLocaleCurrency(numberValue) : ''
+    }
 
     onChange?.(e)
   }

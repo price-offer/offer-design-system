@@ -1,5 +1,11 @@
 # @offer-ui/react
 
+## 0.3.4
+
+### Patch Changes
+
+- fdc2483: - Input-Edit: isPrice에 따른 UI변화
+
 ## 0.3.3
 
 ### Patch Changes

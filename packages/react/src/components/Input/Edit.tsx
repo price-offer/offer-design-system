@@ -45,7 +45,7 @@ export const Edit = forwardRef(function Edit(
     inputSize = 'small',
     width = '100%',
     onChange,
-    isPrice,
+    isPrice = false,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -74,13 +74,15 @@ export const Edit = forwardRef(function Edit(
           onChange={handleChange}
           {...props}
         />
-        <StyledPriceUnit
-          color="grayScale90"
-          hasGuideMessage={hasGuideMessage}
-          isSmall={isSmall}
-          styleType="subtitle01M">
-          {VALIDATE_MESSAGE.PRICE_UNIT}
-        </StyledPriceUnit>
+        {isPrice && (
+          <StyledPriceUnit
+            color="grayScale90"
+            hasGuideMessage={hasGuideMessage}
+            isSmall={isSmall}
+            styleType="subtitle01M">
+            {VALIDATE_MESSAGE.PRICE_UNIT}
+          </StyledPriceUnit>
+        )}
       </StyledInputLabel>
       {hasGuideMessage && (
         <StyledInputGuideMessage status={status} styleType="caption01M">

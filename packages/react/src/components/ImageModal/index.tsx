@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom'
 
 type ImageInfo = {
   id: number
-  src: string
+  url: string
 }
 export type ImageModalProps = {
   /**
@@ -20,7 +20,7 @@ export type ImageModalProps = {
   isOpen?: boolean
   /**
    * ImageModal에 띄울 이미지들을 정합니다.
-   * @type IconType
+   * @type ImageInfo
    */
   images: ImageInfo[]
   /**
@@ -114,16 +114,16 @@ export const ImageModal = forwardRef(function ImageModal(
   }, [isOpen, selectedIndex])
 
   const getImagesInfo = async (): Promise<void> => {
-    const fulfilledImages = images.map(({ src, id }) => {
+    const fulfilledImages = images.map(({ url, id }) => {
       const image = new Image()
-      image.src = src
+      image.src = url
 
       return new Promise(resolve => {
         image.onload = (): void => {
           resolve({
             height: image.height,
             id,
-            src,
+            url,
             width: (image.width * DEFAULT_RESIZE_IMAGE.HEIGHT) / image.height
           })
         }
@@ -132,7 +132,7 @@ export const ImageModal = forwardRef(function ImageModal(
           resolve({
             height: DEFAULT_RESIZE_IMAGE.HEIGHT,
             id,
-            src: null,
+            url: null,
             width: DEFAULT_RESIZE_IMAGE.WIDTH
           })
         }
@@ -211,7 +211,7 @@ export const ImageModal = forwardRef(function ImageModal(
             ref={ref}
             currentIndex={currentIndex}
             currentTranslateX={currentTranslateX}>
-            {imagesInfo.current.map(({ src, id, width, height }) => (
+            {imagesInfo.current.map(({ url, id, width, height }) => (
               <StyledImage
                 key={id}
                 alt={`${name}-${id}`}
@@ -219,7 +219,7 @@ export const ImageModal = forwardRef(function ImageModal(
                 isFixedHeight={
                   calculateSizeRate(width, height) < IMAGE_MAX_RATE
                 }
-                src={src}
+                src={url}
                 width={`${width}px`}
               />
             ))}

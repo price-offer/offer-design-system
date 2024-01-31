@@ -5,11 +5,16 @@ import { useMedia } from '@offer-ui/hooks/useMedia'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 
+type ImageInfo = {
+  id: number
+  url: string
+}
+
 export type CarouselProps = {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.
-   * @type { src: string, id: number } []
+   * @type ImageInfo []
    */
-  images: { src: string; id: number }[]
+  images: ImageInfo[]
   /** Carousel 에서 처음에 보여줄 이미지를 선택합니다.
    * @type number
    */
@@ -145,7 +150,7 @@ export const Carousel = forwardRef(function Carousel(
                 key={image.id}
                 alt={`${name}- ${image.id}`}
                 size={carouselWidthSize}
-                src={image.src}
+                src={image.url}
               />
             )
           })}

@@ -10,6 +10,10 @@ export type CarouselProps = {
    * @type { src: string, id: number } []
    */
   images: { src: string; id: number }[]
+  /** Carousel 에서 처음에 보여줄 이미지를 선택합니다.
+   * @type number
+   */
+  selectedIndex: number
   /** Carousel 컴포넌트에 화살표의 유무를 정합니다.
    * @type boolean
    */
@@ -23,9 +27,13 @@ export type CarouselProps = {
    */
   name: string
   /** Carousel 내에 Image 클릭시 실행할 함수를 지정합니다.
+   * @type (): void | undefined
+   */
+  onClickImage?(): void
+  /** Carousel 내에 Indicator가 변할 때 실행할 함수를 지정합니다.
    * @type (index: number): void | undefined
    */
-  onClick?(index: number): void
+  onChangeIndicator?(index: number): void
 } & HTMLAttributes<HTMLDivElement>
 
 type SliderProps = {
@@ -54,12 +62,21 @@ const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
 export const Carousel = forwardRef(function Carousel(
-  { images = [], isArrow, size = 687, name, onClick, ...props }: CarouselProps,
+  {
+    images = [],
+    isArrow,
+    size = 687,
+    selectedIndex,
+    name,
+    onClickImage,
+    onChangeIndicator,
+    ...props
+  }: CarouselProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { desktop } = useMedia()
   const carouselWidthSize = desktop ? size : FULL_SCREEN_WIDTH
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [currentIndex, setCurrentIndex] = useState<number>(selectedIndex)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
@@ -70,13 +87,16 @@ export const Carousel = forwardRef(function Carousel(
 
   const handleIndicator = (idx: number): void => {
     setCurrentIndex(idx)
+    onChangeIndicator?.(idx)
   }
 
   const handleOffset: HandleOffset = navType => {
     const { LEFT } = NAV_TYPE
     const goPrev = navType === LEFT
+    const nextIndex = goPrev ? currentIndex - 1 : currentIndex + 1
 
-    setCurrentIndex(goPrev ? currentIndex - 1 : currentIndex + 1)
+    setCurrentIndex(nextIndex)
+    onChangeIndicator?.(nextIndex)
   }
 
   const handleTouchStart: TouchEventHandler<HTMLDivElement> = e => {
@@ -118,7 +138,7 @@ export const Carousel = forwardRef(function Carousel(
         onTouchStart={handleTouchStart}>
         <StyledImageBox
           currentTranslateX={currentTranslateX}
-          onClick={(): void => onClick?.(currentIndex)}>
+          onClick={(): void => onClickImage?.()}>
           {images.map(image => {
             return (
               <StyledImage

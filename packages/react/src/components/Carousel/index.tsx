@@ -22,6 +22,10 @@ export type CarouselProps = {
    * @type string
    */
   name: string
+  /** Carousel 내에 Image 클릭시 실행할 함수를 지정합니다.
+   * @type (index: number): void | undefined
+   */
+  onClick?(index: number): void
 } & HTMLAttributes<HTMLDivElement>
 
 type SliderProps = {
@@ -29,20 +33,12 @@ type SliderProps = {
   size: number
 }
 
-type CurrentIndicatorProps = {
-  imageIndex: number
-}
-
 type ImageBoxProps = {
-  currentImageValue: number
+  currentTranslateX: number
 }
 
 type ImageProps = {
   size: number
-}
-
-type ArrowProps = {
-  currentImageValue: number
 }
 
 type IndicatorBoxProps = {
@@ -58,38 +54,29 @@ const FULL_SCREEN_WIDTH = 100
 const USER_DRAG_LENGTH = 100
 
 export const Carousel = forwardRef(function Carousel(
-  { images = [], isArrow, size = 687, name, ...props }: CarouselProps,
+  { images = [], isArrow, size = 687, name, onClick, ...props }: CarouselProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { desktop } = useMedia()
   const carouselWidthSize = desktop ? size : FULL_SCREEN_WIDTH
-  const lastImageValue = carouselWidthSize * (images.length - 1)
-  const [currentImageValue, setCurrentImageValue] = useState<number>(0)
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
   const [startClientX, setStartClientX] = useState<number>(0)
   const [endClientX, setEndClientX] = useState<number>(0)
   const [cursorOn, setCursorOn] = useState<boolean>(false)
-  const isFirstImage = currentImageValue === 0
-  const isLastImage = currentImageValue === lastImageValue
+  const isFirstImage = currentIndex === 0
+  const isLastImage = currentIndex === images.length - 1
   const hasImages = images.length > 0
+  const currentTranslateX = currentIndex * carouselWidthSize
 
-  const VALUE_OF_NAV_TYPE = {
-    LEFT: -carouselWidthSize,
-    RIGHT: carouselWidthSize
-  }
-
-  const handleIndicator = (imageIndex: number): void => {
-    setCurrentImageValue((imageIndex - 1) * carouselWidthSize)
+  const handleIndicator = (idx: number): void => {
+    setCurrentIndex(idx)
   }
 
   const handleOffset: HandleOffset = navType => {
     const { LEFT } = NAV_TYPE
-    const endPoint = navType === LEFT ? 0 : lastImageValue
-    const prevTranslateValue = navType === LEFT ? lastImageValue : 0
-    if (currentImageValue === endPoint) {
-      setCurrentImageValue(prevTranslateValue)
-    } else {
-      setCurrentImageValue(prev => prev + VALUE_OF_NAV_TYPE[navType])
-    }
+    const goPrev = navType === LEFT
+
+    setCurrentIndex(goPrev ? currentIndex - 1 : currentIndex + 1)
   }
 
   const handleTouchStart: TouchEventHandler<HTMLDivElement> = e => {
@@ -129,7 +116,9 @@ export const Carousel = forwardRef(function Carousel(
         size={carouselWidthSize}
         onTouchEnd={handleTouchStartEnd}
         onTouchStart={handleTouchStart}>
-        <StyledImageBox currentImageValue={currentImageValue}>
+        <StyledImageBox
+          currentTranslateX={currentTranslateX}
+          onClick={(): void => onClick?.(currentIndex)}>
           {images.map(image => {
             return (
               <StyledImage
@@ -142,12 +131,11 @@ export const Carousel = forwardRef(function Carousel(
           })}
         </StyledImageBox>
         {isArrow && hasImages && (
-          <StyledArrowBox>
+          <>
             {isFirstImage ? (
               <div />
             ) : (
               <StyledLeftArrow
-                currentImageValue={currentImageValue}
                 type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.LEFT)
@@ -159,7 +147,6 @@ export const Carousel = forwardRef(function Carousel(
               <div />
             ) : (
               <StyledRightArrow
-                currentImageValue={currentImageValue}
                 type="button"
                 onClick={(): void => {
                   handleOffset(NAV_TYPE.RIGHT)
@@ -167,26 +154,22 @@ export const Carousel = forwardRef(function Carousel(
                 <Icon size={40} type="chevronRight" />
               </StyledRightArrow>
             )}
-          </StyledArrowBox>
+          </>
         )}
       </StyledSlider>
       <StyledIndicatorBox isArrow={isArrow}>
-        {images.map(image => {
+        {images.map(({ id }, idx) => {
           return (
             <StyledIndicator
-              key={image.id}
-              className={`${name}- ${image.id}`}
+              key={id}
+              className={`${name}- ${id}`}
+              isSelected={currentIndex === idx}
               onClick={(): void => {
-                handleIndicator(image.id)
+                handleIndicator(idx)
               }}
             />
           )
         })}
-        {hasImages && (
-          <StyledCurrentIndicator
-            imageIndex={currentImageValue / carouselWidthSize}
-          />
-        )}
       </StyledIndicatorBox>
     </StyledCarouselWrapper>
   )
@@ -233,19 +216,19 @@ const StyledImageBox = styled.div<ImageBoxProps>`
   display: flex;
   height: 440px;
   transition: 0.5s;
-  transform: ${({ currentImageValue }): string =>
-    `translateX(-${currentImageValue}px)`};
+  transform: ${({ currentTranslateX }): string =>
+    `translateX(-${currentTranslateX}px)`};
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     height: 400px;
-    transform: ${({ currentImageValue }): string =>
-      `translateX(-${currentImageValue}vw)`};
+    transform: ${({ currentTranslateX }): string =>
+      `translateX(-${currentTranslateX}vw)`};
   }
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
     height: 400px;
-    transform: ${({ currentImageValue }): string =>
-      `translateX(-${currentImageValue}vw)`};
+    transform: ${({ currentTranslateX }): string =>
+      `translateX(-${currentTranslateX}vw)`};
   }
 `
 
@@ -278,18 +261,26 @@ export const StyledArrowBox = styled.div`
   }
 `
 
-const StyledRightArrow = styled.button<ArrowProps>`
+const StyledRightArrow = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 0;
   width: 40px;
   height: 60px;
   border: none;
+  transform: translate(0, -50%);
   background-color: ${({ theme }): string => theme.colors.white};
   cursor: pointer;
 `
 
-const StyledLeftArrow = styled.button<ArrowProps>`
+const StyledLeftArrow = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 0;
   width: 40px;
   height: 60px;
   border: none;
+  transform: translate(0, -50%);
   background-color: ${({ theme }): string => theme.colors.white};
   cursor: pointer;
 `
@@ -302,6 +293,7 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%);
+
   ${({ theme }): string => theme.mediaQuery.tablet} {
     bottom: 27px;
     margin-top: 0px;
@@ -312,42 +304,20 @@ const StyledIndicatorBox = styled.div<IndicatorBoxProps>`
   }
 `
 
-const StyledIndicator = styled.div`
+const StyledIndicator = styled.div<{ isSelected: boolean }>`
   width: 10px;
   height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale10};
+  background-color: ${({ theme, isSelected }): string =>
+    isSelected ? theme.colors.black : theme.colors.grayScale10};
   border-radius: 100px;
   height: 10px;
   margin: 0 1px;
   font-size: 20px;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
-    width: 8px;
-    height: 8px;
-    background-color: ${({ theme }): string => theme.colors.white};
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
-  }
-`
 
-const StyledCurrentIndicator = styled.div<CurrentIndicatorProps>`
-  width: 10px;
-  height: 10px;
-  background-color: ${({ theme }): string => theme.colors.grayScale90};
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin: 0 1px;
-  border-radius: 100px;
-  cursor: pointer;
-  transform: ${({ imageIndex }): string =>
-    `translate(${imageIndex * 17}px,-50%)`};
-  transition: transform 0.2s;
   ${({ theme }): string => theme.mediaQuery.tablet} {
     width: 8px;
     height: 8px;
     background-color: ${({ theme }): string => theme.colors.white};
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
-    transform: ${({ imageIndex }): string =>
-      `translate(${imageIndex * 15}px,-50%)`};
-    transition: transform 0.2s;
   }
 `

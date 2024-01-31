@@ -132,9 +132,7 @@ export const Carousel = forwardRef(function Carousel(
         </StyledImageBox>
         {isArrow && hasImages && (
           <>
-            {isFirstImage ? (
-              <div />
-            ) : (
+            {!isFirstImage && (
               <StyledLeftArrow
                 type="button"
                 onClick={(): void => {
@@ -143,9 +141,7 @@ export const Carousel = forwardRef(function Carousel(
                 <Icon size={40} type="chevronLeft" />
               </StyledLeftArrow>
             )}
-            {isLastImage ? (
-              <div />
-            ) : (
+            {!isLastImage && (
               <StyledRightArrow
                 type="button"
                 onClick={(): void => {
@@ -248,25 +244,13 @@ const StyledImage = styled(Image)<ImageProps>`
   }
 `
 
-export const StyledArrowBox = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  ${({ theme }): string => theme.mediaQuery.tablet} {
-    display: none;
-  }
-`
-
 const StyledRightArrow = styled.button`
   position: absolute;
   top: 50%;
   right: 0;
   width: 40px;
   height: 60px;
+  z-index: ${({ theme }): number => theme.zIndex.common};
   border: none;
   transform: translate(0, -50%);
   background-color: ${({ theme }): string => theme.colors.white};
@@ -279,6 +263,8 @@ const StyledLeftArrow = styled.button`
   left: 0;
   width: 40px;
   height: 60px;
+
+  z-index: ${({ theme }): number => theme.zIndex.common};
   border: none;
   transform: translate(0, -50%);
   background-color: ${({ theme }): string => theme.colors.white};

@@ -273,15 +273,15 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   ${({ theme }): string => theme.mediaQuery.mobile} {
     transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentIndex }): SerializedStyles =>
-      css`translate(-${currentIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): string =>
+      `translate(-${currentIndex * 100}vw, 0)`};
   }
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentIndex }): SerializedStyles =>
-      css`translate(-${currentIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): string =>
+      `translate(-${currentIndex * 100}vw, 0)`};
   }
 `
 

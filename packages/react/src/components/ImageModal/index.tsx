@@ -110,7 +110,9 @@ export const ImageModal = forwardRef(function ImageModal(
   }, [images])
 
   useEffect(() => {
-    isOpen && setCurrentIndex(initIndex)
+    if (isOpen) {
+      setCurrentIndex(initIndex)
+    }
   }, [isOpen])
 
   const getImagesInfo = async (): Promise<void> => {
@@ -161,7 +163,7 @@ export const ImageModal = forwardRef(function ImageModal(
     }
 
     return sumImageWidth
-  }, [currentIndex])
+  }, [currentIndex, imagesInfo.current])
 
   const handleClickIndicator = (idx: number): void => {
     setCurrentIndex(idx)

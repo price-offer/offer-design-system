@@ -5,7 +5,7 @@ import { IconButton } from '@offer-ui/components/IconButton'
 import { Image as ImageComponent } from '@offer-ui/components/Image'
 import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type ImageInfo = {
@@ -23,6 +23,11 @@ export type ImageModalProps = {
    * @type IconType
    */
   images: ImageInfo[]
+  /**
+   * ImageModal의 처음 띄워줄 이미지 index를 지정합니다.
+   * @type number | undefined
+   */
+  initIndex?: number
   /**
    * ImageModal의 이름을 정합니다.
    * @type string
@@ -45,8 +50,8 @@ type StyledImageModalProps = {
   direction: 'top' | 'bottom'
 }
 type StyledImageContainerProps = {
-  currentImageIndex: number
-  sumOfHandoverImageWidth: number
+  currentIndex: number
+  currentTranslateX: number
 }
 type StyledImageProps = Pick<StyledImageModalProps, 'isFixedHeight'>
 type StyledGradientProps = Pick<StyledImageModalProps, 'direction'>
@@ -71,12 +76,18 @@ const calculateSizeRate = (width: number, height: number): number =>
   width / height
 
 export const ImageModal = forwardRef(function ImageModal(
-  { onClose, images = [], isOpen = false, name, ...props }: ImageModalProps,
+  {
+    onClose,
+    initIndex = 0,
+    images = [],
+    isOpen = false,
+    name,
+    ...props
+  }: ImageModalProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
-  const initImageId = images[0]?.id
-  const [currentImageId, setCurrentImageId] = useState<number>(initImageId)
+  const [currentIndex, setCurrentIndex] = useState<number>(initIndex)
   const startClientX = useRef<number | null>(null)
   const topElement = useRef<HTMLDivElement | null>(null)
   const hasImages = images.length > 0
@@ -99,7 +110,7 @@ export const ImageModal = forwardRef(function ImageModal(
   }, [images])
 
   useEffect(() => {
-    isOpen && setCurrentImageId(initImageId)
+    isOpen && setCurrentIndex(initIndex)
   }, [isOpen])
 
   const getImagesInfo = async (): Promise<void> => {
@@ -133,14 +144,14 @@ export const ImageModal = forwardRef(function ImageModal(
     )) as ResizeImageInfo[]
   }
 
-  const getSumOfHandoverImageWidth = (): number => {
+  const currentTranslateX = useMemo((): number => {
     let sumImageWidth = 0
     const imageCount = imagesInfo.current.length
 
     for (let i = 0; i < imageCount; i++) {
-      const { id, width } = imagesInfo.current[i]
+      const { width } = imagesInfo.current[i]
 
-      if (currentImageId === id) {
+      if (currentIndex === i) {
         sumImageWidth += width / 2 + IMAGE_GAP_HALF
 
         return sumImageWidth
@@ -150,13 +161,10 @@ export const ImageModal = forwardRef(function ImageModal(
     }
 
     return sumImageWidth
-  }
+  }, [currentIndex])
 
-  const getCurrentImageIndex = (): number =>
-    imagesInfo.current?.findIndex(({ id }) => currentImageId === id) || 0
-
-  const handleClickIndicator = (id: number): void => {
-    setCurrentImageId(id)
+  const handleClickIndicator = (idx: number): void => {
+    setCurrentIndex(idx)
   }
 
   const handleTouchStart: TouchEventHandler = (e): void => {
@@ -169,7 +177,6 @@ export const ImageModal = forwardRef(function ImageModal(
     const images = imagesInfo.current
     const prevTouchX = startClientX.current
     const currentTouchX = e.changedTouches[0].pageX
-    const currentImageIndex = getCurrentImageIndex()
     const isNotMoved = !prevTouchX
 
     if (isNotMoved) {
@@ -178,12 +185,11 @@ export const ImageModal = forwardRef(function ImageModal(
 
     const isRight = prevTouchX - currentTouchX > TOUCH_START_END_DIFFERENCE
     const touchNavType = isRight ? TOUCH_NAV_TYPE.RIGHT : TOUCH_NAV_TYPE.LEFT
-    const newCurrentImage =
-      images[currentImageIndex + VALUE_OF_TOUCH_NAV_TYPE[touchNavType]]
-    const defaultImageId = isRight ? images[0].id : images[images.length - 1].id
-    const newCurrentImageId = newCurrentImage?.id || defaultImageId
+    const newCurrentImage = currentIndex + VALUE_OF_TOUCH_NAV_TYPE[touchNavType]
+    const defaultIndex = isRight ? 0 : images.length - 1
+    const newCurrentImageId = newCurrentImage || defaultIndex
 
-    setCurrentImageId(newCurrentImageId)
+    setCurrentIndex(newCurrentImageId)
   }
 
   return topElement.current && hasImages
@@ -203,8 +209,8 @@ export const ImageModal = forwardRef(function ImageModal(
           <StyledImageContainer
             {...props}
             ref={ref}
-            currentImageIndex={getCurrentImageIndex()}
-            sumOfHandoverImageWidth={getSumOfHandoverImageWidth()}>
+            currentIndex={currentIndex}
+            currentTranslateX={currentTranslateX}>
             {imagesInfo.current.map(({ src, id, width, height }) => (
               <StyledImage
                 key={id}
@@ -220,12 +226,12 @@ export const ImageModal = forwardRef(function ImageModal(
           </StyledImageContainer>
           {imagesInfo.current.length > 1 && (
             <StyledIndicatorBox>
-              {imagesInfo.current.map(({ id }) => (
+              {imagesInfo.current.map(({ id }, idx) => (
                 <StyledIndicator
                   key={id}
-                  className={currentImageId === id ? 'selected' : ''}
+                  isSelected={idx === currentIndex}
                   onClick={(): void => {
-                    handleClickIndicator(id)
+                    handleClickIndicator(idx)
                   }}
                 />
               ))}
@@ -259,23 +265,24 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   display: flex;
   gap: 12px;
   transition: 0.6s ease-in-out;
+  transform: translate(
+    calc(50vw - ${({ currentTranslateX }): string => `${currentTranslateX}px`}),
+    0
+  );
 
   ${({ theme }): string => theme.mediaQuery.mobile} {
-    transform: translate((0, 0));
+    transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentImageIndex }): SerializedStyles =>
-      css`translate(-${currentImageIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): SerializedStyles =>
+      css`translate(-${currentIndex * 100}vw, 0);`};
   }
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
-    transform: translate((0, 0));
+    transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentImageIndex }): SerializedStyles =>
-      css`translate(-${currentImageIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): SerializedStyles =>
+      css`translate(-${currentIndex * 100}vw, 0);`};
   }
-
-  transform: ${({ sumOfHandoverImageWidth }): SerializedStyles =>
-    css`translate(calc(50vw - ${sumOfHandoverImageWidth}px), 0)}, 0)`};
 `
 
 const StyledImage = styled(ImageComponent)<StyledImageProps>`
@@ -351,24 +358,25 @@ const StyledIndicatorBox = styled.div`
   }
 `
 
-const StyledIndicator = styled.div`
+const StyledIndicator = styled.div<{ isSelected: boolean }>`
   width: 8px;
   height: 8px;
   opacity: 0.3;
   font-size: 20px;
   cursor: pointer;
 
-  ${({ theme }): SerializedStyles => css`
+  ${({ theme, isSelected }): SerializedStyles => css`
     background-color: ${theme.colors.grayScale10};
     border-radius: ${theme.radius.round100};
     box-shadow: 0px 0px 4px ${theme.colors.dimOpacity40};
-  `}
 
-  &.selected {
-    transition: 0.6s ease-out;
-    background-color: ${({ theme }): string => theme.colors.white};
-    opacity: 1;
-  }
+    ${isSelected &&
+    `
+      transition: 0.6s ease-out;
+      background-color: ${theme.colors.white};
+      opacity: 1;
+    `}
+  `}
 `
 
 const StyledGradient = styled.div<StyledGradientProps>`

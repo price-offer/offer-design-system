@@ -5,7 +5,7 @@ import type { ColorKeys } from '@offer-ui/themes'
 import type { StyledProps } from '@offer-ui/types'
 import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
-import type { ChangeEventHandler, ForwardedRef } from 'react'
+import type { ChangeEventHandler, FormEventHandler, ForwardedRef } from 'react'
 import type { InputProps } from './index'
 
 export type EditInputProps = InputProps & {
@@ -46,6 +46,8 @@ export const Edit = forwardRef(function Edit(
     width = '100%',
     onChange,
     isPrice = false,
+    maxLength,
+    onInput,
     ...props
   }: EditInputProps,
   ref: ForwardedRef<HTMLInputElement>
@@ -63,6 +65,16 @@ export const Edit = forwardRef(function Edit(
     onChange?.(e)
   }
 
+  const handleInput: FormEventHandler<HTMLInputElement> = (e): void => {
+    const inputValue = e.currentTarget.value
+
+    if (maxLength && maxLength < inputValue.length) {
+      e.currentTarget.value = inputValue.slice(0, maxLength)
+    }
+
+    onInput?.(e)
+  }
+
   return (
     <StyledInputForm width={width}>
       <StyledInputLabel>
@@ -71,7 +83,9 @@ export const Edit = forwardRef(function Edit(
           ref={ref}
           hasGuideMessage={hasGuideMessage}
           isSmall={isSmall}
+          maxLength={maxLength}
           onChange={handleChange}
+          onInput={handleInput}
           {...props}
         />
         {isPrice && (

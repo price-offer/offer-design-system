@@ -1,5 +1,12 @@
 # @offer-ui/react
 
+## 0.3.5
+
+### Patch Changes
+
+- 247b71b: - fix: ImageModal 이미지 위치 못잡는 이슈 수정
+  - feat: Carousel onClick prop 추가
+
 ## 0.3.4
 
 ### Patch Changes

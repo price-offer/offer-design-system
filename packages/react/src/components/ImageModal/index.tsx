@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom'
 
 type ImageInfo = {
   id: number
-  src: string
+  url: string
 }
 export type ImageModalProps = {
   /**
@@ -20,14 +20,14 @@ export type ImageModalProps = {
   isOpen?: boolean
   /**
    * ImageModal에 띄울 이미지들을 정합니다.
-   * @type IconType
+   * @type ImageInfo
    */
   images: ImageInfo[]
   /**
    * ImageModal의 처음 띄워줄 이미지 index를 지정합니다.
    * @type number | undefined
    */
-  initIndex?: number
+  selectedIndex?: number
   /**
    * ImageModal의 이름을 정합니다.
    * @type string
@@ -77,17 +77,17 @@ const calculateSizeRate = (width: number, height: number): number =>
 
 export const ImageModal = forwardRef(function ImageModal(
   {
-    onClose,
-    initIndex = 0,
+    selectedIndex = 0,
     images = [],
     isOpen = false,
     name,
+    onClose,
     ...props
   }: ImageModalProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const imagesInfo = useRef<ResizeImageInfo[]>([])
-  const [currentIndex, setCurrentIndex] = useState<number>(initIndex)
+  const [currentIndex, setCurrentIndex] = useState<number>(selectedIndex)
   const startClientX = useRef<number | null>(null)
   const topElement = useRef<HTMLDivElement | null>(null)
   const hasImages = images.length > 0
@@ -110,20 +110,20 @@ export const ImageModal = forwardRef(function ImageModal(
   }, [images])
 
   useEffect(() => {
-    isOpen && setCurrentIndex(initIndex)
-  }, [isOpen])
+    setCurrentIndex(selectedIndex)
+  }, [isOpen, selectedIndex])
 
   const getImagesInfo = async (): Promise<void> => {
-    const fulfilledImages = images.map(({ src, id }) => {
+    const fulfilledImages = images.map(({ url, id }) => {
       const image = new Image()
-      image.src = src
+      image.src = url
 
       return new Promise(resolve => {
         image.onload = (): void => {
           resolve({
             height: image.height,
             id,
-            src,
+            url,
             width: (image.width * DEFAULT_RESIZE_IMAGE.HEIGHT) / image.height
           })
         }
@@ -132,7 +132,7 @@ export const ImageModal = forwardRef(function ImageModal(
           resolve({
             height: DEFAULT_RESIZE_IMAGE.HEIGHT,
             id,
-            src: null,
+            url: null,
             width: DEFAULT_RESIZE_IMAGE.WIDTH
           })
         }
@@ -161,7 +161,7 @@ export const ImageModal = forwardRef(function ImageModal(
     }
 
     return sumImageWidth
-  }, [currentIndex])
+  }, [currentIndex, imagesInfo.current, selectedIndex])
 
   const handleClickIndicator = (idx: number): void => {
     setCurrentIndex(idx)
@@ -211,7 +211,7 @@ export const ImageModal = forwardRef(function ImageModal(
             ref={ref}
             currentIndex={currentIndex}
             currentTranslateX={currentTranslateX}>
-            {imagesInfo.current.map(({ src, id, width, height }) => (
+            {imagesInfo.current.map(({ url, id, width, height }) => (
               <StyledImage
                 key={id}
                 alt={`${name}-${id}`}
@@ -219,7 +219,7 @@ export const ImageModal = forwardRef(function ImageModal(
                 isFixedHeight={
                   calculateSizeRate(width, height) < IMAGE_MAX_RATE
                 }
-                src={src}
+                src={url}
                 width={`${width}px`}
               />
             ))}
@@ -273,15 +273,15 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
   ${({ theme }): string => theme.mediaQuery.mobile} {
     transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentIndex }): SerializedStyles =>
-      css`translate(-${currentIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): string =>
+      `translate(-${currentIndex * 100}vw, 0)`};
   }
 
   ${({ theme }): string => theme.mediaQuery.tablet} {
     transform: translate(0, 0);
     gap: 0;
-    transform: ${({ currentIndex }): SerializedStyles =>
-      css`translate(-${currentIndex * 100}vw, 0);`};
+    transform: ${({ currentIndex }): string =>
+      `translate(-${currentIndex * 100}vw, 0)`};
   }
 `
 

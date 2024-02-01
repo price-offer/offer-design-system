@@ -1,5 +1,24 @@
 # @offer-ui/react
 
+## 0.3.6
+
+### Patch Changes
+
+- cd1d94a: - Carousel
+  - onClick, 화살표 클릭시에는 동작하지 않도록 수정
+  - tablet, mobile에서 인디케이터 클릭시 동작하지 않는 이슈 수정
+  - src -> url로 변경
+  - ImageModal
+    - 처음에 이미지 위치 잡지 못하는 이슈 수정
+    - src -> url로 변경
+- 49309a2: - Carousel
+  - mobile, tablet에서 인디케이터 동작하지 않는 이슈 수정
+  - 화살표 클릭이 이미지 클릭에 영향을 미치지 않도록 수정
+  - ImageModal
+    - 초기 로딩시 이미지 위치 잃어버리는 이슈 수정
+  - Input - Edit
+    - UI 상에서 한국어가 maxLength 이상으로 입력되는 이슈 수정
+
 ## 0.3.5
 
 ### Patch Changes

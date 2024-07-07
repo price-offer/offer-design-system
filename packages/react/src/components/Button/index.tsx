@@ -14,8 +14,7 @@ export const BUTTON_STYLE_KEYS = {
   SOLID_SUB: 'solidSub'
 } as const
 
-export type ButtonStyleType =
-  typeof BUTTON_STYLE_KEYS[keyof typeof BUTTON_STYLE_KEYS]
+export type ButtonStyleType = ValueOf<typeof BUTTON_STYLE_KEYS>
 export type ButtonSize = 'small' | 'medium' | 'large'
 export type ButtonProps = {
   /**

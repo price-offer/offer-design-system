@@ -39,7 +39,7 @@ import {
 import type { ColorKeys } from '../../styles/themes'
 import type { StyledProps } from '../../types'
 
-export type IconType = keyof typeof ICON_TYPES
+export type IconType = KeyOf<typeof ICON_TYPES>
 export type IconProps = {
   /**
    * Icon의 크기를 정합니다.

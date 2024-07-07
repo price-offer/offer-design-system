@@ -1,10 +1,10 @@
 import type { SerializedStyles } from '@emotion/react'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useImage } from '@offer-ui/hooks'
-import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, ImgHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
+import { useImage } from '../../hooks'
+import type { StyledProps } from '../../types'
 
 type ObjectFit = 'fill' | 'contain' | 'cover' | 'none'
 

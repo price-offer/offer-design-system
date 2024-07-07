@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components/Text'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef } from 'react'
+import { Text } from '../Text'
 
 type BadgeColorType = 'gray' | 'orange' | 'purple'
 export type BadgeProps = {

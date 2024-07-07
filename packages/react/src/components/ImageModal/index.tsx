@@ -1,12 +1,12 @@
 import type { SerializedStyles } from '@emotion/react'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { IconButton } from '@offer-ui/components/IconButton'
-import { Image as ImageComponent } from '@offer-ui/components/Image'
-import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import type { StyledProps } from '../../types'
+import { IconButton } from '../IconButton'
+import { Image as ImageComponent } from '../Image'
 
 type ImageInfo = {
   src: string

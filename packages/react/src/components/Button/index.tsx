@@ -1,11 +1,11 @@
 import { css } from '@emotion/react'
 import type { Theme, SerializedStyles } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Icon as IconComponent } from '@offer-ui/components'
-import type { IconType } from '@offer-ui/components'
-import type { StyledProps } from '@offer-ui/types'
 import { forwardRef } from 'react'
 import type { ForwardedRef, ButtonHTMLAttributes, ReactNode } from 'react'
+import type { StyledProps } from '../../types'
+import type { IconType } from '../Icon'
+import { Icon as IconComponent } from '../Icon'
 
 export const BUTTON_STYLE_KEYS = {
   GHOST: 'ghost',

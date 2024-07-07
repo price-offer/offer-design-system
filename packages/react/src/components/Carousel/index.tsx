@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { Icon } from '@offer-ui/components/Icon'
-import { useMedia } from '@offer-ui/hooks/useMedia'
 import type { ForwardedRef, HTMLAttributes, TouchEventHandler } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
+import { useMedia } from '../../hooks'
+import { Icon } from '../Icon'
 
 export type CarouselProps = {
   /** Carousel 컴포넌트에 들어갈 이미지들을 정합니다.

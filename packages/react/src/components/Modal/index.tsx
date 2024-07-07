@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
-import { useClickAway } from '@offer-ui/hooks'
-import type { StyledProps } from '@offer-ui/types'
-import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import type { ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { useClickAway } from '../../hooks'
+import type { StyledProps } from '../../types'
+import { mergeRefs } from '../../utils/mergeRefs'
 
 export type ModalProps = {
   /**

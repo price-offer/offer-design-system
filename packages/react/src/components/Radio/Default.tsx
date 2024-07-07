@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components'
-import type { StyledProps } from '@offer-ui/types'
 import { forwardRef } from 'react'
 import type { ForwardedRef, ChangeEvent, ReactNode } from 'react'
 import { Input } from './Input'
+import { Text } from '../../components'
+import type { StyledProps } from '../../types'
 
 export const DIRECTION = {
   VERTICAL: 'vertical',

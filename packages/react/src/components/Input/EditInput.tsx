@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components'
-import { VALIDATE_MESSAGE } from '@offer-ui/constants'
-import type { ColorKeys } from '@offer-ui/themes'
-import type { StyledProps } from '@offer-ui/types'
-import { convertToNumber, toLocaleCurrency } from '@offer-ui/utils/format'
 import { forwardRef } from 'react'
 import type { ChangeEventHandler, ForwardedRef } from 'react'
+import { VALIDATE_MESSAGE } from '../../constants'
+import type { ColorKeys } from '../../styles/themes'
+import type { StyledProps } from '../../types'
+import { convertToNumber, toLocaleCurrency } from '../../utils/format'
+import { Text } from '../Text'
 import type { MainInputProps as EditInputProps } from './index'
 
 type StyledInputProps = {

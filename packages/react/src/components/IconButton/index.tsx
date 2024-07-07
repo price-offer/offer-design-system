@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
-import { Icon } from '@offer-ui/components/Icon'
-import type { IconType } from '@offer-ui/components/Icon'
-import type { ColorKeys } from '@offer-ui/themes'
-import type { StyledProps } from '@offer-ui/types'
 import type { ButtonHTMLAttributes, ForwardedRef } from 'react'
 import { forwardRef } from 'react'
+import type { ColorKeys } from '../../styles/themes'
+import type { StyledProps } from '../../types'
+import type { IconType } from '../Icon'
+import { Icon } from '../Icon'
 
 export type IconButtonColorType = ColorKeys
 

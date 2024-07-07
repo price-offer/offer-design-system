@@ -1,6 +1,6 @@
-import type { SelectOnChangeHandler } from '@offer-ui/types/offer'
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
+import type { SelectOnChangeHandler } from '../../types'
 import { SelectBox as SelectBoxComponent } from './index'
 
 type SelectBox = typeof SelectBoxComponent

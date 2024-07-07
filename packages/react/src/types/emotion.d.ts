@@ -6,7 +6,7 @@ import type {
   MediaQuery,
   Radius,
   ZIndex
-} from '@offer-ui/themes'
+} from '../styles/themes'
 
 declare module '@emotion/react' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

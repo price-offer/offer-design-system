@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start:storybook": "lerna run start --parallel",
-    "start:playground":"lerna run dev --parallel",
+    "start:playground": "lerna run dev --parallel",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "build-storybook": "lerna run build-storybook",
@@ -32,5 +32,6 @@
   "bugs": {
     "url": "https://github.com/price-offer/offer-design-system/issues"
   },
-  "homepage": "https://github.com/price-offer/offer-design-system#readme"
+  "homepage": "https://github.com/price-offer/offer-design-system#readme",
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

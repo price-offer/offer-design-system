@@ -1,9 +1,9 @@
-import type { IconType } from '@offer-ui/components'
-import { Icon } from '@offer-ui/components'
 import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 import type { ChangeEvent } from 'react'
 import { DIRECTION } from './Default'
+import { Icon } from '../../components'
+import type { IconType } from '../../components'
 import { Radio as RadioComponent } from './index'
 
 type Radio = typeof RadioComponent

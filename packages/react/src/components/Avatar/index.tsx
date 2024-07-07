@@ -1,11 +1,11 @@
 import type { SerializedStyles } from '@emotion/react'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Icon } from '@offer-ui/components/Icon'
-import { Image } from '@offer-ui/components/Image'
-import type { StyledProps } from '@offer-ui/types'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
+import type { StyledProps } from '../../types'
+import { Icon } from '../Icon'
+import { Image } from '../Image'
 
 export type AvatarProps = {
   /** Avatar 컴포넌트 이미지의 alt 속성을 정합니다.

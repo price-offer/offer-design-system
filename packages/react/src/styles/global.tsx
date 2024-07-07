@@ -1,7 +1,7 @@
 import { css, Global } from '@emotion/react'
-import { FontCSS, ResetCSS } from '@offer-ui/styles'
-import { colors } from '@offer-ui/themes'
 import type { ReactElement } from 'react'
+import { FontCSS, ResetCSS } from '../styles'
+import { colors } from '../styles/themes'
 
 const globalStyle = css`
   * {

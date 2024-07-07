@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components/Text'
-import { mergeRefs } from '@offer-ui/utils/mergeRefs'
 import type { ChangeEvent, ForwardedRef, TextareaHTMLAttributes } from 'react'
 import { forwardRef, useRef } from 'react'
+import { mergeRefs } from '../../utils/mergeRefs'
+import { Text } from '../Text'
 
 export type TextAreaProps = {
   /** TextArea 컴포넌트 상단의 label 정합니다.

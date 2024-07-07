@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { Text } from '@offer-ui/components/Text'
-import { useMediaQuery } from '@offer-ui/hooks'
 import { forwardRef } from 'react'
 import type { ForwardedRef, HTMLAttributes } from 'react'
+import { useMediaQuery } from '../../hooks'
+import { Text } from '../Text'
 
 export type ChattingBubbleProps = {
   /** ChattingBubble 컴포넌트의 수신 또는 발신에 대한 형태를 정합니다.

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import type { StyledProps } from '@offer-ui/types/offer'
 import type { ForwardedRef, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
+import type { StyledProps } from '../../types/offer'
 
 export type DividerProps = {
   /** Divider 컴포넌트의 방향을 정합니다.

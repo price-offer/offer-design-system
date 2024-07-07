@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { Badge } from '@offer-ui/components/Badge'
-import { Button } from '@offer-ui/components/Button'
-import { Icon } from '@offer-ui/components/Icon'
-import { Image } from '@offer-ui/components/Image'
-import { Text } from '@offer-ui/components/Text'
 import { forwardRef } from 'react'
 import type { ForwardedRef, HTMLAttributes } from 'react'
+import { Badge } from '../../Badge'
+import { Button } from '../../Button'
+import { Icon } from '../../Icon'
+import { Image } from '../../Image'
+import { Text } from '../../Text'
 import type { UploaderProps } from '../index'
 
 type StyledProps = {

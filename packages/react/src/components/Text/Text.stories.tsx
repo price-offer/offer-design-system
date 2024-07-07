@@ -1,5 +1,5 @@
-import { colors, fonts } from '@offer-ui/themes'
 import type { Meta, StoryObj } from '@storybook/react'
+import { colors, fonts } from '../../styles/themes'
 import { Text as TextComponent } from './index'
 
 type Text = typeof TextComponent
